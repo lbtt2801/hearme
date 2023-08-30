@@ -1,11 +1,14 @@
 package com.lbtt2801.hearme
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -15,8 +18,8 @@ import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: UserViewModel by viewModels()
-
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,21 +30,57 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         viewModel.initUser()
 
-        val navView: BottomNavigationView = binding.navView
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        navController = navHostFragment.navController
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+        customToolbar("GONE", null, R.color.transparent, null)
+        showBottomNav("GONE")
+    }
+
+    fun customToolbar(
+        isVisible: String,
+        title: String? = null,
+        backgroundColor: Int,
+        navIcon: Int? = null
+    ) {
+        //Toolbar visibility
+        when (isVisible) {
+            "VISIBLE" -> {
+                binding.toolBar.visibility = View.VISIBLE
+            }
+
+            "INVISIBLE" -> {
+                binding.toolBar.visibility = View.INVISIBLE
+            }
+
+            else -> {
+                binding.toolBar.visibility = View.GONE
+            }
+        }
+        //Toolbar title
+        if (title != null) {
+            binding.toolBar.title = title
+        }
+        //Toolbar background
+        binding.toolBar.setBackgroundColor(
+            resources.getColor(
+                backgroundColor,
+                null
             )
         )
-
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-
-        binding.navView.isVisible = false
-        supportActionBar?.hide()
+        //Toolbar nav icon
+        if (navIcon != null) {
+            binding.toolBar.setNavigationIcon(navIcon)
+        }
     }
+
+    fun showBottomNav(isVisible: String) {
+        when (isVisible) {
+            "VISIBLE" -> binding.navView.visibility = View.VISIBLE
+            "INVISIBLE" -> binding.navView.visibility = View.INVISIBLE
+            else -> binding.navView.visibility = View.GONE
+        }
+    }
+
 }
