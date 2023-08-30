@@ -15,7 +15,9 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.UserData
 import com.lbtt2801.hearme.databinding.FragmentSignUpBinding
+import com.lbtt2801.hearme.model.User
 import com.lbtt2801.hearme.viewmodel.SignUpViewModel
+import java.util.Date
 
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
@@ -35,11 +37,20 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        viewModel.lstUserLiveData.observe(viewLifecycleOwner) {
-//            Toast.makeText(context, UserData.data()[1].toString(), Toast.LENGTH_SHORT).show()
-//        }
-//
-//        viewModel.signUpUser()
+        Toast.makeText(context, "Size: " + UserData.data().size.toString(), Toast.LENGTH_SHORT).show()
+
+//        UserData.data().add(User("lbb","123", R.drawable.logo,"45","54", Date(2002, 12, 6, 0, 0, 0),"VN","55",2345,38,32,false))
+
+        viewModel.lstDataUser.observe(viewLifecycleOwner) {
+//            UserData.data().clear()
+//            UserData.data().addAll(it)
+            if (it.isEmpty())
+                Toast.makeText(context, "list is null or empty", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(context, "Size XXX: " + UserData.data().size.toString(), Toast.LENGTH_SHORT).show()
+        }
+
+//        viewModel.addDataUser(binding.edtEmail.text.toString(), binding.edtPass.text.toString())
+        viewModel.addUser(binding.edtEmail.text.toString(), binding.edtPass.text.toString())
 
         binding.edtEmail.setOnFocusChangeListener  { _, hasFocus ->
             val color = if (hasFocus) resources.getColor(R.color.btn) else Color.BLACK
@@ -53,7 +64,10 @@ class SignUpFragment : Fragment() {
         }
 
         binding.tvSignIn.setOnClickListener() {
-            findNavController().navigate(R.id.signInFragment)
+            findNavController().run {
+                popBackStack()
+                navigate(R.id.signInFragment)
+            }
         }
 
         binding.btnSignUp.setOnClickListener() {

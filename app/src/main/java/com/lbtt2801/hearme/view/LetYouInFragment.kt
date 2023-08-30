@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -30,12 +31,26 @@ class LetYouInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
+            (activity as MainActivity).binding.toolBar.isVisible = false
+            findNavController().run {
+                popBackStack()
+                navigate(R.id.walkThroughFragment)
+            }
+        }
+
         binding.btnSignIn.setOnClickListener {
-            findNavController().navigate(R.id.signInFragment)
+            findNavController().run {
+                popBackStack()
+                navigate(R.id.signInFragment)
+            }
         }
 
         binding.tvSignUp.setOnClickListener {
-            findNavController().navigate(R.id.signUpFragment)
+            findNavController().run {
+                popBackStack()
+                navigate(R.id.signUpFragment)
+            }
         }
     }
 
@@ -45,7 +60,7 @@ class LetYouInFragment : Fragment() {
     }
 
     private fun onClickSignUp(it: View?) {
-        findNavController().navigate(R.id.action_letYouInFragment_to_signUpFragment)
+        findNavController().navigate(R.id.signUpFragment)
     }
 
     override fun onDestroyView() {
