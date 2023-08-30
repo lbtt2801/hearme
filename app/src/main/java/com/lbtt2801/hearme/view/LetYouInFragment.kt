@@ -39,6 +39,15 @@ class LetYouInFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.tvSignUp.setOnClickListener { onClickSignUp(it) }
+    }
+
+    private fun onClickSignUp(it: View?) {
+        findNavController().navigate(R.id.action_letYouInFragment_to_signUpFragment)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
