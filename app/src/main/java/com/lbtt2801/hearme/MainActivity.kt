@@ -1,26 +1,31 @@
 package com.lbtt2801.hearme
 
 import android.os.Bundle
-import android.view.Window
-import android.view.WindowManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
+import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
+    private val viewModel: UserViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(binding.root)
+
+        binding.lifecycleOwner = this
+        viewModel.initUser()
 
         val navView: BottomNavigationView = binding.navView
 
