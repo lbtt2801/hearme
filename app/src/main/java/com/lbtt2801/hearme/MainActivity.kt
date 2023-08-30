@@ -82,5 +82,4 @@ class MainActivity : AppCompatActivity() {
             else -> binding.navView.visibility = View.GONE
         }
     }
-
 }

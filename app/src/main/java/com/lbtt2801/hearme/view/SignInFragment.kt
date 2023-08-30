@@ -31,7 +31,12 @@ class SignInFragment : Fragment() {
                 navigate(R.id.letYouInFragment)
             }
         }
+
+        binding.btnSignIn.setOnClickListener() {
+            findNavController().navigate(R.id.action_signInFragment_to_fillYourProfileFragment)
+        }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

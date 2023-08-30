@@ -26,7 +26,7 @@
         android:id="@+id/splashScreenFragment"
         android:name="com.lbtt2801.hearme.view.SplashScreenFragment"
         android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" >
+        tools:layout="@layout/fragment_splash_screen">
         <action
             android:id="@+id/action_splashScreenFragment_to_walkThroughFragment"
             app:destination="@id/walkThroughFragment" />
@@ -35,7 +35,7 @@
         android:id="@+id/walkThroughFragment"
         android:name="com.lbtt2801.hearme.view.WalkThroughFragment"
         android:label="fragment_walk_through"
-        tools:layout="@layout/fragment_walk_through" >
+        tools:layout="@layout/fragment_walk_through">
         <action
             android:id="@+id/action_walkThroughFragment_to_letYouInFragment"
             app:destination="@id/letYouInFragment" />
@@ -47,7 +47,7 @@
         android:id="@+id/letYouInFragment"
         android:name="com.lbtt2801.hearme.view.LetYouInFragment"
         android:label="fragment_let_you_in"
-        tools:layout="@layout/fragment_let_you_in" >
+        tools:layout="@layout/fragment_let_you_in">
         <action
             android:id="@+id/action_letYouInFragment_to_walkThroughFragment"
             app:destination="@id/walkThroughFragment" />
@@ -61,17 +61,30 @@
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.lbtt2801.hearme.view.SignUpFragment"
-        android:label="SignUpFragment" >
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_letYouInFragment"
             app:destination="@id/letYouInFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment2"
+            app:destination="@id/signInFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.lbtt2801.hearme.view.SignInFragment"
-        android:label="SignInFragment" >
+        android:label="SignInFragment"
+        tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_signInFragment_to_letYouInFragment"
             app:destination="@id/letYouInFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_fillYourProfileFragment"
+            app:destination="@id/fillYourProfileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/fillYourProfileFragment"
+        android:name="com.lbtt2801.hearme.view.FillYourProfileFragment"
+        android:label="FillYourProfileFragment"
+        tools:layout="@layout/fragment_fill_your_profile" />
 </navigation>

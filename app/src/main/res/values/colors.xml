@@ -12,6 +12,14 @@
     <color name="txt_hint">#CCCCCC</color>
     <color name="on_btn">#FFFFFF</color>
     <color name="btn">#0E9E42</color>
+    <color name="color_bg_edit_text">#FAFAFA</color>
+
+    <color name="color_txt_button_skip">#06C149</color>
+    <color name="color_txt_button_continue">#FFFFFF</color>
+
+    <color name="color_bg_button_skip">#E6F9ED</color>
+    <color name="color_bg_button_continue">#06C149</color>
 
     <color name="transparent">#00000000</color>
+
 </resources>
