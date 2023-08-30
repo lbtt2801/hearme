@@ -24,7 +24,7 @@ class LetYouInFragment : Fragment() {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_let_you_in, container, false)
         val activity = (activity as MainActivity)
         activity.supportActionBar?.title = ""
-        activity.supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+//        activity.supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return binding.root
     }
 
