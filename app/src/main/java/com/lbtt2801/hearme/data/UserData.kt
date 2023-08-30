@@ -26,6 +26,22 @@ class UserData {
                         true //true is male, false is female
                     )
                 )
+                add(
+                    User(
+                        "lebuitantruong@gmail.com",
+                        "lbtt2801",
+                        R.drawable.logo,
+                        "Le Bui Tan Truong",
+                        "Truong HUIT",
+                        Date(2002, 1, 28, 0, 0, 0),
+                        "VietNam",
+                        "0328467924",
+                        4567,
+                        1155,
+                        11,
+                        true // true is male, false is female
+                    )
+                )
             }
             return data
         }

@@ -1,5 +1,7 @@
 package com.lbtt2801.hearme.model
 
+import android.text.TextUtils
+import android.util.Patterns
 import java.util.Date
 
 data class User(
@@ -15,4 +17,9 @@ data class User(
     val numberOfFollowers: Int,
     val numberOfFollowing: Int,
     val gender: Boolean
-)
+) {
+    val isDataValid: Boolean
+        get() = (!TextUtils.isEmpty(email))
+                && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+                && password.length >= 6
+}
