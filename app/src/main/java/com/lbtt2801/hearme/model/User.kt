@@ -7,16 +7,16 @@ import java.util.Date
 data class User(
     val email: String,
     val password: String,
-    val avatar: Int,
-    val fullName: String,
-    val nickName: String,
-    val dob: Date,
-    val nation: String,
-    val phone: String,
-    val pin: Int,
-    val numberOfFollowers: Int,
-    val numberOfFollowing: Int,
-    val gender: Boolean
+    val avatar: Int? = null,
+    val fullName: String? = null,
+    val nickName: String? = null,
+    val dob: Date? = null,
+    val nation: String? = null,
+    val phone: String? = null,
+    val pin: Int? = null,
+    val numberOfFollowers: Int? = null,
+    val numberOfFollowing: Int? = null,
+    val gender: Boolean? = null
 ) {
     val isDataValid: Boolean
         get() = (!TextUtils.isEmpty(email))
