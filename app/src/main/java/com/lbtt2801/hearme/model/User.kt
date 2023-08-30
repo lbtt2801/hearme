@@ -16,7 +16,8 @@ data class User(
     val pin: Int? = null,
     val numberOfFollowers: Int? = null,
     val numberOfFollowing: Int? = null,
-    val gender: Boolean? = null
+    val gender: Boolean? = null,
+    val isFirstSignIn: Boolean = true
 ) {
     val isDataValid: Boolean
         get() = (!TextUtils.isEmpty(email))

@@ -23,7 +23,8 @@ class UserData {
                         1234,
                         1023,
                         13,
-                        true //true is male, false is female
+                        gender = true, //true is male, false is female
+                        isFirstSignIn = false // true if user the first sign in
                     )
                 )
                 add(
@@ -39,7 +40,8 @@ class UserData {
                         4567,
                         1155,
                         11,
-                        true // true is male, false is female
+                        gender = true, // true is male, false is female,
+                        isFirstSignIn = false // true if user the first sign in
                     )
                 )
             }

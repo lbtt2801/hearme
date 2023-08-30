@@ -21,5 +21,8 @@
     <color name="color_bg_button_continue">#06C149</color>
 
     <color name="transparent">#00000000</color>
+    <color name="transparent_8percent">#06C14914</color>
+
+    <color name="border_edt_pin">#EEEEEE</color>
 
 </resources>

@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentFillYourProfileBinding
@@ -49,19 +50,13 @@ class FillYourProfileFragment : Fragment() {
         binding.ccp.setPhoneNumberValidityChangeListener {
             isValidPhone = it
         }
-        binding.edtEmail.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-                isValidEmail = isValidEmail(p0)
-            }
-        })
 
         binding.edtDob.setOnClickListener() { calendarDialog(it) }
+
+        binding.btnContinue.setOnClickListener() {
+            isValidEmail = isValidEmail(binding.edtEmail.text)
+            findNavController().navigate(R.id.action_fillYourProfileFragment_to_createNewPinFragment)
+        }
     }
 
     override fun onResume() {
