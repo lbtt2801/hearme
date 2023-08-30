@@ -26,15 +26,52 @@
         android:id="@+id/splashScreenFragment"
         android:name="com.lbtt2801.hearme.view.SplashScreenFragment"
         android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" />
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/action_splashScreenFragment_to_walkThroughFragment"
+            app:destination="@id/walkThroughFragment" />
+    </fragment>
     <fragment
         android:id="@+id/walkThroughFragment"
         android:name="com.lbtt2801.hearme.view.WalkThroughFragment"
         android:label="fragment_walk_through"
-        tools:layout="@layout/fragment_walk_through" />
+        tools:layout="@layout/fragment_walk_through" >
+        <action
+            android:id="@+id/action_walkThroughFragment_to_letYouInFragment"
+            app:destination="@id/letYouInFragment" />
+        <action
+            android:id="@+id/action_walkThroughFragment_to_splashScreenFragment"
+            app:destination="@id/splashScreenFragment" />
+    </fragment>
     <fragment
         android:id="@+id/letYouInFragment"
         android:name="com.lbtt2801.hearme.view.LetYouInFragment"
         android:label="fragment_let_you_in"
-        tools:layout="@layout/fragment_let_you_in" />
+        tools:layout="@layout/fragment_let_you_in" >
+        <action
+            android:id="@+id/action_letYouInFragment_to_walkThroughFragment"
+            app:destination="@id/walkThroughFragment" />
+        <action
+            android:id="@+id/action_letYouInFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_letYouInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.lbtt2801.hearme.view.SignUpFragment"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment_to_letYouInFragment"
+            app:destination="@id/letYouInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.lbtt2801.hearme.view.SignInFragment"
+        android:label="SignInFragment" >
+        <action
+            android:id="@+id/action_signInFragment_to_letYouInFragment"
+            app:destination="@id/letYouInFragment" />
+    </fragment>
 </navigation>

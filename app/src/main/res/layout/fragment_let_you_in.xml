@@ -188,6 +188,8 @@
             android:textAllCaps="false"
             android:backgroundTint="@color/btn"
             android:text="Sign in with password"
+            android:paddingVertical="18dp"
+            android:paddingHorizontal="16dp"
             app:cornerRadius="50dp"
             app:layout_constraintTop_toBottomOf="@+id/tvOr"
             app:layout_constraintStart_toStartOf="parent"

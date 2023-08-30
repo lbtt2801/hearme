@@ -18,7 +18,7 @@ import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: UserViewModel by viewModels()
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
