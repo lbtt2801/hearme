@@ -58,4 +58,6 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
 
     implementation("com.hbb20:ccp:2.7.3")
+
+    implementation("io.github.chaosleung:pinview:1.4.4")
 }

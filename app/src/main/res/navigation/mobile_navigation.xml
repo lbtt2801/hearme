@@ -86,5 +86,14 @@
         android:id="@+id/fillYourProfileFragment"
         android:name="com.lbtt2801.hearme.view.FillYourProfileFragment"
         android:label="FillYourProfileFragment"
-        tools:layout="@layout/fragment_fill_your_profile" />
+        tools:layout="@layout/fragment_fill_your_profile" >
+        <action
+            android:id="@+id/action_fillYourProfileFragment_to_createNewPinFragment"
+            app:destination="@id/createNewPinFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createNewPinFragment"
+        android:name="com.lbtt2801.hearme.view.CreateNewPinFragment"
+        android:label="fragment_create_new_pin"
+        tools:layout="@layout/fragment_create_new_pin" />
 </navigation>
