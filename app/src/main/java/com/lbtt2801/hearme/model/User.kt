@@ -17,7 +17,13 @@ data class User(
     val numberOfFollowers: Int? = null,
     val numberOfFollowing: Int? = null,
     val gender: Boolean? = null,
-    val isFirstSignIn: Boolean = true
+    val isPremium: Boolean? = false,
+    val isFirstSignIn: Boolean = true,
+    val listArtistsFollowing: ArrayList<Artist>? = null, //Following
+    val listFollowers: ArrayList<User>? = null, //Followers
+    val listMusicsLoved: ArrayList<Music>? = null,
+    val listMusicListened: ArrayList<Music>? = null,
+    val listMusicDownloaded: ArrayList<Music>? = null
 ) {
     val isDataValid: Boolean
         get() = (!TextUtils.isEmpty(email))

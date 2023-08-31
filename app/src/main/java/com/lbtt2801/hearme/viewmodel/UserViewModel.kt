@@ -15,8 +15,7 @@ class UserViewModel : ViewModel() {
     val lstDataUser: LiveData<List<User>>
         get() = _lstDataUser
 
-    private val userMutableLiveData: MutableLiveData<ArrayList<User>> = MutableLiveData()
-    lateinit var userArrayList: ArrayList<User>
+    private lateinit var lst: ArrayList<User>
 
     init {
         getListDataUser()
@@ -28,14 +27,13 @@ class UserViewModel : ViewModel() {
 //    }
 
     fun getListDataUser() {
-        val lst = UserData.dataUser
+        lst = UserData.data
         _lstDataUser.postValue(lst)
     }
 
     fun addDataUser(email: String, pass: String) {
-        val lst = UserData.dataUser
-        lst.add(User(email, pass, R.drawable.logo,"45","54", Date(2002, 8, 30, 0, 0, 0),"VN","55",2345,38,32,false))
-        Log.v(ContentValues.TAG, "size: ${lst.size}")
+        lst.add(User(email, pass))
+        Log.v(ContentValues.TAG, "size 00: ${lst.size}")
         _lstDataUser.postValue(lst)
     }
 }
