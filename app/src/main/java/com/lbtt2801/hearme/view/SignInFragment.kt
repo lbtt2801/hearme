@@ -1,5 +1,7 @@
 package com.lbtt2801.hearme.view
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -23,6 +25,7 @@ class SignInFragment : Fragment() {
     private val signInViewModel by lazy {
         ViewModelProvider(this)[SignInViewModel::class.java]
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,6 +45,28 @@ class SignInFragment : Fragment() {
 
         signInViewModel.getListDataUser()
 
+        (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
+            findNavController().run {
+                popBackStack()
+                navigate(R.id.letYouInFragment)
+            }
+        }
+
+        binding.edtEmail.setOnFocusChangeListener  { _, hasFocus ->
+            val color = if (hasFocus) resources.getColor(R.color.bg_button) else Color.BLACK
+            binding.txtLayoutEmail.setStartIconTintList(ColorStateList.valueOf(color))
+            binding.txtLayoutEmail.error = ""
+        }
+
+        binding.edtPass.setOnFocusChangeListener  { _, hasFocus ->
+            val color = if (hasFocus) resources.getColor(R.color.bg_button) else Color.BLACK
+            binding.txtLayoutPass.setStartIconTintList(ColorStateList.valueOf(color))
+            binding.txtLayoutPass.setEndIconTintList(ColorStateList.valueOf(color))
+
+            if (binding.edtPass.text?.length!! >= 6)
+                binding.txtLayoutPass.error = ""
+        }
+
         binding.tvSignUp.setOnClickListener() {
             findNavController().run {
                 popBackStack()
@@ -50,22 +75,35 @@ class SignInFragment : Fragment() {
         }
 
         binding.btnSignIn.setOnClickListener() {
-            val kq = lstDataUser?.filter { it.email == binding.edtEmail.text.toString() && it.password == binding.edtPass.text.toString() }
-            if (kq!!.isNotEmpty()) {
-                Toast.makeText(context, "Welcome to Hearme!", Toast.LENGTH_SHORT).show()
-                findNavController().run {
-                    popBackStack()
-                    navigate(R.id.fillYourProfileFragment)
+            val email = binding.edtEmail.text.toString().trim()
+            val pass = binding.edtPass.text.toString().trim()
+            var checkEmail = false
+            var checkPass = false
+
+            // kiem tra dinh dang email va do dai pass
+            val pattern = "[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\\.[a-zA-Z.]{2,18}".toRegex()
+            repeat(email.length) {
+                if (pattern.matches(email))
+                    checkEmail = true
+                else binding.txtLayoutEmail.error = "Please enter the correct email format"
+            }
+
+            if (pass.length >= 6)
+                checkPass = true
+            else binding.txtLayoutPass.error = "Password length must be >= 6"
+
+            if (checkEmail && checkPass) {
+                val kq = lstDataUser?.filter { it.email == binding.edtEmail.text.toString() && it.password == binding.edtPass.text.toString() }
+                if (kq!!.isNotEmpty()) {
+                    Toast.makeText(context, "Welcome to Hearme!", Toast.LENGTH_SHORT).show()
+                    findNavController().run {
+                        popBackStack()
+                        navigate(R.id.navigation_home)
+                    }
+                } else {
+                    Toast.makeText(context, "Please check Email or Password !!!", Toast.LENGTH_SHORT).show()
+                    binding.edtEmail.requestFocus()
                 }
-            } else  Toast.makeText(context, "Please check Email or Password !!!", Toast.LENGTH_SHORT).show()
-
-
-        }
-
-        (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
-            findNavController().run {
-                popBackStack()
-                navigate(R.id.letYouInFragment)
             }
         }
     }

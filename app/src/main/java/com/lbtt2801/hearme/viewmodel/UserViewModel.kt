@@ -14,7 +14,7 @@ class UserViewModel : ViewModel() {
     }
 
     fun initUser() {
-        userArrayList = UserData.data()
+        userArrayList = UserData.dataUser
         userMutableLiveData.value = userArrayList
     }
 }

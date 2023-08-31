@@ -15,9 +15,7 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.UserData
 import com.lbtt2801.hearme.databinding.FragmentSignUpBinding
-import com.lbtt2801.hearme.model.User
 import com.lbtt2801.hearme.viewmodel.SignUpViewModel
-import java.util.Date
 
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
@@ -37,30 +35,26 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Toast.makeText(context, "Size: " + UserData.data().size.toString(), Toast.LENGTH_SHORT).show()
-
-//        UserData.data().add(User("lbb","123", R.drawable.logo,"45","54", Date(2002, 12, 6, 0, 0, 0),"VN","55",2345,38,32,false))
-
-        viewModel.lstDataUser.observe(viewLifecycleOwner) {
-//            UserData.data().clear()
-//            UserData.data().addAll(it)
-            if (it.isEmpty())
-                Toast.makeText(context, "list is null or empty", Toast.LENGTH_SHORT).show()
-            else Toast.makeText(context, "Size XXX: " + UserData.data().size.toString(), Toast.LENGTH_SHORT).show()
+        (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
+            findNavController().run {
+                popBackStack()
+                navigate(R.id.letYouInFragment)
+            }
         }
 
-//        viewModel.addDataUser(binding.edtEmail.text.toString(), binding.edtPass.text.toString())
-        viewModel.addUser(binding.edtEmail.text.toString(), binding.edtPass.text.toString())
-
         binding.edtEmail.setOnFocusChangeListener  { _, hasFocus ->
-            val color = if (hasFocus) resources.getColor(R.color.btn) else Color.BLACK
+            val color = if (hasFocus) resources.getColor(R.color.bg_button) else Color.BLACK
             binding.txtLayoutEmail.setStartIconTintList(ColorStateList.valueOf(color))
+            binding.txtLayoutEmail.error = ""
         }
 
         binding.edtPass.setOnFocusChangeListener  { _, hasFocus ->
-            val color = if (hasFocus) resources.getColor(R.color.btn) else Color.BLACK
+            val color = if (hasFocus) resources.getColor(R.color.bg_button) else Color.BLACK
             binding.txtLayoutPass.setStartIconTintList(ColorStateList.valueOf(color))
             binding.txtLayoutPass.setEndIconTintList(ColorStateList.valueOf(color))
+
+            if (binding.edtPass.text?.length!! >= 6)
+                binding.txtLayoutPass.error = ""
         }
 
         binding.tvSignIn.setOnClickListener() {
@@ -71,15 +65,39 @@ class SignUpFragment : Fragment() {
         }
 
         binding.btnSignUp.setOnClickListener() {
+            val email = binding.edtEmail.text.toString().trim()
+            val pass = binding.edtPass.text.toString().trim()
+            val sizeUserDataOld = UserData.dataUser.size
+            var checkEmail = false
+            var checkPass = false
 
-        }
+            // kiem tra dinh dang email va do dai pass
+            val pattern = "[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\\.[a-zA-Z.]{2,18}".toRegex()
+            repeat(email.length) {
+                if (pattern.matches(email))
+                    checkEmail = true
+                else binding.txtLayoutEmail.error = "Please enter the correct email format"
+            }
 
-        (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
-            findNavController().run {
-                popBackStack()
-                navigate(R.id.letYouInFragment)
+            if (pass.length >= 6)
+                checkPass = true
+            else binding.txtLayoutPass.error = "Password length must be >= 6"
+
+            if (checkEmail && checkPass) {
+                viewModel.lstDataUser.observe(viewLifecycleOwner) {
+                    if (it.size > sizeUserDataOld){
+                        Toast.makeText(context, "Sign Up Success", Toast.LENGTH_SHORT).show()
+                        findNavController().run {
+                            popBackStack()
+                            navigate(R.id.signInFragment)
+                        }
+                    }
+                    else Toast.makeText(context, "Fail Fail Fail", Toast.LENGTH_SHORT).show()
+                }
+                viewModel.addDataUser(email, pass)
             }
         }
+
     }
     override fun onDestroyView() {
         super.onDestroyView()
