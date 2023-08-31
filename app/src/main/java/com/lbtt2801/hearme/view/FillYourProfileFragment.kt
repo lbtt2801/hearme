@@ -2,31 +2,33 @@ package com.lbtt2801.hearme.view
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
-import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
+import androidx.core.net.ParseException
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentFillYourProfileBinding
 import com.lbtt2801.hearme.viewmodel.UserViewModel
-import java.util.Calendar
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class FillYourProfileFragment : Fragment() {
     private lateinit var binding: FragmentFillYourProfileBinding
     private lateinit var mainActivity: MainActivity
+    private var email: String? = null
 
     private var isValidEmail = false
     private var isValidPhone = false
@@ -42,6 +44,8 @@ class FillYourProfileFragment : Fragment() {
             false
         )
         mainActivity = (activity as MainActivity)
+        email = arguments?.getString("email").toString()
+        Toast.makeText(requireContext(), "$email", Toast.LENGTH_SHORT).show()
         return binding.root
     }
 
@@ -49,11 +53,7 @@ class FillYourProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val model = ViewModelProvider(this)[UserViewModel::class.java]
-//
-//        model.userMutableLiveData.observe(this, Observer {
-//            Toast.makeText(requireContext(), "$it", Toast.LENGTH_LONG).show()
-//        })
+        val model = ViewModelProvider(this)[UserViewModel::class.java]
 
         binding.ccp.registerCarrierNumberEditText(binding.edtPhoneNumber)
         binding.ccp.setPhoneNumberValidityChangeListener {
@@ -64,7 +64,42 @@ class FillYourProfileFragment : Fragment() {
 
         binding.btnContinue.setOnClickListener() {
             isValidEmail = isValidEmail(binding.edtEmail.text)
-            findNavController().navigate(R.id.action_fillYourProfileFragment_to_createNewPinFragment)
+            if (binding.edtFullName.text.isEmpty() || binding.edtNickName.text.isEmpty() || binding.edtDob.text.isEmpty() || binding.edtEmail.text.isEmpty() || binding.edtPhoneNumber.text.isEmpty()) {
+                val snack = Snackbar.make(
+                    view,
+                    "Enter full information!",
+                    Snackbar.LENGTH_LONG
+                )
+                snack.show()
+            } else {
+                if (!isValidEmail || !isValidPhone) {
+                    val snack = Snackbar.make(
+                        view,
+                        "Invalid Email or Phone!",
+                        Snackbar.LENGTH_LONG
+                    )
+                    snack.show()
+                } else {
+                    email?.let {
+                        stringToDate(binding.edtDob.text.toString())?.let { it1 ->
+                            model.updateUserInfo(
+                                it,
+                                binding.edtFullName.text.toString(),
+                                binding.edtNickName.text.toString(),
+                                it1,
+                                binding.edtEmail.text.toString(),
+                                binding.edtPhoneNumber.text.toString()
+                            )
+                        }
+                    }
+                    Log.v(TAG, model.lstDataUser.value.toString())
+                    findNavController().navigate(
+                        R.id.action_fillYourProfileFragment_to_createNewPinFragment,
+                        Bundle().apply {
+                            putString("email", email)
+                        })
+                }
+            }
         }
     }
 
@@ -92,5 +127,16 @@ class FillYourProfileFragment : Fragment() {
 
     fun isValidEmail(target: CharSequence?): Boolean {
         return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
+    }
+
+    fun stringToDate(date: String): Date? {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        var dateConverted: Date? = null
+        try {
+            dateConverted = dateFormat.parse(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return dateConverted
     }
 }

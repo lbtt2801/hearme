@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -44,13 +45,13 @@ class SignUpFragment : Fragment() {
             }
         }
 
-        binding.edtEmail.setOnFocusChangeListener  { _, hasFocus ->
+        binding.edtEmail.setOnFocusChangeListener { _, hasFocus ->
             val color = if (hasFocus) resources.getColor(R.color.bg_button) else Color.BLACK
             binding.txtLayoutEmail.setStartIconTintList(ColorStateList.valueOf(color))
             binding.txtLayoutEmail.error = ""
         }
 
-        binding.edtPass.setOnFocusChangeListener  { _, hasFocus ->
+        binding.edtPass.setOnFocusChangeListener { _, hasFocus ->
             val color = if (hasFocus) resources.getColor(R.color.bg_button) else Color.BLACK
             binding.txtLayoutPass.setStartIconTintList(ColorStateList.valueOf(color))
             binding.txtLayoutPass.setEndIconTintList(ColorStateList.valueOf(color))
@@ -88,20 +89,24 @@ class SignUpFragment : Fragment() {
             if (checkEmail && checkPass) {
                 viewModel.lstDataUser.observe(viewLifecycleOwner) {
                     Log.v(TAG, "Size: " + it.size.toString())
-                    if (it.size > sizeUserDataOld){
+                    if (it.size > sizeUserDataOld) {
                         Toast.makeText(context, "Sign Up Success", Toast.LENGTH_SHORT).show()
                         findNavController().run {
-                            popBackStack()
-                            navigate(R.id.signInFragment)
+                            navigate(
+                                R.id.action_signUpFragment_to_fillYourProfileFragment,
+                                Bundle().apply
+                                {
+                                    putString("email", binding.edtEmail.text.toString())
+                                })
                         }
-                    }
-                    else Toast.makeText(context, "Fail Fail Fail", Toast.LENGTH_SHORT).show()
+                    } else Toast.makeText(context, "Fail Fail Fail", Toast.LENGTH_SHORT).show()
                 }
                 viewModel.addDataUser(email, pass)
             }
         }
 
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

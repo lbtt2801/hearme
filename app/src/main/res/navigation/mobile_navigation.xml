@@ -95,5 +95,14 @@
         android:id="@+id/createNewPinFragment"
         android:name="com.lbtt2801.hearme.view.CreateNewPinFragment"
         android:label="fragment_create_new_pin"
-        tools:layout="@layout/fragment_create_new_pin" />
+        tools:layout="@layout/fragment_create_new_pin" >
+        <action
+            android:id="@+id/action_createNewPinFragment_to_setFingerprintFragment"
+            app:destination="@id/setFingerprintFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setFingerprintFragment"
+        android:name="com.lbtt2801.hearme.view.SetFingerprintFragment"
+        android:label="fragment_set_fingerprint"
+        tools:layout="@layout/fragment_set_fingerprint" />
 </navigation>
