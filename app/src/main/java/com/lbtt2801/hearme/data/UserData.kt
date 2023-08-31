@@ -72,6 +72,7 @@ class UserData {
                     User(
                         "phuongviet.huit@gmail.com",
                         "Awdssdfg852456",
+                        "awdssdfgviethufi@gmail.com",
                         R.drawable.logo,
                         "Nguyen Phuong Viet",
                         "Viet Huit",
@@ -89,6 +90,7 @@ class UserData {
                     User(
                         "lebuitantruong@gmail.com",
                         "lbtt2801",
+                        "truongletanbui@gmail.com",
                         R.drawable.logo,
                         "Le Bui Tan Truong",
                         "Truong HUIT",
@@ -106,6 +108,7 @@ class UserData {
                     User(
                         "a@gmail.com",
                         "123456",
+                        "b@gmail.com",
                         R.drawable.logo,
                         "Le Bui Tan Truong",
                         "Truong HUIT",

@@ -9,11 +9,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentCreateNewPinBinding
+import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class CreateNewPinFragment : Fragment() {
     private lateinit var binding: FragmentCreateNewPinBinding
+    private var email: String? = null
 
     private var numbersList = ArrayList<String>()
     private var passCode = ""
@@ -37,11 +41,14 @@ class CreateNewPinFragment : Fragment() {
                 container,
                 false
             )
+        email = arguments?.getString("email").toString()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val model = ViewModelProvider(this)[UserViewModel::class.java]
 
         binding.edtNum1.isEnabled = false
         binding.edtNum2.isEnabled = false
@@ -108,11 +115,18 @@ class CreateNewPinFragment : Fragment() {
             }
             passNumber(numbersList)
         }
+
         binding.btnContinue.setOnClickListener() {
             if (passCode.length < 4) {
                 Toast.makeText(requireContext(), "Invalid PIN!", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "Valid PIN ($passCode)", Toast.LENGTH_SHORT).show()
+                email?.let { it1 -> model.updateUserPin(it1, passCode.toInt()) }
+                findNavController().navigate(
+                    R.id.action_createNewPinFragment_to_setFingerprintFragment,
+                    Bundle().apply {
+                        putString("email", email)
+                        putInt("pin", passCode.toInt())
+                    })
             }
         }
     }
