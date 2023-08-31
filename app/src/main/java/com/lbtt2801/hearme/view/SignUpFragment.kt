@@ -15,13 +15,13 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.UserData
 import com.lbtt2801.hearme.databinding.FragmentSignUpBinding
-import com.lbtt2801.hearme.viewmodel.SignUpViewModel
+import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
     private val viewModel by lazy {
-        ViewModelProvider(this)[SignUpViewModel::class.java]
+        ViewModelProvider(this)[UserViewModel::class.java]
     }
 
     override fun onCreateView(

@@ -15,15 +15,15 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentSignInBinding
 import com.lbtt2801.hearme.model.User
-import com.lbtt2801.hearme.viewmodel.SignInViewModel
+import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 
 class SignInFragment : Fragment() {
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
     private var lstDataUser: List<User> ?= null
-    private val signInViewModel by lazy {
-        ViewModelProvider(this)[SignInViewModel::class.java]
+    private val viewModel by lazy {
+        ViewModelProvider(this)[UserViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -37,13 +37,13 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        signInViewModel.lstDataUser.observe(viewLifecycleOwner) {
+        viewModel.lstDataUser.observe(viewLifecycleOwner) {
             lstDataUser = it
             if (lstDataUser.isNullOrEmpty())
                 Toast.makeText(context, "list is null or empty", Toast.LENGTH_SHORT).show()
         }
 
-        signInViewModel.getListDataUser()
+        viewModel.getListDataUser()
 
         (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
             findNavController().run {
