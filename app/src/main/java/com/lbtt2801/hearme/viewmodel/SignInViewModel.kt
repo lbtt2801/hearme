@@ -12,7 +12,7 @@ class SignInViewModel: ViewModel() {
         get() = _lstDataUser
 
     fun getListDataUser() {
-        val lst = UserData.data()
+        val lst = UserData.dataUser
         _lstDataUser.postValue(lst)
     }
 }
