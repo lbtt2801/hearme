@@ -85,9 +85,16 @@ class SignUpFragment : Fragment() {
                 checkPass = true
             else binding.txtLayoutPass.error = "Password length must be >= 6"
 
+            // kiem tra trung lap email
+            if (viewModel.checkDuplicateEmails(email)) {
+                binding.edtEmail.text = null
+                binding.edtEmail.requestFocus()
+                checkEmail = false
+                binding.txtLayoutEmail.error = "Email Already Exists !!"
+            }
+
             if (checkEmail && checkPass) {
                 viewModel.lstDataUser.observe(viewLifecycleOwner) {
-                    Log.v(TAG, "Size: " + it.size.toString())
                     if (it.size > sizeUserDataOld){
                         Toast.makeText(context, "Sign Up Success", Toast.LENGTH_SHORT).show()
                         findNavController().run {
@@ -100,7 +107,6 @@ class SignUpFragment : Fragment() {
                 viewModel.addDataUser(email, pass)
             }
         }
-
     }
     override fun onDestroyView() {
         super.onDestroyView()
