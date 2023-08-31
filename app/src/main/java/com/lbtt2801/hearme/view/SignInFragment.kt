@@ -1,14 +1,17 @@
 package com.lbtt2801.hearme.view
 
+import android.content.ContentValues.TAG
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lbtt2801.hearme.MainActivity
@@ -21,7 +24,7 @@ import com.lbtt2801.hearme.viewmodel.UserViewModel
 class SignInFragment : Fragment() {
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
-    private var lstDataUser: List<User> ?= null
+    private var lstDataUser: List<User>? = null
     private val viewModel by lazy {
         ViewModelProvider(this)[UserViewModel::class.java]
     }
@@ -37,11 +40,12 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.lstDataUser.observe(viewLifecycleOwner) {
+        viewModel.lstDataUser.observe((activity as MainActivity), Observer {
             lstDataUser = it
+            Log.v(TAG, "${it.size}")
             if (lstDataUser.isNullOrEmpty())
                 Toast.makeText(context, "list is null or empty", Toast.LENGTH_SHORT).show()
-        }
+        })
 
         viewModel.getListDataUser()
 
@@ -52,13 +56,13 @@ class SignInFragment : Fragment() {
             }
         }
 
-        binding.edtEmail.setOnFocusChangeListener  { _, hasFocus ->
+        binding.edtEmail.setOnFocusChangeListener { _, hasFocus ->
             val color = if (hasFocus) resources.getColor(R.color.bg_button) else Color.BLACK
             binding.txtLayoutEmail.setStartIconTintList(ColorStateList.valueOf(color))
             binding.txtLayoutEmail.error = ""
         }
 
-        binding.edtPass.setOnFocusChangeListener  { _, hasFocus ->
+        binding.edtPass.setOnFocusChangeListener { _, hasFocus ->
             val color = if (hasFocus) resources.getColor(R.color.bg_button) else Color.BLACK
             binding.txtLayoutPass.setStartIconTintList(ColorStateList.valueOf(color))
             binding.txtLayoutPass.setEndIconTintList(ColorStateList.valueOf(color))
@@ -93,7 +97,8 @@ class SignInFragment : Fragment() {
             else binding.txtLayoutPass.error = "Password length must be >= 6"
 
             if (checkEmail && checkPass) {
-                val kq = lstDataUser?.filter { it.email == binding.edtEmail.text.toString() && it.password == binding.edtPass.text.toString() }
+                val kq =
+                    lstDataUser?.filter { it.email == binding.edtEmail.text.toString() && it.password == binding.edtPass.text.toString() }
                 if (kq!!.isNotEmpty()) {
                     Toast.makeText(context, "Welcome to Hearme!", Toast.LENGTH_SHORT).show()
                     findNavController().run {
@@ -101,7 +106,11 @@ class SignInFragment : Fragment() {
                         navigate(R.id.navigation_home)
                     }
                 } else {
-                    Toast.makeText(context, "Please check Email or Password !!!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "Please check Email or Password !!!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     binding.edtEmail.requestFocus()
                 }
             }

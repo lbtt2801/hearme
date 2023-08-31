@@ -69,6 +69,9 @@
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment2"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_fillYourProfileFragment"
+            app:destination="@id/fillYourProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -78,9 +81,6 @@
         <action
             android:id="@+id/action_signInFragment_to_letYouInFragment"
             app:destination="@id/letYouInFragment" />
-        <action
-            android:id="@+id/action_signInFragment_to_fillYourProfileFragment"
-            app:destination="@id/fillYourProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/fillYourProfileFragment"

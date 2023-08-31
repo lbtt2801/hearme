@@ -14,10 +14,13 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentFillYourProfileBinding
+import com.lbtt2801.hearme.viewmodel.UserViewModel
 import java.util.Calendar
 
 
@@ -45,6 +48,12 @@ class FillYourProfileFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        val model = ViewModelProvider(this)[UserViewModel::class.java]
+//
+//        model.userMutableLiveData.observe(this, Observer {
+//            Toast.makeText(requireContext(), "$it", Toast.LENGTH_LONG).show()
+//        })
 
         binding.ccp.registerCarrierNumberEditText(binding.edtPhoneNumber)
         binding.ccp.setPhoneNumberValidityChangeListener {

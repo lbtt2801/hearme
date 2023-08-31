@@ -1,8 +1,10 @@
 package com.lbtt2801.hearme.view
 
+import android.content.ContentValues.TAG
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -67,7 +69,7 @@ class SignUpFragment : Fragment() {
         binding.btnSignUp.setOnClickListener() {
             val email = binding.edtEmail.text.toString().trim()
             val pass = binding.edtPass.text.toString().trim()
-            val sizeUserDataOld = UserData.dataUser.size
+            val sizeUserDataOld = UserData.data().size
             var checkEmail = false
             var checkPass = false
 
@@ -85,6 +87,7 @@ class SignUpFragment : Fragment() {
 
             if (checkEmail && checkPass) {
                 viewModel.lstDataUser.observe(viewLifecycleOwner) {
+                    Log.v(TAG, "Size: " + it.size.toString())
                     if (it.size > sizeUserDataOld){
                         Toast.makeText(context, "Sign Up Success", Toast.LENGTH_SHORT).show()
                         findNavController().run {
