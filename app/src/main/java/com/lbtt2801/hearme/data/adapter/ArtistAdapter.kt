@@ -3,9 +3,8 @@ package com.lbtt2801.hearme.data.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.lbtt2801.hearme.databinding.ViewTrendingNowBinding
+import com.lbtt2801.hearme.databinding.ViewHomeArtistBinding
 import com.lbtt2801.hearme.model.Artist
-import com.lbtt2801.hearme.model.Music
 
 class ArtistAdapter(private val dataArtists: ArrayList<Artist>, private val type: Int ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
@@ -23,30 +22,35 @@ class ArtistAdapter(private val dataArtists: ArrayList<Artist>, private val type
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        TODO("Not yet implemented")
+        return when (viewType) {
+            HOME -> HomeViewHolder(parent)
+//            TOPIC_LIST -> InterestViewHolder(parent)
+//            SAVED -> SavedViewHolder(parent)
+            else -> throw IllegalArgumentException("Invalid view type")
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-//            is HomeViewHolder -> holder.bind()
+            is HomeViewHolder -> holder.bind(dataArtists[position])
         }
     }
 
     override fun getItemCount(): Int = dataArtists.size
 
     inner class HomeViewHolder private constructor(
-        val binding: ViewTrendingNowBinding
+        val binding: ViewHomeArtistBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
-            ViewTrendingNowBinding.inflate(
+            ViewHomeArtistBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             )
         )
 
-        fun bind(music: Music) {
-            binding.music = music
+        fun bind(artist: Artist) {
+            binding.artist = artist
         }
     }
 

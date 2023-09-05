@@ -38,10 +38,7 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
-            findNavController().run {
-                popBackStack()
-                navigate(R.id.letYouInFragment)
-            }
+            findNavController().navigate(R.id.letYouInFragment)
         }
 
         binding.edtEmail.setOnFocusChangeListener  { _, hasFocus ->
@@ -60,16 +57,13 @@ class SignUpFragment : Fragment() {
         }
 
         binding.tvSignIn.setOnClickListener() {
-            findNavController().run {
-                popBackStack()
-                navigate(R.id.signInFragment)
-            }
+            findNavController().navigate(R.id.signInFragment)
         }
 
         binding.btnSignUp.setOnClickListener() {
             val email = binding.edtEmail.text.toString().trim()
             val pass = binding.edtPass.text.toString().trim()
-            val sizeUserDataOld = UserData.data().size
+            val sizeUserDataOld = UserData.data.size
             var checkEmail = false
             var checkPass = false
 
@@ -97,10 +91,7 @@ class SignUpFragment : Fragment() {
                 viewModel.lstDataUser.observe(viewLifecycleOwner) {
                     if (it.size > sizeUserDataOld){
                         Toast.makeText(context, "Sign Up Success", Toast.LENGTH_SHORT).show()
-                        findNavController().run {
-                            popBackStack()
-                            navigate(R.id.signInFragment)
-                        }
+                        findNavController().navigate(R.id.signInFragment)
                     }
                     else Toast.makeText(context, "Fail Fail Fail", Toast.LENGTH_SHORT).show()
                 }

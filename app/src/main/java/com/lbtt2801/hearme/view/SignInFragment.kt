@@ -29,6 +29,7 @@ class SignInFragment : Fragment() {
         ViewModelProvider(this)[UserViewModel::class.java]
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,10 +51,7 @@ class SignInFragment : Fragment() {
         viewModel.getListDataUser()
 
         (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
-            findNavController().run {
-                popBackStack()
-                navigate(R.id.letYouInFragment)
-            }
+            findNavController().navigate(R.id.letYouInFragment)
         }
 
         binding.edtEmail.setOnFocusChangeListener { _, hasFocus ->
@@ -72,10 +70,7 @@ class SignInFragment : Fragment() {
         }
 
         binding.tvSignUp.setOnClickListener() {
-            findNavController().run {
-                popBackStack()
-                navigate(R.id.signUpFragment)
-            }
+            findNavController().navigate(R.id.signUpFragment)
         }
 
         binding.btnSignIn.setOnClickListener() {
@@ -101,10 +96,7 @@ class SignInFragment : Fragment() {
                     lstDataUser?.filter { it.email == binding.edtEmail.text.toString() && it.password == binding.edtPass.text.toString() }
                 if (kq!!.isNotEmpty()) {
                     Toast.makeText(context, "Welcome to Hearme!", Toast.LENGTH_SHORT).show()
-                    findNavController().run {
-                        popBackStack()
-                        navigate(R.id.navigation_home)
-                    }
+                    findNavController().navigate(R.id.navigation_home)
                 } else {
                     Toast.makeText(
                         context,

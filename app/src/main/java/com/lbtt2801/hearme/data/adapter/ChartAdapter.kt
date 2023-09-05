@@ -3,10 +3,10 @@ package com.lbtt2801.hearme.data.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.lbtt2801.hearme.databinding.ViewHomeTrendingBinding
-import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.databinding.ViewHomeChartBinding
+import com.lbtt2801.hearme.model.Chart
 
-class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: Int): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChartAdapter (private val dataChart: ArrayList<Chart>, private val type: Int ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val HOME = 0
         const val POPULAR_ARTISTS = 1
@@ -30,26 +30,27 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
         }
     }
 
-    override fun getItemCount(): Int = dataMusics.size
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is HomeViewHolder -> holder.bind(dataMusics[position])
+            is HomeViewHolder -> holder.bind(dataChart[position])
         }
     }
 
+    override fun getItemCount(): Int = dataChart.size
+
     inner class HomeViewHolder private constructor(
-        val binding: ViewHomeTrendingBinding
+        val binding: ViewHomeChartBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
-            ViewHomeTrendingBinding.inflate(
+            ViewHomeChartBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             )
         )
-        fun bind(music: Music) {
-            binding.music = music
+
+        fun bind(chart: Chart) {
+            binding.chart = chart
         }
     }
 }

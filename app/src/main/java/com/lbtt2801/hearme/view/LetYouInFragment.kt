@@ -33,24 +33,15 @@ class LetYouInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
             (activity as MainActivity).binding.toolBar.isVisible = false
-            findNavController().run {
-                popBackStack()
-                navigate(R.id.walkThroughFragment)
-            }
+            findNavController().navigate(R.id.walkThroughFragment)
         }
 
         binding.btnSignIn.setOnClickListener {
-            findNavController().run {
-                popBackStack()
-                navigate(R.id.signInFragment)
-            }
+            findNavController().navigate(R.id.signInFragment)
         }
 
         binding.tvSignUp.setOnClickListener {
-            findNavController().run {
-                popBackStack()
-                navigate(R.id.signUpFragment)
-            }
+            findNavController().navigate(R.id.signUpFragment)
         }
     }
 

@@ -18,11 +18,6 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.lbtt2801.hearme.view.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-    <fragment
         android:id="@+id/splashScreenFragment"
         android:name="com.lbtt2801.hearme.view.SplashScreenFragment"
         android:label="fragment_splash_screen"
@@ -96,4 +91,8 @@
         android:name="com.lbtt2801.hearme.view.CreateNewPinFragment"
         android:label="fragment_create_new_pin"
         tools:layout="@layout/fragment_create_new_pin" />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.lbtt2801.hearme.view.NotificationFragment"
+        android:label="NotificationFragment" />
 </navigation>

@@ -2,16 +2,14 @@ package com.lbtt2801.hearme
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.lbtt2801.hearme.data.UserData
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
-import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel: UserViewModel by viewModels()
     lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
@@ -22,11 +20,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.lifecycleOwner = this
-//        viewModel.initUser()
-        viewModel.getListDataUser()
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        UserData.data() // khoi tao du lieu
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navHostFragment.navController
 
         customToolbar("GONE", null, R.color.transparent, null)
