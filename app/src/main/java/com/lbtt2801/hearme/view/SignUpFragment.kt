@@ -39,10 +39,7 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
-            findNavController().run {
-                popBackStack()
-                navigate(R.id.letYouInFragment)
-            }
+            findNavController().navigate(R.id.letYouInFragment)
         }
 
         binding.edtEmail.setOnFocusChangeListener { _, hasFocus ->
@@ -61,16 +58,13 @@ class SignUpFragment : Fragment() {
         }
 
         binding.tvSignIn.setOnClickListener() {
-            findNavController().run {
-                popBackStack()
-                navigate(R.id.signInFragment)
-            }
+            findNavController().navigate(R.id.signInFragment)
         }
 
         binding.btnSignUp.setOnClickListener() {
             val email = binding.edtEmail.text.toString().trim()
             val pass = binding.edtPass.text.toString().trim()
-            val sizeUserDataOld = UserData.data().size
+            val sizeUserDataOld = UserData.data.size
             var checkEmail = false
             var checkPass = false
 
@@ -86,25 +80,25 @@ class SignUpFragment : Fragment() {
                 checkPass = true
             else binding.txtLayoutPass.error = "Password length must be >= 6"
 
+            // kiem tra trung lap email
+            if (viewModel.checkDuplicateEmails(email)) {
+                binding.edtEmail.text = null
+                binding.edtEmail.requestFocus()
+                checkEmail = false
+                binding.txtLayoutEmail.error = "Email Already Exists !!"
+            }
+
             if (checkEmail && checkPass) {
                 viewModel.lstDataUser.observe(viewLifecycleOwner) {
-                    Log.v(TAG, "Size: " + it.size.toString())
-                    if (it.size > sizeUserDataOld) {
+                    if (it.size > sizeUserDataOld){
                         Toast.makeText(context, "Sign Up Success", Toast.LENGTH_SHORT).show()
-                        findNavController().run {
-                            navigate(
-                                R.id.action_signUpFragment_to_fillYourProfileFragment,
-                                Bundle().apply
-                                {
-                                    putString("email", binding.edtEmail.text.toString())
-                                })
-                        }
-                    } else Toast.makeText(context, "Fail Fail Fail", Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.signInFragment)
+                    }
+                    else Toast.makeText(context, "Fail Fail Fail", Toast.LENGTH_SHORT).show()
                 }
                 viewModel.addDataUser(email, pass)
             }
         }
-
     }
 
     override fun onDestroyView() {

@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id ("kotlin-kapt")
+    id("kotlin-kapt")
 }
 
 android {
@@ -59,6 +59,9 @@ dependencies {
     implementation("com.hbb20:ccp:2.7.3")
 
     implementation("io.github.chaosleung:pinview:1.4.4")
+
+    // viewpager
+    implementation("androidx.viewpager2:viewpager2:1.0")
 
     // room
     implementation("androidx.room:room-runtime:2.5.2")
