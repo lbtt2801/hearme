@@ -1,6 +1,8 @@
 package com.lbtt2801.hearme
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -11,17 +13,20 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.snackbar.Snackbar
 import androidx.navigation.fragment.findNavController
 import com.lbtt2801.hearme.data.UserData
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
 import com.lbtt2801.hearme.viewmodel.ArtistViewModel
 import com.lbtt2801.hearme.viewmodel.EmailViewModel
+import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private val viewModelArtist: ArtistViewModel by viewModels()
     private val viewModelEmail: EmailViewModel by viewModels()
+    private val viewModelUser: UserViewModel by viewModels()
 
     lateinit var email: String
 
@@ -37,8 +42,9 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "$it", Toast.LENGTH_SHORT).show()
             email = it
         })
+        viewModelUser.getListDataUser()
 
-        UserData.data() // khoi tao du lieu
+//        UserData.data() // khoi tao du lieu
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
@@ -122,5 +128,41 @@ class MainActivity : AppCompatActivity() {
             "INVISIBLE" -> binding.navView.visibility = View.INVISIBLE
             else -> binding.navView.visibility = View.GONE
         }
+    }
+
+    fun showSnack(view: View, text: String) {
+        val snack = Snackbar.make(
+            view,
+            text,
+            Snackbar.LENGTH_SHORT
+        )
+        snack.show()
+    }
+
+    fun protectedPhone(phone: String): String {
+        var editPhone = ""
+        for (item in phone.indices) {
+            if (item in 5..10)
+                editPhone += "*"
+            else
+                editPhone += phone[item]
+        }
+        return editPhone
+    }
+
+    fun protectedEmail(email: String): String {
+        var edtEmail = ""
+        var keep = ""
+        for (item in email.indices) {
+            keep = "@" + email.split("@")[1]
+            Log.v(TAG, "$keep")
+            if (email[item] == '@') {
+                break
+            } else if (item in 3..5)
+                edtEmail += "*"
+            else
+                edtEmail += email[item]
+        }
+        return edtEmail.plus(keep)
     }
 }

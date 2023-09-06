@@ -22,13 +22,14 @@ class UserViewModel : ViewModel() {
     }
 
     fun getListDataUser() {
-        lst = UserData.data
+        lst = UserData.data()
         _lstDataUser.postValue(lst)
     }
 
     fun addDataUser(email: String, pass: String) {
         lst.add(User(email, pass))
         _lstDataUser.postValue(lst)
+        Log.v(TAG, "${lstDataUser.value.toString()}")
     }
 
     fun checkDuplicateEmails(email: String): Boolean {

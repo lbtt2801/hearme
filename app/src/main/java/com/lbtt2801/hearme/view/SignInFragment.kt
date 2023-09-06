@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -18,37 +19,46 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentSignInBinding
 import com.lbtt2801.hearme.model.User
+import com.lbtt2801.hearme.viewmodel.ArtistViewModel
+import com.lbtt2801.hearme.viewmodel.EmailViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 
 class SignInFragment : Fragment() {
     private var _binding: FragmentSignInBinding? = null
+    private lateinit var mainActivity: MainActivity
     private val binding get() = _binding!!
-    private var lstDataUser: List<User>? = null
-    private val viewModel by lazy {
-        ViewModelProvider(this)[UserViewModel::class.java]
-    }
+    private lateinit var lstDataUser: List<User>
 
+    private val viewModelUser: UserViewModel by activityViewModels()
+
+//    private val viewModel by lazy {
+//        ViewModelProvider(this)[UserViewModel::class.java]
+//    }
+
+    private val emailViewModel: EmailViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false)
+        mainActivity = activity as MainActivity
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModelUser.lstDataUser.observe(viewLifecycleOwner) {
+            Log.v(TAG, "SignIn -> ${it.size}")
+        }
 
-        viewModel.lstDataUser.observe((activity as MainActivity), Observer {
+        viewModelUser.lstDataUser.observe(viewLifecycleOwner, Observer {
             lstDataUser = it
             Log.v(TAG, "${it.size}")
             if (lstDataUser.isNullOrEmpty())
                 Toast.makeText(context, "list is null or empty", Toast.LENGTH_SHORT).show()
         })
-
-        viewModel.getListDataUser()
 
         (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
             findNavController().navigate(R.id.letYouInFragment)
@@ -105,6 +115,21 @@ class SignInFragment : Fragment() {
                     ).show()
                     binding.edtEmail.requestFocus()
                 }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.tvForgot.setOnClickListener() {
+            val email = binding.edtEmail.text.toString()
+            if (email.isEmpty()) {
+                mainActivity.showSnack(requireView(), "Must to input email for finding password!")
+            } else if (lstDataUser.any { it.email == email }) {
+                findNavController().navigate(R.id.action_signInFragment_to_selectMethodFragment)
+                emailViewModel.selectItem(binding.edtEmail.text.toString())
+            } else {
+                mainActivity.showSnack(requireView(), "The email is not exists!")
             }
         }
     }

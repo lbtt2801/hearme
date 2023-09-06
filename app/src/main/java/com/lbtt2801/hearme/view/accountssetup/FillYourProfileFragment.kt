@@ -71,21 +71,13 @@ class FillYourProfileFragment : Fragment() {
         binding.btnContinue.setOnClickListener() {
             isValidEmail = isValidEmail(binding.edtEmail.text)
             if (binding.edtFullName.text.isEmpty() || binding.edtNickName.text.isEmpty() || binding.edtDob.text.isEmpty() || binding.edtEmail.text.isEmpty() || binding.edtPhoneNumber.text.isEmpty()) {
-                val snack = Snackbar.make(
-                    view,
-                    "Enter full information!",
-                    Snackbar.LENGTH_LONG
-                )
-                snack.show()
+                mainActivity.showSnack(view, "Enter full information, please!")
             } else {
                 if (!isValidEmail || !isValidPhone) {
-                    val snack = Snackbar.make(
-                        view,
-                        "Invalid Email or Phone!",
-                        Snackbar.LENGTH_LONG
-                    )
-                    snack.show()
+                    mainActivity.showSnack(view, "Invalid Email or Phone!")
                 } else {
+                    val phone =
+                        "${binding.ccp.selectedCountryCodeAsInt} ${binding.edtPhoneNumber.text}"
                     email?.let {
                         stringToDate(binding.edtDob.text.toString())?.let { it1 ->
                             model.updateUserInfo(
@@ -94,7 +86,7 @@ class FillYourProfileFragment : Fragment() {
                                 binding.edtNickName.text.toString(),
                                 it1,
                                 binding.edtEmail.text.toString(),
-                                binding.edtPhoneNumber.text.toString()
+                                phone
                             )
                         }
                     }
