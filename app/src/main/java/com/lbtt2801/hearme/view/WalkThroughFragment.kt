@@ -31,8 +31,8 @@ class WalkThroughFragment : Fragment() {
         binding.btnGetStarted.setOnClickListener {
             val activity = (activity as MainActivity)
             activity.supportActionBar?.show()
-//            findNavController().navigate(R.id.letYouInFragment)
-            findNavController().navigate(R.id.navigation_home)
+            findNavController().navigate(R.id.letYouInFragment)
+//            findNavController().navigate(R.id.navigation_home)
         }
 
     }
