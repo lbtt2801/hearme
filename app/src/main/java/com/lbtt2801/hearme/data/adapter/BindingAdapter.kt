@@ -1,13 +1,11 @@
 package com.lbtt2801.hearme.data.adapter
 
-
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.lbtt2801.hearme.model.Time
 import java.text.SimpleDateFormat
 import java.util.Date
-
 
 @BindingAdapter("app:setImage")
 fun setImage(imageView: ImageView, id: Int) {
