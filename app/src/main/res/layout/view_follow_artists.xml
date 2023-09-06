@@ -24,6 +24,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             app:setImage="@{artist.image}"
+            android:src="@drawable/img_artist"
             app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
         <LinearLayout

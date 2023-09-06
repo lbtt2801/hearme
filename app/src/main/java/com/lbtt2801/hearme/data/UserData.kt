@@ -65,8 +65,8 @@ class UserData {
 //    }
 
     companion object {
-        val data = ArrayList<User>()
         fun data(): ArrayList<User> {
+            val data = ArrayList<User>()
             data.apply {
                 add(
                     User(
@@ -78,7 +78,7 @@ class UserData {
                         "Viet Huit",
                         Date(2002, 12, 6, 0, 0, 0),
                         "VietNam",
-                        "0939826376",
+                        "84 93 982 63 76",
                         1234,
                         1023,
                         13,
@@ -96,7 +96,7 @@ class UserData {
                         "Truong HUIT",
                         Date(2002, 1, 28, 0, 0, 0),
                         "VietNam",
-                        "0328467924",
+                        "84 32 846 79 24",
                         4567,
                         1155,
                         11,
@@ -114,7 +114,7 @@ class UserData {
                         "Truong HUIT",
                         Date(2002, 1, 28, 0, 0, 0),
                         "VietNam",
-                        "0328467924",
+                        "84 32 846 79 25",
                         4567,
                         1155,
                         11,

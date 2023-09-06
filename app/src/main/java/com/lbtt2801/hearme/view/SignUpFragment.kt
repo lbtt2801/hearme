@@ -25,9 +25,10 @@ import com.lbtt2801.hearme.viewmodel.UserViewModel
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
-    private val viewModel by lazy {
-        ViewModelProvider(this)[UserViewModel::class.java]
-    }
+    private val viewModelUser: UserViewModel by activityViewModels()
+//    private val viewModel by lazy {
+//        ViewModelProvider(this)[UserViewModel::class.java]
+//    }
 
     private val emailViewModel: EmailViewModel by activityViewModels()
 
@@ -68,7 +69,7 @@ class SignUpFragment : Fragment() {
         binding.btnSignUp.setOnClickListener() {
             val email = binding.edtEmail.text.toString().trim()
             val pass = binding.edtPass.text.toString().trim()
-            val sizeUserDataOld = UserData.data.size
+            val sizeUserDataOld = UserData.data().size
             var checkEmail = false
             var checkPass = false
 
@@ -85,7 +86,7 @@ class SignUpFragment : Fragment() {
             else binding.txtLayoutPass.error = "Password length must be >= 6"
 
             // kiem tra trung lap email
-            if (viewModel.checkDuplicateEmails(email)) {
+            if (viewModelUser.checkDuplicateEmails(email)) {
                 binding.edtEmail.text = null
                 binding.edtEmail.requestFocus()
                 checkEmail = false
@@ -93,7 +94,7 @@ class SignUpFragment : Fragment() {
             }
 
             if (checkEmail && checkPass) {
-                viewModel.lstDataUser.observe(viewLifecycleOwner) {
+                viewModelUser.lstDataUser.observe(viewLifecycleOwner) {
                     if (it.size > sizeUserDataOld) {
                         Toast.makeText(context, "Sign Up Success", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(
@@ -102,7 +103,7 @@ class SignUpFragment : Fragment() {
                         emailViewModel.selectItem(binding.edtEmail.text.toString())
                     } else Toast.makeText(context, "Fail Fail Fail", Toast.LENGTH_SHORT).show()
                 }
-                viewModel.addDataUser(email, pass)
+                viewModelUser.addDataUser(email, pass)
             }
         }
     }
