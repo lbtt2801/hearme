@@ -29,4 +29,6 @@
 
     <color name="border_edt_pin">#EEEEEE</color>
 
+    <color name="border_bg_container_skip_continue">#F5F5F5</color>
+
 </resources>

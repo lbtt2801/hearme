@@ -1,4 +1,4 @@
-package com.lbtt2801.hearme.view
+package com.lbtt2801.hearme.view.accountssetup
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -44,7 +44,7 @@ class FillYourProfileFragment : Fragment() {
             false
         )
         mainActivity = (activity as MainActivity)
-        email = arguments?.getString("email").toString()
+        email = mainActivity.email
         Toast.makeText(requireContext(), "$email", Toast.LENGTH_SHORT).show()
         return binding.root
     }
@@ -61,6 +61,12 @@ class FillYourProfileFragment : Fragment() {
         }
 
         binding.edtDob.setOnClickListener() { calendarDialog(it) }
+
+        binding.btnSkip.setOnClickListener() {
+            findNavController().navigate(
+                R.id.action_fillYourProfileFragment_to_createNewPinFragment
+            )
+        }
 
         binding.btnContinue.setOnClickListener() {
             isValidEmail = isValidEmail(binding.edtEmail.text)
@@ -94,10 +100,8 @@ class FillYourProfileFragment : Fragment() {
                     }
                     Log.v(TAG, model.lstDataUser.value.toString())
                     findNavController().navigate(
-                        R.id.action_fillYourProfileFragment_to_createNewPinFragment,
-                        Bundle().apply {
-                            putString("email", email)
-                        })
+                        R.id.action_fillYourProfileFragment_to_createNewPinFragment
+                    )
                 }
             }
         }
@@ -109,6 +113,9 @@ class FillYourProfileFragment : Fragment() {
             "VISIBLE", "Fill Your Profile", R.color.transparent,
             com.google.android.material.R.drawable.ic_arrow_back_black_24
         )
+        mainActivity.binding.toolBar.setNavigationOnClickListener() {
+            findNavController().popBackStack()
+        }
     }
 
     private fun calendarDialog(it: View?) {

@@ -12,12 +12,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.UserData
 import com.lbtt2801.hearme.databinding.FragmentSignUpBinding
+import com.lbtt2801.hearme.viewmodel.EmailViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class SignUpFragment : Fragment() {
@@ -26,6 +28,8 @@ class SignUpFragment : Fragment() {
     private val viewModel by lazy {
         ViewModelProvider(this)[UserViewModel::class.java]
     }
+
+    private val emailViewModel: EmailViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,11 +94,13 @@ class SignUpFragment : Fragment() {
 
             if (checkEmail && checkPass) {
                 viewModel.lstDataUser.observe(viewLifecycleOwner) {
-                    if (it.size > sizeUserDataOld){
+                    if (it.size > sizeUserDataOld) {
                         Toast.makeText(context, "Sign Up Success", Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.signInFragment)
-                    }
-                    else Toast.makeText(context, "Fail Fail Fail", Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(
+                            R.id.action_signUpFragment_to_fillYourProfileFragment
+                        )
+                        emailViewModel.selectItem(binding.edtEmail.text.toString())
+                    } else Toast.makeText(context, "Fail Fail Fail", Toast.LENGTH_SHORT).show()
                 }
                 viewModel.addDataUser(email, pass)
             }
