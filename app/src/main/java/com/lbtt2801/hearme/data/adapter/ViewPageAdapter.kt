@@ -7,6 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.lbtt2801.hearme.view.NotificationFragment
 import com.lbtt2801.hearme.view.SignInFragment
 import com.lbtt2801.hearme.view.SignUpFragment
+import com.lbtt2801.hearme.view.SongNotificationFragment
 
 class ViewPageAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle): FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {
@@ -15,7 +16,7 @@ class ViewPageAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle): F
 
     override fun createFragment(position: Int): Fragment {
         return  when (position) {
-            0 -> { SignInFragment() }
+            0 -> { SongNotificationFragment() }
             1 -> { SignUpFragment() }
             else -> { NotificationFragment() }
         }
