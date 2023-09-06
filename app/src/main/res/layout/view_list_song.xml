@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/text_detail"
-            android:text="Today"
+            app:setDate="@{music.release}"
             android:textSize="12sp"
             android:layout_marginStart="16dp"
             app:layout_constraintTop_toTopOf="parent"
@@ -54,7 +54,7 @@
             android:textColor="@color/text_detail"
             android:textSize="12sp"
             android:layout_marginStart="12dp"
-            android:text="04:36 mins"
+            app:setDuration="@{music.duration}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/lineTop"/>
 
