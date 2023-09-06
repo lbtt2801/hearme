@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.databinding.ViewHomeTrendingBinding
+import com.lbtt2801.hearme.databinding.ViewListPodcastBinding
 import com.lbtt2801.hearme.databinding.ViewListSongBinding
 import com.lbtt2801.hearme.model.Music
 
@@ -11,14 +12,14 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
     companion object {
         const val HOME = 0
         const val SONG_LIST = 1
-        const val SAVED = 2
+        const val PODCAST_LIST = 2
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (type) {
             0 -> HOME
             1 -> SONG_LIST
-            else -> SAVED
+            else -> PODCAST_LIST
         }
     }
 
@@ -26,7 +27,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
         return when (viewType) {
             HOME -> HomeViewHolder(parent)
             SONG_LIST -> SongNotificationViewHolder(parent)
-//            SAVED -> SavedViewHolder(parent)
+            PODCAST_LIST -> PodcastNotificationViewHolder(parent)
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -37,6 +38,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
         when (holder) {
             is HomeViewHolder -> holder.bind(dataMusics[position])
             is SongNotificationViewHolder -> holder.bind(dataMusics[position])
+            is PodcastNotificationViewHolder -> holder.bind(dataMusics[position])
         }
     }
 
@@ -60,6 +62,21 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
             ViewListSongBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+        fun bind(music: Music) {
+            binding.music = music
+        }
+    }
+
+    inner class PodcastNotificationViewHolder private constructor(
+        val binding: ViewListPodcastBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        constructor(parent: ViewGroup) : this(
+            ViewListPodcastBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

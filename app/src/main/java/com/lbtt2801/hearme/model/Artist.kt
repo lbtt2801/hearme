@@ -5,5 +5,5 @@ data class Artist(
     val artistName: String,
     val image: Int,
     val totalNumberOfListeners: Int = 0,
-    val isSinger: Boolean = false,
+    val isSinger: Boolean = false
 )
