@@ -14,7 +14,7 @@
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
         android:paddingBottom="48dp"
-        tools:context=".view.FillYourProfileFragment">
+        tools:context=".view.accountssetup.FillYourProfileFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <ScrollView
@@ -167,6 +167,7 @@
                 android:background="@drawable/bg_button_continue"
                 android:padding="16dp"
                 android:text="Continue"
+
                 android:textAllCaps="false"
                 android:textColor="@color/color_txt_button_continue" />
         </LinearLayout>

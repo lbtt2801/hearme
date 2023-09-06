@@ -1,8 +1,6 @@
-package com.lbtt2801.hearme.view
+package com.lbtt2801.hearme.view.accountssetup
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +9,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentCreateNewPinBinding
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class CreateNewPinFragment : Fragment() {
     private lateinit var binding: FragmentCreateNewPinBinding
+    private lateinit var mainActivity: MainActivity
     private var email: String? = null
 
     private var numbersList = ArrayList<String>()
@@ -41,7 +41,9 @@ class CreateNewPinFragment : Fragment() {
                 container,
                 false
             )
-        email = arguments?.getString("email").toString()
+        mainActivity = activity as MainActivity
+        email = mainActivity.email
+        Toast.makeText(requireContext(), "$email", Toast.LENGTH_SHORT).show()
         return binding.root
     }
 
@@ -128,6 +130,17 @@ class CreateNewPinFragment : Fragment() {
                         putInt("pin", passCode.toInt())
                     })
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainActivity.customToolbar(
+            "VISIBLE", "Create New PIN", R.color.transparent,
+            com.google.android.material.R.drawable.ic_arrow_back_black_24
+        )
+        mainActivity.binding.toolBar.setNavigationOnClickListener() {
+            findNavController().popBackStack()
         }
     }
 

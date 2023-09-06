@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".view.CreateNewPinFragment">
+        tools:context=".view.accountssetup.CreateNewPinFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <LinearLayout
@@ -31,7 +31,8 @@
                 android:gravity="center"
                 android:text="Add a PIN number to make your account more secure."
                 android:textColor="@color/text"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:lineHeight="25dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

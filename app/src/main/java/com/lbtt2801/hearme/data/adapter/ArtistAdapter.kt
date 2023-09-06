@@ -2,21 +2,28 @@ package com.lbtt2801.hearme.data.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.lbtt2801.hearme.MainActivity
+import com.lbtt2801.hearme.databinding.ViewFollowArtistsBinding
 import com.lbtt2801.hearme.databinding.ViewHomeArtistBinding
 import com.lbtt2801.hearme.model.Artist
+import com.lbtt2801.hearme.viewmodel.UserViewModel
 
-class ArtistAdapter(private val dataArtists: ArrayList<Artist>, private val type: Int ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ArtistAdapter(private val dataArtists: ArrayList<Artist>, private val type: Int) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val HOME = 0
         const val POPULAR_ARTISTS = 1
         const val SAVED = 2
+        const val FOLLOW_ARTISTS = 3
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (type) {
             0 -> HOME
             1 -> POPULAR_ARTISTS
+            3 -> FOLLOW_ARTISTS
             else -> SAVED
         }
     }
@@ -26,6 +33,7 @@ class ArtistAdapter(private val dataArtists: ArrayList<Artist>, private val type
             HOME -> HomeViewHolder(parent)
 //            TOPIC_LIST -> InterestViewHolder(parent)
 //            SAVED -> SavedViewHolder(parent)
+            FOLLOW_ARTISTS -> ArtistViewHolderFollowArtists(parent)
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -33,6 +41,7 @@ class ArtistAdapter(private val dataArtists: ArrayList<Artist>, private val type
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is HomeViewHolder -> holder.bind(dataArtists[position])
+            is ArtistViewHolderFollowArtists -> holder.bind(dataArtists[position])
         }
     }
 
@@ -51,6 +60,32 @@ class ArtistAdapter(private val dataArtists: ArrayList<Artist>, private val type
 
         fun bind(artist: Artist) {
             binding.artist = artist
+        }
+    }
+
+    inner class ArtistViewHolderFollowArtists private constructor(
+        val binding: ViewFollowArtistsBinding,
+        private val viewModel: UserViewModel = UserViewModel()
+    ) : RecyclerView.ViewHolder(binding.root) {
+        constructor(parent: ViewGroup) : this(
+            ViewFollowArtistsBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+
+        fun bind(artist: Artist) {
+            binding.artist = artist
+
+            binding.toggleButtonFollow.setOnCheckedChangeListener() { compound, isChecked ->
+                val activity = compound.context as MainActivity
+                viewModel.updateFollowingArtists(
+                    activity.email,
+                    dataArtists[absoluteAdapterPosition],
+                    isChecked
+                )
+            }
         }
     }
 

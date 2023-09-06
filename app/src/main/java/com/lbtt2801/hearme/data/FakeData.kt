@@ -74,7 +74,7 @@ class FakeData {
                         "Ariana Grande",
                         R.drawable.img_artist,
                         0,
-                        true
+                        true,
                     )
                 )
                 add(
