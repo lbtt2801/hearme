@@ -87,6 +87,7 @@
                     app:layout_constraintStart_toStartOf="parent"/>
 
                 <TextView
+                    android:id="@+id/tvSeeTrendingNow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="See All"
@@ -125,6 +126,7 @@
                     app:layout_constraintStart_toStartOf="parent"/>
 
                 <TextView
+                    android:id="@+id/tvSeePopularArtists"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="See All"
@@ -163,6 +165,7 @@
                     app:layout_constraintStart_toStartOf="parent"/>
 
                 <TextView
+                    android:id="@+id/tvSeeTopCharts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="See All"

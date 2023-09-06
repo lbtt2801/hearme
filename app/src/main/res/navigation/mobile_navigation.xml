@@ -9,7 +9,14 @@
         android:id="@+id/navigation_home"
         android:name="com.lbtt2801.hearme.view.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_trendingNowFragment"
+            app:destination="@id/trendingNowFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_popularArtistsFragment"
+            app:destination="@id/popularArtistsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -119,4 +126,16 @@
             app:popUpTo="@id/mobile_navigation"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/trendingNowFragment"
+        android:name="com.lbtt2801.hearme.view.TrendingNowFragment"
+        android:label="TrendingNowFragment" />
+    <fragment
+        android:id="@+id/popularArtistsFragment"
+        android:name="com.lbtt2801.hearme.view.PopularArtistsFragment"
+        android:label="PopularArtistsFragment" />
+    <fragment
+        android:id="@+id/navigation_explore"
+        android:name="com.lbtt2801.hearme.view.ExploreFragment"
+        android:label="ExploreFragment" />
 </navigation>

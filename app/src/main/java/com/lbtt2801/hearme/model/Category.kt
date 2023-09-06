@@ -4,5 +4,6 @@ data class Category(
     val categoryID: String,
     val categoryName: String,
     val image: Int,
-    val listMusic: ArrayList<Music>
+    val background: Int,
+    val listMusic: ArrayList<Music> = ArrayList()
 )
