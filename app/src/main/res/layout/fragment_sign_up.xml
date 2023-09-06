@@ -46,7 +46,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:hint="Email"
-
                 app:hintTextColor="@color/bg_button"
                 app:boxBackgroundColor="@color/text_hint"
                 app:boxStrokeWidthFocused="2dp"

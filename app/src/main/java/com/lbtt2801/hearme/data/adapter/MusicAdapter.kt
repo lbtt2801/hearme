@@ -3,6 +3,7 @@ package com.lbtt2801.hearme.data.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.lbtt2801.hearme.databinding.FragmentTrendingNowBinding
 import com.lbtt2801.hearme.databinding.ViewHomeTrendingBinding
 import com.lbtt2801.hearme.databinding.ViewListPodcastBinding
 import com.lbtt2801.hearme.databinding.ViewListSongBinding
@@ -19,6 +20,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
         return when (type) {
             0 -> HOME
             1 -> SONG_LIST
+            2 -> PODCAST_LIST
             else -> PODCAST_LIST
         }
     }
@@ -86,4 +88,6 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
             binding.music = music
         }
     }
+
+
 }

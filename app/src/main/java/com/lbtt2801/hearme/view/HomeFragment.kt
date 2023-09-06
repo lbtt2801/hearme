@@ -51,6 +51,14 @@ class HomeFragment : Fragment() {
         (activity as MainActivity).binding.toolBar.isVisible = false
         (activity as MainActivity).showBottomNav("VISIBLE")
 
+        binding.tvSeeTrendingNow.setOnClickListener {
+            findNavController().navigate(R.id.trendingNowFragment)
+        }
+
+        binding.tvSeePopularArtists.setOnClickListener {
+            findNavController().navigate(R.id.popularArtistsFragment)
+        }
+
         viewModel.lstDataMusic.observe((activity as MainActivity), Observer {
             displayRecyclerViewMusic(it as ArrayList<Music>)
             Log.v(ContentValues.TAG, "size music: ${it.size}")
@@ -76,7 +84,6 @@ class HomeFragment : Fragment() {
         viewModel.getListDataChart()
 
         binding.icNotification.setOnClickListener {
-            Toast.makeText(context, "Click icNotification", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.notificationFragment)
         }
     }

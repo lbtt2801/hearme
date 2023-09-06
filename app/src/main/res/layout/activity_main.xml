@@ -18,7 +18,9 @@
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:layout_marginTop="24dp"
+            android:visibility="gone"
+            app:menu="@menu/menu_toolbar"/>
 
         <fragment
             android:id="@+id/nav_host_fragment_activity_main"

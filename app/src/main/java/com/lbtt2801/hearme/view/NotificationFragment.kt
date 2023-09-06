@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
@@ -22,7 +23,7 @@ class NotificationFragment : Fragment() {
     ): View {
 
         val activity: MainActivity = (activity as MainActivity)
-        activity.customToolbar("VISIBLE","Notification", R.color.transparent, R.drawable.ic_arrow_back)
+        activity.customToolbar("VISIBLE","Notification", R.color.transparent, R.drawable.ic_arrow_back,true)
         activity.showBottomNav("GONE")
 
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notification, container, false)
