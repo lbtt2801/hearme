@@ -90,5 +90,14 @@ class UserViewModel : ViewModel() {
         lst.first { it.email == email }.apply {
             this.numberOfFollowing = this.listArtistsFollowing.size
         }
+        _lstDataUser.postValue(lst)
+    }
+
+    fun updatePassword(email: String, password: String) {
+        lst.first { it.email == email }.apply {
+            this.password = password
+        }
+        _lstDataUser.postValue(lst)
+        Log.v(TAG, "${lstDataUser.value.toString()}")
     }
 }

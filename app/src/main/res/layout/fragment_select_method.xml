@@ -169,7 +169,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_button_continue"
+                android:background="@drawable/bg_button_continue_1"
                 android:padding="16dp"
                 android:text="Continue"
                 android:textAllCaps="false"

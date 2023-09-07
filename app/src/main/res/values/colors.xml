@@ -31,4 +31,6 @@
 
     <color name="border_bg_container_skip_continue">#F5F5F5</color>
 
+    <color name="greyscale">#9E9E9E</color>
+
 </resources>
