@@ -87,26 +87,20 @@ class MainActivity : AppCompatActivity() {
         backgroundColor: Int,
         navIcon: Int? = null,
         showIcMore: Boolean = false,
+        showIcFilter: Boolean = false,
         showIcSearch: Boolean = false
     ) {
         //Toolbar visibility
         when (isVisible) {
-            "VISIBLE" -> {
-                binding.toolBar.visibility = View.VISIBLE
-            }
-
-            "INVISIBLE" -> {
-                binding.toolBar.visibility = View.INVISIBLE
-            }
-
-            else -> {
-                binding.toolBar.visibility = View.GONE
-            }
+            "VISIBLE" -> binding.toolBar.visibility = View.VISIBLE
+            "INVISIBLE" -> binding.toolBar.visibility = View.INVISIBLE
+            else -> binding.toolBar.visibility = View.GONE
         }
+
         //Toolbar title
-        if (title != null) {
+        if (title != null)
             binding.toolBar.title = title
-        }
+
         //Toolbar background
         binding.toolBar.setBackgroundColor(
             resources.getColor(
@@ -114,11 +108,13 @@ class MainActivity : AppCompatActivity() {
                 null
             )
         )
+
         //Toolbar nav icon
-        if (navIcon != null) {
+        if (navIcon != null)
             binding.toolBar.setNavigationIcon(navIcon)
-        }
+
         binding.toolBar.menu.findItem(R.id.item_more_circle).isVisible = showIcMore
+        binding.toolBar.menu.findItem(R.id.item_filter).isVisible = showIcFilter
         binding.toolBar.menu.findItem(R.id.item_search).isVisible = showIcSearch
     }
 

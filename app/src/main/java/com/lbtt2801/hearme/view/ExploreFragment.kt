@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lbtt2801.hearme.MainActivity
@@ -29,6 +30,7 @@ class ExploreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
+        (activity as MainActivity).customToolbar("VISIBLE", "Explore", R.color.transparent, R.drawable.logo_nav, true)
         return binding.root
     }
 
@@ -48,7 +50,9 @@ class ExploreFragment : Fragment() {
 
     private fun displayRecyclerView(lstData: ArrayList<Category>) {
         val layoutRecyclerView = GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
-        categoryAdapter = CategoryAdapter(lstData, 0)
+        categoryAdapter = CategoryAdapter(lstData, 0) {
+            findNavController().navigate(R.id.itemExploreFragment, it)
+        }
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerView
             adapter = categoryAdapter

@@ -20,7 +20,8 @@ class FakeData {
                         0,
                         R.drawable.img_music,
                         Time(0, 4, 30),
-                        Date("09/06/2023")
+                        Date("09/06/2023"),
+                        false
                     )
                 )
                 add(
@@ -40,7 +41,11 @@ class FakeData {
                         4,
                         R.drawable.img_music,
                         Time(0, 4, 30),
-                        Date("03/10/2023")
+                        Date("03/10/2023"),
+                        category = false,
+                        isLoveList = true,
+                        isPlayList = true,
+                        isDownList = true
                     )
                 )
                 add(

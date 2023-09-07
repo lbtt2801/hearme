@@ -12,4 +12,9 @@
         android:icon="@drawable/ic_search"
         android:title="Search"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/item_filter"
+        android:icon="@drawable/ic_filter"
+        android:title="Search"
+        app:showAsAction="ifRoom" />
 </menu>

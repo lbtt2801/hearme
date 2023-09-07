@@ -9,4 +9,8 @@ data class Music(
     val image: Int,
     val duration: Time,
     val release: Date,
+    val category: Boolean = true,
+    var isLoveList: Boolean = false,
+    var isPlayList: Boolean = false,
+    var isDownList: Boolean = false
 )

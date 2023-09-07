@@ -39,6 +39,7 @@ class TrendingNowFragment : Fragment() {
 
         (activity as MainActivity).customToolbar("VISIBLE","Trending Now",R.color.transparent,R.drawable.ic_arrow_back,
             showIcMore = false,
+            showIcFilter = false,
             showIcSearch = true
         )
 
