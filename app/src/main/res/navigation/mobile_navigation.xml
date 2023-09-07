@@ -190,4 +190,8 @@
         android:name="com.lbtt2801.hearme.view.TopItemFragment"
         android:label="fragment_top_item"
         tools:layout="@layout/fragment_top_item" />
+    <fragment
+        android:id="@+id/podcastFragment"
+        android:name="com.lbtt2801.hearme.view.PodcastFragment"
+        android:label="PodcastFragment" />
 </navigation>

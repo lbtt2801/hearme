@@ -53,10 +53,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navHostFragment.navController
 
-        binding.toolBar.setNavigationOnClickListener() {
-            navHostFragment.findNavController().popBackStack()
-        }
-
         customToolbar("GONE", null, R.color.transparent, null)
         showBottomNav("GONE")
     }

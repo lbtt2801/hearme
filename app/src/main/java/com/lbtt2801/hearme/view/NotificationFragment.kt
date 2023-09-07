@@ -25,6 +25,9 @@ class NotificationFragment : Fragment() {
         val activity: MainActivity = (activity as MainActivity)
         activity.customToolbar("VISIBLE","Notification", R.color.transparent, R.drawable.ic_arrow_back,true)
         activity.showBottomNav("GONE")
+        (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
+            findNavController().popBackStack()
+        }
 
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notification, container, false)
         return binding.root

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lbtt2801.hearme.MainActivity
@@ -50,6 +51,10 @@ class PopularArtistsFragment : Fragment() {
             showIcFilter = false,
             showIcSearch = true
         )
+
+        (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
+            findNavController().popBackStack()
+        }
 
         viewModel.lstDataArtist.observe((activity as MainActivity), Observer {
             displayRecyclerView(it as ArrayList<Artist>)

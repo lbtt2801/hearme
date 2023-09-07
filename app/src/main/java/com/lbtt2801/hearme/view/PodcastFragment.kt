@@ -3,70 +3,63 @@ package com.lbtt2801.hearme.view
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.ArtistAdapter
-import com.lbtt2801.hearme.data.adapter.ChartAdapter
+import com.lbtt2801.hearme.data.adapter.CategoryAdapter
 import com.lbtt2801.hearme.data.adapter.MusicAdapter
-import com.lbtt2801.hearme.databinding.FragmentHomeBinding
+import com.lbtt2801.hearme.databinding.FragmentPodcastBinding
 import com.lbtt2801.hearme.model.Artist
-import com.lbtt2801.hearme.model.Chart
+import com.lbtt2801.hearme.model.Category
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.viewmodel.HomeViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
-class HomeFragment : Fragment() {
-
-    private var _binding: FragmentHomeBinding? = null
+class PodcastFragment : Fragment() {
+    private var _binding: FragmentPodcastBinding? = null
     private val binding get() = _binding!!
     private lateinit var musicAdapter: MusicAdapter
     private lateinit var artistAdapter: ArtistAdapter
-    private lateinit var chartAdapter: ChartAdapter
+    private lateinit var categoryAdapter: CategoryAdapter
 
     private val userViewModel: UserViewModel by activityViewModels()
-
     private val viewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_podcast, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).binding.toolBar.isVisible = false
         (activity as MainActivity).showBottomNav("VISIBLE")
 
-        val bundle = requireArguments()
-        val avatar = bundle.getInt("avatar")
-        binding.imgAvt.background = ContextCompat.getDrawable(requireContext(), avatar)
-        binding.tvUser.text = bundle.getString("fullName")
+        (activity as MainActivity).customToolbar(
+            "VISIBLE", "Podcasts", R.color.transparent, R.drawable.ic_arrow_back,
+            showIcMore = true,
+            showIcFilter = true,
+            showIcSearch = true
+        )
 
-        binding.tvSeeTrendingNow.setOnClickListener {
-            findNavController().navigate(R.id.trendingNowFragment)
-        }
-
-        binding.tvSeePopularArtists.setOnClickListener {
-            findNavController().navigate(R.id.popularArtistsFragment)
+        (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
+            findNavController().popBackStack()
         }
 
         viewModel.lstDataMusic.observe((activity as MainActivity), Observer {
@@ -83,16 +76,11 @@ class HomeFragment : Fragment() {
         })
         viewModel.getListDataArtist()
 
-        viewModel.lstDataChart.observe((activity as MainActivity), Observer {
-            displayRecyclerViewChart(it as ArrayList<Chart>)
-            if (it.isEmpty())
-                Toast.makeText(context, "list Chart is null or empty", Toast.LENGTH_SHORT).show()
+        viewModel.lstDataCategory.observe((activity as MainActivity), Observer {
+            displayRecyclerViewCategory(it as ArrayList<Category>)
         })
-        viewModel.getListDataChart()
+        viewModel.getListDataArtist()
 
-        binding.icNotification.setOnClickListener {
-            findNavController().navigate(R.id.notificationFragment)
-        }
     }
 
     override fun onDestroyView() {
@@ -104,7 +92,7 @@ class HomeFragment : Fragment() {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
         musicAdapter = MusicAdapter(lstData, 0)
-        binding.recyclerViewTrending.apply {
+        binding.recyclerViewPopularPodcasts.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter
         }
@@ -120,13 +108,13 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun displayRecyclerViewChart(lstData: ArrayList<Chart>) {
-        val layoutRecyclerViewChart =
-            LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
-        chartAdapter = ChartAdapter(lstData, 0)
-        binding.recyclerViewTopCharts.apply {
-            layoutManager = layoutRecyclerViewChart
-            adapter = chartAdapter
+    private fun displayRecyclerViewCategory(lstData: ArrayList<Category>) {
+        val layoutRecyclerView = GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
+        categoryAdapter = CategoryAdapter(lstData, 0)
+        binding.recyclerViewCategories.apply {
+            layoutManager = layoutRecyclerView
+            adapter = categoryAdapter
         }
     }
+
 }
