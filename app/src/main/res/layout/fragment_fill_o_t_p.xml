@@ -29,12 +29,13 @@
                 android:paddingRight="24dp">
 
                 <TextView
+                    android:id="@+id/text_send_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="60dp"
                     android:gravity="center"
                     android:lineHeight="25dp"
-                    android:text="Code has been send to +1 111 ******99"
+                    android:text="Code has been send to"
                     android:textColor="@color/text"
                     android:textSize="18sp" />
 

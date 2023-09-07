@@ -40,7 +40,7 @@ class SelectMethodFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.lstDataUser.value?.first { it.email == mainActivity.email }.apply {
-            binding.textPhone.text = mainActivity.protectedPhone(this?.phone.toString())
+            binding.textPhone.text = "+${mainActivity.protectedPhone(this?.phone.toString())}"
             binding.textEmail.text = mainActivity.protectedEmail(this?.email.toString())
         }
 
@@ -63,10 +63,19 @@ class SelectMethodFragment : Fragment() {
         }
 
         binding.btnContinue.setOnClickListener() {
-            if (binding.btnSMS.isChecked || binding.btnEmail.isChecked)
-                findNavController().navigate(R.id.action_selectMethodFragment_to_fillOTPFragment)
-            else
-                mainActivity.showSnack(view, "Please, let to choose one selection!")
+            val method = if (binding.btnSMS.isChecked) {
+                binding.textPhone.text.toString()
+            } else if (binding.btnEmail.isChecked) {
+                binding.textEmail.text.toString()
+            } else {
+                mainActivity.showSnack(view, "Please, let's choose one method!")
+                return@setOnClickListener
+            }
+            findNavController().navigate(
+                R.id.action_selectMethodFragment_to_fillOTPFragment,
+                Bundle().apply {
+                    putString("method", method)
+                })
         }
     }
 
