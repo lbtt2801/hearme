@@ -10,7 +10,11 @@ import com.lbtt2801.hearme.databinding.ViewHomeArtistBinding
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
-class ArtistAdapter(private val dataArtists: ArrayList<Artist>, private val type: Int) :
+class ArtistAdapter(
+    private val dataArtists: ArrayList<Artist>,
+    private val type: Int,
+    private val userViewModel: UserViewModel
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val HOME = 0
@@ -65,7 +69,6 @@ class ArtistAdapter(private val dataArtists: ArrayList<Artist>, private val type
 
     inner class ArtistViewHolderFollowArtists private constructor(
         val binding: ViewFollowArtistsBinding,
-        private val viewModel: UserViewModel = UserViewModel()
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
             ViewFollowArtistsBinding.inflate(
@@ -80,7 +83,7 @@ class ArtistAdapter(private val dataArtists: ArrayList<Artist>, private val type
 
             binding.toggleButtonFollow.setOnCheckedChangeListener() { compound, isChecked ->
                 val activity = compound.context as MainActivity
-                viewModel.updateFollowingArtists(
+                userViewModel.updateFollowingArtists(
                     activity.email,
                     dataArtists[absoluteAdapterPosition],
                     isChecked

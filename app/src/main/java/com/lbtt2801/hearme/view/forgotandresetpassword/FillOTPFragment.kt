@@ -13,12 +13,14 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentCreateNewPinBinding
 import com.lbtt2801.hearme.databinding.FragmentFillOTPBinding
+import com.lbtt2801.hearme.hideSoftKeyboard
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class FillOTPFragment : Fragment() {
     private lateinit var binding: FragmentFillOTPBinding
     private lateinit var mainActivity: MainActivity
     private var email: String? = null
+    private var method: String? = null
 
     private var numbersList = ArrayList<String>()
     private var passCode = ""
@@ -40,14 +42,17 @@ class FillOTPFragment : Fragment() {
             )
         mainActivity = activity as MainActivity
         email = mainActivity.email
-        Toast.makeText(requireContext(), "$email", Toast.LENGTH_SHORT).show()
+        method = arguments?.getString("method")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.textSendCode.text = "Code has been send to $method"
 
-        val model = ViewModelProvider(this)[UserViewModel::class.java]
+        binding.edtNum4.setOnClickListener() {
+            binding.containerNumPad.visibility = View.VISIBLE
+        }
 
         binding.edtNum1.isEnabled = false
         binding.edtNum2.isEnabled = false
@@ -118,9 +123,10 @@ class FillOTPFragment : Fragment() {
         binding.btnVerify.setOnClickListener() {
             if (passCode.length < 4) {
                 Toast.makeText(requireContext(), "Invalid code!", Toast.LENGTH_SHORT).show()
-            } else if (passCode == "7458") {
+            } else if (passCode == "1111") {
                 findNavController().navigate(R.id.action_fillOTPFragment_to_createNewPasswordFragment)
             } else {
+                binding.containerNumPad.visibility = View.VISIBLE
                 mainActivity.showSnack(view, "Incorrect code, try again!")
             }
         }
@@ -164,6 +170,9 @@ class FillOTPFragment : Fragment() {
                     binding.edtNum4.setText(num1)
                     passCode = num1 + num2 + num3 + num4
                     binding.containerNumPad.visibility = View.GONE
+                    binding.edtNum4.isEnabled = true
+                    binding.edtNum4.isClickable = false
+                    binding.edtNum4.isFocusable = false
                 }
             }
         }

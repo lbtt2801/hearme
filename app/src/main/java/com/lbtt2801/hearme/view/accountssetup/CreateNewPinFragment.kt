@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lbtt2801.hearme.MainActivity
@@ -17,6 +18,7 @@ import com.lbtt2801.hearme.viewmodel.UserViewModel
 class CreateNewPinFragment : Fragment() {
     private lateinit var binding: FragmentCreateNewPinBinding
     private lateinit var mainActivity: MainActivity
+    private val viewModelUser: UserViewModel by activityViewModels()
     private var email: String? = null
 
     private var numbersList = ArrayList<String>()
@@ -49,8 +51,6 @@ class CreateNewPinFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val model = ViewModelProvider(this)[UserViewModel::class.java]
 
         binding.edtNum1.isEnabled = false
         binding.edtNum2.isEnabled = false
@@ -122,7 +122,8 @@ class CreateNewPinFragment : Fragment() {
             if (passCode.length < 4) {
                 Toast.makeText(requireContext(), "Invalid PIN!", Toast.LENGTH_SHORT).show()
             } else {
-                email?.let { it1 -> model.updateUserPin(it1, passCode.toInt()) }
+
+                email?.let { it1 -> viewModelUser.updateUserPin(it1, passCode.toInt()) }
                 findNavController().navigate(
                     R.id.action_createNewPinFragment_to_setFingerprintFragment,
                     Bundle().apply {
@@ -170,6 +171,11 @@ class CreateNewPinFragment : Fragment() {
                     num4 = numbersList[3]
                     binding.edtNum4.setText(num1)
                     passCode = num1 + num2 + num3 + num4
+                    Toast.makeText(
+                        requireContext(),
+                        "${numbersList.toString()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
