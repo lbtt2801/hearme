@@ -1,12 +1,17 @@
 package com.lbtt2801.hearme.data.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.databinding.ViewListBrowseBinding
 import com.lbtt2801.hearme.model.Category
 
-class CategoryAdapter (private val dataCategory: ArrayList<Category>, private val type: Int ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CategoryAdapter (
+    private val dataCategory: ArrayList<Category>,
+    private val type: Int,
+    val onItemClick: ((Bundle) -> Unit)? = null
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val EXPLORE = 0
         const val POPULAR_ARTISTS = 1
@@ -30,7 +35,16 @@ class CategoryAdapter (private val dataCategory: ArrayList<Category>, private va
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is ExploreViewHolder -> holder.bind(dataCategory[position])
+            is ExploreViewHolder -> {
+                holder.bind(dataCategory[position])
+                holder.itemView.setOnClickListener {
+                    val param = Bundle().apply {
+                        putString("name", dataCategory[position].categoryName)
+                        putInt("position", position)
+                    }
+                    onItemClick?.invoke(param)
+                }
+            }
         }
     }
 

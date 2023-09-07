@@ -40,6 +40,7 @@ class PopularArtistsFragment : Fragment() {
 
         (activity as MainActivity).customToolbar("VISIBLE","Popular Artists",R.color.transparent,R.drawable.ic_arrow_back,
             showIcMore = false,
+            showIcFilter = false,
             showIcSearch = true
         )
 

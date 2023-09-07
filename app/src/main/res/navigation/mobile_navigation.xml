@@ -169,5 +169,25 @@
     <fragment
         android:id="@+id/navigation_explore"
         android:name="com.lbtt2801.hearme.view.ExploreFragment"
-        android:label="ExploreFragment" />
+        android:label="ExploreFragment" >
+        <action
+            android:id="@+id/action_navigation_explore_to_itemExploreFragment"
+            app:destination="@id/itemExploreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemExploreFragment"
+        android:name="com.lbtt2801.hearme.view.ItemExploreFragment"
+        android:label="ItemExploreFragment" >
+        <action
+            android:id="@+id/action_itemExploreFragment_to_navigation_explore"
+            app:destination="@id/navigation_explore" />
+        <action
+            android:id="@+id/action_itemExploreFragment_to_topItemFragment"
+            app:destination="@id/topItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/topItemFragment"
+        android:name="com.lbtt2801.hearme.view.TopItemFragment"
+        android:label="fragment_top_item"
+        tools:layout="@layout/fragment_top_item" />
 </navigation>

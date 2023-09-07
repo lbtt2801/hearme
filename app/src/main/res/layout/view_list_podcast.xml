@@ -80,34 +80,41 @@
             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             app:layout_constraintStart_toEndOf="@+id/line"/>
 
-        <ImageView
+<!--        android:src="@drawable/ic_light_heart"-->
+        <CheckBox
             android:id="@+id/ic_heart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_light_heart"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
             android:layout_marginTop="12dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="20dp"
+            app:setLoveList="@{music.loveList}"
+            app:clickLoveList="@{music}"
             app:layout_constraintTop_toBottomOf="@+id/tvDuration"
             app:layout_constraintStart_toEndOf="@+id/cardViewPodcast"/>
 
 
-        <ImageView
+        <CheckBox
             android:id="@+id/ic_add_playlist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_playlist"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
             android:layout_marginTop="12dp"
             android:layout_marginStart="20dp"
+            app:setPlayList="@{music.playList}"
+            app:clickPlayList="@{music}"
             app:layout_constraintTop_toBottomOf="@+id/tvDuration"
             app:layout_constraintStart_toEndOf="@+id/ic_heart"/>
 
-        <ImageView
+        <CheckBox
             android:id="@+id/ic_download"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_light_down"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
             android:layout_marginTop="12dp"
             android:layout_marginStart="20dp"
+            app:setDownList="@{music.downList}"
+            app:clickDownList="@{music}"
             app:layout_constraintTop_toBottomOf="@+id/tvDuration"
             app:layout_constraintStart_toEndOf="@+id/ic_add_playlist"/>
 

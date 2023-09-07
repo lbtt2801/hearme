@@ -52,8 +52,7 @@ class HomeFragment : Fragment() {
         (activity as MainActivity).showBottomNav("VISIBLE")
 
         binding.tvSeeTrendingNow.setOnClickListener {
-//            findNavController().navigate(R.id.trendingNowFragment)
-            findNavController().navigate(R.id.navigation_explore)
+            findNavController().navigate(R.id.trendingNowFragment)
         }
 
         binding.tvSeePopularArtists.setOnClickListener {
