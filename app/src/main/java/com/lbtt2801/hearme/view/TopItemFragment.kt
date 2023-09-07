@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentTopItemBinding
 
@@ -23,6 +26,11 @@ class TopItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as MainActivity).customToolbar("VISIBLE", "", R.color.transparent, R.drawable.ic_arrow_back)
+        (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
+            findNavController().popBackStack()
+        }
 
         val bundle = requireArguments()
         val idCard = bundle.getInt("idCard")

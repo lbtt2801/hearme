@@ -73,7 +73,7 @@ class UserData {
                         "phuongviet.huit@gmail.com",
                         "Awdssdfg852456",
                         "awdssdfgviethufi@gmail.com",
-                        R.drawable.logo,
+                        R.drawable.img_podcast,
                         "Nguyen Phuong Viet",
                         "Viet Huit",
                         Date(2002, 12, 6, 0, 0, 0),
@@ -91,7 +91,7 @@ class UserData {
                         "lebuitantruong@gmail.com",
                         "lbtt2801",
                         "truongletanbui@gmail.com",
-                        R.drawable.logo,
+                        R.drawable.img_music,
                         "Le Bui Tan Truong",
                         "Truong HUIT",
                         Date(2002, 1, 28, 0, 0, 0),
@@ -106,11 +106,11 @@ class UserData {
                 )
                 add(
                     User(
-                        "a@gmail.com",
+                        "123456@gmail.com",
                         "123456",
                         "b@gmail.com",
                         R.drawable.logo,
-                        "Le Bui Tan Truong",
+                        "Account Clone",
                         "Truong HUIT",
                         Date(2002, 1, 28, 0, 0, 0),
                         "VietNam",

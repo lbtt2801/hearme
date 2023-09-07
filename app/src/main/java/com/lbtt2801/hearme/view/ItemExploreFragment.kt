@@ -36,6 +36,10 @@ class ItemExploreFragment : Fragment() {
             showIcSearch = true
         )
 
+        (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
+            findNavController().popBackStack()
+        }
+
         binding.tvWeeklyAlbum.text = "Weekly Album $title"
         binding.tvWeeklySong.text = "Weekly Song $title"
         binding.tvDailyViral.text = "Daily Viral $title"
@@ -45,7 +49,7 @@ class ItemExploreFragment : Fragment() {
                 0,
                 binding.tvInCardTopAlbumGlobal.text.toString(),
                 binding.tvTopAlbumGlobal.text.toString(),
-                "The most played albums from last week."
+                "The most played albums from last week.The most played albums from last week.The most played albums from last week."
             )
         }
 

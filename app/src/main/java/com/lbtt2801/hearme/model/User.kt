@@ -2,14 +2,15 @@ package com.lbtt2801.hearme.model
 
 import android.text.TextUtils
 import android.util.Patterns
+import com.lbtt2801.hearme.R
 import java.util.Date
 
 data class User(
     val email: String,
     val password: String,
     var secondaryEmail: String? = null,
-    val avatar: Int? = null,
-    var fullName: String? = null,
+    val avatar: Int = R.drawable.logo,
+    var fullName: String = "User 404",
     var nickName: String? = null,
     var dob: Date? = null,
     val nation: String? = null,

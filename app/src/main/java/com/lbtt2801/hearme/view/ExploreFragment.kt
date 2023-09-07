@@ -51,7 +51,11 @@ class ExploreFragment : Fragment() {
     private fun displayRecyclerView(lstData: ArrayList<Category>) {
         val layoutRecyclerView = GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
         categoryAdapter = CategoryAdapter(lstData, 0) {
-            findNavController().navigate(R.id.itemExploreFragment, it)
+            if (it.getInt("position") == 1)
+                findNavController().navigate(R.id.podcastFragment, it)
+            else if (it.getInt("position") == 2)
+                findNavController().navigate(R.id.itemExploreFragment, it)
+            else findNavController().navigate(R.id.itemExploreFragment, it)
         }
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerView

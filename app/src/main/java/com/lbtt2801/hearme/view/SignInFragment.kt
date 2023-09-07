@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -102,11 +103,14 @@ class SignInFragment : Fragment() {
             else binding.txtLayoutPass.error = "Password length must be >= 6"
 
             if (checkEmail && checkPass) {
-                val kq =
-                    lstDataUser?.filter { it.email == binding.edtEmail.text.toString() && it.password == binding.edtPass.text.toString() }
-                if (kq!!.isNotEmpty()) {
+                val kq = lstDataUser.filter { it.email == binding.edtEmail.text.toString() && it.password == binding.edtPass.text.toString() }
+                if (kq.isNotEmpty()) {
                     Toast.makeText(context, "Welcome to Hearme!", Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.navigation_home)
+                    val bundle = Bundle().apply {
+                        kq[0].avatar?.let { avt -> putInt("avatar", avt) }
+                        putString("fullName", kq[0].fullName)
+                    }
+                    findNavController().navigate(R.id.navigation_home, bundle)
                 } else {
                     Toast.makeText(
                         context,
