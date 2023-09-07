@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -24,6 +25,7 @@ import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Chart
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.viewmodel.HomeViewModel
+import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class HomeFragment : Fragment() {
 
@@ -32,6 +34,8 @@ class HomeFragment : Fragment() {
     private lateinit var musicAdapter: MusicAdapter
     private lateinit var artistAdapter: ArtistAdapter
     private lateinit var chartAdapter: ChartAdapter
+
+    private val userViewModel: UserViewModel by activityViewModels()
 
     private val viewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
@@ -104,8 +108,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun displayRecyclerViewArtist(lstData: ArrayList<Artist>) {
-        val layoutRecyclerViewArtist = LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
-        artistAdapter = ArtistAdapter(lstData, 0)
+        val layoutRecyclerViewArtist =
+            LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
+        artistAdapter = ArtistAdapter(lstData, 0, userViewModel)
         binding.recyclerViewPopularArtists.apply {
             layoutManager = layoutRecyclerViewArtist
             adapter = artistAdapter
@@ -113,7 +118,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun displayRecyclerViewChart(lstData: ArrayList<Chart>) {
-        val layoutRecyclerViewChart = LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
+        val layoutRecyclerViewChart =
+            LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
         chartAdapter = ChartAdapter(lstData, 0)
         binding.recyclerViewTopCharts.apply {
             layoutManager = layoutRecyclerViewChart

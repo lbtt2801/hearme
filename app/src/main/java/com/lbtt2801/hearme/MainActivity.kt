@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -20,6 +22,7 @@ import com.lbtt2801.hearme.databinding.ActivityMainBinding
 import com.lbtt2801.hearme.viewmodel.ArtistViewModel
 import com.lbtt2801.hearme.viewmodel.EmailViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
+import java.lang.Math.round
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -148,17 +151,41 @@ class MainActivity : AppCompatActivity() {
 
     fun protectedEmail(email: String): String {
         var edtEmail = ""
-        var keep = ""
-        for (item in email.indices) {
-            keep = "@" + email.split("@")[1]
-            Log.v(TAG, "$keep")
-            if (email[item] == '@') {
-                break
-            } else if (item in 3..5)
+        val splitAt = email.split("@")
+        val str1 = splitAt[0]
+        val str2 = splitAt[1]
+        val len = str1.length
+        var count = 0
+
+        val int: Int = when (len) {
+            in 6..8 -> {
+                2
+            }
+
+            else -> {
+                3
+            }
+        }
+        for (item in str1.indices) {
+            if (count < int) {
+                edtEmail += email[item]
+                count++
+                continue
+            }
+            if (item < len - int)
                 edtEmail += "*"
             else
                 edtEmail += email[item]
         }
-        return edtEmail.plus(keep)
+
+        return edtEmail.plus("@$str2")
+    }
+}
+
+fun MainActivity.hideSoftKeyboard() {
+    currentFocus?.let {
+        val inputMethodManager =
+            ContextCompat.getSystemService(this, InputMethodManager::class.java)!!
+        inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
     }
 }

@@ -23,6 +23,7 @@ import com.lbtt2801.hearme.databinding.FragmentSetFingerprintBinding
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.viewmodel.ArtistViewModel
 import com.lbtt2801.hearme.viewmodel.HomeViewModel
+import com.lbtt2801.hearme.viewmodel.UserViewModel
 import java.util.*
 
 class FollowArtistsFragment : Fragment() {
@@ -31,7 +32,8 @@ class FollowArtistsFragment : Fragment() {
 
     private lateinit var artistAdapter: ArtistAdapter
 
-    private val viewModel: ArtistViewModel by activityViewModels()
+    private val artistViewModel: ArtistViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,9 +51,10 @@ class FollowArtistsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.lstDataArtists.observe(viewLifecycleOwner, displayRecyclerView)
+        artistViewModel.lstDataArtists.observe(viewLifecycleOwner, displayRecyclerView)
 
-        val direction = FollowArtistsFragmentDirections.actionFollowArtistsFragmentToNavigationHome()
+        val direction =
+            FollowArtistsFragmentDirections.actionFollowArtistsFragmentToNavigationHome()
         binding.btnSkip.setOnClickListener() {
             findNavController().navigate(direction)
         }
@@ -74,7 +77,7 @@ class FollowArtistsFragment : Fragment() {
     private var displayRecyclerView: Observer<ArrayList<Artist>?> =
         Observer<ArrayList<Artist>?> { artistArrayList ->
             val layout = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
-            artistAdapter = artistArrayList?.let { ArtistAdapter(it, 3) }!!
+            artistAdapter = artistArrayList?.let { ArtistAdapter(it, 3, userViewModel) }!!
             binding.recyclerView.apply {
                 layoutManager = layout
                 adapter = artistAdapter
