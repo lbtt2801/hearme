@@ -77,6 +77,7 @@
                     android:background="@drawable/img_bg_02"/>
 
                 <TextView
+                    android:id="@+id/tvInCardTopAlbum"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textStyle="bold"
@@ -88,6 +89,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
+                android:id="@+id/tvTopAlbum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -124,6 +126,7 @@
                     android:background="@drawable/img_bg_03"/>
 
                 <TextView
+                    android:id="@+id/tvInCardTopSongGlobal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textStyle="bold"
@@ -161,6 +164,7 @@
                     android:background="@drawable/img_bg_04"/>
 
                 <TextView
+                    android:id="@+id/tvInCardTopSong"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textStyle="bold"
@@ -172,6 +176,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
+                android:id="@+id/tvTopSong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -208,6 +213,7 @@
                     android:background="@drawable/img_bg_05"/>
 
                 <TextView
+                    android:id="@+id/tvInCardTop50Global"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textStyle="bold"
@@ -215,8 +221,6 @@
                     android:textSize="24sp"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="VIRAL 50 GLOBAL"/>
-
-
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -247,6 +251,7 @@
                     android:background="@drawable/img_bg_06"/>
 
                 <TextView
+                    android:id="@+id/tvInCardTop50"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textStyle="bold"
@@ -258,6 +263,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
+                android:id="@+id/tvTop50"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
