@@ -81,6 +81,22 @@ class SignUpFragment : Fragment() {
                 else binding.txtLayoutEmail.error = "Please enter the correct email format"
             }
 
+            // check length username email: 6 <= username <= 30
+            if (email.substring(0,6).find { it == '@' } != null) {
+                checkEmail = false
+                binding.txtLayoutEmail.error = "Please enter the correct email format"
+            } else checkEmail = true
+
+            if (email.length > 30) {
+                if (email.substring(0,30).find { it == '@' } == null)
+                    checkEmail = true
+                else {
+                    checkEmail = false
+                    binding.txtLayoutEmail.error = "Please enter the correct email format"
+                }
+            }
+
+
             if (pass.length >= 6)
                 checkPass = true
             else binding.txtLayoutPass.error = "Password length must be >= 6"
@@ -101,7 +117,7 @@ class SignUpFragment : Fragment() {
                             R.id.action_signUpFragment_to_fillYourProfileFragment
                         )
                         emailViewModel.selectItem(binding.edtEmail.text.toString())
-                    } else Toast.makeText(context, "Fail Fail Fail", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 viewModelUser.addDataUser(email, pass)
             }

@@ -41,34 +41,73 @@ class ItemExploreFragment : Fragment() {
         binding.tvDailyViral.text = "Daily Viral $title"
 
         binding.cardViewTopAlbumGlobal.setOnClickListener {
-            val detail = "The most played albums from last week."
-//            sendData(
-//                binding.tvInCardTopAlbumGlobal.text.toString(),
-//                0,
-//                binding.tvTopAlbumGlobal.text.toString(),
-//                detail
-//            )
-            val bundle = Bundle().apply {
-//                putInt("background", background)
-//                putString("tvInCard", tvInCard)
-//                putString("tvTitle", tvTitle)
-                putString("tvDetail", detail)
-            }
-            ItemExploreFragment().arguments = bundle
-            findNavController().navigate(R.id.topItemFragment)
+            sendData(
+                0,
+                binding.tvInCardTopAlbumGlobal.text.toString(),
+                binding.tvTopAlbumGlobal.text.toString(),
+                "The most played albums from last week."
+            )
+        }
+
+        binding.cardViewTopAlbum.setOnClickListener {
+            sendData(
+                1,
+                binding.tvInCardTopAlbum.text.toString(),
+                binding.tvTopAlbum.text.toString(),
+                "The most played albums from last week."
+            )
+        }
+
+        binding.cardViewTopSongGlobal.setOnClickListener {
+            sendData(
+                2,
+                binding.tvInCardTopSongGlobal.text.toString(),
+                binding.tvTopSongGlobal.text.toString(),
+                "The most played songs from last week."
+            )
+        }
+
+        binding.cardViewTopSong.setOnClickListener {
+            sendData(
+                3,
+                binding.tvInCardTopSong.text.toString(),
+                binding.tvTopSong.text.toString(),
+                "The most played songs from last week."
+            )
+        }
+
+        binding.cardViewTop50Global.setOnClickListener {
+            sendData(
+                4,
+                binding.tvInCardTop50Global.text.toString(),
+                binding.tvTop50Global.text.toString(),
+                "The list viral top 50 from last week."
+            )
+        }
+
+        binding.cardViewTop50.setOnClickListener {
+            sendData(
+                5,
+                binding.tvInCardTop50.text.toString(),
+                binding.tvTop50.text.toString(),
+                "The list viral top 50 from last week."
+            )
         }
 
     }
 
-    private fun sendData(tvInCard: String, background: Int, tvTitle: String, tvDetail: String) {
+    private fun sendData(idCard: Int, tvInCard: String, tvTitle: String, tvDetail: String) {
         val bundle = Bundle().apply {
-            putInt("background", background)
+            putInt("idCard", idCard)
             putString("tvInCard", tvInCard)
             putString("tvTitle", tvTitle)
             putString("tvDetail", tvDetail)
         }
         this.arguments = bundle
+
+        findNavController().navigate(R.id.topItemFragment, bundle)
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
