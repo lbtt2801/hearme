@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -126,7 +129,7 @@ class FillOTPFragment : Fragment() {
             } else if (passCode == "1111") {
                 findNavController().navigate(R.id.action_fillOTPFragment_to_createNewPasswordFragment)
             } else {
-                binding.containerNumPad.visibility = View.VISIBLE
+                editState(binding.btnVerify, "up")
                 mainActivity.showSnack(view, "Incorrect code, try again!")
             }
         }
@@ -136,7 +139,7 @@ class FillOTPFragment : Fragment() {
         super.onResume()
         mainActivity.customToolbar(
             "VISIBLE", "Forgot Password", R.color.transparent,
-            com.google.android.material.R.drawable.ic_arrow_back_black_24
+            R.drawable.ic_arrow_back
         )
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
@@ -155,26 +158,58 @@ class FillOTPFragment : Fragment() {
                     binding.edtNum1.isPressed = false
                     binding.edtNum2.isPressed = true
                     num2 = numbersList[1]
-                    binding.edtNum2.setText(num1)
+                    binding.edtNum2.setText(num2)
                 }
                 3 -> {
                     binding.edtNum2.isPressed = false
                     binding.edtNum3.isPressed = true
                     num3 = numbersList[2]
-                    binding.edtNum3.setText(num1)
+                    binding.edtNum3.setText(num3)
                 }
                 4 -> {
                     binding.edtNum3.isPressed = false
                     binding.edtNum4.isPressed = true
                     num4 = numbersList[3]
-                    binding.edtNum4.setText(num1)
+                    binding.edtNum4.setText(num4)
                     passCode = num1 + num2 + num3 + num4
-                    binding.containerNumPad.visibility = View.GONE
+                    editState(binding.btnVerify, "down")
                     binding.edtNum4.isEnabled = true
                     binding.edtNum4.isClickable = false
                     binding.edtNum4.isFocusable = false
                 }
             }
+        }
+    }
+
+    private fun editState(
+        appCompatButton: AppCompatButton, type: String //up or down
+    ) {
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        if (type.lowercase() == "up") {
+            appCompatButton.apply {
+                background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.bg_button_continue_1)
+                layoutParams = params.apply {
+                    bottomMargin = 24
+                    leftMargin = 24
+                    rightMargin = 24
+                }
+            }
+            binding.containerNumPad.visibility = View.VISIBLE
+        } else if (type.lowercase() == "down") {
+            appCompatButton.apply {
+                background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.bg_button_continue_2)
+                layoutParams = params.apply {
+                    bottomMargin = 48
+                    leftMargin = 24
+                    rightMargin = 24
+                }
+            }
+            binding.containerNumPad.visibility = View.GONE
         }
     }
 }

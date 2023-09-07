@@ -83,7 +83,7 @@ class SelectMethodFragment : Fragment() {
         super.onResume()
         mainActivity.customToolbar(
             "VISIBLE", "Forgot Password", R.color.transparent,
-            com.google.android.material.R.drawable.ic_arrow_back_black_24
+            R.drawable.ic_arrow_back
         )
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
