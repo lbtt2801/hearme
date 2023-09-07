@@ -10,16 +10,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
-            android:layout_width="185dp"
+            android:layout_width="160dp"
             android:layout_height="120dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:cardCornerRadius="30dp"
-            android:backgroundTint="@{category.background}">
+            app:setBackgroundTint="@{category.background}">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -41,7 +42,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@{category.image}" />
+                    app:setImage="@{category.image}" />
 
             </com.google.android.material.card.MaterialCardView>
 
