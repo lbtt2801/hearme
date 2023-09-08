@@ -1,15 +1,11 @@
 package com.lbtt2801.hearme.view.forgotandresetpassword
 
-import android.content.ContentValues.TAG
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,9 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentCreateNewPasswordBinding
-import com.lbtt2801.hearme.view.accountssetup.FollowArtistsFragmentDirections
 import com.lbtt2801.hearme.viewmodel.UserViewModel
-import java.io.ByteArrayOutputStream
 
 
 class CreateNewPasswordFragment : Fragment() {
@@ -188,7 +182,10 @@ class CreateNewPasswordFragment : Fragment() {
                         pass
                     )
                 }
-                findNavController().navigate(CreateNewPasswordFragmentDirections.actionCreateNewPasswordFragmentToNavigationHome())
+                AuthorizationProgressDialog().show(
+                    childFragmentManager,
+                    AuthorizationProgressDialog.TAG
+                )
             } else {
                 mainActivity.showSnack(it, "Password and Re-password aren't similar!")
             }
