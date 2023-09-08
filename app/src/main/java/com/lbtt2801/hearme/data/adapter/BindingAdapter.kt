@@ -74,64 +74,51 @@ fun clickLoveList(checkBox: CheckBox, music: Music) {
 
 @BindingAdapter("app:setPlayList")
 fun setPlayList(checkBox: CheckBox, music: Music) {
-    //Log.v(TAG, "setPlayList -> $music")
-
-//    checkBox.isChecked = check
-//    if (check) {
-//        checkBox.buttonTintList =
-//            ContextCompat.getColorStateList(checkBox.context, R.color.green_500)
-//        checkBox.setButtonDrawable(R.drawable.ic_tick_square)
-//    } else {
-//        checkBox.buttonTintList = ContextCompat.getColorStateList(checkBox.context, R.color.text)
-//        checkBox.setButtonDrawable(R.drawable.ic_add_playlist)
-//    }
+    val mainActivity = checkBox.context as MainActivity
+    val user =
+        mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }
+    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) {
+        Log.v(TAG, "${it.first { it.email == mainActivity.email }.listPlayedMusic.size}")
+        checkBox.isChecked =
+            user?.listPlayedMusic?.none { it.musicID == music.musicID } == false
+    }
 }
 
 @BindingAdapter("app:clickPlayList")
 fun clickPlayList(checkBox: CheckBox, music: Music) {
-    checkBox.setOnCheckedChangeListener { _, _ ->
-        // Log.v(TAG, "clickPlayList -> $music")
-//        music.isPlayList = checkBox.isChecked
-//        if (checkBox.isChecked) {
-//            checkBox.buttonTintList =
-//                ContextCompat.getColorStateList(checkBox.context, R.color.green_500)
-//            checkBox.setButtonDrawable(R.drawable.ic_tick_square)
-//        } else {
-//            checkBox.buttonTintList =
-//                ContextCompat.getColorStateList(checkBox.context, R.color.text)
-//            checkBox.setButtonDrawable(R.drawable.ic_add_playlist)
-//        }
+    val mainActivity = checkBox.context as MainActivity
+    checkBox.setOnClickListener() {
+        mainActivity.viewModelUser.updateListPlayedMusic(
+            mainActivity.email,
+            music,
+            checkBox.isChecked
+        )
     }
 }
 
 @BindingAdapter("app:setDownList")
 fun setDownList(checkBox: CheckBox, music: Music) {
-    //Log.v(TAG, "setDownList-> $music")
-//    checkBox.isChecked = check
-//    if (check) {
-//        checkBox.buttonTintList =
-//            ContextCompat.getColorStateList(checkBox.context, R.color.green_500)
-//        checkBox.setButtonDrawable(R.drawable.ic_bold_down)
-//    } else {
-//        checkBox.buttonTintList = ContextCompat.getColorStateList(checkBox.context, R.color.text)
-//        checkBox.setButtonDrawable(R.drawable.ic_light_down)
-//    }
+    val mainActivity = checkBox.context as MainActivity
+    val user =
+        mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }
+    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) {
+        Log.v(TAG, "${it.first { it.email == mainActivity.email }.listMusicsDownloaded.size}")
+        checkBox.isChecked =
+            user?.listMusicsDownloaded?.none { it.musicID == music.musicID } == false
+    }
 }
 
 @BindingAdapter("app:clickDownList")
 fun clickDownList(checkBox: CheckBox, music: Music) {
     checkBox.setOnCheckedChangeListener { _, _ ->
-        //Log.v(TAG, "setDownList-> $music")
-//        music.isDownList = checkBox.isChecked
-//        if (checkBox.isChecked) {
-//            checkBox.buttonTintList =
-//                ContextCompat.getColorStateList(checkBox.context, R.color.green_500)
-//            checkBox.setButtonDrawable(R.drawable.ic_bold_down)
-//        } else {
-//            checkBox.buttonTintList =
-//                ContextCompat.getColorStateList(checkBox.context, R.color.text)
-//            checkBox.setButtonDrawable(R.drawable.ic_light_down)
-//        }
+        val mainActivity = checkBox.context as MainActivity
+        checkBox.setOnClickListener() {
+            mainActivity.viewModelUser.updateListMusicsDownloaded(
+                mainActivity.email,
+                music,
+                checkBox.isChecked
+            )
+        }
     }
 }
 

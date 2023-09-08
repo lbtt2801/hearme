@@ -21,9 +21,10 @@ data class User(
     val isFirstSignIn: Boolean = true,
     val listArtistsFollowing: ArrayList<Artist> = ArrayList(), //Following
     val listFollowers: ArrayList<User> = ArrayList(), //Followers
-    val listMusicsLoved: ArrayList<Music> = ArrayList(),
-    val listMusicListened: ArrayList<Music> = ArrayList(),
-    val listMusicDownloaded: ArrayList<Music> = ArrayList()
+    val listMusicsLoved: ArrayList<Music> = ArrayList(), //Love
+    val listMusicsListened: ArrayList<Music> = ArrayList(), //History
+    val listMusicsDownloaded: ArrayList<Music> = ArrayList(), //Downloaded
+    val listPlayedMusic: ArrayList<Music> = ArrayList() //Play list
 ) {
     val isDataValid: Boolean
         get() = (!TextUtils.isEmpty(email))

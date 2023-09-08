@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
@@ -27,6 +28,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
 import com.lbtt2801.hearme.model.User
+import com.lbtt2801.hearme.view.forgotandresetpassword.AuthorizationProgressDialog
+import com.lbtt2801.hearme.view.forgotandresetpassword.AuthorizationProgressDialog.Companion.TAG
 import com.lbtt2801.hearme.viewmodel.ArtistViewModel
 import com.lbtt2801.hearme.viewmodel.CategoriesViewModel
 import com.lbtt2801.hearme.viewmodel.EmailViewModel
@@ -43,7 +46,6 @@ class MainActivity : AppCompatActivity() {
     val viewModelUser: UserViewModel by viewModels()
 
     lateinit var email: String
-    lateinit var userList: ArrayList<User>
 
     var checkInHome = false
 
@@ -67,8 +69,6 @@ class MainActivity : AppCompatActivity() {
             email = it
         })
         viewModelUser.getListDataUser()
-
-//        UserData.data() // khoi tao du lieu
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
