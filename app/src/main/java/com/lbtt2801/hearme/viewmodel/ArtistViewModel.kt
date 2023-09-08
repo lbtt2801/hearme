@@ -3,11 +3,9 @@ package com.lbtt2801.hearme.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.lbtt2801.hearme.data.ArtistsData
 import com.lbtt2801.hearme.data.FakeData
-import com.lbtt2801.hearme.data.UserData
 import com.lbtt2801.hearme.model.Artist
-import com.lbtt2801.hearme.model.User
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ArtistViewModel : ViewModel() {
@@ -18,7 +16,7 @@ class ArtistViewModel : ViewModel() {
     private lateinit var lst: ArrayList<Artist>
 
     fun getListDataArtists() {
-        lst = FakeData.dataArtist()
+        lst = ArtistsData.dataArtist()
         _lstDataArtists.postValue(lst)
     }
 }

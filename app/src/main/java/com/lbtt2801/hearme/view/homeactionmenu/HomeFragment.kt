@@ -1,14 +1,11 @@
-package com.lbtt2801.hearme.view
+package com.lbtt2801.hearme.view.homeactionmenu
 
-import android.content.ContentValues
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -37,6 +34,8 @@ class HomeFragment : Fragment() {
     private lateinit var chartAdapter: ChartAdapter
     private lateinit var mainActivity: MainActivity
     private var email: String? = ""
+    private var avatar: Drawable? = null
+    private var fullName: String? = ""
 
     private val userViewModel: UserViewModel by activityViewModels()
 
@@ -58,14 +57,12 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).binding.toolBar.isVisible = false
-        (activity as MainActivity).showBottomNav("VISIBLE")
 
-        val avatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
-        val fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
 
-        binding.imgAvt.background = avatar?.let { ContextCompat.getDrawable(requireContext(), it) }
-        binding.tvUser.text = fullName.toString()
+        val newAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
+        fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
+
+        avatar = newAvatar?.let { mainActivity.changeSizeBitmap(it, 48, 48) }
 
         binding.tvSeeTrendingNow.setOnClickListener {
             findNavController().navigate(R.id.trendingNowFragment)
@@ -95,9 +92,28 @@ class HomeFragment : Fragment() {
                 Toast.makeText(context, "list Chart is null or empty", Toast.LENGTH_SHORT).show()
         })
         viewModel.getListDataChart()
+//
+//        binding.icNotification.setOnClickListener {
+//            findNavController().navigate(R.id.notificationFragment)
+//        }
+    }
 
-        binding.icNotification.setOnClickListener {
-            findNavController().navigate(R.id.notificationFragment)
+    override fun onResume() {
+        super.onResume()
+        mainActivity.showBottomNav("VISIBLE")
+        mainActivity.customToolbar(
+            "VISIBLE",
+            null,
+            fullName,
+            R.color.transparent,
+            avatar,
+            showIcMore = false,
+            showIcFilter = false,
+            showIcSearch = true,
+            showIcNotification = true
+        )
+        mainActivity.binding.toolBar.setNavigationOnClickListener() {
+            //navigate
         }
     }
 

@@ -1,4 +1,4 @@
-package com.lbtt2801.hearme.view
+package com.lbtt2801.hearme.view.homeactionmenu
 
 import android.annotation.SuppressLint
 import android.os.Bundle

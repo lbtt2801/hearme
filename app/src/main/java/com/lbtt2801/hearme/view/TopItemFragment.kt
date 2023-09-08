@@ -14,7 +14,7 @@ import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentTopItemBinding
 
 class TopItemFragment : Fragment() {
-    private var _binding: FragmentTopItemBinding?= null
+    private var _binding: FragmentTopItemBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +27,13 @@ class TopItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as MainActivity).customToolbar("VISIBLE", "", R.color.transparent, R.drawable.ic_arrow_back)
+        (activity as MainActivity).customToolbar(
+            "VISIBLE",
+            "",
+            null,
+            R.color.transparent,
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)
+        )
         (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
         }
@@ -39,12 +45,18 @@ class TopItemFragment : Fragment() {
         binding.tvDetail.text = bundle.getString("tvDetail")
 
         when (idCard) {
-            0 -> binding.imgCardView.background = ContextCompat.getDrawable(requireContext(), R.drawable.img_bg_01)
-            1 -> binding.imgCardView.background = ContextCompat.getDrawable(requireContext(), R.drawable.img_bg_02)
-            2 -> binding.imgCardView.background = ContextCompat.getDrawable(requireContext(), R.drawable.img_bg_03)
-            3 -> binding.imgCardView.background = ContextCompat.getDrawable(requireContext(), R.drawable.img_bg_04)
-            4 -> binding.imgCardView.background = ContextCompat.getDrawable(requireContext(), R.drawable.img_bg_05)
-            5 -> binding.imgCardView.background = ContextCompat.getDrawable(requireContext(), R.drawable.img_bg_06)
+            0 -> binding.imgCardView.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.img_bg_01)
+            1 -> binding.imgCardView.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.img_bg_02)
+            2 -> binding.imgCardView.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.img_bg_03)
+            3 -> binding.imgCardView.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.img_bg_04)
+            4 -> binding.imgCardView.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.img_bg_05)
+            5 -> binding.imgCardView.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.img_bg_06)
         }
     }
 

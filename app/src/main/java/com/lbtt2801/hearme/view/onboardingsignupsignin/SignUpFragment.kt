@@ -1,23 +1,20 @@
-package com.lbtt2801.hearme.view
+package com.lbtt2801.hearme.view.onboardingsignupsignin
 
-import android.content.ContentValues.TAG
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
-import com.lbtt2801.hearme.data.UserData
+import com.lbtt2801.hearme.data.UsersData
 import com.lbtt2801.hearme.databinding.FragmentSignUpBinding
 import com.lbtt2801.hearme.viewmodel.EmailViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
@@ -26,11 +23,8 @@ class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
     private lateinit var mainActivity: MainActivity
-    private val viewModelUser: UserViewModel by activityViewModels()
-//    private val viewModel by lazy {
-//        ViewModelProvider(this)[UserViewModel::class.java]
-//    }
 
+    private val viewModelUser: UserViewModel by activityViewModels()
     private val emailViewModel: EmailViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -44,11 +38,6 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
-            findNavController().navigate(R.id.letYouInFragment)
-        }
-
         binding.edtEmail.setOnFocusChangeListener { _, hasFocus ->
             val color = if (hasFocus) resources.getColor(R.color.bg_button) else Color.BLACK
             binding.txtLayoutEmail.setStartIconTintList(ColorStateList.valueOf(color))
@@ -65,13 +54,13 @@ class SignUpFragment : Fragment() {
         }
 
         binding.tvSignIn.setOnClickListener() {
-            findNavController().navigate(R.id.signInFragment)
+            findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
         }
 
         binding.btnSignUp.setOnClickListener() {
             val email = binding.edtEmail.text.toString().trim()
             val pass = binding.edtPass.text.toString().trim()
-            val sizeUserDataOld = UserData.data().size
+            val sizeUserDataOld = UsersData.data().size
             var checkEmail = false
             var checkPass = false
 
@@ -129,6 +118,20 @@ class SignUpFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mainActivity.showBottomNav("gone")
+        mainActivity.customToolbar(
+            "visible",
+            null,
+            null,
+            R.color.transparent,
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back),
+            showIcMore = false,
+            showIcFilter = false,
+            showIcSearch = false,
+            showIcNotification = false
+        )
+        mainActivity.binding.toolBar.setNavigationOnClickListener() {
+            findNavController().popBackStack()
+        }
     }
 
     override fun onDestroyView() {

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -14,14 +15,15 @@ import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentItemExploreBinding
 
 class ItemExploreFragment : Fragment() {
-    private var _binding: FragmentItemExploreBinding?= null
+    private var _binding: FragmentItemExploreBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_item_explore, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_item_explore, container, false)
         return binding.root
     }
 
@@ -30,7 +32,11 @@ class ItemExploreFragment : Fragment() {
 
         val title = arguments?.getString("name")
         (activity as MainActivity).customToolbar(
-            "VISIBLE", title, R.color.transparent, R.drawable.ic_arrow_back,
+            "VISIBLE",
+            title,
+            null,
+            R.color.transparent,
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back),
             showIcMore = false,
             showIcFilter = false,
             showIcSearch = true

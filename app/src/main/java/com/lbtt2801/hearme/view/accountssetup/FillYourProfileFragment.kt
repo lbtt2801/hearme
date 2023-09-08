@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.net.ParseException
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -103,8 +104,8 @@ class FillYourProfileFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mainActivity.customToolbar(
-            "VISIBLE", "Fill Your Profile", R.color.transparent,
-            R.drawable.ic_arrow_back
+            "VISIBLE", "Fill Your Profile", null, R.color.transparent,
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)
         )
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()

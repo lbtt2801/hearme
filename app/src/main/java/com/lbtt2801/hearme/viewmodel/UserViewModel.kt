@@ -5,14 +5,14 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lbtt2801.hearme.data.UserData
+import com.lbtt2801.hearme.data.UsersData
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.User
 import java.util.Date
 
 class UserViewModel : ViewModel() {
-    private val _lstDataUser = MutableLiveData<List<User>>()
-    val lstDataUser: LiveData<List<User>>
+    private val _lstDataUser = MutableLiveData<ArrayList<User>>()
+    val lstDataUser: LiveData<ArrayList<User>>
         get() = _lstDataUser
 
     private lateinit var lst: ArrayList<User>
@@ -22,7 +22,7 @@ class UserViewModel : ViewModel() {
     }
 
     fun getListDataUser() {
-        lst = UserData.data()
+        lst = UsersData.data()
         _lstDataUser.postValue(lst)
     }
 
@@ -75,22 +75,9 @@ class UserViewModel : ViewModel() {
             }
             _lstDataUser.postValue(lst)
         }
-        numberOfFollowing(email)
         Log.v(TAG, "lst -> $lst")
         Log.v(TAG, "_lstDataUser -> ${_lstDataUser.value.toString()}")
         Log.v(TAG, "lstDataUser -> ${lstDataUser.value.toString()}")
-        Log.v(
-            TAG, "numberOfFollowing -> ${
-                lst.first { it.email == email }.numberOfFollowing.toString()
-            }"
-        )
-    }
-
-    fun numberOfFollowing(email: String) {
-        lst.first { it.email == email }.apply {
-            this.numberOfFollowing = this.listArtistsFollowing.size
-        }
-        _lstDataUser.postValue(lst)
     }
 
     fun updatePassword(email: String, password: String) {

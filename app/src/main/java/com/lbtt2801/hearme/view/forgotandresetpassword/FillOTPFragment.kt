@@ -137,8 +137,8 @@ class FillOTPFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mainActivity.customToolbar(
-            "VISIBLE", "Forgot Password", R.color.transparent,
-            R.drawable.ic_arrow_back
+            "VISIBLE", "Forgot Password", null, R.color.transparent,
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)
         )
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()

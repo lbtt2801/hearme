@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
@@ -66,8 +67,8 @@ class FollowArtistsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mainActivity.customToolbar(
-            "VISIBLE", "Set Your Fingerprint", R.color.transparent,
-            R.drawable.ic_arrow_back
+            "VISIBLE", "Set Your Fingerprint", null, R.color.transparent,
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)
         )
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()

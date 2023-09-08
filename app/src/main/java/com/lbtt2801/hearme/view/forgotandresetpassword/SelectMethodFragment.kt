@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -82,8 +83,8 @@ class SelectMethodFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mainActivity.customToolbar(
-            "VISIBLE", "Forgot Password", R.color.transparent,
-            R.drawable.ic_arrow_back
+            "VISIBLE", "Forgot Password", null, R.color.transparent,
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)
         )
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()

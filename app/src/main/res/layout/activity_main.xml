@@ -18,9 +18,62 @@
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:visibility="gone"
-            app:menu="@menu/menu_toolbar" />
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:visibility="visible"
+            app:menu="@menu/menu_toolbar"
+            app:navigationIcon="@drawable/avt_home">
+
+
+            <LinearLayout
+                android:id="@+id/container_title_for_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:letterSpacing="0.01"
+                        android:lineSpacingExtra="3sp"
+                        android:text="Good Morning 👋"
+                        android:textColor="@color/text_nav"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/text_user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="3sp"
+                    android:text="Andrew Ainsley"
+                    android:textColor="@color/text"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tool_bar_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Fill Your Profile"
+                android:textColor="@color/text"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <fragment
             android:id="@+id/nav_host_fragment_activity_main"
