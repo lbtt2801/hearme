@@ -152,7 +152,7 @@ class CreateNewPasswordFragment : Fragment() {
 
         binding.imageVisibleRePass.setOnClickListener() {
             val edt = binding.edtRePassword
-            if (!isShowPass) {
+            if (!isShowRePass) {
                 edt.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
                 binding.imageVisibleRePass.setImageDrawable(
                     ContextCompat.getDrawable(
@@ -160,8 +160,8 @@ class CreateNewPasswordFragment : Fragment() {
                         R.drawable.ic_visible
                     )
                 )
-                isShowPass = true
-            } else if (isShowPass) {
+                isShowRePass = true
+            } else if (isShowRePass) {
                 edt.inputType =
                     InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                 binding.imageVisibleRePass.setImageDrawable(
@@ -170,7 +170,7 @@ class CreateNewPasswordFragment : Fragment() {
                         R.drawable.ic_invisible
                     )
                 )
-                isShowPass = false
+                isShowRePass = false
             }
             edt.setSelection(edt.length())
             edt.letterSpacing = 0f
@@ -203,26 +203,6 @@ class CreateNewPasswordFragment : Fragment() {
         )
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
-        }
-    }
-
-    fun compareDrawable(d1: Drawable, d2: Drawable): Boolean {
-        try {
-            val bitmap1: Bitmap = (d1 as BitmapDrawable).bitmap
-            val stream1 = ByteArrayOutputStream()
-            bitmap1.compress(Bitmap.CompressFormat.JPEG, 100, stream1)
-            stream1.flush()
-            val bitmapdata1: ByteArray = stream1.toByteArray()
-            stream1.close()
-            val bitmap2: Bitmap = (d2 as BitmapDrawable).bitmap
-            val stream2 = ByteArrayOutputStream()
-            bitmap2.compress(Bitmap.CompressFormat.JPEG, 100, stream2)
-            stream2.flush()
-            val bitmapdata2: ByteArray = stream2.toByteArray()
-            stream2.close()
-            return bitmapdata1 == bitmapdata2
-        } catch (e: Exception) {
-            return false
         }
     }
 }
