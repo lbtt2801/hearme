@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentSplashScreenBinding
 
@@ -15,12 +16,15 @@ class SplashScreenFragment : Fragment() {
 
     private var _binding: FragmentSplashScreenBinding? = null
     private val binding get() = _binding!!
+    private lateinit var mainActivity: MainActivity
     private var handler: Handler = Handler()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_splash_screen, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_splash_screen, container, false)
+        mainActivity = activity as MainActivity
         return binding.root
     }
 
@@ -33,6 +37,11 @@ class SplashScreenFragment : Fragment() {
             findNavController().navigate(R.id.walkThroughFragment)
 //            findNavController().navigate(R.id.navigation_explore)
         }, 3000)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainActivity.showBottomNav("gone")
     }
 
     override fun onDestroyView() {

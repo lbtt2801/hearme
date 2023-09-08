@@ -25,6 +25,7 @@ import com.lbtt2801.hearme.viewmodel.UserViewModel
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
+    private lateinit var mainActivity: MainActivity
     private val viewModelUser: UserViewModel by activityViewModels()
 //    private val viewModel by lazy {
 //        ViewModelProvider(this)[UserViewModel::class.java]
@@ -37,6 +38,7 @@ class SignUpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
+        mainActivity = activity as MainActivity
         return binding.root
     }
 
@@ -82,13 +84,13 @@ class SignUpFragment : Fragment() {
             }
 
             // check length username email: 6 <= username <= 30
-            if (email.substring(0,6).find { it == '@' } != null) {
+            if (email.substring(0, 6).find { it == '@' } != null) {
                 checkEmail = false
                 binding.txtLayoutEmail.error = "Please enter the correct email format"
             } else checkEmail = true
 
             if (email.length > 30) {
-                if (email.substring(0,30).find { it == '@' } == null)
+                if (email.substring(0, 30).find { it == '@' } == null)
                     checkEmail = true
                 else {
                     checkEmail = false
@@ -122,6 +124,11 @@ class SignUpFragment : Fragment() {
                 viewModelUser.addDataUser(email, pass)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainActivity.showBottomNav("gone")
     }
 
     override fun onDestroyView() {

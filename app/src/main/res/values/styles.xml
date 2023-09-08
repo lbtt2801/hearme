@@ -25,4 +25,13 @@
         <item name="cornerSize">48dp</item>
     </style>
 
+    <style name="BottomNavigationView.ActiveItemTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="BottomNavigationView.InactiveItemTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">11sp</item>
+    </style>
 </resources>

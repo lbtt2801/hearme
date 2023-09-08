@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
             android:visibility="gone"
-            app:menu="@menu/menu_toolbar"/>
+            app:menu="@menu/menu_toolbar" />
 
         <fragment
             android:id="@+id/nav_host_fragment_activity_main"
@@ -32,13 +32,17 @@
             app:navGraph="@navigation/mobile_navigation" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/nav_view"
+            android:id="@+id/bottom_nav_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:background="?android:attr/windowBackground"
-            app:itemIconTint="@color/text"
+            android:background="@drawable/bg_bottom_nav"
+            android:paddingTop="5dp"
+            app:itemIconSize="24dp"
+            app:itemIconTint="@color/item_bottom_nav"
+            app:itemTextAppearanceActive="@style/BottomNavigationView.ActiveItemTextAppearance"
+            app:itemTextAppearanceInactive="@style/BottomNavigationView.InactiveItemTextAppearance"
+            app:itemTextColor="@color/item_bottom_nav"
+            app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_nav_menu" />
 
     </LinearLayout>
