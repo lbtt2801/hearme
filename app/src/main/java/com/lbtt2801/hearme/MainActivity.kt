@@ -1,11 +1,16 @@
 package com.lbtt2801.hearme
 
+import android.app.Dialog
 import android.content.ContentValues.TAG
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +28,7 @@ import com.lbtt2801.hearme.viewmodel.ArtistViewModel
 import com.lbtt2801.hearme.viewmodel.EmailViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 import java.lang.Math.round
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -32,6 +38,8 @@ class MainActivity : AppCompatActivity() {
     private val viewModelUser: UserViewModel by viewModels()
 
     lateinit var email: String
+
+    var checkInHome = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +65,33 @@ class MainActivity : AppCompatActivity() {
         showBottomNav("GONE")
     }
 
+    override fun onBackPressed() {
+        if (!checkInHome)
+            super.onBackPressed()
+        else showDialogBox()
+    }
+
+    private fun showDialogBox() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_back)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+
+        val btnYes: TextView = dialog.findViewById(R.id.btnYesDialog)
+        val btnNo: TextView = dialog.findViewById(R.id.btnNoDialog)
+
+        btnYes.setOnClickListener {
+            moveTaskToBack(true);
+            exitProcess(-1)
+        }
+
+        btnNo.setOnClickListener {
+            dialog.dismiss()
+        }
+
+    }
     private fun onClickItemBottomNav(id: MenuItem) = when (id.itemId) {
         R.id.navigation_home -> {
             navController.navigate(R.id.navigation_home)

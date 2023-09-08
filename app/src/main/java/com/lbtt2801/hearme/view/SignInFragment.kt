@@ -107,11 +107,7 @@ class SignInFragment : Fragment() {
                     lstDataUser.filter { it.email == binding.edtEmail.text.toString() && it.password == binding.edtPass.text.toString() }
                 if (kq.isNotEmpty()) {
                     Toast.makeText(context, "Welcome to Hearme!", Toast.LENGTH_SHORT).show()
-                    val bundle = Bundle().apply {
-                        kq[0].avatar?.let { avt -> putInt("avatar", avt) }
-                        putString("fullName", kq[0].fullName)
-                    }
-                    findNavController().navigate(R.id.navigation_home, bundle)
+                    findNavController().navigate(R.id.navigation_home)
                     emailViewModel.selectItem(email)
                 } else {
                     Toast.makeText(

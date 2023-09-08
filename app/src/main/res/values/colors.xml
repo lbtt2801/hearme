@@ -15,6 +15,7 @@
     <color name="on_button">#FFFFFF</color>
     <color name="bg_button">#0E9E42</color>
     <color name="green_500">#06C149</color>
+    <color name="gradient_green">#33EB75</color>
 
     <color name="color_bg_edit_text">#FAFAFA</color>
 
