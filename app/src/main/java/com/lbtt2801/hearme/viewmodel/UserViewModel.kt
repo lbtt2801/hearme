@@ -19,12 +19,23 @@ class UserViewModel : ViewModel() {
 
     private lateinit var lst: ArrayList<User>
 
-    init {
-        getListDataUser()
-    }
-
     fun getListDataUser() {
         lst = UsersData.data()
+        lst.first { it.email == "phuongviet.huit@gmail.com" }.apply {
+            this.listFollowers.add(
+                UsersData.data().first { it.email == "lebuitantruong@gmail.com" })
+        }
+        lst.first { it.email == "lebuitantruong@gmail.com" }.apply {
+            this.listFollowers.add(
+                UsersData.data().first { it.email == "phuongviet.huit@gmail.com" })
+        }
+        lst.first { it.email == "123456@gmail.com" }.apply {
+            this.listFollowers.apply {
+                add(UsersData.data().first { it.email == "phuongviet.huit@gmail.com" })
+                add(UsersData.data().first { it.email == "lebuitantruong@gmail.com" })
+
+            }
+        }
         _lstDataUser.postValue(lst)
     }
 
@@ -100,14 +111,48 @@ class UserViewModel : ViewModel() {
             }
         } else {
             lst.first { it.email == email }.apply {
-                this.listMusicsLoved.remove(music)
+                this.listMusicsLoved.removeIf { it.musicID == music.musicID }
             }
         }
         _lstDataUser.postValue(lst)
-        Log.v(
-            TAG, "updateListMusicsLoved -> ${
-                lstDataUser.value?.first { it.email == email }?.listMusicsLoved?.size
-            }"
-        )
+    }
+
+    fun updateListPlayedMusic(email: String, music: Music, isLove: Boolean) {
+        if (isLove) {
+            lst.first { it.email == email }.apply {
+                this.listPlayedMusic.add(music)
+            }
+        } else {
+            lst.first { it.email == email }.apply {
+                this.listPlayedMusic.removeIf { it.musicID == music.musicID }
+            }
+        }
+        _lstDataUser.postValue(lst)
+    }
+
+    fun updateListMusicsDownloaded(email: String, music: Music, isLove: Boolean) {
+        if (isLove) {
+            lst.first { it.email == email }.apply {
+                this.listMusicsDownloaded.add(music)
+            }
+        } else {
+            lst.first { it.email == email }.apply {
+                this.listMusicsDownloaded.removeIf { it.musicID == music.musicID }
+            }
+        }
+        _lstDataUser.postValue(lst)
+    }
+
+    fun updateListFollowers(email: String, user: User, isFollow: Boolean) {
+        if (isFollow) {
+            lst.first { it.email == email }.apply {
+                this.listFollowers.add(user)
+            }
+        } else {
+            lst.first { it.email == email }.apply {
+                this.listFollowers.removeIf { it.email == user.email }
+            }
+        }
+        _lstDataUser.postValue(lst)
     }
 }
