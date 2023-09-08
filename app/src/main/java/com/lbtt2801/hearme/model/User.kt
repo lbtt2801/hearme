@@ -9,7 +9,7 @@ data class User(
     val email: String,
     var password: String,
     var secondaryEmail: String? = null,
-    val avatar: Int = R.drawable.logo,
+    var avatar: Int = R.drawable.logo,
     var fullName: String = "User 404",
     var nickName: String? = null,
     var dob: Date? = null,
@@ -21,9 +21,9 @@ data class User(
     val isFirstSignIn: Boolean = true,
     val listArtistsFollowing: ArrayList<Artist> = ArrayList(), //Following
     val listFollowers: ArrayList<User> = ArrayList(), //Followers
-    val listMusicsLoved: ArrayList<Music>? = ArrayList(),
-    val listMusicListened: ArrayList<Music>? = ArrayList(),
-    val listMusicDownloaded: ArrayList<Music>? = ArrayList()
+    val listMusicsLoved: ArrayList<Music> = ArrayList(),
+    val listMusicListened: ArrayList<Music> = ArrayList(),
+    val listMusicDownloaded: ArrayList<Music> = ArrayList()
 ) {
     val isDataValid: Boolean
         get() = (!TextUtils.isEmpty(email))

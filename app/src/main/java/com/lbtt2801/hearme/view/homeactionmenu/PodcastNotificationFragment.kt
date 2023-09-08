@@ -34,7 +34,12 @@ class PodcastNotificationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_podcast_notification, container, false)
+        _binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_podcast_notification,
+            container,
+            false
+        )
         return binding.root
     }
 
@@ -66,8 +71,11 @@ class PodcastNotificationFragment : Fragment() {
     }
 
     private fun displayRecyclerViewToday(lstData: ArrayList<Music>) {
-        val layoutRecyclerViewMusic = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
-        musicAdapter = MusicAdapter(lstData, 2)
+        val layoutRecyclerViewMusic =
+            LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
+        musicAdapter =
+            MusicAdapter(lstData.filter { it.category.categoryID == "ca002" } as ArrayList<Music>,
+                2)
         binding.recyclerViewToday.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter
@@ -75,8 +83,11 @@ class PodcastNotificationFragment : Fragment() {
     }
 
     private fun displayRecyclerViewYesterday(lstData: ArrayList<Music>) {
-        val layoutRecyclerViewMusic = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
-        musicAdapter = MusicAdapter(lstData, 2)
+        val layoutRecyclerViewMusic =
+            LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
+        musicAdapter =
+            MusicAdapter(lstData.filter { it.category.categoryID == "ca002" } as ArrayList<Music>,
+                2)
         binding.recyclerViewYesterday.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter

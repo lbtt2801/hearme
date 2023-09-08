@@ -26,6 +26,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
+import com.lbtt2801.hearme.model.User
 import com.lbtt2801.hearme.viewmodel.ArtistViewModel
 import com.lbtt2801.hearme.viewmodel.CategoriesViewModel
 import com.lbtt2801.hearme.viewmodel.EmailViewModel
@@ -39,9 +40,10 @@ class MainActivity : AppCompatActivity() {
     private val viewModelArtist: ArtistViewModel by viewModels()
     private val viewModelCategory: CategoriesViewModel by viewModels()
     private val viewModelEmail: EmailViewModel by viewModels()
-    private val viewModelUser: UserViewModel by viewModels()
+    val viewModelUser: UserViewModel by viewModels()
 
     lateinit var email: String
+    lateinit var userList: ArrayList<User>
 
     var checkInHome = false
 
@@ -211,7 +213,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun changeSizeBitmap(image: Int, width: Int, height: Int): Drawable {
-        val drawable = resources.getDrawable(image)
+        val drawable: Drawable = if (image != null)
+            resources.getDrawable(image)
+        else
+            resources.getDrawable(R.drawable.avt_home)
         val bitmap: Bitmap = (drawable as BitmapDrawable).bitmap
         val newDrawable: Drawable =
             BitmapDrawable(resources, Bitmap.createScaledBitmap(bitmap, width, height, true))
