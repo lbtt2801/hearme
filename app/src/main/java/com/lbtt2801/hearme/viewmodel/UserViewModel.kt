@@ -100,14 +100,9 @@ class UserViewModel : ViewModel() {
             }
         } else {
             lst.first { it.email == email }.apply {
-                this.listMusicsLoved.remove(music)
+                this.listMusicsLoved.removeIf { it.musicID == music.musicID }
             }
         }
         _lstDataUser.postValue(lst)
-        Log.v(
-            TAG, "updateListMusicsLoved -> ${
-                lstDataUser.value?.first { it.email == email }?.listMusicsLoved?.size
-            }"
-        )
     }
 }

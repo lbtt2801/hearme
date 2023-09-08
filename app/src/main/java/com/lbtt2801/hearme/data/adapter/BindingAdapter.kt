@@ -51,40 +51,24 @@ fun setCategory(text: TextView, check: Boolean) {
 // CON DANG BUG
 @BindingAdapter("app:setLoveList")
 fun setLoveList(checkBox: CheckBox, music: Music) {
-    Log.v(TAG, "setLoveList -> $music")
     val mainActivity = checkBox.context as MainActivity
-    Log.v(TAG, "setLoveList -> ${mainActivity.email}")
-
-    mainActivity.viewModelUser.lstDataUser.observe(mainActivity, Observer { listUser ->
-        val user = listUser.first { it.email == mainActivity.email }
-        if (user.listMusicsLoved.none { it.musicID == music.musicID }) {
-            checkBox.buttonTintList =
-                ContextCompat.getColorStateList(checkBox.context, R.color.text)
-            checkBox.setButtonDrawable(R.drawable.ic_light_heart)
-        } else {
-            checkBox.buttonTintList =
-                ContextCompat.getColorStateList(checkBox.context, R.color.green_500)
-            checkBox.setButtonDrawable(R.drawable.ic_bold_heart)
-        }
-        Log.v(TAG, "${user.listMusicsLoved.size}")
-    })
+    val user =
+        mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }
+    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) {
+        checkBox.isChecked =
+            user?.listMusicsLoved?.none { it.musicID == music.musicID } == false
+    }
 }
 
 @BindingAdapter("app:clickLoveList")
 fun clickLoveList(checkBox: CheckBox, music: Music) {
     val mainActivity = checkBox.context as MainActivity
-    checkBox.setOnCheckedChangeListener { _, isLove ->
-        if (isLove) {
-            checkBox.buttonTintList =
-                ContextCompat.getColorStateList(checkBox.context, R.color.text)
-            checkBox.setButtonDrawable(R.drawable.ic_light_heart)
-            mainActivity.viewModelUser.updateListMusicsLoved(mainActivity.email, music, true)
-        } else {
-            checkBox.buttonTintList =
-                ContextCompat.getColorStateList(checkBox.context, R.color.green_500)
-            checkBox.setButtonDrawable(R.drawable.ic_bold_heart)
-            mainActivity.viewModelUser.updateListMusicsLoved(mainActivity.email, music, false)
-        }
+    checkBox.setOnClickListener() {
+        mainActivity.viewModelUser.updateListMusicsLoved(
+            mainActivity.email,
+            music,
+            checkBox.isChecked
+        )
     }
 }
 
