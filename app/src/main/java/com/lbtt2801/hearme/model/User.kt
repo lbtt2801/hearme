@@ -7,7 +7,7 @@ import java.util.Date
 
 data class User(
     val email: String,
-    val password: String,
+    var password: String,
     var secondaryEmail: String? = null,
     val avatar: Int = R.drawable.logo,
     var fullName: String = "User 404",

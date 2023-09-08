@@ -103,7 +103,8 @@ class SignInFragment : Fragment() {
             else binding.txtLayoutPass.error = "Password length must be >= 6"
 
             if (checkEmail && checkPass) {
-                val kq = lstDataUser.filter { it.email == binding.edtEmail.text.toString() && it.password == binding.edtPass.text.toString() }
+                val kq =
+                    lstDataUser.filter { it.email == binding.edtEmail.text.toString() && it.password == binding.edtPass.text.toString() }
                 if (kq.isNotEmpty()) {
                     Toast.makeText(context, "Welcome to Hearme!", Toast.LENGTH_SHORT).show()
                     val bundle = Bundle().apply {
@@ -111,6 +112,7 @@ class SignInFragment : Fragment() {
                         putString("fullName", kq[0].fullName)
                     }
                     findNavController().navigate(R.id.navigation_home, bundle)
+                    emailViewModel.selectItem(email)
                 } else {
                     Toast.makeText(
                         context,

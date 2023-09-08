@@ -35,6 +35,8 @@ class HomeFragment : Fragment() {
     private lateinit var musicAdapter: MusicAdapter
     private lateinit var artistAdapter: ArtistAdapter
     private lateinit var chartAdapter: ChartAdapter
+    private lateinit var mainActivity: MainActivity
+    private var email: String? = ""
 
     private val userViewModel: UserViewModel by activityViewModels()
 
@@ -48,6 +50,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        mainActivity = activity as MainActivity
+        email = mainActivity.email
         return binding.root
     }
 
@@ -57,8 +61,9 @@ class HomeFragment : Fragment() {
         (activity as MainActivity).showBottomNav("VISIBLE")
 
         val bundle = requireArguments()
-        val avatar = bundle.getInt("avatar")
-        binding.imgAvt.background = ContextCompat.getDrawable(requireContext(), avatar)
+        val avatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
+//        val avatar = bundle.getInt("avatar")
+        binding.imgAvt.background = avatar?.let { ContextCompat.getDrawable(requireContext(), it) }
         binding.tvUser.text = bundle.getString("fullName")
 
         binding.tvSeeTrendingNow.setOnClickListener {

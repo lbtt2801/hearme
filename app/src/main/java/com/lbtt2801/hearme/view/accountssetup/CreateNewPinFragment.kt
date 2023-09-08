@@ -138,7 +138,7 @@ class CreateNewPinFragment : Fragment() {
         super.onResume()
         mainActivity.customToolbar(
             "VISIBLE", "Create New PIN", R.color.transparent,
-            com.google.android.material.R.drawable.ic_arrow_back_black_24
+            R.drawable.ic_arrow_back
         )
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
@@ -157,19 +157,19 @@ class CreateNewPinFragment : Fragment() {
                     binding.edtNum1.isPressed = false
                     binding.edtNum2.isPressed = true
                     num2 = numbersList[1]
-                    binding.edtNum2.setText(num1)
+                    binding.edtNum2.setText(num2)
                 }
                 3 -> {
                     binding.edtNum2.isPressed = false
                     binding.edtNum3.isPressed = true
                     num3 = numbersList[2]
-                    binding.edtNum3.setText(num1)
+                    binding.edtNum3.setText(num3)
                 }
                 4 -> {
                     binding.edtNum3.isPressed = false
                     binding.edtNum4.isPressed = true
                     num4 = numbersList[3]
-                    binding.edtNum4.setText(num1)
+                    binding.edtNum4.setText(num4)
                     passCode = num1 + num2 + num3 + num4
                     Toast.makeText(
                         requireContext(),

@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.core.net.ParseException
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -29,6 +30,8 @@ class FillYourProfileFragment : Fragment() {
     private lateinit var binding: FragmentFillYourProfileBinding
     private lateinit var mainActivity: MainActivity
     private var email: String? = null
+
+    private val userViewModel: UserViewModel by activityViewModels()
 
     private var isValidEmail = false
     private var isValidPhone = false
@@ -52,8 +55,6 @@ class FillYourProfileFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val model = ViewModelProvider(this)[UserViewModel::class.java]
 
         binding.ccp.registerCarrierNumberEditText(binding.edtPhoneNumber)
         binding.ccp.setPhoneNumberValidityChangeListener {
@@ -80,7 +81,7 @@ class FillYourProfileFragment : Fragment() {
                         "${binding.ccp.selectedCountryCodeAsInt} ${binding.edtPhoneNumber.text}"
                     email?.let {
                         stringToDate(binding.edtDob.text.toString())?.let { it1 ->
-                            model.updateUserInfo(
+                            userViewModel.updateUserInfo(
                                 it,
                                 binding.edtFullName.text.toString(),
                                 binding.edtNickName.text.toString(),
@@ -90,7 +91,7 @@ class FillYourProfileFragment : Fragment() {
                             )
                         }
                     }
-                    Log.v(TAG, model.lstDataUser.value.toString())
+                    Log.v(TAG, userViewModel.lstDataUser.value.toString())
                     findNavController().navigate(
                         R.id.action_fillYourProfileFragment_to_createNewPinFragment
                     )
@@ -103,7 +104,7 @@ class FillYourProfileFragment : Fragment() {
         super.onResume()
         mainActivity.customToolbar(
             "VISIBLE", "Fill Your Profile", R.color.transparent,
-            com.google.android.material.R.drawable.ic_arrow_back_black_24
+            R.drawable.ic_arrow_back
         )
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
