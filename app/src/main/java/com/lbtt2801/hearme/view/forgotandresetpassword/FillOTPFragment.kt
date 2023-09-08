@@ -16,7 +16,6 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentCreateNewPinBinding
 import com.lbtt2801.hearme.databinding.FragmentFillOTPBinding
-import com.lbtt2801.hearme.hideSoftKeyboard
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class FillOTPFragment : Fragment() {
