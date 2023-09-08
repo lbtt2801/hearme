@@ -51,6 +51,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         mainActivity = activity as MainActivity
+        mainActivity.checkInHome = true
         email = mainActivity.email
         return binding.root
     }
@@ -60,11 +61,11 @@ class HomeFragment : Fragment() {
         (activity as MainActivity).binding.toolBar.isVisible = false
         (activity as MainActivity).showBottomNav("VISIBLE")
 
-        val bundle = requireArguments()
         val avatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
-//        val avatar = bundle.getInt("avatar")
+        val fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
+
         binding.imgAvt.background = avatar?.let { ContextCompat.getDrawable(requireContext(), it) }
-        binding.tvUser.text = bundle.getString("fullName")
+        binding.tvUser.text = fullName.toString()
 
         binding.tvSeeTrendingNow.setOnClickListener {
             findNavController().navigate(R.id.trendingNowFragment)
@@ -102,6 +103,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        mainActivity.checkInHome = false
         _binding = null
     }
 
