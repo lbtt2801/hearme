@@ -6,7 +6,7 @@
     app:startDestination="@id/splashScreenFragment">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/item_nav_home"
         android:name="com.lbtt2801.hearme.view.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
@@ -125,7 +125,7 @@
         tools:layout="@layout/fragment_follow_artists">
         <action
             android:id="@+id/action_followArtistsFragment_to_navigation_home"
-            app:destination="@id/navigation_home"
+            app:destination="@id/item_nav_home"
             app:popUpTo="@id/mobile_navigation"
             app:popUpToInclusive="true" />
     </fragment>
@@ -154,7 +154,7 @@
         tools:layout="@layout/fragment_create_new_password">
         <action
             android:id="@+id/action_createNewPasswordFragment_to_navigation_home"
-            app:destination="@id/navigation_home"
+            app:destination="@id/item_nav_home"
             app:popUpTo="@id/mobile_navigation"
             app:popUpToInclusive="true" />
     </fragment>
@@ -167,7 +167,7 @@
         android:name="com.lbtt2801.hearme.view.PopularArtistsFragment"
         android:label="PopularArtistsFragment" />
     <fragment
-        android:id="@+id/navigation_explore"
+        android:id="@+id/item_nav_explore"
         android:name="com.lbtt2801.hearme.view.ExploreFragment"
         android:label="ExploreFragment" >
         <action
@@ -180,7 +180,7 @@
         android:label="ItemExploreFragment" >
         <action
             android:id="@+id/action_itemExploreFragment_to_navigation_explore"
-            app:destination="@id/navigation_explore" />
+            app:destination="@id/item_nav_explore" />
         <action
             android:id="@+id/action_itemExploreFragment_to_topItemFragment"
             app:destination="@id/topItemFragment" />

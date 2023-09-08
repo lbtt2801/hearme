@@ -63,8 +63,10 @@ class MainActivity : AppCompatActivity() {
 
         customToolbar("GONE", null, R.color.transparent, null)
         showBottomNav("GONE")
-    }
 
+        binding.bottomNavView.setOnItemSelectedListener { onClickItemBottomNav(it) }
+    }
+    
     override fun onBackPressed() {
         if (!checkInHome)
             super.onBackPressed()
@@ -92,24 +94,25 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    private fun onClickItemBottomNav(id: MenuItem) = when (id.itemId) {
-        R.id.navigation_home -> {
-            navController.navigate(R.id.navigation_home)
+    
+    private fun onClickItemBottomNav(it: MenuItem) = when (it.itemId) {
+        R.id.item_nav_home -> {
+            navController.navigate(R.id.item_nav_home)
             true
         }
 
-        R.id.navigation_explore -> {
-            navController.navigate(R.id.navigation_explore)
+        R.id.item_nav_explore -> {
+            navController.navigate(R.id.item_nav_explore)
             true
         }
 
-        R.id.navigation_library -> {
-            navController.navigate(R.id.navigation_library)
+        R.id.item_nav_library -> {
+            navController.navigate(R.id.item_nav_library)
             true
         }
 
-        R.id.navigation_profile -> {
-            navController.navigate(R.id.navigation_library)
+        R.id.item_nav_profile -> {
+            navController.navigate(R.id.item_nav_profile)
             true
         }
         else -> false
@@ -153,10 +156,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showBottomNav(isVisible: String) {
-        when (isVisible) {
-            "VISIBLE" -> binding.navView.visibility = View.VISIBLE
-            "INVISIBLE" -> binding.navView.visibility = View.INVISIBLE
-            else -> binding.navView.visibility = View.GONE
+        when (isVisible.lowercase()) {
+            "visible" -> binding.bottomNavView.visibility = View.VISIBLE
+            "invisible" -> binding.bottomNavView.visibility = View.INVISIBLE
+            else -> binding.bottomNavView.visibility = View.GONE
         }
     }
 
@@ -210,13 +213,5 @@ class MainActivity : AppCompatActivity() {
         }
 
         return edtEmail.plus("@$str2")
-    }
-}
-
-fun MainActivity.hideSoftKeyboard() {
-    currentFocus?.let {
-        val inputMethodManager =
-            ContextCompat.getSystemService(this, InputMethodManager::class.java)!!
-        inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
     }
 }
