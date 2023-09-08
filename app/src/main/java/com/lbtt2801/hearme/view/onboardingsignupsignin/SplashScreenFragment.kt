@@ -1,4 +1,4 @@
-package com.lbtt2801.hearme.view
+package com.lbtt2801.hearme.view.onboardingsignupsignin
 
 import android.os.Bundle
 import android.os.Handler
@@ -42,6 +42,7 @@ class SplashScreenFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mainActivity.showBottomNav("gone")
+        mainActivity.customToolbar("gone")
     }
 
     override fun onDestroyView() {

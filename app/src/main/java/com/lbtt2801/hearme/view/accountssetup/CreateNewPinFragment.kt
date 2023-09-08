@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -137,8 +138,8 @@ class CreateNewPinFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mainActivity.customToolbar(
-            "VISIBLE", "Create New PIN", R.color.transparent,
-            R.drawable.ic_arrow_back
+            "VISIBLE", "Create New PIN", null, R.color.transparent,
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)
         )
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()

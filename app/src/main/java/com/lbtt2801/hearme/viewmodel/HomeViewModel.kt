@@ -3,7 +3,10 @@ package com.lbtt2801.hearme.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.lbtt2801.hearme.data.ArtistsData
+import com.lbtt2801.hearme.data.CategoriesData
 import com.lbtt2801.hearme.data.FakeData
+import com.lbtt2801.hearme.data.MusicsData
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Category
 import com.lbtt2801.hearme.model.Chart
@@ -39,12 +42,12 @@ class HomeViewModel : ViewModel() {
     }
 
     fun getListDataMusic() {
-        lstMusic = FakeData.dataMusic()
+        lstMusic = MusicsData.dataMusic()
         _lstDataMusic.postValue(lstMusic)
     }
 
     fun getListDataArtist() {
-        lstArtist = FakeData.dataArtist()
+        lstArtist = ArtistsData.dataArtist()
         _lstDataArtist.postValue(lstArtist)
     }
 
@@ -54,9 +57,7 @@ class HomeViewModel : ViewModel() {
     }
 
     fun getListDataCategory() {
-        lstCategory = FakeData.dataCategory()
+        lstCategory = CategoriesData.dataCategory()
         _lstDataCategory.postValue(lstCategory)
     }
-
-
 }

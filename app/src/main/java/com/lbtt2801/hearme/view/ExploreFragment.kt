@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -19,18 +20,26 @@ import com.lbtt2801.hearme.model.Category
 import com.lbtt2801.hearme.viewmodel.HomeViewModel
 
 class ExploreFragment : Fragment() {
-    private var _binding: FragmentExploreBinding?= null
+    private var _binding: FragmentExploreBinding? = null
     private val binding get() = _binding!!
     private lateinit var categoryAdapter: CategoryAdapter
     private val viewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
-        (activity as MainActivity).customToolbar("VISIBLE", "Explore", R.color.transparent, R.drawable.logo_nav, true)
+        (activity as MainActivity).customToolbar(
+            "VISIBLE",
+            "Explore",
+            null,
+            R.color.transparent,
+            ContextCompat.getDrawable(requireContext(), R.drawable.logo_nav),
+            true
+        )
         return binding.root
     }
 
@@ -49,7 +58,8 @@ class ExploreFragment : Fragment() {
     }
 
     private fun displayRecyclerView(lstData: ArrayList<Category>) {
-        val layoutRecyclerView = GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
+        val layoutRecyclerView =
+            GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
         categoryAdapter = CategoryAdapter(lstData, 0) {
             if (it.getInt("position") == 1)
                 findNavController().navigate(R.id.podcastFragment, it)

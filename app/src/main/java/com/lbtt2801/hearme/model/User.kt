@@ -16,13 +16,11 @@ data class User(
     val nation: String? = null,
     var phone: String? = null,
     var pin: Int? = null,
-    var numberOfFollowers: Int? = null,
-    var numberOfFollowing: Int? = null,
     val gender: Boolean? = null,
     val isPremium: Boolean? = false,
     val isFirstSignIn: Boolean = true,
     val listArtistsFollowing: ArrayList<Artist> = ArrayList(), //Following
-    val listFollowers: ArrayList<User>? = ArrayList(), //Followers
+    val listFollowers: ArrayList<User> = ArrayList(), //Followers
     val listMusicsLoved: ArrayList<Music>? = ArrayList(),
     val listMusicListened: ArrayList<Music>? = ArrayList(),
     val listMusicDownloaded: ArrayList<Music>? = ArrayList()

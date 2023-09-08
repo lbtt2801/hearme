@@ -1,9 +1,10 @@
-package com.lbtt2801.hearme.view
+package com.lbtt2801.hearme.view.homeactionmenu
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -23,13 +24,21 @@ class NotificationFragment : Fragment() {
     ): View {
 
         val activity: MainActivity = (activity as MainActivity)
-        activity.customToolbar("VISIBLE","Notification", R.color.transparent, R.drawable.ic_arrow_back,true)
+        activity.customToolbar(
+            "VISIBLE",
+            "Notification",
+            null,
+            R.color.transparent,
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back),
+            true
+        )
         activity.showBottomNav("GONE")
         (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
         }
 
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notification, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_notification, container, false)
         return binding.root
     }
 

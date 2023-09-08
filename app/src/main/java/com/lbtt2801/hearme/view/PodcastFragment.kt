@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -52,7 +53,11 @@ class PodcastFragment : Fragment() {
         (activity as MainActivity).showBottomNav("VISIBLE")
 
         (activity as MainActivity).customToolbar(
-            "VISIBLE", "Podcasts", R.color.transparent, R.drawable.ic_arrow_back,
+            "VISIBLE",
+            "Podcasts",
+            null,
+            R.color.transparent,
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back),
             showIcMore = true,
             showIcFilter = true,
             showIcSearch = true
@@ -109,7 +114,8 @@ class PodcastFragment : Fragment() {
     }
 
     private fun displayRecyclerViewCategory(lstData: ArrayList<Category>) {
-        val layoutRecyclerView = GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
+        val layoutRecyclerView =
+            GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
         categoryAdapter = CategoryAdapter(lstData, 0)
         binding.recyclerViewCategories.apply {
             layoutManager = layoutRecyclerView

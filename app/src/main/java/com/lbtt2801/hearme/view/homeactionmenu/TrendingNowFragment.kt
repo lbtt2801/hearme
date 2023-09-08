@@ -1,12 +1,12 @@
-package com.lbtt2801.hearme.view
+package com.lbtt2801.hearme.view.homeactionmenu
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -14,20 +14,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
-import com.lbtt2801.hearme.data.adapter.ArtistAdapter
 import com.lbtt2801.hearme.data.adapter.MusicAdapter
-import com.lbtt2801.hearme.databinding.FragmentPopularArtistsBinding
-import com.lbtt2801.hearme.model.Artist
+import com.lbtt2801.hearme.databinding.FragmentTrendingNowBinding
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.viewmodel.HomeViewModel
-import com.lbtt2801.hearme.viewmodel.UserViewModel
 
-class PopularArtistsFragment : Fragment() {
-    private var _binding: FragmentPopularArtistsBinding? = null
+class TrendingNowFragment : Fragment() {
+    private var _binding: FragmentTrendingNowBinding? = null
     private val binding get() = _binding!!
-    private lateinit var artistAdapter: ArtistAdapter
-
-    private val userViewModel: UserViewModel by activityViewModels()
+    private lateinit var musicAdapter: MusicAdapter
 
     private val viewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
@@ -38,7 +33,7 @@ class PopularArtistsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_popular_artists, container, false)
+            DataBindingUtil.inflate(inflater, R.layout.fragment_trending_now, container, false)
         return binding.root
     }
 
@@ -46,7 +41,11 @@ class PopularArtistsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as MainActivity).customToolbar(
-            "VISIBLE", "Popular Artists", R.color.transparent, R.drawable.ic_arrow_back,
+            "VISIBLE",
+            "Trending Now",
+            null,
+            R.color.transparent,
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back),
             showIcMore = false,
             showIcFilter = false,
             showIcSearch = true
@@ -56,10 +55,10 @@ class PopularArtistsFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        viewModel.lstDataArtist.observe((activity as MainActivity), Observer {
-            displayRecyclerView(it as ArrayList<Artist>)
+        viewModel.lstDataMusic.observe((activity as MainActivity), Observer {
+            displayRecyclerView(it as ArrayList<Music>)
         })
-        viewModel.getListDataArtist()
+        viewModel.getListDataMusic()
     }
 
     override fun onDestroyView() {
@@ -67,13 +66,13 @@ class PopularArtistsFragment : Fragment() {
         _binding = null
     }
 
-    private fun displayRecyclerView(lstData: ArrayList<Artist>) {
+    private fun displayRecyclerView(lstData: ArrayList<Music>) {
         val layoutRecyclerView =
             GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
-        artistAdapter = ArtistAdapter(lstData, 0, userViewModel)
+        musicAdapter = MusicAdapter(lstData, 0)
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerView
-            adapter = artistAdapter
+            adapter = musicAdapter
         }
     }
 }

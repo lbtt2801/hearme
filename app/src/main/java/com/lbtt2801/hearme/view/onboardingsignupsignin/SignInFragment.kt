@@ -1,4 +1,4 @@
-package com.lbtt2801.hearme.view
+package com.lbtt2801.hearme.view.onboardingsignupsignin
 
 import android.content.ContentValues.TAG
 import android.content.res.ColorStateList
@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -58,10 +59,6 @@ class SignInFragment : Fragment() {
                 Toast.makeText(context, "list is null or empty", Toast.LENGTH_SHORT).show()
         })
 
-        (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
-            findNavController().navigate(R.id.letYouInFragment)
-        }
-
         binding.edtEmail.setOnFocusChangeListener { _, hasFocus ->
             val color = if (hasFocus) resources.getColor(R.color.bg_button) else Color.BLACK
             binding.txtLayoutEmail.setStartIconTintList(ColorStateList.valueOf(color))
@@ -78,7 +75,7 @@ class SignInFragment : Fragment() {
         }
 
         binding.tvSignUp.setOnClickListener() {
-            findNavController().navigate(R.id.signUpFragment)
+            findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
         }
 
         binding.btnSignIn.setOnClickListener() {
@@ -104,7 +101,7 @@ class SignInFragment : Fragment() {
                     lstDataUser.filter { it.email == binding.edtEmail.text.toString() && it.password == binding.edtPass.text.toString() }
                 if (kq.isNotEmpty()) {
                     Toast.makeText(context, "Welcome to Hearme!", Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.navigation_home)
+                    findNavController().navigate(R.id.action_signInFragment_to_item_nav_home)
                     emailViewModel.selectItem(email)
                 } else {
                     Toast.makeText(
@@ -132,6 +129,20 @@ class SignInFragment : Fragment() {
             }
         }
         mainActivity.showBottomNav("gone")
+        mainActivity.customToolbar(
+            "visible",
+            null,
+            null,
+            R.color.transparent,
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back),
+            showIcMore = false,
+            showIcFilter = false,
+            showIcSearch = false,
+            showIcNotification = false
+        )
+        mainActivity.binding.toolBar.setNavigationOnClickListener() {
+            findNavController().popBackStack()
+        }
     }
 
     override fun onDestroyView() {
