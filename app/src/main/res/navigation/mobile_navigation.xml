@@ -215,4 +215,9 @@
             android:id="@+id/action_editProfileFragment_to_profileDetailFragment"
             app:destination="@id/profileDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.lbtt2801.hearme.view.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search"/>
 </navigation>

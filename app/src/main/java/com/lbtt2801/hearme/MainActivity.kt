@@ -1,8 +1,7 @@
 package com.lbtt2801.hearme
 
-import com.lbtt2801.hearme.R
 import android.app.Dialog
-import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
@@ -18,19 +17,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
-import com.lbtt2801.hearme.model.User
-import com.lbtt2801.hearme.view.forgotandresetpassword.AuthorizationProgressDialog
-import com.lbtt2801.hearme.view.forgotandresetpassword.AuthorizationProgressDialog.Companion.TAG
 import com.lbtt2801.hearme.viewmodel.*
 import kotlin.system.exitProcess
 
@@ -88,6 +84,8 @@ class MainActivity : AppCompatActivity() {
         binding.toolBar.setOnMenuItemClickListener() {
             when (it.itemId) {
                 R.id.item_search -> {
+                    navController.navigate(R.id.searchFragment)
+                    binding.searchView.onActionViewExpanded()
                     true
                 }
                 R.id.item_notification -> {
@@ -105,6 +103,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        initSearchBar()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -172,7 +172,8 @@ class MainActivity : AppCompatActivity() {
         showIcMore: Boolean = false,
         showIcFilter: Boolean = false,
         showIcSearch: Boolean = false,
-        showIcNotification: Boolean = false
+        showIcNotification: Boolean = false,
+        showSearchView: Boolean = false
     ) {
         //Toolbar visibility
         when (isVisible.lowercase()) {
@@ -214,6 +215,15 @@ class MainActivity : AppCompatActivity() {
         binding.toolBar.menu.findItem(R.id.item_filter).isVisible = showIcFilter
         binding.toolBar.menu.findItem(R.id.item_search).isVisible = showIcSearch
         binding.toolBar.menu.findItem(R.id.item_notification).isVisible = showIcNotification
+
+        //Search view
+        if (showSearchView) {
+            binding.searchView.visibility = View.VISIBLE
+            binding.containerToolBar.visibility = View.GONE
+        } else {
+            binding.searchView.visibility = View.GONE
+            binding.containerToolBar.visibility = View.VISIBLE
+        }
     }
 
     fun showBottomNav(isVisible: String) {
@@ -285,5 +295,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         return edtEmail.plus("@$str2")
+    }
+
+    private fun initSearchBar() {
+        binding.searchView.setOnQueryTextListener(object :
+            SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return true
+            }
+        })
     }
 }
