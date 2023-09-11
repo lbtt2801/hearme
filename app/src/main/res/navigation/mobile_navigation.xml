@@ -22,12 +22,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.lbtt2801.hearme.view.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
         android:id="@+id/splashScreenFragment"
         android:name="com.lbtt2801.hearme.view.onboardingsignupsignin.SplashScreenFragment"
         android:label="fragment_splash_screen"
@@ -192,4 +186,33 @@
         android:id="@+id/podcastFragment"
         android:name="com.lbtt2801.hearme.view.PodcastFragment"
         android:label="PodcastFragment" />
+    <fragment
+        android:id="@+id/item_nav_profile"
+        android:name="com.lbtt2801.hearme.view.profile_settings.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_item_nav_profile_to_profileDetailFragment"
+            app:destination="@id/profileDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileDetailFragment"
+        android:name="com.lbtt2801.hearme.view.profile_settings.ProfileDetailFragment"
+        android:label="fragment_profile_detail"
+        tools:layout="@layout/fragment_profile_detail" >
+        <action
+            android:id="@+id/action_profileDetailFragment_to_item_nav_profile"
+            app:destination="@id/item_nav_profile" />
+        <action
+            android:id="@+id/action_profileDetailFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.lbtt2801.hearme.view.profile_settings.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileDetailFragment"
+            app:destination="@id/profileDetailFragment" />
+    </fragment>
 </navigation>

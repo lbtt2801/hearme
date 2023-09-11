@@ -58,7 +58,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val newAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
         fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
 
@@ -92,6 +91,7 @@ class HomeFragment : Fragment() {
                 Toast.makeText(context, "list Chart is null or empty", Toast.LENGTH_SHORT).show()
         })
         viewModel.getListDataChart()
+
 //
 //        binding.icNotification.setOnClickListener {
 //            findNavController().navigate(R.id.notificationFragment)
