@@ -4,7 +4,7 @@ import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.model.Artist
 
 class ArtistsData {
-    companion object{
+    companion object {
         fun dataArtist(): ArrayList<Artist> {
             val dataArtist = ArrayList<Artist>()
             dataArtist.apply {
@@ -36,6 +36,16 @@ class ArtistsData {
                 add(
                     Artist(
                         "ar006", "Troye Sivan", R.drawable.img_artist, 0, false
+                    )
+                )
+                add(
+                    Artist(
+                        "ar007", "Apple Talk", R.drawable.img_artist, 0, false
+                    )
+                )
+                add(
+                    Artist(
+                        "ar008", "Dr. Death", R.drawable.img_artist, 0, false
                     )
                 )
             }

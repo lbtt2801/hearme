@@ -2,6 +2,7 @@ package com.lbtt2801.hearme
 
 import com.lbtt2801.hearme.R
 import android.app.Dialog
+import android.content.ContentValues
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
@@ -30,22 +31,20 @@ import com.lbtt2801.hearme.databinding.ActivityMainBinding
 import com.lbtt2801.hearme.model.User
 import com.lbtt2801.hearme.view.forgotandresetpassword.AuthorizationProgressDialog
 import com.lbtt2801.hearme.view.forgotandresetpassword.AuthorizationProgressDialog.Companion.TAG
-import com.lbtt2801.hearme.viewmodel.ArtistViewModel
-import com.lbtt2801.hearme.viewmodel.CategoriesViewModel
-import com.lbtt2801.hearme.viewmodel.EmailViewModel
-import com.lbtt2801.hearme.viewmodel.UserViewModel
+import com.lbtt2801.hearme.viewmodel.*
 import kotlin.system.exitProcess
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    private val viewModelMusic: MusicViewModel by viewModels()
     private val viewModelArtist: ArtistViewModel by viewModels()
     private val viewModelCategory: CategoriesViewModel by viewModels()
     private val viewModelEmail: EmailViewModel by viewModels()
     val viewModelUser: UserViewModel by viewModels()
 
-    lateinit var email: String
+    var email: String = ""
 
     var checkInHome = false
 
@@ -62,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.lifecycleOwner = this
+        viewModelMusic.getListDataMusics()
         viewModelArtist.getListDataArtists()
         viewModelCategory.getListDataCategories()
         viewModelEmail.selectedItem.observe(this, Observer {
@@ -69,6 +69,10 @@ class MainActivity : AppCompatActivity() {
             email = it
         })
         viewModelUser.getListDataUser()
+
+        if (savedInstanceState != null) {
+            email = savedInstanceState.getString("email").toString()
+        }
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
@@ -98,6 +102,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("email", email)
     }
 
     override fun onBackPressed() {

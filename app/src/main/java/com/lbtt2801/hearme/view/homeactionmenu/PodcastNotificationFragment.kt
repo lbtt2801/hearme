@@ -17,14 +17,15 @@ import com.lbtt2801.hearme.databinding.FragmentPodcastNotificationBinding
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.viewmodel.HomeViewModel
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PodcastNotificationFragment : Fragment() {
     private var _binding: FragmentPodcastNotificationBinding? = null
     private val binding get() = _binding!!
     private lateinit var musicAdapter: MusicAdapter
-    private var lstToday: ArrayList<Music> = ArrayList()
-    private var lstYesterday: ArrayList<Music> = ArrayList()
+
+    private lateinit var lst: ArrayList<Music>
 
     private val viewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
@@ -40,6 +41,7 @@ class PodcastNotificationFragment : Fragment() {
             container,
             false
         )
+        lst = ArrayList()
         return binding.root
     }
 
@@ -48,18 +50,28 @@ class PodcastNotificationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.lstDataMusic.observe((activity as MainActivity), Observer { musicList ->
-            musicList as ArrayList<Music>
+            lst = musicList as ArrayList<Music>
             val formatter = SimpleDateFormat("dd/MM/yyyy")
-            val date = Date() // get date now
-            val current = formatter.format(date) // format date now
-            for (music: Music in musicList) {
-                val release = formatter.format(music.release)
-                if (current.compareTo(release) == 0)
-                    lstToday.add(music)
-                else lstYesterday.add(music)
-            }
-            displayRecyclerViewToday(lstToday)
-            displayRecyclerViewYesterday(lstYesterday)
+            val calToday = Calendar.getInstance()
+            val calYesterday = Calendar.getInstance()
+            calYesterday.add(Calendar.DATE, -1)
+            val currentDate = formatter.format(calToday.time) // format date now
+            val yesterdayDate = formatter.format(calYesterday.time) // format yesterday date
+
+            displayRecyclerViewToday(lst.filter {
+                formatter.format(
+                    it.release
+                ).compareTo(
+                    currentDate
+                ) == 0 && it.category.categoryID == "ca002"
+            } as ArrayList<Music>)
+            displayRecyclerViewYesterday(lst.filter {
+                formatter.format(
+                    it.release
+                ).compareTo(
+                    yesterdayDate
+                ) == 0 && it.category.categoryID == "ca002"
+            } as ArrayList<Music>)
         })
         viewModel.getListDataMusic()
 
@@ -74,8 +86,7 @@ class PodcastNotificationFragment : Fragment() {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
         musicAdapter =
-            MusicAdapter(lstData.filter { it.category.categoryID == "ca002" } as ArrayList<Music>,
-                2)
+            MusicAdapter(lstData, 2)
         binding.recyclerViewToday.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter
@@ -86,8 +97,7 @@ class PodcastNotificationFragment : Fragment() {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
         musicAdapter =
-            MusicAdapter(lstData.filter { it.category.categoryID == "ca002" } as ArrayList<Music>,
-                2)
+            MusicAdapter(lstData, 2)
         binding.recyclerViewYesterday.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter

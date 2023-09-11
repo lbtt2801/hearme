@@ -1,7 +1,9 @@
 package com.lbtt2801.hearme.view.homeactionmenu
 
+import android.content.ContentValues.TAG
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +24,11 @@ import com.lbtt2801.hearme.databinding.FragmentHomeBinding
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Chart
 import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.viewmodel.ArtistViewModel
 import com.lbtt2801.hearme.viewmodel.HomeViewModel
+import com.lbtt2801.hearme.viewmodel.MusicViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
+import kotlin.math.round
 
 class HomeFragment : Fragment() {
 
@@ -37,10 +42,16 @@ class HomeFragment : Fragment() {
     private var avatar: Drawable? = null
     private var fullName: String? = ""
 
+    private val musicViewModel: MusicViewModel by activityViewModels()
+    private val artistViewModel: ArtistViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
 
     private val viewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
@@ -52,50 +63,14 @@ class HomeFragment : Fragment() {
         mainActivity = activity as MainActivity
         mainActivity.checkInHome = true
         email = mainActivity.email
+        if (savedInstanceState != null) {
+            email = savedInstanceState.getString("email").toString()
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        val newAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
-        fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
-
-        avatar = newAvatar?.let { mainActivity.changeSizeBitmap(it, 48, 48) }
-
-        binding.tvSeeTrendingNow.setOnClickListener {
-            findNavController().navigate(R.id.trendingNowFragment)
-        }
-
-        binding.tvSeePopularArtists.setOnClickListener {
-            findNavController().navigate(R.id.popularArtistsFragment)
-        }
-
-        viewModel.lstDataMusic.observe((activity as MainActivity), Observer {
-            displayRecyclerViewMusic(it as ArrayList<Music>)
-            if (it.isEmpty())
-                Toast.makeText(context, "list Music is null or empty", Toast.LENGTH_SHORT).show()
-        })
-        viewModel.getListDataMusic()
-
-        viewModel.lstDataArtist.observe((activity as MainActivity), Observer {
-            displayRecyclerViewArtist(it as ArrayList<Artist>)
-            if (it.isEmpty())
-                Toast.makeText(context, "list Artist is null or empty", Toast.LENGTH_SHORT).show()
-        })
-        viewModel.getListDataArtist()
-
-        viewModel.lstDataChart.observe((activity as MainActivity), Observer {
-            displayRecyclerViewChart(it as ArrayList<Chart>)
-            if (it.isEmpty())
-                Toast.makeText(context, "list Chart is null or empty", Toast.LENGTH_SHORT).show()
-        })
-        viewModel.getListDataChart()
-//
-//        binding.icNotification.setOnClickListener {
-//            findNavController().navigate(R.id.notificationFragment)
-//        }
     }
 
     override fun onResume() {
@@ -115,6 +90,48 @@ class HomeFragment : Fragment() {
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             //navigate
         }
+
+        val newAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
+        fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
+        Log.v(TAG,"avatar = $newAvatar | fullname = $fullName")
+        avatar = newAvatar?.let { mainActivity.changeSizeBitmap(it, 48, 48) }
+
+        binding.tvSeeTrendingNow.setOnClickListener {
+            findNavController().navigate(R.id.trendingNowFragment)
+        }
+
+        binding.tvSeePopularArtists.setOnClickListener {
+            findNavController().navigate(R.id.popularArtistsFragment)
+        }
+
+        musicViewModel.lstDataMusics.observe((activity as MainActivity), Observer { list ->
+            displayRecyclerViewMusic(list.sortedByDescending { it.totalListeners }
+                .take(5) as ArrayList<Music>)
+            if (list.isEmpty())
+                Toast.makeText(context, "list Music is null or empty", Toast.LENGTH_SHORT).show()
+        })
+
+        artistViewModel.lstDataArtists.observe((activity as MainActivity), Observer { list ->
+            displayRecyclerViewArtist(list.sortedByDescending { it.totalNumberOfListeners }
+                .take(5) as ArrayList<Artist>)
+            if (list.isEmpty())
+                Toast.makeText(context, "list Artist is null or empty", Toast.LENGTH_SHORT).show()
+        })
+
+        viewModel.lstDataChart.observe((activity as MainActivity), Observer { list ->
+            displayRecyclerViewChart(list as ArrayList<Chart>)
+            if (list.isEmpty())
+                Toast.makeText(context, "list Chart is null or empty", Toast.LENGTH_SHORT).show()
+        })
+//
+//        binding.icNotification.setOnClickListener {
+//            findNavController().navigate(R.id.notificationFragment)
+//        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("email", email)
     }
 
     override fun onDestroyView() {
