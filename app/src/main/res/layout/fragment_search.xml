@@ -17,28 +17,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp">
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="184dp"
-                android:layout_height="24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="top"
-                android:lineSpacingExtra="0sp"
                 android:text="Recent Searches"
                 android:textColor="@color/greyscale_900"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="184dp"
-                android:layout_height="22dp"
-                android:gravity="right|top"
+                android:id="@+id/text_clear_all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
                 android:letterSpacing="0.01"
-                android:lineSpacingExtra="3sp"
                 android:text="Clear All"
                 android:textColor="@color/color_bg_button_continue"
                 android:textSize="16sp"
-                android:translationY="-1.6sp" />
+                android:textStyle="bold" />
         </LinearLayout>
 
         <View
@@ -51,8 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="24dp"
-            tools:listitem=""
-            android:paddingBottom="24dp" />
+            tools:listitem="@layout/view_recent_search" />
 
     </LinearLayout>
 </layout>
