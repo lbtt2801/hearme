@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:text="Follow your favorite artists. Or you can skip it for now."
-                android:textColor="@color/text"
+                android:textColor="@color/greyscale_900"
                 android:textSize="18dp"
                 android:lineHeight="25dp"/>
 

@@ -44,7 +44,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="24dp"
                         android:text="Select which contact details should we use to reset your password"
-                        android:textColor="@color/text"
+                        android:textColor="@color/greyscale_900"
                         android:textSize="18dp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,7 +100,7 @@
                                 android:layout_height="wrap_content"
                                 android:elevation="5dp"
                                 android:text="+1 111 ******99"
-                                android:textColor="@color/text"
+                                android:textColor="@color/greyscale_900"
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -157,7 +157,7 @@
                                 android:layout_height="wrap_content"
                                 android:elevation="5dp"
                                 android:text="and***ley@yourdomain.com"
-                                android:textColor="@color/text"
+                                android:textColor="@color/greyscale_900"
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>

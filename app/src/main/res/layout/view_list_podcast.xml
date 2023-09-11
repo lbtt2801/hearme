@@ -43,7 +43,7 @@
             android:gravity="center_vertical"
             android:maxWidth="275dp"
             android:text="@{music.musicName}"
-            android:textColor="@color/text"
+            android:textColor="@color/greyscale_900"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/cardViewPodcast"
@@ -56,7 +56,7 @@
             android:layout_marginVertical="12dp"
             android:layout_marginStart="16dp"
             android:text="@{music.artist.artistName}"
-            android:textColor="@color/text_detail"
+            android:textColor="@color/greyscale_700"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/cardViewPodcast"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
@@ -68,7 +68,7 @@
             android:layout_marginVertical="10dp"
             android:layout_marginStart="12sp"
             android:text="I"
-            android:textColor="@color/text_detail"
+            android:textColor="@color/greyscale_700"
             android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/tvNamePodcast"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
@@ -80,7 +80,7 @@
             android:layout_marginVertical="12sp"
             android:layout_marginStart="12dp"
             android:text="56:42 mins"
-            android:textColor="@color/text"
+            android:textColor="@color/greyscale_900"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/line"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />

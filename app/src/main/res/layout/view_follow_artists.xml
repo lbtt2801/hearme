@@ -42,7 +42,7 @@
                 android:layout_marginRight="4dp"
                 android:letterSpacing="0.04"
                 android:text="@{artist.artistName}"
-                android:textColor="@color/text"
+                android:textColor="@color/greyscale_900"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 
