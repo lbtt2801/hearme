@@ -22,8 +22,11 @@ import com.lbtt2801.hearme.databinding.FragmentHomeBinding
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Chart
 import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.viewmodel.ArtistViewModel
 import com.lbtt2801.hearme.viewmodel.HomeViewModel
+import com.lbtt2801.hearme.viewmodel.MusicViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
+import kotlin.math.round
 
 class HomeFragment : Fragment() {
 
@@ -37,6 +40,8 @@ class HomeFragment : Fragment() {
     private var avatar: Drawable? = null
     private var fullName: String? = ""
 
+    private val musicViewModel: MusicViewModel by activityViewModels()
+    private val artistViewModel: ArtistViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
 
     private val viewModel by lazy {
@@ -58,7 +63,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val newAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
         fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
 
@@ -72,26 +76,25 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.popularArtistsFragment)
         }
 
-        viewModel.lstDataMusic.observe((activity as MainActivity), Observer {
-            displayRecyclerViewMusic(it as ArrayList<Music>)
-            if (it.isEmpty())
+        musicViewModel.lstDataMusics.observe((activity as MainActivity), Observer { list ->
+            displayRecyclerViewMusic(list.sortedByDescending { it.totalListeners }
+                .take(5) as ArrayList<Music>)
+            if (list.isEmpty())
                 Toast.makeText(context, "list Music is null or empty", Toast.LENGTH_SHORT).show()
         })
-        viewModel.getListDataMusic()
 
-        viewModel.lstDataArtist.observe((activity as MainActivity), Observer {
-            displayRecyclerViewArtist(it as ArrayList<Artist>)
-            if (it.isEmpty())
+        artistViewModel.lstDataArtists.observe((activity as MainActivity), Observer { list ->
+            displayRecyclerViewArtist(list.sortedByDescending { it.totalNumberOfListeners }
+                .take(5) as ArrayList<Artist>)
+            if (list.isEmpty())
                 Toast.makeText(context, "list Artist is null or empty", Toast.LENGTH_SHORT).show()
         })
-        viewModel.getListDataArtist()
 
-        viewModel.lstDataChart.observe((activity as MainActivity), Observer {
-            displayRecyclerViewChart(it as ArrayList<Chart>)
-            if (it.isEmpty())
+        viewModel.lstDataChart.observe((activity as MainActivity), Observer { list ->
+            displayRecyclerViewChart(list as ArrayList<Chart>)
+            if (list.isEmpty())
                 Toast.makeText(context, "list Chart is null or empty", Toast.LENGTH_SHORT).show()
         })
-        viewModel.getListDataChart()
 //
 //        binding.icNotification.setOnClickListener {
 //            findNavController().navigate(R.id.notificationFragment)

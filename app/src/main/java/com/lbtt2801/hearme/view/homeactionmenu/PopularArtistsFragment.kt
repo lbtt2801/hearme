@@ -18,7 +18,9 @@ import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.ArtistAdapter
 import com.lbtt2801.hearme.databinding.FragmentPopularArtistsBinding
 import com.lbtt2801.hearme.model.Artist
+import com.lbtt2801.hearme.viewmodel.ArtistViewModel
 import com.lbtt2801.hearme.viewmodel.HomeViewModel
+import com.lbtt2801.hearme.viewmodel.MusicViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class PopularArtistsFragment : Fragment() {
@@ -27,10 +29,8 @@ class PopularArtistsFragment : Fragment() {
     private lateinit var artistAdapter: ArtistAdapter
 
     private val userViewModel: UserViewModel by activityViewModels()
+    private val artistViewModel: ArtistViewModel by activityViewModels()
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[HomeViewModel::class.java]
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,10 +59,10 @@ class PopularArtistsFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        viewModel.lstDataArtist.observe((activity as MainActivity), Observer {
-            displayRecyclerView(it as ArrayList<Artist>)
+        artistViewModel.lstDataArtists.observe((activity as MainActivity), Observer {
+            displayRecyclerView(it.sortedByDescending { it.totalNumberOfListeners }
+                .take(5) as ArrayList<Artist>)
         })
-        viewModel.getListDataArtist()
     }
 
     override fun onDestroyView() {
