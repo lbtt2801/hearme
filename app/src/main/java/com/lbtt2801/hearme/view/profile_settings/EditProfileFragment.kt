@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -15,6 +18,7 @@ import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentEditProfileBinding
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 import java.text.SimpleDateFormat
+import java.util.Date
 
 class EditProfileFragment : Fragment() {
     private var _binding: FragmentEditProfileBinding? = null
@@ -22,6 +26,7 @@ class EditProfileFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private var email: String? = ""
     private var fullName: String? = ""
+    private var spinnerItems = arrayOf("Male", "Female", "Other")
 
     private val userViewModel: UserViewModel by activityViewModels()
     override fun onCreateView(
@@ -54,16 +59,59 @@ class EditProfileFragment : Fragment() {
         val formatter = SimpleDateFormat("dd/MM/yyyy")
         fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
         val nickName = userViewModel.lstDataUser.value?.first { it.email == email }?.nickName
+        val nation = userViewModel.lstDataUser.value?.first { it.email == email }?.nation
         val dob = userViewModel.lstDataUser.value?.first { it.email == email }?.dob
         val phone = userViewModel.lstDataUser.value?.first { it.email == email }?.phone
-        val gender = userViewModel.lstDataUser.value?.first { it.email == email }?.gender
+        var gender = userViewModel.lstDataUser.value?.first { it.email == email }?.gender
 
         binding.edtFullName.setText(fullName, TextView.BufferType.EDITABLE)
         binding.edtNickName.setText(nickName, TextView.BufferType.EDITABLE)
         binding.edtDob.setText(dob?.let { formatter.format(it) }, TextView.BufferType.EDITABLE)
         binding.edtEmail.setText(email, TextView.BufferType.EDITABLE)
         binding.edtPhoneNumber.setText(phone, TextView.BufferType.EDITABLE)
+        binding.ccp.setDefaultCountryUsingNameCode(nation)
+        binding.ccp.resetToDefaultCountry()
 
+        val spinnerAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            spinnerItems
+        )
+        binding.spinner.adapter = spinnerAdapter
+
+        var position = 1
+        if (gender == true)
+            position = 0
+        binding.spinner.setSelection(position)
+
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                gender = true
+                if (p2 > 0)
+                    gender = false
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                gender = position <= 0
+            }
+        }
+
+        binding.btnUpdate.setOnClickListener {
+            formatter.parse(binding.edtDob.text.toString())?.let { it1 ->
+                if (gender != null) {
+                    userViewModel.updateDataUser(
+                        email.toString(),
+                        binding.edtFullName.text.toString(),
+                        binding.edtNickName.text.toString(),
+                        it1,
+                        binding.edtPhoneNumber.text.toString(),
+                        gender!!
+                    )
+                }
+            }
+            Toast.makeText(context, "Update Success !!", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_editProfileFragment_to_profileDetailFragment)
+        }
 
     }
 

@@ -10,6 +10,7 @@ import com.lbtt2801.hearme.data.UsersData
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.model.User
+import java.text.SimpleDateFormat
 import java.util.Date
 
 class UserViewModel : ViewModel() {
@@ -67,6 +68,24 @@ class UserViewModel : ViewModel() {
             this.secondaryEmail = secondaryEmail
             this.phone = phoneNumber
             this.avatar = image
+        }
+        _lstDataUser.postValue(lst)
+    }
+
+    fun updateDataUser(
+        email: String,
+        fullName: String,
+        nickName: String,
+        dob: Date,
+        phoneNumber: String,
+        gender: Boolean
+    ) {
+        lst.first { it.email == email }.apply {
+            this.fullName = fullName
+            this.nickName = nickName
+            this.dob = dob
+            this.phone = phoneNumber
+            this.gender = gender
         }
         _lstDataUser.postValue(lst)
     }

@@ -172,7 +172,9 @@ class MainActivity : AppCompatActivity() {
         showIcMore: Boolean = false,
         showIcFilter: Boolean = false,
         showIcSearch: Boolean = false,
-        showIcNotification: Boolean = false
+        showIcNotification: Boolean = false,
+        showIcEdit: Boolean = false,
+        showIcScan: Boolean = false
     ) {
         //Toolbar visibility
         when (isVisible.lowercase()) {
@@ -214,6 +216,8 @@ class MainActivity : AppCompatActivity() {
         binding.toolBar.menu.findItem(R.id.item_filter).isVisible = showIcFilter
         binding.toolBar.menu.findItem(R.id.item_search).isVisible = showIcSearch
         binding.toolBar.menu.findItem(R.id.item_notification).isVisible = showIcNotification
+        binding.toolBar.menu.findItem(R.id.item_edit).isVisible = showIcEdit
+        binding.toolBar.menu.findItem(R.id.item_scan).isVisible = showIcScan
     }
 
     fun showBottomNav(isVisible: String) {
