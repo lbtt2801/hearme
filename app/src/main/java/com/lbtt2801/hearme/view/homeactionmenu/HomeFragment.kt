@@ -40,6 +40,7 @@ class HomeFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private var email: String? = ""
     private var avatar: Drawable? = null
+    private var convertedAvatar: Int? = null
     private var fullName: String? = ""
 
     private val musicViewModel: MusicViewModel by activityViewModels()
@@ -63,6 +64,7 @@ class HomeFragment : Fragment() {
         mainActivity = activity as MainActivity
         mainActivity.checkInHome = true
         email = mainActivity.email
+        Toast.makeText(requireContext(), "home -> $email", Toast.LENGTH_SHORT).show()
         if (savedInstanceState != null) {
             email = savedInstanceState.getString("email").toString()
         }
@@ -71,30 +73,13 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        convertedAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
+        fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
     }
-    
+
     override fun onResume() {
         super.onResume()
-        mainActivity.showBottomNav("VISIBLE")
-        mainActivity.customToolbar(
-            "VISIBLE",
-            null,
-            fullName,
-            R.color.transparent,
-            avatar,
-            showIcMore = false,
-            showIcFilter = false,
-            showIcSearch = true,
-            showIcNotification = true
-        )
-        mainActivity.binding.toolBar.setNavigationOnClickListener() {
-            //navigate
-        }
-        
-        val newAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
-        fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
-        Log.v(TAG,"avatar = $newAvatar | fullname = $fullName")
-        avatar = newAvatar?.let { mainActivity.changeSizeBitmap(it, 48, 48) }
+        avatar = convertedAvatar?.let { mainActivity.changeSizeBitmap(it, 48, 48) }
 
         binding.tvSeeTrendingNow.setOnClickListener {
             findNavController().navigate(R.id.trendingNowFragment)
@@ -125,10 +110,21 @@ class HomeFragment : Fragment() {
         })
         viewModel.getListDataChart()
 
-//
-//        binding.icNotification.setOnClickListener {
-//            findNavController().navigate(R.id.notificationFragment)
-//        }
+        mainActivity.showBottomNav("VISIBLE")
+        mainActivity.customToolbar(
+            "VISIBLE",
+            null,
+            fullName,
+            R.color.transparent,
+            avatar,
+            showIcMore = false,
+            showIcFilter = false,
+            showIcSearch = true,
+            showIcNotification = true
+        )
+        mainActivity.binding.toolBar.setNavigationOnClickListener() {
+            //navigate
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

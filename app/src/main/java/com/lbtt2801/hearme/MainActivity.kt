@@ -67,11 +67,14 @@ class MainActivity : AppCompatActivity() {
         viewModelEmail.selectedItem.observe(this, Observer {
             Toast.makeText(this, "$it", Toast.LENGTH_SHORT).show()
             email = it
+            Toast.makeText(this, "viewModelEmail -> $email", Toast.LENGTH_SHORT).show()
+
         })
         viewModelUser.getListDataUser()
 
         if (savedInstanceState != null) {
             email = savedInstanceState.getString("email").toString()
+            Toast.makeText(this, "savedInstanceState -> $email", Toast.LENGTH_SHORT).show()
         }
 
         val navHostFragment =
