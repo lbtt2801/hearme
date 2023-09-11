@@ -7,6 +7,7 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.Observer
@@ -15,6 +16,7 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.model.Time
+import com.lbtt2801.hearme.model.TopicSearch
 import com.lbtt2801.hearme.model.User
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -125,4 +127,35 @@ fun clickDownList(checkBox: CheckBox, music: Music) {
 @BindingAdapter("app:setBackgroundTint")
 fun setBackgroundTint(cardView: MaterialCardView, color: Int) {
     cardView.backgroundTintList = ContextCompat.getColorStateList(cardView.context, color)
+}
+
+@BindingAdapter("app:topicSearchTextColor")
+fun setColorTopicSearchText(checkedTextView: AppCompatCheckedTextView, topicSearch: TopicSearch) {
+    if (checkedTextView.isChecked)
+        checkedTextView.setTextColor(checkedTextView.resources.getColor(R.color.white, null))
+    else
+        checkedTextView.setTextColor(
+            checkedTextView.resources.getColor(
+                R.color.color_bg_button_continue,
+                null
+            )
+        )
+}
+
+@BindingAdapter("app:onCheckedChanged")
+fun onCheckedChanged(checkedTextView: AppCompatCheckedTextView, topicSearch: TopicSearch) {
+    checkedTextView.setOnClickListener() {
+        if (checkedTextView.isChecked) {
+            checkedTextView.isChecked
+            checkedTextView.setTextColor(checkedTextView.resources.getColor(R.color.white, null))
+        } else {
+            checkedTextView.isChecked = false
+            checkedTextView.setTextColor(
+                checkedTextView.resources.getColor(
+                    R.color.color_bg_button_continue,
+                    null
+                )
+            )
+        }
+    }
 }

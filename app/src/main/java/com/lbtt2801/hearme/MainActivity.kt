@@ -34,6 +34,7 @@ import kotlin.system.exitProcess
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    private val viewModelRecentSearch: RecentSearchViewModel by viewModels()
     private val viewModelMusic: MusicViewModel by viewModels()
     private val viewModelArtist: ArtistViewModel by viewModels()
     private val viewModelCategory: CategoriesViewModel by viewModels()
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.lifecycleOwner = this
+        viewModelRecentSearch.getListDataRecentSearches()
         viewModelMusic.getListDataMusics()
         viewModelArtist.getListDataArtists()
         viewModelCategory.getListDataCategories()
@@ -85,7 +87,6 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.item_search -> {
                     navController.navigate(R.id.searchFragment)
-                    binding.searchView.onActionViewExpanded()
                     true
                 }
                 R.id.item_notification -> {
@@ -103,8 +104,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        initSearchBar()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -173,7 +172,6 @@ class MainActivity : AppCompatActivity() {
         showIcFilter: Boolean = false,
         showIcSearch: Boolean = false,
         showIcNotification: Boolean = false,
-        showSearchView: Boolean = false
     ) {
         //Toolbar visibility
         when (isVisible.lowercase()) {
@@ -215,15 +213,6 @@ class MainActivity : AppCompatActivity() {
         binding.toolBar.menu.findItem(R.id.item_filter).isVisible = showIcFilter
         binding.toolBar.menu.findItem(R.id.item_search).isVisible = showIcSearch
         binding.toolBar.menu.findItem(R.id.item_notification).isVisible = showIcNotification
-
-        //Search view
-        if (showSearchView) {
-            binding.searchView.visibility = View.VISIBLE
-            binding.containerToolBar.visibility = View.GONE
-        } else {
-            binding.searchView.visibility = View.GONE
-            binding.containerToolBar.visibility = View.VISIBLE
-        }
     }
 
     fun showBottomNav(isVisible: String) {
@@ -295,18 +284,5 @@ class MainActivity : AppCompatActivity() {
         }
 
         return edtEmail.plus("@$str2")
-    }
-
-    private fun initSearchBar() {
-        binding.searchView.setOnQueryTextListener(object :
-            SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-                return true
-            }
-        })
     }
 }

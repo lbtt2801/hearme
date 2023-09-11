@@ -45,20 +45,7 @@ class SearchFragment : Fragment() {
             false,
             false,
             false,
-            false,
-            true
+            false
         )
-        displayRecyclerViewRecentSearches(RecentSearchesData.data())
-    }
-
-    private fun displayRecyclerViewRecentSearches(lstData: ArrayList<RecentSearch>) {
-        val layout =
-            LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
-        recentSearchesAdapter =
-            RecentSearchesAdapter(lstData)
-        binding.recyclerViewRecentSearches.apply {
-            layoutManager = layout
-            adapter = recentSearchesAdapter
-        }
     }
 }
