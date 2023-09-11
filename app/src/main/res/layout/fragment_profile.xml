@@ -6,7 +6,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.ProfileFragment">
+        tools:context=".view.profile_settings.ProfileFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -17,13 +17,15 @@
                 android:id="@+id/cardView"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/imgAvatar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:background="@drawable/img_artist"
                     android:scaleType="centerCrop"
                     app:shapeAppearance="@style/circleImageView" />
@@ -41,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="35dp"
                 android:text="Andrew Ainsley"
                 android:textColor="@color/text"
                 android:textSize="20sp"
@@ -130,20 +132,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardViewPay">
 
                 <LinearLayout
+                    android:id="@+id/linearProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:gravity="center"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/ic_profile"/>
+                        android:src="@drawable/ic_profile" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -159,19 +164,21 @@
                         android:layout_height="20dp"
                         android:layout_gravity="end|center"
                         android:layout_marginStart="20dp"
-                        android:src="@drawable/ic_arrow_right"/>
+                        android:src="@drawable/ic_arrow_right" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearNotification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:gravity="center"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/ic_notification"/>
+                        android:src="@drawable/ic_notification" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -187,19 +194,21 @@
                         android:layout_height="20dp"
                         android:layout_gravity="end|center"
                         android:layout_marginStart="20dp"
-                        android:src="@drawable/ic_arrow_right"/>
+                        android:src="@drawable/ic_arrow_right" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearAudioVideo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:gravity="center"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/ic_profile"/>
+                        android:src="@drawable/ic_audio" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -215,26 +224,28 @@
                         android:layout_height="20dp"
                         android:layout_gravity="end|center"
                         android:layout_marginStart="20dp"
-                        android:src="@drawable/ic_arrow_right"/>
+                        android:src="@drawable/ic_arrow_right" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearPlayback"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:gravity="center"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/ic_profile"/>
+                        android:src="@drawable/ic_playback" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
-                        android:text="Profile"
+                        android:text="Playback"
                         android:textColor="@color/text"
                         android:textSize="18sp" />
 
@@ -243,26 +254,28 @@
                         android:layout_height="20dp"
                         android:layout_gravity="end|center"
                         android:layout_marginStart="20dp"
-                        android:src="@drawable/ic_arrow_right"/>
+                        android:src="@drawable/ic_arrow_right" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearDataSaver"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:gravity="center"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/ic_profile"/>
+                        android:src="@drawable/ic_datasaver" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
-                        android:text="Profile"
+                        android:text="Data Saver &amp; Storage"
                         android:textColor="@color/text"
                         android:textSize="18sp" />
 
@@ -271,26 +284,28 @@
                         android:layout_height="20dp"
                         android:layout_gravity="end|center"
                         android:layout_marginStart="20dp"
-                        android:src="@drawable/ic_arrow_right"/>
+                        android:src="@drawable/ic_arrow_right" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearSecurity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:gravity="center"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/ic_profile"/>
+                        android:src="@drawable/ic_security" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
-                        android:text="Profile"
+                        android:text="Security"
                         android:textColor="@color/text"
                         android:textSize="18sp" />
 
@@ -299,26 +314,37 @@
                         android:layout_height="20dp"
                         android:layout_gravity="end|center"
                         android:layout_marginStart="20dp"
-                        android:src="@drawable/ic_arrow_right"/>
+                        android:src="@drawable/ic_arrow_right" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLanguage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:gravity="center"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/ic_profile"/>
+                        android:src="@drawable/ic_language" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
-                        android:text="Profile"
+                        android:text="Language"
+                        android:textColor="@color/text"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="0"
+                        android:text="English (US)"
                         android:textColor="@color/text"
                         android:textSize="18sp" />
 
@@ -327,43 +353,37 @@
                         android:layout_height="20dp"
                         android:layout_gravity="end|center"
                         android:layout_marginStart="20dp"
-                        android:src="@drawable/ic_arrow_right"/>
+                        android:src="@drawable/ic_arrow_right" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearDarkMode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:gravity="center"
                     android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/ic_profile"/>
+                        android:src="@drawable/ic_darkmode" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
-                        android:text="Profile"
+                        android:text="Dark Mode"
                         android:textColor="@color/text"
                         android:textSize="18sp" />
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="end|center"
-                        android:layout_marginStart="20dp"
-                        android:src="@drawable/ic_arrow_right"/>
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
-
-
-
 
             </LinearLayout>
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
