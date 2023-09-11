@@ -25,7 +25,7 @@
                     android:text="Popular Podcasts"
                     android:textStyle="bold"
                     android:textSize="24sp"
-                    android:textColor="@color/text"
+                    android:textColor="@color/greyscale_900"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
 
@@ -65,7 +65,7 @@
                     android:text="Popular Artists"
                     android:textStyle="bold"
                     android:textSize="24sp"
-                    android:textColor="@color/text"
+                    android:textColor="@color/greyscale_900"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
 
@@ -105,7 +105,7 @@
                     android:text="Categories"
                     android:textStyle="bold"
                     android:textSize="24sp"
-                    android:textColor="@color/text"
+                    android:textColor="@color/greyscale_900"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
 

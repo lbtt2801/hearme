@@ -45,7 +45,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="35dp"
                 android:text="Andrew Ainsley"
-                android:textColor="@color/text"
+                android:textColor="@color/greyscale_900"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/cardView"
@@ -58,7 +58,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
                 android:text="andrew_ainsley@yourdomain.com"
-                android:textColor="@color/text"
+                android:textColor="@color/greyscale_900"
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/cardView"
                 app:layout_constraintTop_toBottomOf="@+id/tvNameUser" />
@@ -156,7 +156,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
                         android:text="Profile"
-                        android:textColor="@color/text"
+                        android:textColor="@color/greyscale_900"
                         android:textSize="18sp" />
 
                     <ImageView
@@ -186,7 +186,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
                         android:text="Notification"
-                        android:textColor="@color/text"
+                        android:textColor="@color/greyscale_900"
                         android:textSize="18sp" />
 
                     <ImageView
@@ -216,7 +216,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
                         android:text="Audio &amp; Video"
-                        android:textColor="@color/text"
+                        android:textColor="@color/greyscale_900"
                         android:textSize="18sp" />
 
                     <ImageView
@@ -246,7 +246,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
                         android:text="Playback"
-                        android:textColor="@color/text"
+                        android:textColor="@color/greyscale_900"
                         android:textSize="18sp" />
 
                     <ImageView
@@ -276,7 +276,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
                         android:text="Data Saver &amp; Storage"
-                        android:textColor="@color/text"
+                        android:textColor="@color/greyscale_900"
                         android:textSize="18sp" />
 
                     <ImageView
@@ -306,7 +306,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
                         android:text="Security"
-                        android:textColor="@color/text"
+                        android:textColor="@color/greyscale_900"
                         android:textSize="18sp" />
 
                     <ImageView
@@ -336,7 +336,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
                         android:text="Language"
-                        android:textColor="@color/text"
+                        android:textColor="@color/greyscale_900"
                         android:textSize="18sp" />
 
                     <TextView
@@ -345,7 +345,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_weight="0"
                         android:text="English (US)"
-                        android:textColor="@color/text"
+                        android:textColor="@color/greyscale_900"
                         android:textSize="18sp" />
 
                     <ImageView
@@ -375,7 +375,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
                         android:text="Dark Mode"
-                        android:textColor="@color/text"
+                        android:textColor="@color/greyscale_900"
                         android:textSize="18sp" />
 
                     <com.google.android.material.switchmaterial.SwitchMaterial

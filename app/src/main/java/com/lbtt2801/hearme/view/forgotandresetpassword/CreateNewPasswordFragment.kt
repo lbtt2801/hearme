@@ -2,7 +2,6 @@ package com.lbtt2801.hearme.view.forgotandresetpassword
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
@@ -63,7 +62,7 @@ class CreateNewPasswordFragment : Fragment() {
                             ColorStateList.valueOf(
                                 ContextCompat.getColor(
                                     view.context,
-                                    R.color.text
+                                    R.color.greyscale_900
                                 )
                             )
                     } else {
@@ -71,7 +70,7 @@ class CreateNewPasswordFragment : Fragment() {
                             ColorStateList.valueOf(
                                 ContextCompat.getColor(
                                     view.context,
-                                    R.color.greyscale
+                                    R.color.greyscale_500
                                 )
                             )
                     }
@@ -98,7 +97,7 @@ class CreateNewPasswordFragment : Fragment() {
                             ColorStateList.valueOf(
                                 ContextCompat.getColor(
                                     view.context,
-                                    R.color.text
+                                    R.color.greyscale_900
                                 )
                             )
                     } else {
@@ -106,7 +105,7 @@ class CreateNewPasswordFragment : Fragment() {
                             ColorStateList.valueOf(
                                 ContextCompat.getColor(
                                     view.context,
-                                    R.color.greyscale
+                                    R.color.greyscale_500
                                 )
                             )
                     }

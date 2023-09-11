@@ -30,7 +30,7 @@
                 android:text="Andrew Ainsley"
                 android:textStyle="bold"
                 android:textSize="32sp"
-                android:textColor="@color/text"
+                android:textColor="@color/greyscale_900"
                 android:layout_marginTop="20dp"
                 app:layout_constraintTop_toBottomOf="@+id/imgAvatar"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +79,7 @@
                     android:text="2.739"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    android:textColor="@color/text"
+                    android:textColor="@color/greyscale_900"
                     android:layout_weight="1"
                     android:gravity="center"/>
                 <TextView
@@ -89,7 +89,7 @@
                     android:text="347"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    android:textColor="@color/text"
+                    android:textColor="@color/greyscale_900"
                     android:layout_weight="1"
                     android:gravity="center"/>
             </LinearLayout>
@@ -111,7 +111,7 @@
                     android:text="Followers"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="@color/text_detail"
+                    android:textColor="@color/greyscale_700"
                     android:layout_weight="1"
                     android:gravity="center"/>
                 <TextView
@@ -120,7 +120,7 @@
                     android:text="Following"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="@color/text_detail"
+                    android:textColor="@color/greyscale_700"
                     android:layout_weight="1"
                     android:gravity="center"/>
             </LinearLayout>
@@ -142,7 +142,7 @@
                 android:text="Playlists"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="@color/text"
+                android:textColor="@color/greyscale_900"
                 android:layout_marginTop="24dp"
                 app:layout_constraintTop_toBottomOf="@+id/lineBottom"
                 app:layout_constraintStart_toStartOf="parent"/>

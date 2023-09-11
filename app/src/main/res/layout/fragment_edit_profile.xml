@@ -22,7 +22,7 @@
                 android:background="@drawable/bg_edit_text_profile"
                 android:hint="Full name"
                 android:padding="20dp"
-                android:textColor="@color/text"
+                android:textColor="@color/greyscale_900"
                 android:textSize="14sp" />
 
             <EditText
@@ -33,7 +33,7 @@
                 android:background="@drawable/bg_edit_text_profile"
                 android:hint="Nickname"
                 android:padding="20dp"
-                android:textColor="@color/text"
+                android:textColor="@color/greyscale_900"
                 android:textSize="14sp" />
 
             <EditText
@@ -46,7 +46,7 @@
                 android:hint="Date of Birth"
                 android:inputType="date"
                 android:padding="20dp"
-                android:textColor="@color/text"
+                android:textColor="@color/greyscale_900"
                 android:textSize="14sp" />
 
             <EditText
@@ -60,7 +60,7 @@
                 android:enabled="false"
                 android:inputType="textEmailAddress"
                 android:padding="20dp"
-                android:textColor="@color/text"
+                android:textColor="@color/greyscale_900"
                 android:textSize="14sp" />
 
             <LinearLayout
@@ -91,7 +91,7 @@
                     android:hint="Phone Number"
                     android:inputType="phone"
                     android:padding="20dp"
-                    android:textColor="@color/text"
+                    android:textColor="@color/greyscale_900"
                     android:textSize="14sp" />
             </LinearLayout>
 

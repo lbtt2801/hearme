@@ -148,7 +148,7 @@
                 android:letterSpacing="0.005"
                 android:lineHeight="22dp"
                 android:text="Your account is ready to use. You will be redirected to the Home page in a few seconds.."
-                android:textColor="@color/text"
+                android:textColor="@color/greyscale_900"
                 android:textSize="16sp" />
         </LinearLayout>
 

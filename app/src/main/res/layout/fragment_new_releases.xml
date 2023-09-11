@@ -20,7 +20,7 @@
                 android:text="The Best New Releases"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="@color/text"
+                android:textColor="@color/greyscale_900"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
@@ -41,7 +41,7 @@
                 android:text="New Albums &amp; Single"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="@color/text"
+                android:textColor="@color/greyscale_900"
                 app:layout_constraintTop_toBottomOf="@+id/recyclerViewTheBest"
                 app:layout_constraintStart_toStartOf="parent"/>
 

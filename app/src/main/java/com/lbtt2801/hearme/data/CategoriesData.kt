@@ -29,7 +29,7 @@ class CategoriesData {
                         "ca003",
                         "New Releases",
                         R.drawable.img_artist,
-                        R.color.text_nav
+                        R.color.greyscale_50
                     )
                 )
                 add(
@@ -61,7 +61,7 @@ class CategoriesData {
                         "ca007",
                         "Rock",
                         R.drawable.img_artist,
-                        R.color.border_edt_pin
+                        R.color.greyscale_200
                     )
                 )
                 add(
