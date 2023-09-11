@@ -1,7 +1,9 @@
 package com.lbtt2801.hearme.view.homeactionmenu
 
+import android.content.ContentValues.TAG
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +50,10 @@ class HomeFragment : Fragment() {
         ViewModelProvider(this)[HomeViewModel::class.java]
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,15 +63,37 @@ class HomeFragment : Fragment() {
         mainActivity = activity as MainActivity
         mainActivity.checkInHome = true
         email = mainActivity.email
+        if (savedInstanceState != null) {
+            email = savedInstanceState.getString("email").toString()
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainActivity.showBottomNav("VISIBLE")
+        mainActivity.customToolbar(
+            "VISIBLE",
+            null,
+            fullName,
+            R.color.transparent,
+            avatar,
+            showIcMore = false,
+            showIcFilter = false,
+            showIcSearch = true,
+            showIcNotification = true
+        )
+        mainActivity.binding.toolBar.setNavigationOnClickListener() {
+            //navigate
+        }
 
         val newAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
         fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
-
+        Log.v(TAG,"avatar = $newAvatar | fullname = $fullName")
         avatar = newAvatar?.let { mainActivity.changeSizeBitmap(it, 48, 48) }
 
         binding.tvSeeTrendingNow.setOnClickListener {
@@ -101,23 +129,9 @@ class HomeFragment : Fragment() {
 //        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        mainActivity.showBottomNav("VISIBLE")
-        mainActivity.customToolbar(
-            "VISIBLE",
-            null,
-            fullName,
-            R.color.transparent,
-            avatar,
-            showIcMore = false,
-            showIcFilter = false,
-            showIcSearch = true,
-            showIcNotification = true
-        )
-        mainActivity.binding.toolBar.setNavigationOnClickListener() {
-            //navigate
-        }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("email", email)
     }
 
     override fun onDestroyView() {

@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModelEmail: EmailViewModel by viewModels()
     val viewModelUser: UserViewModel by viewModels()
 
-    lateinit var email: String
+    var email: String = ""
 
     var checkInHome = false
 
@@ -69,6 +69,10 @@ class MainActivity : AppCompatActivity() {
             email = it
         })
         viewModelUser.getListDataUser()
+
+        if (savedInstanceState != null) {
+            email = savedInstanceState.getString("email").toString()
+        }
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
@@ -98,6 +102,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("email", email)
     }
 
     override fun onBackPressed() {
