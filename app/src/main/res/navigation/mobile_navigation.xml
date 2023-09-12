@@ -160,7 +160,7 @@
         android:label="PopularArtistsFragment" />
     <fragment
         android:id="@+id/item_nav_explore"
-        android:name="com.lbtt2801.hearme.view.ExploreFragment"
+        android:name="com.lbtt2801.hearme.view.search.ExploreFragment"
         android:label="ExploreFragment" >
         <action
             android:id="@+id/action_navigation_explore_to_itemExploreFragment"
@@ -215,4 +215,9 @@
             android:id="@+id/action_editProfileFragment_to_profileDetailFragment"
             app:destination="@id/profileDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.lbtt2801.hearme.view.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search"/>
 </navigation>

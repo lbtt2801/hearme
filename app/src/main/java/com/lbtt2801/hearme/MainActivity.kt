@@ -1,8 +1,7 @@
 package com.lbtt2801.hearme
 
-import com.lbtt2801.hearme.R
 import android.app.Dialog
-import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
@@ -18,19 +17,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
-import com.lbtt2801.hearme.model.User
-import com.lbtt2801.hearme.view.forgotandresetpassword.AuthorizationProgressDialog
-import com.lbtt2801.hearme.view.forgotandresetpassword.AuthorizationProgressDialog.Companion.TAG
 import com.lbtt2801.hearme.viewmodel.*
 import kotlin.system.exitProcess
 
@@ -38,6 +34,7 @@ import kotlin.system.exitProcess
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    private val viewModelRecentSearch: RecentSearchViewModel by viewModels()
     private val viewModelMusic: MusicViewModel by viewModels()
     private val viewModelArtist: ArtistViewModel by viewModels()
     private val viewModelCategory: CategoriesViewModel by viewModels()
@@ -61,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.lifecycleOwner = this
+        viewModelRecentSearch.getListDataRecentSearches()
         viewModelMusic.getListDataMusics()
         viewModelArtist.getListDataArtists()
         viewModelCategory.getListDataCategories()
@@ -88,6 +86,7 @@ class MainActivity : AppCompatActivity() {
         binding.toolBar.setOnMenuItemClickListener() {
             when (it.itemId) {
                 R.id.item_search -> {
+                    navController.navigate(R.id.searchFragment)
                     true
                 }
                 R.id.item_notification -> {
@@ -173,8 +172,6 @@ class MainActivity : AppCompatActivity() {
         showIcFilter: Boolean = false,
         showIcSearch: Boolean = false,
         showIcNotification: Boolean = false,
-        showIcEdit: Boolean = false,
-        showIcScan: Boolean = false
     ) {
         //Toolbar visibility
         when (isVisible.lowercase()) {
@@ -216,8 +213,6 @@ class MainActivity : AppCompatActivity() {
         binding.toolBar.menu.findItem(R.id.item_filter).isVisible = showIcFilter
         binding.toolBar.menu.findItem(R.id.item_search).isVisible = showIcSearch
         binding.toolBar.menu.findItem(R.id.item_notification).isVisible = showIcNotification
-        binding.toolBar.menu.findItem(R.id.item_edit).isVisible = showIcEdit
-        binding.toolBar.menu.findItem(R.id.item_scan).isVisible = showIcScan
     }
 
     fun showBottomNav(isVisible: String) {
