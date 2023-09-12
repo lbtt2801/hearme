@@ -19,6 +19,16 @@
         android:title="Search"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/item_edit"
+        android:icon="@drawable/ic_edit"
+        android:title="Search"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/item_scan"
+        android:icon="@drawable/ic_scan"
+        android:title="Search"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/item_more_circle"
         android:icon="@drawable/ic_more_circle"
         android:title="More"

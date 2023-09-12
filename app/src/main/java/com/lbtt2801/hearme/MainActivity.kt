@@ -9,10 +9,13 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -97,6 +100,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.item_more_circle -> {
+                    showDialogBottom()
                     true
                 }
                 else -> {
@@ -136,7 +140,21 @@ class MainActivity : AppCompatActivity() {
         btnNo.setOnClickListener {
             dialog.dismiss()
         }
+    }
 
+    private fun showDialogBottom() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.bottomsheet_layout)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.attributes?.windowAnimations = com.google.android.material.R.style.MaterialAlertDialog_Material3_Animation
+        dialog.window?.setGravity(Gravity.BOTTOM)
+        dialog.show()
+
+        val btnYes: Button = dialog.findViewById(R.id.btnYes)
+        val btnNo: Button = dialog.findViewById(R.id.btnCancel)
     }
 
     private fun onClickItemBottomNav(it: MenuItem) = when (it.itemId) {
@@ -172,6 +190,8 @@ class MainActivity : AppCompatActivity() {
         showIcFilter: Boolean = false,
         showIcSearch: Boolean = false,
         showIcNotification: Boolean = false,
+        showIcEdit: Boolean = false,
+        showIcScan: Boolean = false
     ) {
         //Toolbar visibility
         when (isVisible.lowercase()) {
@@ -213,6 +233,8 @@ class MainActivity : AppCompatActivity() {
         binding.toolBar.menu.findItem(R.id.item_filter).isVisible = showIcFilter
         binding.toolBar.menu.findItem(R.id.item_search).isVisible = showIcSearch
         binding.toolBar.menu.findItem(R.id.item_notification).isVisible = showIcNotification
+        binding.toolBar.menu.findItem(R.id.item_scan).isVisible = showIcScan
+        binding.toolBar.menu.findItem(R.id.item_edit).isVisible = showIcEdit
     }
 
     fun showBottomNav(isVisible: String) {

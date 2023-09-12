@@ -36,6 +36,7 @@ class SplashScreenFragment : Fragment() {
             binding.progressBar.visibility = View.GONE
 //            findNavController().navigate(R.id.walkThroughFragment)
             findNavController().navigate(R.id.signInFragment)
+
         }, 3000)
     }
 

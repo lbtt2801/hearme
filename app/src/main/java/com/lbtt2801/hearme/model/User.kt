@@ -16,7 +16,7 @@ data class User(
     val nation: String? = null,
     var phone: String? = null,
     var pin: Int? = null,
-    val gender: Boolean? = null,
+    var gender: Boolean? = null,
     val isPremium: Boolean? = false,
     val isFirstSignIn: Boolean = true,
     val listArtistsFollowing: ArrayList<Artist> = ArrayList(), //Following

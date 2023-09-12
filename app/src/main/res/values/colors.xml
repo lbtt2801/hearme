@@ -11,6 +11,7 @@
     <color name="text_hint">#CCCCCC</color>
     <color name="on_button">#FFFFFF</color>
     <color name="bg_button">#0E9E42</color>
+    <color name="green_100">#E6F9ED</color>
     <color name="green_500">#06C149</color>
     <color name="gradient_green">#33EB75</color>
 

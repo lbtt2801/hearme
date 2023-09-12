@@ -36,15 +36,20 @@ class ProfileDetailFragment : Fragment() {
         mainActivity = activity as MainActivity
         email = mainActivity.email
 
-        mainActivity.binding.toolBar.menu.findItem(R.id.item_more_circle).setIcon(R.drawable.ic_edit)
         mainActivity.customToolbar(
             "VISIBLE",
             "Profile",
             null,
             R.color.transparent,
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back),
-            true
+            showIcMore = false,
+            showIcFilter = false,
+            showIcSearch = false,
+            showIcNotification = false,
+            showIcEdit = true
         )
+
+        mainActivity.showBottomNav("GONE")
 
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()

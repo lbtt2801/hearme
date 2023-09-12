@@ -378,9 +378,13 @@
                         android:textColor="@color/greyscale_900"
                         android:textSize="18sp" />
 
-                    <com.google.android.material.switchmaterial.SwitchMaterial
+                    <Switch
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:thumb="@drawable/thumb"
+                        android:track="@drawable/track"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
                 </LinearLayout>
 
             </LinearLayout>
