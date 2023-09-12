@@ -10,20 +10,21 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
-import com.lbtt2801.hearme.databinding.FragmentSettingNotificationBinding
+import com.lbtt2801.hearme.databinding.FragmentLanguageBinding
+import com.lbtt2801.hearme.databinding.FragmentSecurityBinding
 
-class SettingNotificationFragment : Fragment() {
-    private var _binding: FragmentSettingNotificationBinding? = null
+class LanguageFragment : Fragment() {
+    private var _binding: FragmentLanguageBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting_notification, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_language, container, false)
 
         (activity as MainActivity).customToolbar(
             "VISIBLE",
-            "Notification",
+            "Language",
             null,
             R.color.transparent,
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)

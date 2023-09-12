@@ -193,6 +193,24 @@
         <action
             android:id="@+id/action_item_nav_profile_to_profileDetailFragment"
             app:destination="@id/profileDetailFragment" />
+        <action
+            android:id="@+id/action_item_nav_profile_to_securityFragment"
+            app:destination="@id/securityFragment" />
+        <action
+            android:id="@+id/action_item_nav_profile_to_audioVideoFragment"
+            app:destination="@id/audioVideoFragment" />
+        <action
+            android:id="@+id/action_item_nav_profile_to_languageFragment"
+            app:destination="@id/languageFragment" />
+        <action
+            android:id="@+id/action_item_nav_profile_to_dataSaverStorageFragment"
+            app:destination="@id/dataSaverStorageFragment" />
+        <action
+            android:id="@+id/action_item_nav_profile_to_settingPlaybackFragment"
+            app:destination="@id/settingPlaybackFragment2" />
+        <action
+            android:id="@+id/action_item_nav_profile_to_settingNotificationFragment"
+            app:destination="@id/settingNotificationFragment2" />
     </fragment>
     <fragment
         android:id="@+id/profileDetailFragment"
@@ -220,4 +238,34 @@
         android:name="com.lbtt2801.hearme.view.search.SearchFragment"
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search"/>
+    <fragment
+        android:id="@+id/audioVideoFragment"
+        android:name="com.lbtt2801.hearme.view.profile_settings.AudioVideoFragment"
+        android:label="fragment_audio_video"
+        tools:layout="@layout/fragment_audio_video" />
+    <fragment
+        android:id="@+id/dataSaverStorageFragment"
+        android:name="com.lbtt2801.hearme.view.profile_settings.DataSaverStorageFragment"
+        android:label="fragment_data_saver_storage"
+        tools:layout="@layout/fragment_data_saver_storage" />
+    <fragment
+        android:id="@+id/languageFragment"
+        android:name="com.lbtt2801.hearme.view.profile_settings.LanguageFragment"
+        android:label="fragment_language"
+        tools:layout="@layout/fragment_language" />
+    <fragment
+        android:id="@+id/securityFragment"
+        android:name="com.lbtt2801.hearme.view.profile_settings.SecurityFragment"
+        android:label="fragment_security"
+        tools:layout="@layout/fragment_security" />
+    <fragment
+        android:id="@+id/settingNotificationFragment2"
+        android:name="com.lbtt2801.hearme.view.profile_settings.SettingNotificationFragment"
+        android:label="fragment_setting_notification"
+        tools:layout="@layout/fragment_setting_notification" />
+    <fragment
+        android:id="@+id/settingPlaybackFragment2"
+        android:name="com.lbtt2801.hearme.view.profile_settings.SettingPlaybackFragment"
+        android:label="fragment_setting_playback"
+        tools:layout="@layout/fragment_setting_playback" />
 </navigation>

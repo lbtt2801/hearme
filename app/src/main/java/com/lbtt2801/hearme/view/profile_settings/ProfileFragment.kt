@@ -1,10 +1,18 @@
 package com.lbtt2801.hearme.view.profile_settings
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -58,25 +66,25 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.action_item_nav_profile_to_profileDetailFragment)
         }
         binding.linearNotification.setOnClickListener {
-            findNavController().navigate(R.id.action_item_nav_profile_to_profileDetailFragment)
+            findNavController().navigate(R.id.action_item_nav_profile_to_settingNotificationFragment)
         }
         binding.linearAudioVideo.setOnClickListener {
-            findNavController().navigate(R.id.action_item_nav_profile_to_profileDetailFragment)
+            findNavController().navigate(R.id.action_item_nav_profile_to_audioVideoFragment)
         }
         binding.linearPlayback.setOnClickListener {
-            findNavController().navigate(R.id.action_item_nav_profile_to_profileDetailFragment)
+            findNavController().navigate(R.id.action_item_nav_profile_to_settingPlaybackFragment)
         }
         binding.linearDataSaver.setOnClickListener {
-            findNavController().navigate(R.id.action_item_nav_profile_to_profileDetailFragment)
+            findNavController().navigate(R.id.action_item_nav_profile_to_dataSaverStorageFragment)
         }
         binding.linearSecurity.setOnClickListener {
-            findNavController().navigate(R.id.action_item_nav_profile_to_profileDetailFragment)
+            findNavController().navigate(R.id.action_item_nav_profile_to_securityFragment)
         }
         binding.linearLanguage.setOnClickListener {
-            findNavController().navigate(R.id.action_item_nav_profile_to_profileDetailFragment)
+            findNavController().navigate(R.id.action_item_nav_profile_to_languageFragment)
         }
         binding.linearDarkMode.setOnClickListener {
-            findNavController().navigate(R.id.action_item_nav_profile_to_profileDetailFragment)
+
         }
     }
 
@@ -84,4 +92,5 @@ class ProfileFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

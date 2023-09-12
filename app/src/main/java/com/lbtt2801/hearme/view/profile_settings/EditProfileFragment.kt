@@ -1,5 +1,6 @@
 package com.lbtt2801.hearme.view.profile_settings
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentEditProfileBinding
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 
 class EditProfileFragment : Fragment() {
@@ -46,6 +48,8 @@ class EditProfileFragment : Fragment() {
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)
         )
 
+        (activity as MainActivity).showBottomNav("GONE")
+
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
         }
@@ -71,6 +75,8 @@ class EditProfileFragment : Fragment() {
         binding.edtPhoneNumber.setText(phone, TextView.BufferType.EDITABLE)
         binding.ccp.setDefaultCountryUsingNameCode(nation)
         binding.ccp.resetToDefaultCountry()
+
+        binding.edtDob.setOnClickListener { calendarDialog(it) }
 
         val spinnerAdapter = ArrayAdapter(
             requireContext(),
@@ -120,4 +126,17 @@ class EditProfileFragment : Fragment() {
         _binding = null
     }
 
+    private fun calendarDialog(it: View?) {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH) + 1
+        val day = c.get(Calendar.DAY_OF_MONTH)
+        val dialog = DatePickerDialog(
+            requireContext(),
+            { _, mYear, mMonth, mDay ->
+                binding.edtDob.setText("$mDay/$mMonth/$mYear")
+            }, year, month, day
+        )
+        dialog.show()
+    }
 }

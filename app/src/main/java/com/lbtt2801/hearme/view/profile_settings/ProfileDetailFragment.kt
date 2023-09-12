@@ -49,6 +49,8 @@ class ProfileDetailFragment : Fragment() {
             showIcEdit = true
         )
 
+        mainActivity.showBottomNav("GONE")
+
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
         }

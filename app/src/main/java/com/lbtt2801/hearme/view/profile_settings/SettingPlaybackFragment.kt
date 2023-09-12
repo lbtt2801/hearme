@@ -10,20 +10,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
-import com.lbtt2801.hearme.databinding.FragmentSettingNotificationBinding
+import com.lbtt2801.hearme.databinding.FragmentSettingPlaybackBinding
 
-class SettingNotificationFragment : Fragment() {
-    private var _binding: FragmentSettingNotificationBinding? = null
+class SettingPlaybackFragment : Fragment() {
+    private var _binding: FragmentSettingPlaybackBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting_notification, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting_playback, container, false)
 
         (activity as MainActivity).customToolbar(
             "VISIBLE",
-            "Notification",
+            "Playback",
             null,
             R.color.transparent,
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)
