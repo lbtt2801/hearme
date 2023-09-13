@@ -78,7 +78,6 @@ class SecurityFragment : Fragment() {
 
         binding.switchRememberMe.setOnClickListener {
             mainActivity.checkRemember = binding.switchRememberMe.isChecked
-            Toast.makeText(context, "check: ${mainActivity.checkRemember}", Toast.LENGTH_SHORT).show()
         }
 
 

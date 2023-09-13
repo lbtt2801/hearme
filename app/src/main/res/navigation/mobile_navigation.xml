@@ -211,6 +211,9 @@
         <action
             android:id="@+id/action_item_nav_profile_to_settingNotificationFragment"
             app:destination="@id/settingNotificationFragment2" />
+        <action
+            android:id="@+id/action_item_nav_profile_to_premiumFragment"
+            app:destination="@id/premiumFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileDetailFragment"
@@ -268,4 +271,9 @@
         android:name="com.lbtt2801.hearme.view.profile_settings.SettingPlaybackFragment"
         android:label="fragment_setting_playback"
         tools:layout="@layout/fragment_setting_playback" />
+    <fragment
+        android:id="@+id/premiumFragment"
+        android:name="com.lbtt2801.hearme.view.profile_settings.PremiumFragment"
+        android:label="fragment_premium"
+        tools:layout="@layout/fragment_premium" />
 </navigation>
