@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
-            android:visibility="gone"
+            android:visibility="visible"
             tools:context=".view.search.ExploreFragment">
 
             <TextView
@@ -116,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_topic_search"
@@ -127,8 +127,8 @@
                 android:clipToPadding="false"
                 android:orientation="horizontal"
                 android:paddingLeft="24dp"
-                android:paddingRight="24dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/view_topic_search" />
 
             <LinearLayout
                 android:id="@+id/container_not_found"
@@ -169,6 +169,28 @@
                     android:textSize="18sp" />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_found"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_found_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingBottom="24dp"
+                    tools:listitem="@layout/view_top_list_artist" />
+
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 </layout>

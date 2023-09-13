@@ -15,7 +15,7 @@ class UsersData {
                 add(
                     User(
                         "phuongviet.huit@gmail.com",
-                        "Awdssdfg852456",
+                        "phuongviet123456",
                         "awdssdfgviethufi@gmail.com",
                         R.drawable.img_podcast,
                         "Nguyen Phuong Viet",

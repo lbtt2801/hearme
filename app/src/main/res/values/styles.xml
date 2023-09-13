@@ -11,6 +11,16 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="roundedConorImageview">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">25%</item>
+    </style>
+
+    <style name="roundedConorImageview2">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">15%</item>
+    </style>
+
     <style name="roundedImageView">
         <item name="android:scaleType">centerCrop</item>
         <item name="cornerSize">30dp</item>

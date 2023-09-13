@@ -62,7 +62,8 @@
                     android:id="@+id/edtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"/>
+                    android:inputType="textEmailAddress"
+                    android:text="phuongviet.huit@gmail.com" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,7 +92,8 @@
                     android:id="@+id/edtPass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"/>
+                    android:text="phuongviet123456"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

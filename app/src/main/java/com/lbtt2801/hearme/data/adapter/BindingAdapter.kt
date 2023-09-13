@@ -6,14 +6,17 @@ import android.util.Log
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatCheckedTextView
+import androidx.appcompat.widget.AppCompatToggleButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.Observer
 import com.google.android.material.card.MaterialCardView
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
+import com.lbtt2801.hearme.data.TopicSearchData
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.model.Time
 import com.lbtt2801.hearme.model.TopicSearch
