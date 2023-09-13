@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,9 +17,7 @@ import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.MusicAdapter
 import com.lbtt2801.hearme.databinding.FragmentTrendingNowBinding
 import com.lbtt2801.hearme.model.Music
-import com.lbtt2801.hearme.viewmodel.HomeViewModel
 import com.lbtt2801.hearme.viewmodel.MusicViewModel
-import kotlin.math.round
 
 class TrendingNowFragment : Fragment() {
     private var _binding: FragmentTrendingNowBinding? = null

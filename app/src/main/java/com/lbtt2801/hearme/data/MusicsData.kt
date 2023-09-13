@@ -118,7 +118,7 @@ class MusicsData {
                         calYesterday.time,
                         CategoriesData.dataCategory().first { it.categoryID == "ca004" },
                         ArtistsData.dataArtist().first { it.artistId == "ar005" },
-                        false
+                        true
                     )
                 )
                 add(
@@ -131,7 +131,7 @@ class MusicsData {
                         calYesterday.time,
                         CategoriesData.dataCategory().first { it.categoryID == "ca002" },
                         ArtistsData.dataArtist().first { it.artistId == "ar008" },
-                        true
+                        false
                     )
                 )
                 add(
@@ -170,7 +170,7 @@ class MusicsData {
                         Date("13/04/2023"),
                         CategoriesData.dataCategory().first { it.categoryID == "ca006" },
                         ArtistsData.dataArtist().first { it.artistId == "ar002" },
-                        false
+                        true
                     )
                 )
                 add(
@@ -222,7 +222,7 @@ class MusicsData {
                         calYesterday.time,
                         CategoriesData.dataCategory().first { it.categoryID == "ca008" },
                         ArtistsData.dataArtist().first { it.artistId == "ar003" },
-                        false
+                        true
                     )
                 )
                 add(
@@ -261,7 +261,7 @@ class MusicsData {
                         calToday.time,
                         CategoriesData.dataCategory().first { it.categoryID == "ca009" },
                         ArtistsData.dataArtist().first { it.artistId == "ar001" },
-                        false
+                        true
                     )
                 )
                 add(

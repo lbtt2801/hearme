@@ -35,6 +35,7 @@ import kotlin.system.exitProcess
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    val viewModelTopicSearch: TopicSearchViewModel by viewModels()
     private val viewModelRecentSearch: RecentSearchViewModel by viewModels()
     private val viewModelMusic: MusicViewModel by viewModels()
     private val viewModelArtist: ArtistViewModel by viewModels()
@@ -61,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.lifecycleOwner = this
+        viewModelTopicSearch.getListDataTopicSearch()
         viewModelRecentSearch.getListDataRecentSearches()
         viewModelMusic.getListDataMusics()
         viewModelArtist.getListDataArtists()
@@ -89,7 +91,8 @@ class MainActivity : AppCompatActivity() {
         binding.toolBar.setOnMenuItemClickListener() {
             when (it.itemId) {
                 R.id.item_search -> {
-                    navController.navigate(R.id.searchFragment)
+                    navController.navigate(R.id.item_nav_explore)
+
                     true
                 }
                 R.id.item_notification -> {
@@ -147,9 +150,13 @@ class MainActivity : AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.dialog_bottomsheet)
-        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window?.attributes?.windowAnimations = com.google.android.material.R.style.MaterialAlertDialog_Material3_Animation
+        dialog.window?.attributes?.windowAnimations =
+            com.google.android.material.R.style.MaterialAlertDialog_Material3_Animation
         dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.show()
 

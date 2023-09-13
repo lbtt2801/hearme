@@ -1,3 +1,3 @@
 package com.lbtt2801.hearme.model
 
-class TopicSearch(val name: String)
+data class TopicSearch(val name: String, var isChecked: Boolean)

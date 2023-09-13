@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.databinding.ViewFollowArtistsBinding
 import com.lbtt2801.hearme.databinding.ViewHomeArtistBinding
+import com.lbtt2801.hearme.databinding.ViewTopListArtistBinding
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
@@ -21,6 +22,7 @@ class ArtistAdapter(
         const val POPULAR_ARTISTS = 1
         const val SAVED = 2
         const val FOLLOW_ARTISTS = 3
+        const val ARTISTS_LIST = 4
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -28,6 +30,7 @@ class ArtistAdapter(
             0 -> HOME
             1 -> POPULAR_ARTISTS
             3 -> FOLLOW_ARTISTS
+            4 -> ARTISTS_LIST
             else -> SAVED
         }
     }
@@ -38,6 +41,7 @@ class ArtistAdapter(
 //            TOPIC_LIST -> InterestViewHolder(parent)
 //            SAVED -> SavedViewHolder(parent)
             FOLLOW_ARTISTS -> ArtistViewHolderFollowArtists(parent)
+            ARTISTS_LIST -> TopArtistViewHolder(parent)
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -46,6 +50,7 @@ class ArtistAdapter(
         when (holder) {
             is HomeViewHolder -> holder.bind(dataArtists[position])
             is ArtistViewHolderFollowArtists -> holder.bind(dataArtists[position])
+            is TopArtistViewHolder -> holder.bind(dataArtists[position])
         }
     }
 
@@ -89,6 +94,22 @@ class ArtistAdapter(
                     isChecked
                 )
             }
+        }
+    }
+
+    inner class TopArtistViewHolder private constructor(
+        val binding: ViewTopListArtistBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
+        constructor(parent: ViewGroup) : this(
+            ViewTopListArtistBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+
+        fun bind(artist: Artist) {
+            binding.artist = artist
         }
     }
 

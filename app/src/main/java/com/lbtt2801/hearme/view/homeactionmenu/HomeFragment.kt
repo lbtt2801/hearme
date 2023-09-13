@@ -1,9 +1,7 @@
 package com.lbtt2801.hearme.view.homeactionmenu
 
-import android.content.ContentValues.TAG
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +26,6 @@ import com.lbtt2801.hearme.viewmodel.ArtistViewModel
 import com.lbtt2801.hearme.viewmodel.HomeViewModel
 import com.lbtt2801.hearme.viewmodel.MusicViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
-import kotlin.math.round
 
 class HomeFragment : Fragment() {
 
