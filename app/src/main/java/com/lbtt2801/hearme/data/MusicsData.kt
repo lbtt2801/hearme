@@ -131,7 +131,7 @@ class MusicsData {
                         calYesterday.time,
                         CategoriesData.dataCategory().first { it.categoryID == "ca002" },
                         ArtistsData.dataArtist().first { it.artistId == "ar008" },
-                        true
+                        false
                     )
                 )
                 add(

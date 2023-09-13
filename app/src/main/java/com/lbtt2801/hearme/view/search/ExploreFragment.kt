@@ -19,6 +19,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.lbtt2801.hearme.GridSpacingItemDecorationextends
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.ArtistsData
@@ -311,5 +313,12 @@ class ExploreFragment : Fragment() {
             layoutManager = layout
             adapter = recentSearchesAdapter
         }
+    }
+
+    fun RecyclerView.autoFitColumns(columnWidth: Int) {
+        val displayMetrics = this.context.resources.displayMetrics
+        val noOfColumns =
+            ((displayMetrics.widthPixels / displayMetrics.density) / columnWidth).toInt()
+        this.layoutManager = GridLayoutManager(this.context, noOfColumns)
     }
 }

@@ -1,28 +1,25 @@
 package com.lbtt2801.hearme.data.adapter
 
+import android.app.ActionBar.LayoutParams
 import android.content.ContentValues.TAG
-import android.graphics.Color
+import android.util.DisplayMetrics
 import android.util.Log
 import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatCheckedTextView
-import androidx.appcompat.widget.AppCompatToggleButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.Observer
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.imageview.ShapeableImageView
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
-import com.lbtt2801.hearme.data.TopicSearchData
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.model.Time
 import com.lbtt2801.hearme.model.TopicSearch
-import com.lbtt2801.hearme.model.User
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.*
 
 @BindingAdapter("app:setImage")
 fun setImage(imageView: ImageView, id: Int) {
@@ -161,4 +158,27 @@ fun onCheckedChanged(checkedTextView: AppCompatCheckedTextView, topicSearch: Top
             )
         }
     }
+}
+
+@BindingAdapter("app:setTextYear")
+fun setTextYear(text: TextView, date: Date) {
+    val calendar = Calendar.getInstance()
+    calendar.time = date
+    text.text = calendar.get(Calendar.YEAR).toString()
+}
+
+@BindingAdapter("app:setWidthContainerAlbum")
+fun setWidthContainerAlbum(shapeableImageView: ShapeableImageView, music: Music) {
+    val displayMetrics = DisplayMetrics()
+    val mainBinding = shapeableImageView.context as MainActivity
+    mainBinding.windowManager.defaultDisplay.getMetrics(displayMetrics)
+    Log.v(
+        TAG,
+        "Width: ${(displayMetrics.widthPixels / 2) - (24 * 2 + 12)} Height: ${displayMetrics.heightPixels}"
+    )
+
+    val params = shapeableImageView.layoutParams
+    params.width = (displayMetrics.widthPixels / 2) - (24 * 2 + 25)
+    params.height = (displayMetrics.widthPixels / 2) - (24 * 2 + 25)
+    shapeableImageView.layoutParams = params
 }
