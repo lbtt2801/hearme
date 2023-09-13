@@ -62,6 +62,10 @@ class ProfileFragment : Fragment() {
         binding.tvNameUser.text = fullName
         binding.tvEmailUser.text = email
 
+        binding.btnGetPremium.setOnClickListener {
+            findNavController().navigate(R.id.action_item_nav_profile_to_premiumFragment)
+        }
+
         binding.linearProfile.setOnClickListener {
             findNavController().navigate(R.id.action_item_nav_profile_to_profileDetailFragment)
         }

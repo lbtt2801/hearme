@@ -161,7 +161,7 @@ class SignInFragment : Fragment() {
     }
 
     private fun getDataLogin() {
-        if (mainActivity.checkRemember && binding.chkRemember.isChecked) {
+        if (mainActivity.checkRemember) {
             sharedPreferences = requireActivity().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
             email = sharedPreferences.getString("username", "")!!
             pass = sharedPreferences.getString("pass", "")!!
@@ -174,7 +174,7 @@ class SignInFragment : Fragment() {
             email = ""
             pass = ""
             isChecked = false
-            binding.chkRemember.isEnabled = false
+            binding.chkRemember.isEnabled = mainActivity.checkRemember
         }
     }
 
