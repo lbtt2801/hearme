@@ -1,6 +1,8 @@
 package com.lbtt2801.hearme.view.profile_settings
 
 import android.os.Bundle
+import android.os.Environment
+import android.os.StatFs
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +38,14 @@ class DataSaverStorageFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val stat = StatFs(Environment.getExternalStorageDirectory().getPath())
+        val bytesAvailable: Long = stat.blockSizeLong * stat.availableBlocksLong
+        val megAvailable = bytesAvailable / (1024 * 1024)
+        binding.tvCapacityFree.text = megAvailable.toString()
     }
 
     override fun onDestroyView() {
