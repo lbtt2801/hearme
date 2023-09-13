@@ -161,10 +161,10 @@ class SignInFragment : Fragment() {
     }
 
     private fun getDataLogin() {
-        if (mainActivity.checkRemember) {
+        if (mainActivity.checkRemember && binding.chkRemember.isChecked) {
             sharedPreferences = requireActivity().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
-            email = sharedPreferences.getString("username", null).toString()
-            pass = sharedPreferences.getString("pass", null).toString()
+            email = sharedPreferences.getString("username", "")!!
+            pass = sharedPreferences.getString("pass", "")!!
             isChecked = sharedPreferences.getBoolean("check", false)
 
             binding.edtEmail.setText(email)
