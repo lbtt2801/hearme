@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     var email: String = ""
 
+    var checkRemember = true
     var checkInHome = false
     var language: String = "English (US)"
 

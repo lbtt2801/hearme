@@ -1,6 +1,8 @@
 package com.lbtt2801.hearme.view.onboardingsignupsignin
 
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -28,6 +30,10 @@ class SignInFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private val binding get() = _binding!!
     private lateinit var lstDataUser: List<User>
+    private lateinit var sharedPreferences: SharedPreferences
+    var email = ""
+    private var pass = ""
+    private var isChecked = true
 
     private val viewModelUser: UserViewModel by activityViewModels()
 
@@ -79,8 +85,8 @@ class SignInFragment : Fragment() {
         }
 
         binding.btnSignIn.setOnClickListener() {
-            val email = binding.edtEmail.text.toString().trim()
-            val pass = binding.edtPass.text.toString().trim()
+            email = binding.edtEmail.text.toString().trim()
+            pass = binding.edtPass.text.toString().trim()
             var checkEmail = false
             var checkPass = false
 
@@ -100,6 +106,7 @@ class SignInFragment : Fragment() {
                 val kq =
                     lstDataUser.filter { it.email == binding.edtEmail.text.toString() && it.password == binding.edtPass.text.toString() }
                 if (kq.isNotEmpty()) {
+                    saveDataLogin()
                     Toast.makeText(context, "Welcome to Hearme!", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_signInFragment_to_item_nav_home)
                     emailViewModel.selectItem(email)
@@ -117,8 +124,11 @@ class SignInFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        getDataLogin()
+
         binding.tvForgot.setOnClickListener() {
-            val email = binding.edtEmail.text.toString()
+            email = binding.edtEmail.text.toString()
             if (email.isEmpty()) {
                 mainActivity.showSnack(requireView(), "Must to input email for finding password!")
             } else if (lstDataUser.any { it.email == email }) {
@@ -148,5 +158,38 @@ class SignInFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun getDataLogin() {
+        if (mainActivity.checkRemember) {
+            sharedPreferences = requireActivity().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
+            email = sharedPreferences.getString("username", null).toString()
+            pass = sharedPreferences.getString("pass", null).toString()
+            isChecked = sharedPreferences.getBoolean("check", false)
+
+            binding.edtEmail.setText(email)
+            binding.edtPass.setText(pass)
+            binding.chkRemember.isChecked = isChecked
+        } else {
+            email = ""
+            pass = ""
+            isChecked = false
+            binding.chkRemember.isEnabled = false
+        }
+    }
+
+    private fun saveDataLogin() {
+        if (binding.chkRemember.isChecked) {
+            sharedPreferences = requireActivity().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
+            isChecked = binding.chkRemember.isChecked
+
+            // luu data
+            val editor = sharedPreferences.edit()
+            editor.putString("username", email)
+            editor.putString("pass", pass)
+            editor.putBoolean("check", isChecked)
+            editor.apply()
+            Toast.makeText(context, "Data Login Saved", Toast.LENGTH_SHORT).show()
+        }
     }
 }

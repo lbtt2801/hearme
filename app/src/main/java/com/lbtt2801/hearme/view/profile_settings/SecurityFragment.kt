@@ -28,6 +28,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentSecurityBinding
+import com.lbtt2801.hearme.view.onboardingsignupsignin.SignInFragment
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 import kotlin.system.exitProcess
 
@@ -73,6 +74,11 @@ class SecurityFragment : Fragment() {
 
         binding.btnChangePass.setOnClickListener {
             showDialogChangePassword()
+        }
+
+        binding.switchRememberMe.setOnClickListener {
+            mainActivity.checkRemember = binding.switchRememberMe.isChecked
+            Toast.makeText(context, "check: ${mainActivity.checkRemember}", Toast.LENGTH_SHORT).show()
         }
 
 
