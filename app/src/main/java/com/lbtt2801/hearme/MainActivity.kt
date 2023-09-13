@@ -1,14 +1,12 @@
 package com.lbtt2801.hearme
 
 import android.app.Dialog
-import android.content.ContentValues.TAG
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
@@ -20,13 +18,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
@@ -47,6 +45,7 @@ class MainActivity : AppCompatActivity() {
     var email: String = ""
 
     var checkInHome = false
+    var language: String = "English (US)"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -146,7 +145,7 @@ class MainActivity : AppCompatActivity() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
-        dialog.setContentView(R.layout.bottomsheet_layout)
+        dialog.setContentView(R.layout.dialog_bottomsheet)
         dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.attributes?.windowAnimations = com.google.android.material.R.style.MaterialAlertDialog_Material3_Animation
@@ -155,6 +154,15 @@ class MainActivity : AppCompatActivity() {
 
         val btnYes: Button = dialog.findViewById(R.id.btnYes)
         val btnNo: Button = dialog.findViewById(R.id.btnCancel)
+
+        btnYes.setOnClickListener {
+            navController.navigate(R.id.signInFragment)
+            dialog.dismiss()
+        }
+
+        btnNo.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 
     private fun onClickItemBottomNav(it: MenuItem) = when (it.itemId) {

@@ -33,7 +33,6 @@ class ProfileFragment : Fragment() {
 
     private val userViewModel: UserViewModel by activityViewModels()
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,6 +48,7 @@ class ProfileFragment : Fragment() {
             true
         )
         email = mainActivity.email
+        binding.tvLanguage.text = mainActivity.language
         return binding.root
     }
 

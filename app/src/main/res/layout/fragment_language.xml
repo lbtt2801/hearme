@@ -39,7 +39,6 @@
                     android:layout_gravity="start"
                     android:layout_marginTop="40dp"
                     android:buttonTint="@color/green_500"
-                    android:checked="true"
                     android:layoutDirection="rtl"
                     android:text="English (US)"
                     android:textAlignment="textStart"
