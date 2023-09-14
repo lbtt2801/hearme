@@ -150,48 +150,6 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
                 }
                 binding.containerView.layoutParams = paramsContainer
             }
-
-//            val displayMetrics = DisplayMetrics()
-//            val mainBinding = binding.containerView.context as MainActivity
-//            mainBinding.windowManager.defaultDisplay.getMetrics(displayMetrics)
-//            Log.v(
-//                TAG,
-//                "Width: ${(displayMetrics.widthPixels / 2) - (24 * 2 + 12)} Height: ${displayMetrics.heightPixels}"
-//            )
-//
-//            val paramsImage = LinearLayout.LayoutParams(
-//                (displayMetrics.widthPixels / 2) - (24 * 2 + 18),
-//                (displayMetrics.widthPixels / 2) - (24 * 2 + 18)
-//            )
-//
-//            if (absoluteAdapterPosition % 2 == 0) {
-//                val paramsContainer = LinearLayout.LayoutParams(
-//                    (displayMetrics.widthPixels / 2) - (24 * 2 + 18),
-//                    (displayMetrics.widthPixels / 2) - (24 * 2 + 18)
-//                ).apply {
-//                    marginEnd = 18
-//                }
-//                binding.image.layoutParams = paramsContainer
-//            } else
-//                binding.image.layoutParams = paramsImage
-
-
-//            val displayMetrics = DisplayMetrics()
-//            val mainBinding = binding.containerView.context as MainActivity
-//            mainBinding.windowManager.defaultDisplay.getMetrics(displayMetrics)
-//            Log.v(
-//                TAG,
-//                "Width: ${displayMetrics.widthPixels} Height: ${displayMetrics.heightPixels}"
-//            )
-//
-//            val layoutParams = LinearLayout.LayoutParams(
-//                displayMetrics.widthPixels,
-//                ViewGroup.LayoutParams.WRAP_CONTENT
-//            ).apply {
-//                bottomMargin = 12
-//            }
-//
-//            binding.containerView.layoutParams = layoutParams
         }
     }
 }
