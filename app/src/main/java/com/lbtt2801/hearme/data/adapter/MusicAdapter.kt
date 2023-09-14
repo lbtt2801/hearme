@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.lbtt2801.hearme.data.MoreSongData
 import com.lbtt2801.hearme.databinding.*
 import com.lbtt2801.hearme.model.Music
 import kotlin.math.roundToInt
@@ -119,6 +120,17 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
 
         fun bind(music: Music) {
             binding.music = music
+
+            binding.spinnerDropDownMore.adapter =
+                MoreSongDropdownAdapter(binding.spinnerDropDownMore.context, MoreSongData.data())
+
+            val paramsContainer = LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+            ).apply {
+                marginEnd = (16 * Resources.getSystem().displayMetrics.density).roundToInt()
+            }
+            binding.containerForMusic.layoutParams = paramsContainer
         }
     }
 
@@ -137,11 +149,6 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
             binding.music = music
 
             if (absoluteAdapterPosition % 2 == 0) {
-                val density: Float = binding.containerView.context.resources.displayMetrics.density
-                Log.v(TAG, "Density -> $density")
-                val dp: Float = 12 / density
-                Log.v(TAG, "Dp -> $dp")
-
                 val paramsContainer = LinearLayout.LayoutParams(
                     LayoutParams.MATCH_PARENT,
                     LayoutParams.WRAP_CONTENT

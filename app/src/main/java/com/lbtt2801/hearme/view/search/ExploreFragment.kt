@@ -24,6 +24,7 @@ import com.lbtt2801.hearme.GridSpacingItemDecorationextends
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.ArtistsData
+import com.lbtt2801.hearme.data.MoreSongData
 import com.lbtt2801.hearme.data.adapter.*
 import com.lbtt2801.hearme.databinding.ContainerSearchResultBinding
 import com.lbtt2801.hearme.databinding.FragmentExploreBinding
@@ -284,18 +285,22 @@ class ExploreFragment : Fragment() {
             layoutManager = GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
             adapter = musicAdapter
         }
+
         return true
     }
 
     private fun displayRecyclerFoundArtistsList(p0: String): Boolean {
-        val listFoundArtist =
+        val listFoundArtist: ArrayList<Artist> =
             artistViewModel.lstDataArtists.value?.filter {
                 it.artistName.trim().lowercase().contains(p0.trim().lowercase())
-            }
+            } as ArrayList<Artist>
+
+        if (listFoundArtist.isEmpty())
+            return false
 
         artistAdapter =
             ArtistAdapter(
-                listFoundArtist as ArrayList<Artist>,
+                listFoundArtist,
                 4,
                 userViewModel
             )
@@ -305,20 +310,21 @@ class ExploreFragment : Fragment() {
             adapter = artistAdapter
         }
 
-        if (listFoundArtist.isNotEmpty())
-            return true
-        return false
+        return true
     }
 
     private fun displayRecyclerFoundSongsList(p0: String): Boolean {
-        val listFoundMusic =
+        val listFoundMusic: ArrayList<Music> =
             musicViewModel.lstDataMusics.value?.filter {
                 it.musicName.trim().lowercase().contains(p0.trim().lowercase())
-            }
+            } as ArrayList<Music>
+
+        if (listFoundMusic.isEmpty())
+            return false
 
         musicAdapter =
             MusicAdapter(
-                listFoundMusic as ArrayList<Music>,
+                listFoundMusic,
                 3
             )
 
@@ -327,30 +333,31 @@ class ExploreFragment : Fragment() {
             adapter = musicAdapter
         }
 
-        if (listFoundMusic.isNotEmpty())
-            return true
-        return false
+        return true
     }
 
     private fun displayRecyclerFoundTopList(p0: String): Boolean {
-        val listFoundMusic =
+        val listFoundMusic: ArrayList<Music> =
             musicViewModel.lstDataMusics.value?.sortedByDescending { it.totalListeners }?.filter {
                 it.musicName.trim().lowercase().contains(p0.trim().lowercase())
-            }
-        val listFoundArtist =
+            } as ArrayList<Music>
+        val listFoundArtist: ArrayList<Artist> =
             artistViewModel.lstDataArtists.value?.sortedByDescending { it.totalNumberOfListeners }
                 ?.filter {
                     it.artistName.trim().lowercase().contains(p0.trim().lowercase())
-                }
+                } as ArrayList<Artist>
+
+        if (listFoundArtist.isEmpty() && listFoundMusic.isEmpty())
+            return false
 
         musicAdapter =
             MusicAdapter(
-                listFoundMusic as ArrayList<Music>,
+                listFoundMusic,
                 3
             )
         artistAdapter =
             ArtistAdapter(
-                listFoundArtist as ArrayList<Artist>,
+                listFoundArtist,
                 4,
                 userViewModel
             )
@@ -361,9 +368,7 @@ class ExploreFragment : Fragment() {
             adapter = concatAdapter
         }
 
-        if (listFoundArtist.isNotEmpty() || listFoundMusic.isNotEmpty())
-            return true
-        return false
+        return true
     }
 
     private fun displayRecyclerViewRecentSearches(lstData: ArrayList<RecentSearch>) {
