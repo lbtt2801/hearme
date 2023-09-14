@@ -275,5 +275,27 @@
         android:id="@+id/premiumFragment"
         android:name="com.lbtt2801.hearme.view.profile_settings.PremiumFragment"
         android:label="fragment_premium"
-        tools:layout="@layout/fragment_premium" />
+        tools:layout="@layout/fragment_premium" >
+        <action
+            android:id="@+id/action_premiumFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.lbtt2801.hearme.view.profile_settings.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" >
+        <action
+            android:id="@+id/action_paymentFragment_to_addNewCardFragment"
+            app:destination="@id/addNewCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewCardFragment"
+        android:name="com.lbtt2801.hearme.view.profile_settings.AddNewCardFragment"
+        android:label="fragment_add_new_card"
+        tools:layout="@layout/fragment_add_new_card" >
+        <action
+            android:id="@+id/action_addNewCardFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
 </navigation>

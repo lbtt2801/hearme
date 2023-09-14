@@ -56,7 +56,7 @@ class HomeViewModel : ViewModel() {
         _lstDataChart.postValue(lstChart)
     }
 
-    fun getListDataCategory() {
+    private fun getListDataCategory() {
         lstCategory = CategoriesData.dataCategory()
         _lstDataCategory.postValue(lstCategory)
     }

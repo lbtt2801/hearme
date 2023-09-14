@@ -15,6 +15,11 @@
     <color name="green_500">#06C149</color>
     <color name="gradient_green">#33EB75</color>
 
+    <color name="orange">#FB9400</color>
+    <color name="purple">#9610FF</color>
+    <color name="red">#FF4D67</color>
+
+
 
     <color name="color_txt_button_skip">#06C149</color>
     <color name="color_txt_button_continue">#FFFFFF</color>

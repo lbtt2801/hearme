@@ -45,15 +45,15 @@ class PremiumFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.cardVip1.setOnClickListener {
-
+            findNavController().navigate(R.id.action_premiumFragment_to_paymentFragment)
         }
 
         binding.cardVip2.setOnClickListener {
-
+            findNavController().navigate(R.id.action_premiumFragment_to_paymentFragment)
         }
 
         binding.cardVip3.setOnClickListener {
-
+            findNavController().navigate(R.id.action_premiumFragment_to_paymentFragment)
         }
     }
 
