@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.lbtt2801.hearme.data.MoreSongData
 import com.lbtt2801.hearme.databinding.*
 import com.lbtt2801.hearme.model.Music
 import kotlin.math.roundToInt
@@ -119,6 +120,17 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
 
         fun bind(music: Music) {
             binding.music = music
+
+            binding.spinnerDropDownMore.adapter =
+                MoreSongDropdownAdapter(binding.spinnerDropDownMore.context, MoreSongData.data())
+
+            val paramsContainer = LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT
+            ).apply {
+                marginEnd = (16 * Resources.getSystem().displayMetrics.density).roundToInt()
+            }
+            binding.containerForMusic.layoutParams = paramsContainer
         }
     }
 
@@ -137,11 +149,6 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
             binding.music = music
 
             if (absoluteAdapterPosition % 2 == 0) {
-                val density: Float = binding.containerView.context.resources.displayMetrics.density
-                Log.v(TAG, "Density -> $density")
-                val dp: Float = 12 / density
-                Log.v(TAG, "Dp -> $dp")
-
                 val paramsContainer = LinearLayout.LayoutParams(
                     LayoutParams.MATCH_PARENT,
                     LayoutParams.WRAP_CONTENT
@@ -150,48 +157,6 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
                 }
                 binding.containerView.layoutParams = paramsContainer
             }
-
-//            val displayMetrics = DisplayMetrics()
-//            val mainBinding = binding.containerView.context as MainActivity
-//            mainBinding.windowManager.defaultDisplay.getMetrics(displayMetrics)
-//            Log.v(
-//                TAG,
-//                "Width: ${(displayMetrics.widthPixels / 2) - (24 * 2 + 12)} Height: ${displayMetrics.heightPixels}"
-//            )
-//
-//            val paramsImage = LinearLayout.LayoutParams(
-//                (displayMetrics.widthPixels / 2) - (24 * 2 + 18),
-//                (displayMetrics.widthPixels / 2) - (24 * 2 + 18)
-//            )
-//
-//            if (absoluteAdapterPosition % 2 == 0) {
-//                val paramsContainer = LinearLayout.LayoutParams(
-//                    (displayMetrics.widthPixels / 2) - (24 * 2 + 18),
-//                    (displayMetrics.widthPixels / 2) - (24 * 2 + 18)
-//                ).apply {
-//                    marginEnd = 18
-//                }
-//                binding.image.layoutParams = paramsContainer
-//            } else
-//                binding.image.layoutParams = paramsImage
-
-
-//            val displayMetrics = DisplayMetrics()
-//            val mainBinding = binding.containerView.context as MainActivity
-//            mainBinding.windowManager.defaultDisplay.getMetrics(displayMetrics)
-//            Log.v(
-//                TAG,
-//                "Width: ${displayMetrics.widthPixels} Height: ${displayMetrics.heightPixels}"
-//            )
-//
-//            val layoutParams = LinearLayout.LayoutParams(
-//                displayMetrics.widthPixels,
-//                ViewGroup.LayoutParams.WRAP_CONTENT
-//            ).apply {
-//                bottomMargin = 12
-//            }
-//
-//            binding.containerView.layoutParams = layoutParams
         }
     }
 }

@@ -24,7 +24,9 @@ import com.lbtt2801.hearme.GridSpacingItemDecorationextends
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.ArtistsData
+import com.lbtt2801.hearme.data.MoreSongData
 import com.lbtt2801.hearme.data.adapter.*
+import com.lbtt2801.hearme.databinding.ContainerSearchResultBinding
 import com.lbtt2801.hearme.databinding.FragmentExploreBinding
 import com.lbtt2801.hearme.model.*
 import com.lbtt2801.hearme.viewmodel.*
@@ -48,6 +50,7 @@ class ExploreFragment : Fragment() {
     private lateinit var musicAdapter: MusicAdapter
     private lateinit var artistAdapter: ArtistAdapter
 
+    private lateinit var includeTopsSongsArtistsAlbumsPlaylistsProfiles: ContainerSearchResultBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +58,8 @@ class ExploreFragment : Fragment() {
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
         mainActivity = (activity as MainActivity)
+        includeTopsSongsArtistsAlbumsPlaylistsProfiles =
+            binding.includeTopsSongsArtistsAlbumsPlaylistsProfiles
         return binding.root
     }
 
@@ -75,7 +80,7 @@ class ExploreFragment : Fragment() {
     }
 
     private fun displayRecyclerViewTopicSearch(data: ArrayList<TopicSearch>) {
-        binding.recyclerViewTopicSearch.apply {
+        includeTopsSongsArtistsAlbumsPlaylistsProfiles.recyclerViewTopicSearch.apply {
             layoutManager =
                 LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
             adapter = TopicSearchAdapter(data)
@@ -121,50 +126,62 @@ class ExploreFragment : Fragment() {
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 binding.containerRecentSearches.visibility = View.GONE
-                binding.containerSearchResults.visibility = View.VISIBLE
-                mainActivity.showBottomNav("VISIBLE")
+                includeTopsSongsArtistsAlbumsPlaylistsProfiles.root.visibility = View.VISIBLE
+                mainActivity.showBottomNav("GONE")
                 mainActivity.customToolbar("GONE")
                 if (p0 != null) {
                     topicSearchViewModel.lstDataTopicSearch.observe(requireActivity()) { data ->
+                        includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeNotfoundSearch.root.visibility =
+                            View.GONE
+                        includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.root.visibility =
+                            View.GONE
+                        includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearchPodcasts.root.visibility =
+                            View.GONE
                         when (data.first { it.isChecked }.name) {
                             "Top" -> {
                                 if (displayRecyclerFoundTopList(p0)) {
-                                    binding.containerNotFound.visibility = View.GONE
-                                    binding.containerFound.visibility = View.VISIBLE
+                                    includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.root.visibility =
+                                        View.VISIBLE
                                 } else {
-                                    binding.containerNotFound.visibility = View.VISIBLE
-                                    binding.containerFound.visibility = View.GONE
+                                    includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeNotfoundSearch.root.visibility =
+                                        View.VISIBLE
                                 }
                             }
                             "Songs" -> {
                                 if (displayRecyclerFoundSongsList(p0)) {
-                                    binding.containerNotFound.visibility = View.GONE
-                                    binding.containerFound.visibility = View.VISIBLE
+                                    includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.root.visibility =
+                                        View.VISIBLE
                                 } else {
-                                    binding.containerNotFound.visibility = View.VISIBLE
-                                    binding.containerFound.visibility = View.GONE
+                                    includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeNotfoundSearch.root.visibility =
+                                        View.VISIBLE
                                 }
                             }
                             "Artists" -> {
                                 if (displayRecyclerFoundArtistsList(p0)) {
-                                    binding.containerNotFound.visibility = View.GONE
-                                    binding.containerFound.visibility = View.VISIBLE
+                                    includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.root.visibility =
+                                        View.VISIBLE
                                 } else {
-                                    binding.containerNotFound.visibility = View.VISIBLE
-                                    binding.containerFound.visibility = View.GONE
+                                    includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeNotfoundSearch.root.visibility =
+                                        View.VISIBLE
                                 }
                             }
                             "Albums" -> {
                                 if (displayRecyclerFoundAlbumsList(p0)) {
-                                    binding.containerNotFound.visibility = View.GONE
-                                    binding.containerFound.visibility = View.VISIBLE
+                                    includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.root.visibility =
+                                        View.VISIBLE
                                 } else {
-                                    binding.containerNotFound.visibility = View.VISIBLE
-                                    binding.containerFound.visibility = View.GONE
+                                    includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeNotfoundSearch.root.visibility =
+                                        View.VISIBLE
                                 }
                             }
                             "Podcasts" -> {
-                                displayRecyclerFoundPodcastsList(p0)
+                                if (displayRecyclerFoundPodcastsList(p0)) {
+                                    includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearchPodcasts.root.visibility =
+                                        View.VISIBLE
+                                } else {
+                                    includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeNotfoundSearch.root.visibility =
+                                        View.VISIBLE
+                                }
                             }
                             "Playlists" -> {
                                 displayRecyclerFoundPlaylistsList(p0)
@@ -199,109 +216,159 @@ class ExploreFragment : Fragment() {
     }
 
     private fun displayRecyclerFoundPodcastsList(p0: String): Boolean {
-        return false
+        //Search artist is podcast
+        val listFoundArtist: ArrayList<Artist> =
+            artistViewModel.lstDataArtists.value?.filter {
+                !it.isSinger && it.artistName.trim().lowercase().contains(p0.trim().lowercase())
+            } as ArrayList<Artist>
 
+        //Search podcast
+        val listFoundPodcast: ArrayList<Music> =
+            musicViewModel.lstDataMusics.value?.filter {
+                it.category.categoryID == "ca002" && it.musicName.trim().lowercase()
+                    .contains(p0.trim().lowercase())
+            } as ArrayList<Music>
+
+        if (listFoundArtist.isEmpty() && listFoundPodcast.isEmpty()) {
+            return false
+        }
+
+        //Search podcast of artist above
+        val listPodcastOfArtist: ArrayList<Music> = ArrayList()
+        listFoundArtist.forEach { list ->
+            listPodcastOfArtist.addAll(musicViewModel.lstDataMusics.value?.filter {
+                it.category.categoryID == "ca002" && it.artist.artistId == list.artistId
+            } as ArrayList<Music>)
+        }
+
+        artistAdapter = ArtistAdapter(listFoundArtist, 5, userViewModel)
+        includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearchPodcasts.recyclerViewPodcastAndShow.apply {
+            layoutManager =
+                GridLayoutManager(view?.context, 1, LinearLayoutManager.HORIZONTAL, false)
+            adapter = artistAdapter
+        }
+
+        musicAdapter = if (listPodcastOfArtist.isNotEmpty()) {
+            MusicAdapter(
+                listFoundPodcast.union(listPodcastOfArtist).toList() as ArrayList<Music>,
+                2
+            )
+        } else {
+            MusicAdapter(listFoundPodcast, 2)
+        }
+
+        includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearchPodcasts.recyclerViewEpisode.apply {
+            layoutManager =
+                LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
+            adapter = musicAdapter
+        }
+
+        return true
     }
 
     private fun displayRecyclerFoundAlbumsList(p0: String): Boolean {
-        val listFoundMusic =
-            musicViewModel.lstDataMusics.value?.filter {
-                it.musicName.trim().lowercase().contains(p0.trim().lowercase()) && it.isAlbum
-            }
+        val listFoundMusic: ArrayList<Music> = musicViewModel.lstDataMusics.value?.filter {
+            it.musicName.trim().lowercase().contains(p0.trim().lowercase()) && it.isAlbum
+        } as ArrayList<Music>
+
+        if (listFoundMusic.isEmpty()) {
+            return false
+        }
 
         musicAdapter =
             MusicAdapter(
-                listFoundMusic as ArrayList<Music>,
+                listFoundMusic,
                 4
             )
 
-        binding.recyclerViewFoundList.apply {
+        includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.recyclerViewFoundList.apply {
             layoutManager = GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
             adapter = musicAdapter
         }
 
-        if (listFoundMusic.isNotEmpty())
-            return true
-        return false
+        return true
     }
 
     private fun displayRecyclerFoundArtistsList(p0: String): Boolean {
-        val listFoundArtist =
+        val listFoundArtist: ArrayList<Artist> =
             artistViewModel.lstDataArtists.value?.filter {
                 it.artistName.trim().lowercase().contains(p0.trim().lowercase())
-            }
+            } as ArrayList<Artist>
+
+        if (listFoundArtist.isEmpty())
+            return false
 
         artistAdapter =
             ArtistAdapter(
-                listFoundArtist as ArrayList<Artist>,
+                listFoundArtist,
                 4,
                 userViewModel
             )
 
-        binding.recyclerViewFoundList.apply {
+        includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.recyclerViewFoundList.apply {
             layoutManager = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
             adapter = artistAdapter
         }
 
-        if (listFoundArtist.isNotEmpty())
-            return true
-        return false
+        return true
     }
 
     private fun displayRecyclerFoundSongsList(p0: String): Boolean {
-        val listFoundMusic =
+        val listFoundMusic: ArrayList<Music> =
             musicViewModel.lstDataMusics.value?.filter {
                 it.musicName.trim().lowercase().contains(p0.trim().lowercase())
-            }
+            } as ArrayList<Music>
+
+        if (listFoundMusic.isEmpty())
+            return false
 
         musicAdapter =
             MusicAdapter(
-                listFoundMusic as ArrayList<Music>,
+                listFoundMusic,
                 3
             )
 
-        binding.recyclerViewFoundList.apply {
+        includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.recyclerViewFoundList.apply {
             layoutManager = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
             adapter = musicAdapter
         }
 
-        if (listFoundMusic.isNotEmpty())
-            return true
-        return false
+        return true
     }
 
     private fun displayRecyclerFoundTopList(p0: String): Boolean {
-        val listFoundMusic =
+        val listFoundMusic: ArrayList<Music> =
             musicViewModel.lstDataMusics.value?.sortedByDescending { it.totalListeners }?.filter {
                 it.musicName.trim().lowercase().contains(p0.trim().lowercase())
-            }
-        val listFoundArtist =
+            } as ArrayList<Music>
+        val listFoundArtist: ArrayList<Artist> =
             artistViewModel.lstDataArtists.value?.sortedByDescending { it.totalNumberOfListeners }
                 ?.filter {
                     it.artistName.trim().lowercase().contains(p0.trim().lowercase())
-                }
+                } as ArrayList<Artist>
+
+        if (listFoundArtist.isEmpty() && listFoundMusic.isEmpty())
+            return false
 
         musicAdapter =
             MusicAdapter(
-                listFoundMusic as ArrayList<Music>,
+                listFoundMusic,
                 3
             )
         artistAdapter =
             ArtistAdapter(
-                listFoundArtist as ArrayList<Artist>,
+                listFoundArtist,
                 4,
                 userViewModel
             )
         val concatAdapter = ConcatAdapter(musicAdapter, artistAdapter)
 
-        binding.recyclerViewFoundList.apply {
+        includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.recyclerViewFoundList.apply {
             layoutManager = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
             adapter = concatAdapter
         }
 
-        if (listFoundArtist.isNotEmpty() || listFoundMusic.isNotEmpty())
-            return true
-        return false
+        return true
     }
 
     private fun displayRecyclerViewRecentSearches(lstData: ArrayList<RecentSearch>) {
@@ -313,12 +380,5 @@ class ExploreFragment : Fragment() {
             layoutManager = layout
             adapter = recentSearchesAdapter
         }
-    }
-
-    fun RecyclerView.autoFitColumns(columnWidth: Int) {
-        val displayMetrics = this.context.resources.displayMetrics
-        val noOfColumns =
-            ((displayMetrics.widthPixels / displayMetrics.density) / columnWidth).toInt()
-        this.layoutManager = GridLayoutManager(this.context, noOfColumns)
     }
 }
