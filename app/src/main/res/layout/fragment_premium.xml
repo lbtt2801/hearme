@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="30dp"
-                android:backgroundTint="#FB9400"
+                android:backgroundTint="@color/orange"
                 app:layout_constraintTop_toBottomOf="@+id/tvDetail"
                 android:layout_marginTop="24dp" >
 
@@ -61,6 +61,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:gravity="center">
                         <TextView
                             android:layout_width="wrap_content"
@@ -147,7 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="30dp"
-                android:backgroundTint="#9610FF"
+                android:backgroundTint="@color/purple"
                 app:layout_constraintTop_toBottomOf="@+id/cardVip1"
                 android:layout_marginTop="24dp" >
 
@@ -166,6 +167,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:gravity="center">
                         <TextView
                             android:layout_width="wrap_content"
@@ -252,7 +254,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="30dp"
-                android:backgroundTint="#FF4D67"
+                android:backgroundTint="@color/red"
                 app:layout_constraintTop_toBottomOf="@+id/cardVip2"
                 android:layout_marginTop="24dp" >
 
@@ -271,6 +273,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:gravity="center">
                         <TextView
                             android:layout_width="wrap_content"

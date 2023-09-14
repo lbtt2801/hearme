@@ -1,11 +1,13 @@
 package com.lbtt2801.hearme
 
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.inputmethodservice.InputMethodService
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
@@ -13,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -194,6 +197,15 @@ class MainActivity : AppCompatActivity() {
             true
         }
         else -> false
+    }
+
+    fun hideKeyBoard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val hideMe = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            hideMe.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
 
     fun customToolbar(
