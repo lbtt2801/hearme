@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.text.isDigitsOnly
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
@@ -30,6 +31,8 @@ class AddNewCardFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var mainActivity: MainActivity
     var strNameCard = 15
+    var strLength = 1
+    var lstNumberCard: List<String> = listOf("*","*","*","*"," ","*","*","*","*"," ","*","*","*","*"," ","*","*","*","*")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +68,8 @@ class AddNewCardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.edtCardNumber.addTextChangedListener(textWatcher)
+
 //        binding.edtCardNumber.addTextChangedListener {
 //            var s = it.toString()
 //            if (s.length == 4 || s.length == 9 || s.length == 14)  {
@@ -75,41 +80,19 @@ class AddNewCardFragment : Fragment() {
 //                mainActivity.hideKeyBoard()
 //        }
 
-        binding.edtCardNumber.addTextChangedListener { editable ->
-            var str = editable.toString()
-//            if (s.length == 4 || s.length == 9 || s.length == 14)  {
-//                s += " "
-//                binding.edtCardNumber.setText(s)
-//                binding.edtCardNumber.setSelection(s.lastIndex + 1)
-//            } else if (s.length == 19)
-//                mainActivity.hideKeyBoard()
-
-            for (i in 0 until strNameCard)
-            { // 1234_1234_1234_1234
-                if (str.length == 4 || str.length == 9 || str.length == 14) {
-                    str += " "
-                }
-
-                str += '*'
-
-            }
-            strNameCard --
-            binding.edtCardNumber.setText(str)
-
-
-//            if (str.isNotEmpty()) {
-//                str += "@"
-//                binding.edtCardNumber.setText(str)
-//                val strX = str.filter { it != '@' }
-//                Log.v(TAG, "position: $strX")
-//                binding.edtCardNumber.setSelection(0)
-//            }
-
-        }
-
-//        binding.edtCardNumber.doAfterTextChanged { editable ->
+//        binding.edtCardNumber.addTextChangedListener { editable ->
+////            var s = editable.toString()
+////            if (s.length == 4 || s.length == 9 || s.length == 14)  {
+////                s += " "
+////                binding.edtCardNumber.setText(s)
+////                binding.edtCardNumber.setSelection(s.lastIndex + 1)
+////            } else if (s.length == 19)
+////                mainActivity.hideKeyBoard()
+//
 //            var str = editable.toString()
-//            if (str.isNotEmpty()) {
+//            val strX = str.filter { it != '*' && it != ' '}
+//            if (strX.length < strNameCard) {
+//                Toast.makeText(context, "strx: ${strX.length}", Toast.LENGTH_SHORT).show()
 //                for (i in 0 until strNameCard)
 //                { // 1234_1234_1234_1234
 //                    if (str.length == 4 || str.length == 9 || str.length == 14) {
@@ -117,15 +100,31 @@ class AddNewCardFragment : Fragment() {
 //                    }
 //
 //                    str += '*'
+//                }
+//                strNameCard --
+//                binding.edtCardNumber.setText(str)
+//            }
+//        }
+
+//        binding.edtCardNumber.doAfterTextChanged { editable ->
+//            var str = editable.toString()
+//            var strX = str.filter { it.isDigit() }
+//            var strY = str.filter { it != '*'}
+//            val check: Boolean
+//            if (strX.length == strLength) {
+//                for (i in 0 until strNameCard)
+//                { // 1234_1234_1234_1234
+//                    if (strX.length == 4 || strX.length == 9 || strX.length == 14) {
+//                        strX += "_"
+//                    }
+//
+//                    strX += '*'
 //
 //                }
 //                strNameCard --
-////                this.str += "@"
-////                Toast.makeText(context, "STR: $str - length: ${str.length}", Toast.LENGTH_SHORT).show()
-//                binding.edtCardNumber.setText(str)
-////                val strX = str.filter { it != '@' }
-////                Log.v(TAG, "position: $strX")
-////                binding.edtCardNumber.setSelection(0)
+//                strLength++
+//                binding.edtCardNumber.setText(strX)
+//                binding.edtCardNumber.setSelection(strLength -1 )
 //            }
 //        }
 
@@ -156,26 +155,53 @@ class AddNewCardFragment : Fragment() {
 
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-//            var s = s.toString()
-//            if (s.length == 4 || s.length == 9 || s.length == 14)  {
-//                s += " "
-//                binding.edtCardNumber.setText(s)
-//                binding.edtCardNumber.setSelection(s.lastIndex + 1)
-//            } else if (s.length == 19)
-//                mainActivity.hideKeyBoard()
-            var str = s.toString()
-            if (str.isNotEmpty()) {
-                str += "@@"
-                binding.edtCardNumber.setText(str)
-                val strX = str.filter { it != '@' }
-                binding.edtCardNumber.setSelection(strX.length)
-            }
+//            var str = s.toString()
+//            var strX = str.filter { it.isDigit() }
+//            var strY = str.filter { it != '*'}
+//            val check: Boolean
+//            if (strX.length == strLength) {
+//                for (i in 0 until strNameCard)
+//                { // 1234_1234_1234_1234
+//                    if (strX.length == 4 || strX.length == 9 || strX.length == 14) {
+//                        strX += "_"
+//                    }
+//                    strX += '*'
+//                }
+//                strNameCard --
+//                strLength++
+//                binding.edtCardNumber.setText(strX)
+//                binding.edtCardNumber.setSelection(strLength -1 )
+//            }
         }
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
         }
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            var str = s.toString()
+//            var strX = str.filter { it.isDigit() }
+            var strX = str.filter { it != '*'}
+            val check: Boolean
+//            Toast.makeText(context, "S: ${strX.length}", Toast.LENGTH_SHORT).show()
+            if (strX.length == strLength) {
+                for (i in 0 until strNameCard)
+                { // 1234_1234_1234_1234
+                    if (strX.length == 4 || strX.length == 9 || strX.length == 14) {
+                        strX += "_"
+                    }
 
+                    strX += '*'
+
+                }
+                strNameCard --
+                strLength++
+                binding.edtCardNumber.setText(strX)
+                binding.edtCardNumber.setSelection(strLength - 1 )
+            }
+            else {
+                str = str.substring(3,3)
+                binding.edtCardNumber.setText(str)
+                binding.edtCardNumber.setSelection(strLength - 1 )
+            }
         }
     }
 
