@@ -1,6 +1,8 @@
 package com.lbtt2801.hearme.view.fragments.search
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,10 +46,21 @@ class ExploreFragment : Fragment() {
 
     private lateinit var includeTopsSongsArtistsAlbumsPlaylistsProfiles: ContainerSearchResultBinding
 
+    private var saveInstanceTextSearch: String = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.v(TAG, "onCreate saveInstanceTextSearch -> $saveInstanceTextSearch")
+        if (savedInstanceState != null) {
+            saveInstanceTextSearch = savedInstanceState.getString("textSearch").toString()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.v(TAG, "onCreateView saveInstanceTextSearch -> $saveInstanceTextSearch")
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
         mainActivity = (activity as MainActivity)
         includeTopsSongsArtistsAlbumsPlaylistsProfiles =
@@ -57,6 +70,7 @@ class ExploreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.v(TAG, "onViewCreated saveInstanceTextSearch -> $saveInstanceTextSearch")
         displayRecyclerViewTopicSearch(topicSearchViewModel.lstDataTopicSearch.value as ArrayList<TopicSearch>)
 
         recentSearchViewModel.lstDataRecentSearch.observe(mainActivity) {
@@ -81,6 +95,7 @@ class ExploreFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        Log.v(TAG, "onResume saveInstanceTextSearch -> $saveInstanceTextSearch")
         mainActivity.customToolbar(
             "VISIBLE",
             "Explore",
@@ -90,6 +105,21 @@ class ExploreFragment : Fragment() {
             true
         )
         mainActivity.showBottomNav("VISIBLE")
+
+        if (binding.searchView.query.isNotEmpty()) {
+            binding.searchView.setQuery("${binding.searchView.query}", true)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.v(TAG, "onPause saveInstanceTextSearch -> $saveInstanceTextSearch")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("textSearch", saveInstanceTextSearch)
+        Log.v(TAG, "onSaveInstanceState saveInstanceTextSearch -> $saveInstanceTextSearch")
     }
 
     override fun onDestroyView() {

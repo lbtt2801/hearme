@@ -3,14 +3,17 @@ package com.lbtt2801.hearme.data.adapter
 import android.app.ActionBar.LayoutParams
 import android.app.AlertDialog
 import android.content.res.Resources
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.MainActivity
+import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MoreSongData
 import com.lbtt2801.hearme.databinding.*
 import com.lbtt2801.hearme.model.MoreSong
@@ -57,7 +60,17 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
             is HomeViewHolder -> holder.bind(dataMusics[position])
             is SongNotificationViewHolder -> holder.bind(dataMusics[position])
             is PodcastNotificationViewHolder -> holder.bind(dataMusics[position])
-            is TopMusicViewHolder -> holder.bind(dataMusics[position])
+            is TopMusicViewHolder -> {
+                holder.bind(dataMusics[position])
+                holder.itemView.setOnClickListener() {
+                    it.findNavController()
+                        .navigate(R.id.action_item_nav_explore_to_viewArtistFragment,
+                            Bundle().apply {
+                                putString("musicID", dataMusics[position].musicID)
+                            }
+                        )
+                }
+            }
             is AlbumViewHolder -> holder.bind(dataMusics[position])
         }
     }
@@ -107,6 +120,60 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
 
         fun bind(music: Music) {
             binding.music = music
+
+            binding.spinnerDropDownMore.adapter =
+                MoreSongDropdownAdapter(binding.spinnerDropDownMore.context, MoreSongData.data(), 1)
+
+            binding.spinnerDropDownMore.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
+
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        v: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val music = dataMusics[absoluteAdapterPosition]
+                        val mainActivity = v?.context as MainActivity
+
+                        when (position) {
+                            3 -> { // Add to blacklist
+                                val isDontPlay: Boolean
+                                if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.blackListMusic?.none { it.musicID == music.musicID } == true) {
+                                    isDontPlay = true
+                                    mainActivity.showSnack(
+                                        v,
+                                        "You added ${music.musicName} to blacklist!"
+                                    )
+                                } else {
+                                    isDontPlay = false
+                                    mainActivity.showSnack(
+                                        v,
+                                        "You removed ${music.musicName} from blacklist!"
+                                    )
+                                }
+                                music.let {
+                                    mainActivity.viewModelUser.updateBlackListMusic(
+                                        mainActivity.email,
+                                        it,
+                                        isDontPlay
+                                    )
+                                }
+                            }
+                            5 -> { // View artist
+
+                            }
+                            6 -> { // Go to album
+
+                            }
+                            7 -> { // Share
+
+                            }
+                        }
+                    }
+                }
         }
     }
 
@@ -126,7 +193,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
             binding.music = music
 
             binding.spinnerDropDownMore.adapter =
-                MoreSongDropdownAdapter(binding.spinnerDropDownMore.context, moreSongData)
+                MoreSongDropdownAdapter(binding.spinnerDropDownMore.context, moreSongData, 0)
 
             binding.spinnerDropDownMore.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
@@ -135,12 +202,12 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
 
                     override fun onItemSelected(
                         parent: AdapterView<*>?,
-                        view: View?,
+                        v: View?,
                         position: Int,
                         id: Long
                     ) {
                         val music = dataMusics[absoluteAdapterPosition]
-                        val mainActivity = view?.context as MainActivity
+                        val mainActivity = v?.context as MainActivity
 
                         when (position) {
                             1 -> { // Add to love list
@@ -150,7 +217,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
                                         music
                                     )
                                 ) {
-                                    val builder = AlertDialog.Builder(view.context)
+                                    val builder = AlertDialog.Builder(v.context)
                                     builder.apply {
                                         setTitle("Confirm")
                                         setMessage("${music.musicName} is putting into blacklist, are you want to remove it?")
@@ -170,7 +237,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
                                                 )
                                             }
                                             mainActivity.showSnack(
-                                                view,
+                                                v,
                                                 "You added ${music.musicName} to love list!"
                                             )
                                             dialog.dismiss()
@@ -183,13 +250,13 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
                                     if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listMusicsLoved?.none { it.musicID == music.musicID } == true) {
                                         isLove = true
                                         mainActivity.showSnack(
-                                            view,
+                                            v,
                                             "You added ${music.musicName} to love list!"
                                         )
                                     } else {
                                         isLove = false
                                         mainActivity.showSnack(
-                                            view,
+                                            v,
                                             "You removed ${music.musicName} from love list!"
                                         )
                                     }
@@ -207,7 +274,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
                                         music
                                     )
                                 ) {
-                                    val builder = AlertDialog.Builder(view.context)
+                                    val builder = AlertDialog.Builder(v.context)
                                     builder.apply {
                                         setTitle("Confirm")
                                         setMessage("${music.musicName} is putting into blacklist, are you want to remove it?")
@@ -227,7 +294,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
                                                 )
                                             }
                                             mainActivity.showSnack(
-                                                view,
+                                                v,
                                                 "You added ${music.musicName} to playlist!"
                                             )
                                             dialog.dismiss()
@@ -240,13 +307,13 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
                                     if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listPlayedMusic?.none { it.musicID == music.musicID } == true) {
                                         isAdd = true
                                         mainActivity.showSnack(
-                                            view,
+                                            v,
                                             "You added ${music.musicName} to playlist!"
                                         )
                                     } else {
                                         isAdd = false
                                         mainActivity.showSnack(
-                                            view,
+                                            v,
                                             "You removed ${music.musicName} from playlist!"
                                         )
                                     }
@@ -262,13 +329,13 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
                                 if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.blackListMusic?.none { it.musicID == music.musicID } == true) {
                                     isDontPlay = true
                                     mainActivity.showSnack(
-                                        view,
+                                        v,
                                         "You added ${music.musicName} to blacklist!"
                                     )
                                 } else {
                                     isDontPlay = false
                                     mainActivity.showSnack(
-                                        view,
+                                        v,
                                         "You removed ${music.musicName} from blacklist!"
                                     )
                                 }
@@ -282,6 +349,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
 
                             }
                             5 -> { // View artist
+
                             }
                             6 -> { // Go to album
 

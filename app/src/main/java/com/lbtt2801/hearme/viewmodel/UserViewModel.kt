@@ -10,7 +10,6 @@ import com.lbtt2801.hearme.data.UsersData
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.model.User
-import java.text.SimpleDateFormat
 import java.util.Date
 
 class UserViewModel : ViewModel() {
@@ -134,8 +133,14 @@ class UserViewModel : ViewModel() {
             }
         }
         _lstDataUser.postValue(lst)
-        Log.v(TAG, "blackListMusic -> ${lstDataUser.value?.first { it.email == email }?.blackListMusic?.size}")
-        Log.v(TAG, "listMusicsLoved -> ${lstDataUser.value?.first { it.email == email }?.listMusicsLoved?.size}")
+        Log.v(
+            TAG,
+            "blackListMusic -> ${lstDataUser.value?.first { it.email == email }?.blackListMusic?.size}"
+        )
+        Log.v(
+            TAG,
+            "listMusicsLoved -> ${lstDataUser.value?.first { it.email == email }?.listMusicsLoved?.size}"
+        )
     }
 
     fun updateListPlayedMusic(email: String, music: Music, isLove: Boolean) {
@@ -151,8 +156,8 @@ class UserViewModel : ViewModel() {
         _lstDataUser.postValue(lst)
     }
 
-    fun updateListMusicsDownloaded(email: String, music: Music, isLove: Boolean) {
-        if (isLove) {
+    fun updateListMusicsDownloaded(email: String, music: Music, isDownloaded: Boolean) {
+        if (isDownloaded) {
             lst.first { it.email == email }.apply {
                 this.listMusicsDownloaded.add(music)
             }
@@ -173,12 +178,12 @@ class UserViewModel : ViewModel() {
                 this.listMusicsLoved.removeIf { it.musicID == music.musicID }
                 this.listMusicsListened.removeIf { it.musicID == music.musicID }
             }
-            lst
         } else {
             lst.first { it.email == email }.apply {
                 this.blackListMusic.removeIf { it.musicID == music.musicID }
             }
         }
+        _lstDataUser.postValue(lst)
         Log.v(
             TAG,
             "blackListMusic -> ${lstDataUser.value?.first { it.email == email }?.blackListMusic?.size}"

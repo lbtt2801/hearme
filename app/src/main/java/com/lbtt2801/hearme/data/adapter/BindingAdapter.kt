@@ -1,5 +1,6 @@
 package com.lbtt2801.hearme.data.adapter
 
+import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.util.DisplayMetrics
 import android.util.Log
@@ -48,7 +49,6 @@ fun setCategory(text: TextView, check: Boolean) {
         text.text = "Album"
 }
 
-// CON DANG BUG
 @BindingAdapter("app:setLoveList")
 fun setLoveList(checkBox: CheckBox, music: Music) {
     val mainActivity = checkBox.context as MainActivity
@@ -64,11 +64,69 @@ fun setLoveList(checkBox: CheckBox, music: Music) {
 fun clickLoveList(checkBox: CheckBox, music: Music) {
     val mainActivity = checkBox.context as MainActivity
     checkBox.setOnClickListener() {
-        mainActivity.viewModelUser.updateListMusicsLoved(
-            mainActivity.email,
-            music,
-            checkBox.isChecked
-        )
+        var isLove = false
+
+        if (mainActivity.viewModelUser.isMusicInBlackList(
+                mainActivity.email,
+                music
+            )
+        ) {
+            val builder = AlertDialog.Builder(checkBox.context)
+            builder.apply {
+                setTitle("Confirm")
+                setMessage("${music.musicName} is putting into blacklist, are you want to remove it?")
+                setPositiveButton(
+                    "YES"
+                ) { dialog, _ ->
+                    mainActivity.viewModelUser.apply {
+                        music.let {
+                            updateBlackListMusic(
+                                mainActivity.email,
+                                it,
+                                false
+                            )
+                            updateListMusicsLoved(
+                                mainActivity.email,
+                                it,
+                                true
+                            )
+                        }
+                    }
+                    mainActivity.showSnack(
+                        checkBox,
+                        "You added ${music.musicName} to love list!"
+                    )
+                    dialog.dismiss()
+                }
+                setNegativeButton("NO") { dialog, _ ->
+                    mainActivity.viewModelUser.updateListMusicsLoved(
+                        mainActivity.email,
+                        music,
+                        false
+                    )
+                    dialog.dismiss()
+                }
+            }.create().show()
+        } else {
+            if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listMusicsLoved?.none { it.musicID == music.musicID } == true) {
+                isLove = true
+                mainActivity.showSnack(
+                    checkBox,
+                    "You added ${music.musicName} to love list!"
+                )
+            } else {
+                isLove = false
+                mainActivity.showSnack(
+                    checkBox,
+                    "You removed ${music.musicName} from love list!"
+                )
+            }
+            mainActivity.viewModelUser.updateListMusicsLoved(
+                mainActivity.email,
+                music,
+                isLove
+            )
+        }
     }
 }
 
@@ -78,7 +136,6 @@ fun setPlayList(checkBox: CheckBox, music: Music) {
     val user =
         mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }
     mainActivity.viewModelUser.lstDataUser.observe(mainActivity) {
-        Log.v(TAG, "${it.first { it.email == mainActivity.email }.listPlayedMusic.size}")
         checkBox.isChecked =
             user?.listPlayedMusic?.none { it.musicID == music.musicID } == false
     }
@@ -88,11 +145,69 @@ fun setPlayList(checkBox: CheckBox, music: Music) {
 fun clickPlayList(checkBox: CheckBox, music: Music) {
     val mainActivity = checkBox.context as MainActivity
     checkBox.setOnClickListener() {
-        mainActivity.viewModelUser.updateListPlayedMusic(
-            mainActivity.email,
-            music,
-            checkBox.isChecked
-        )
+        var isLove = false
+
+        if (mainActivity.viewModelUser.isMusicInBlackList(
+                mainActivity.email,
+                music
+            )
+        ) {
+            val builder = AlertDialog.Builder(checkBox.context)
+            builder.apply {
+                setTitle("Confirm")
+                setMessage("${music.musicName} is putting into blacklist, are you want to remove it?")
+                setPositiveButton(
+                    "YES"
+                ) { dialog, _ ->
+                    mainActivity.viewModelUser.apply {
+                        music.let {
+                            updateBlackListMusic(
+                                mainActivity.email,
+                                it,
+                                false
+                            )
+                            updateListPlayedMusic(
+                                mainActivity.email,
+                                it,
+                                true
+                            )
+                        }
+                    }
+                    mainActivity.showSnack(
+                        checkBox,
+                        "You added ${music.musicName} to playlist!"
+                    )
+                    dialog.dismiss()
+                }
+                setNegativeButton("NO") { dialog, _ ->
+                    mainActivity.viewModelUser.updateListPlayedMusic(
+                        mainActivity.email,
+                        music,
+                        false
+                    )
+                    dialog.dismiss()
+                }
+            }.create().show()
+        } else {
+            if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listPlayedMusic?.none { it.musicID == music.musicID } == true) {
+                isLove = true
+                mainActivity.showSnack(
+                    checkBox,
+                    "You added ${music.musicName} to playlist!"
+                )
+            } else {
+                isLove = false
+                mainActivity.showSnack(
+                    checkBox,
+                    "You removed ${music.musicName} from playlist!"
+                )
+            }
+            mainActivity.viewModelUser.updateListPlayedMusic(
+                mainActivity.email,
+                music,
+                isLove
+            )
+        }
     }
 }
 
@@ -102,7 +217,6 @@ fun setDownList(checkBox: CheckBox, music: Music) {
     val user =
         mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }
     mainActivity.viewModelUser.lstDataUser.observe(mainActivity) {
-        Log.v(TAG, "${it.first { it.email == mainActivity.email }.listMusicsDownloaded.size}")
         checkBox.isChecked =
             user?.listMusicsDownloaded?.none { it.musicID == music.musicID } == false
     }
@@ -110,13 +224,69 @@ fun setDownList(checkBox: CheckBox, music: Music) {
 
 @BindingAdapter("app:clickDownList")
 fun clickDownList(checkBox: CheckBox, music: Music) {
-    checkBox.setOnCheckedChangeListener { _, _ ->
-        val mainActivity = checkBox.context as MainActivity
-        checkBox.setOnClickListener() {
+    val mainActivity = checkBox.context as MainActivity
+    checkBox.setOnClickListener() {
+        var isDownloaded = false
+
+        if (mainActivity.viewModelUser.isMusicInBlackList(
+                mainActivity.email,
+                music
+            )
+        ) {
+            val builder = AlertDialog.Builder(checkBox.context)
+            builder.apply {
+                setTitle("Confirm")
+                setMessage("${music.musicName} is putting into blacklist, are you want to remove it?")
+                setPositiveButton(
+                    "YES"
+                ) { dialog, _ ->
+                    mainActivity.viewModelUser.apply {
+                        music.let {
+                            updateBlackListMusic(
+                                mainActivity.email,
+                                it,
+                                false
+                            )
+                            updateListMusicsDownloaded(
+                                mainActivity.email,
+                                it,
+                                true
+                            )
+                        }
+                    }
+                    mainActivity.showSnack(
+                        checkBox,
+                        "You added ${music.musicName} to downloaded list!"
+                    )
+                    dialog.dismiss()
+                }
+                setNegativeButton("NO") { dialog, _ ->
+                    mainActivity.viewModelUser.updateListMusicsDownloaded(
+                        mainActivity.email,
+                        music,
+                        false
+                    )
+                    dialog.dismiss()
+                }
+            }.create().show()
+        } else {
+            if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listMusicsDownloaded?.none { it.musicID == music.musicID } == true) {
+                isDownloaded = true
+                mainActivity.showSnack(
+                    checkBox,
+                    "You added ${music.musicName} to downloaded list!"
+                )
+            } else {
+                isDownloaded = false
+                mainActivity.showSnack(
+                    checkBox,
+                    "You removed ${music.musicName} from downloaded list!"
+                )
+            }
             mainActivity.viewModelUser.updateListMusicsDownloaded(
                 mainActivity.email,
                 music,
-                checkBox.isChecked
+                isDownloaded
             )
         }
     }
