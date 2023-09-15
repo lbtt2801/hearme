@@ -8,6 +8,7 @@ class MoreSongData {
         fun data(): ArrayList<MoreSong> {
             val data = ArrayList<MoreSong>()
             data.apply {
+                add(MoreSong(R.drawable.ic_bold_heart, "Nothing"))
                 add(MoreSong(R.drawable.ic_light_heart, "Like"))
                 add(MoreSong(R.drawable.ic_add_playlist, "Add to Playlist"))
                 add(MoreSong(R.drawable.ic_don_play, "Don't Play This"))

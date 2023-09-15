@@ -1,10 +1,7 @@
 package com.lbtt2801.hearme.data.adapter
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.databinding.ViewFollowArtistsBinding
@@ -12,7 +9,6 @@ import com.lbtt2801.hearme.databinding.ViewHomeArtistBinding
 import com.lbtt2801.hearme.databinding.ViewPodcastAndShowBinding
 import com.lbtt2801.hearme.databinding.ViewTopListArtistBinding
 import com.lbtt2801.hearme.model.Artist
-import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class ArtistAdapter(

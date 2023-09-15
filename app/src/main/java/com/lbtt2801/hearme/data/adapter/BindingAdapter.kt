@@ -1,12 +1,10 @@
 package com.lbtt2801.hearme.data.adapter
 
-import android.app.ActionBar.LayoutParams
 import android.content.ContentValues.TAG
 import android.util.DisplayMetrics
 import android.util.Log
 import android.widget.CheckBox
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.core.content.ContextCompat

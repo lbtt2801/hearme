@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="24dp"
-            tools:context=".view.PodcastFragment">
+            tools:context=".view.fragments.PodcastFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

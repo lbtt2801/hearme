@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/item_nav_home"
-        android:name="com.lbtt2801.hearme.view.homeactionmenu.HomeFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.homeactionmenu.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_trendingNowFragment"
             app:destination="@id/trendingNowFragment" />
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/splashScreenFragment"
-        android:name="com.lbtt2801.hearme.view.onboardingsignupsignin.SplashScreenFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.onboardingsignupsignin.SplashScreenFragment"
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen">
         <action
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/walkThroughFragment"
-        android:name="com.lbtt2801.hearme.view.onboardingsignupsignin.WalkThroughFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.onboardingsignupsignin.WalkThroughFragment"
         android:label="fragment_walk_through"
         tools:layout="@layout/fragment_walk_through">
         <action
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/letYouInFragment"
-        android:name="com.lbtt2801.hearme.view.onboardingsignupsignin.LetYouInFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.onboardingsignupsignin.LetYouInFragment"
         android:label="fragment_let_you_in"
         tools:layout="@layout/fragment_let_you_in">
         <action
@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.lbtt2801.hearme.view.onboardingsignupsignin.SignUpFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.onboardingsignupsignin.SignUpFragment"
         android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up">
         <action
@@ -65,7 +65,7 @@
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.lbtt2801.hearme.view.onboardingsignupsignin.SignInFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.onboardingsignupsignin.SignInFragment"
         android:label="SignInFragment"
         tools:layout="@layout/fragment_sign_in">
         <action
@@ -80,7 +80,7 @@
     </fragment>
     <fragment
         android:id="@+id/fillYourProfileFragment"
-        android:name="com.lbtt2801.hearme.view.accountssetup.FillYourProfileFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.accountssetup.FillYourProfileFragment"
         android:label="FillYourProfileFragment"
         tools:layout="@layout/fragment_fill_your_profile">
         <action
@@ -89,7 +89,7 @@
     </fragment>
     <fragment
         android:id="@+id/createNewPinFragment"
-        android:name="com.lbtt2801.hearme.view.accountssetup.CreateNewPinFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.accountssetup.CreateNewPinFragment"
         android:label="fragment_create_new_pin"
         tools:layout="@layout/fragment_create_new_pin">
         <action
@@ -98,7 +98,7 @@
     </fragment>
     <fragment
         android:id="@+id/setFingerprintFragment"
-        android:name="com.lbtt2801.hearme.view.accountssetup.SetFingerprintFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.accountssetup.SetFingerprintFragment"
         android:label="fragment_set_fingerprint"
         tools:layout="@layout/fragment_set_fingerprint">
         <action
@@ -107,12 +107,12 @@
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.lbtt2801.hearme.view.homeactionmenu.NotificationFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment"
         android:label="NotificationFragment"
-        tools:layout="@layout/fragment_notification"/>
+        tools:layout="@layout/fragment_notification" />
     <fragment
         android:id="@+id/followArtistsFragment"
-        android:name="com.lbtt2801.hearme.view.accountssetup.FollowArtistsFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.accountssetup.FollowArtistsFragment"
         android:label="fragment_follow_artists"
         tools:layout="@layout/fragment_follow_artists">
         <action
@@ -123,7 +123,7 @@
     </fragment>
     <fragment
         android:id="@+id/selectMethodFragment"
-        android:name="com.lbtt2801.hearme.view.forgotandresetpassword.SelectMethodFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.forgotandresetpassword.SelectMethodFragment"
         android:label="fragment_select_method"
         tools:layout="@layout/fragment_select_method">
         <action
@@ -132,7 +132,7 @@
     </fragment>
     <fragment
         android:id="@+id/fillOTPFragment"
-        android:name="com.lbtt2801.hearme.view.forgotandresetpassword.FillOTPFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.forgotandresetpassword.FillOTPFragment"
         android:label="fragment_fill_o_t_p"
         tools:layout="@layout/fragment_fill_o_t_p">
         <action
@@ -141,7 +141,7 @@
     </fragment>
     <fragment
         android:id="@+id/createNewPasswordFragment"
-        android:name="com.lbtt2801.hearme.view.forgotandresetpassword.CreateNewPasswordFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.forgotandresetpassword.CreateNewPasswordFragment"
         android:label="fragment_create_new_password"
         tools:layout="@layout/fragment_create_new_password">
         <action
@@ -152,24 +152,29 @@
     </fragment>
     <fragment
         android:id="@+id/trendingNowFragment"
-        android:name="com.lbtt2801.hearme.view.homeactionmenu.TrendingNowFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.homeactionmenu.TrendingNowFragment"
         android:label="TrendingNowFragment" />
     <fragment
         android:id="@+id/popularArtistsFragment"
-        android:name="com.lbtt2801.hearme.view.homeactionmenu.PopularArtistsFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.homeactionmenu.PopularArtistsFragment"
         android:label="PopularArtistsFragment" />
     <fragment
         android:id="@+id/item_nav_explore"
-        android:name="com.lbtt2801.hearme.view.search.ExploreFragment"
-        android:label="ExploreFragment" >
+        android:name="com.lbtt2801.hearme.view.fragments.search.ExploreFragment"
+        android:label="ExploreFragment"
+        tools:layout="@layout/fragment_explore">
         <action
             android:id="@+id/action_navigation_explore_to_itemExploreFragment"
             app:destination="@id/itemExploreFragment" />
+        <action
+            android:id="@+id/action_item_nav_explore_to_viewArtistFragment"
+            app:destination="@id/viewArtistFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemExploreFragment"
-        android:name="com.lbtt2801.hearme.view.ItemExploreFragment"
-        android:label="ItemExploreFragment" >
+        android:name="com.lbtt2801.hearme.view.fragments.ItemExploreFragment"
+        android:label="ItemExploreFragment"
+        tools:layout="@layout/fragment_item_explore">
         <action
             android:id="@+id/action_itemExploreFragment_to_navigation_explore"
             app:destination="@id/item_nav_explore" />
@@ -179,17 +184,17 @@
     </fragment>
     <fragment
         android:id="@+id/topItemFragment"
-        android:name="com.lbtt2801.hearme.view.TopItemFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.TopItemFragment"
         android:label="fragment_top_item"
         tools:layout="@layout/fragment_top_item" />
     <fragment
         android:id="@+id/podcastFragment"
-        android:name="com.lbtt2801.hearme.view.PodcastFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.PodcastFragment"
         android:label="PodcastFragment" />
     <fragment
         android:id="@+id/item_nav_profile"
-        android:name="com.lbtt2801.hearme.view.profile_settings.ProfileFragment"
-        android:label="ProfileFragment" >
+        android:name="com.lbtt2801.hearme.view.fragments.profile_settings.ProfileFragment"
+        android:label="ProfileFragment">
         <action
             android:id="@+id/action_item_nav_profile_to_profileDetailFragment"
             app:destination="@id/profileDetailFragment" />
@@ -217,9 +222,9 @@
     </fragment>
     <fragment
         android:id="@+id/profileDetailFragment"
-        android:name="com.lbtt2801.hearme.view.profile_settings.ProfileDetailFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.profile_settings.ProfileDetailFragment"
         android:label="fragment_profile_detail"
-        tools:layout="@layout/fragment_profile_detail" >
+        tools:layout="@layout/fragment_profile_detail">
         <action
             android:id="@+id/action_profileDetailFragment_to_item_nav_profile"
             app:destination="@id/item_nav_profile" />
@@ -229,73 +234,78 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.lbtt2801.hearme.view.profile_settings.EditProfileFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.profile_settings.EditProfileFragment"
         android:label="fragment_edit_profile"
-        tools:layout="@layout/fragment_edit_profile" >
+        tools:layout="@layout/fragment_edit_profile">
         <action
             android:id="@+id/action_editProfileFragment_to_profileDetailFragment"
             app:destination="@id/profileDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.lbtt2801.hearme.view.search.SearchFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.search.SearchFragment"
         android:label="SearchFragment"
-        tools:layout="@layout/fragment_search"/>
+        tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/audioVideoFragment"
-        android:name="com.lbtt2801.hearme.view.profile_settings.AudioVideoFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.profile_settings.AudioVideoFragment"
         android:label="fragment_audio_video"
         tools:layout="@layout/fragment_audio_video" />
     <fragment
         android:id="@+id/dataSaverStorageFragment"
-        android:name="com.lbtt2801.hearme.view.profile_settings.DataSaverStorageFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.profile_settings.DataSaverStorageFragment"
         android:label="fragment_data_saver_storage"
         tools:layout="@layout/fragment_data_saver_storage" />
     <fragment
         android:id="@+id/languageFragment"
-        android:name="com.lbtt2801.hearme.view.profile_settings.LanguageFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.profile_settings.LanguageFragment"
         android:label="fragment_language"
         tools:layout="@layout/fragment_language" />
     <fragment
         android:id="@+id/securityFragment"
-        android:name="com.lbtt2801.hearme.view.profile_settings.SecurityFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.profile_settings.SecurityFragment"
         android:label="fragment_security"
         tools:layout="@layout/fragment_security" />
     <fragment
         android:id="@+id/settingNotificationFragment2"
-        android:name="com.lbtt2801.hearme.view.profile_settings.SettingNotificationFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.profile_settings.SettingNotificationFragment"
         android:label="fragment_setting_notification"
         tools:layout="@layout/fragment_setting_notification" />
     <fragment
         android:id="@+id/settingPlaybackFragment2"
-        android:name="com.lbtt2801.hearme.view.profile_settings.SettingPlaybackFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.profile_settings.SettingPlaybackFragment"
         android:label="fragment_setting_playback"
         tools:layout="@layout/fragment_setting_playback" />
     <fragment
         android:id="@+id/premiumFragment"
-        android:name="com.lbtt2801.hearme.view.profile_settings.PremiumFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.profile_settings.PremiumFragment"
         android:label="fragment_premium"
-        tools:layout="@layout/fragment_premium" >
+        tools:layout="@layout/fragment_premium">
         <action
             android:id="@+id/action_premiumFragment_to_paymentFragment"
             app:destination="@id/paymentFragment" />
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"
-        android:name="com.lbtt2801.hearme.view.profile_settings.PaymentFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.profile_settings.PaymentFragment"
         android:label="fragment_payment"
-        tools:layout="@layout/fragment_payment" >
+        tools:layout="@layout/fragment_payment">
         <action
             android:id="@+id/action_paymentFragment_to_addNewCardFragment"
             app:destination="@id/addNewCardFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewCardFragment"
-        android:name="com.lbtt2801.hearme.view.profile_settings.AddNewCardFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.profile_settings.AddNewCardFragment"
         android:label="fragment_add_new_card"
-        tools:layout="@layout/fragment_add_new_card" >
+        tools:layout="@layout/fragment_add_new_card">
         <action
             android:id="@+id/action_addNewCardFragment_to_paymentFragment"
             app:destination="@id/paymentFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/viewArtistFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.search.ViewArtistFragment"
+        android:label="ViewArtistFragment"
+        tools:layout="@layout/fragment_view_artist" />
 </navigation>

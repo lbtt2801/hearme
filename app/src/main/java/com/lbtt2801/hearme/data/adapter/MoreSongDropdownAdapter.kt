@@ -1,61 +1,54 @@
 package com.lbtt2801.hearme.data.adapter
 
-import android.content.Context
+import android.annotation.SuppressLint
 import com.lbtt2801.hearme.R
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.databinding.DataBindingUtil
-import com.lbtt2801.hearme.databinding.ViewMoreSongBinding
+import android.widget.Toast
 import com.lbtt2801.hearme.model.MoreSong
 
 
-class MoreSongDropdownAdapter(val context: Context, var dataSource: ArrayList<MoreSong>) :
+class MoreSongDropdownAdapter(val context: Context, var data: ArrayList<MoreSong>) :
     BaseAdapter() {
 
-    private val inflater: LayoutInflater =
-        context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
+    @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        val view: View = LayoutInflater.from(context)
+            .inflate(R.layout.view_more_song, parent, false)
 
-        val view: View
-        val vh: ItemHolder
-        if (convertView == null) {
-            view = inflater.inflate(R.layout.view_more_song, parent, false)
-            vh = ItemHolder(view)
-            view?.tag = vh
-        } else {
-            view = convertView
-            vh = view.tag as ItemHolder
+        val txtName = view.findViewById<TextView>(R.id.name_dropdown)
+        val image = view.findViewById<ImageView>(R.id.image_dropdown)
+        val container = view.findViewById<LinearLayout>(R.id.container_item_dropdown)
+
+        txtName.text = data[position].name
+        image.setImageResource(data[position].image)
+
+
+
+        if (position == 0) {
+            txtName.visibility = View.GONE
+            image.visibility = View.GONE
+            view.visibility = View.GONE
+            container.visibility = View.GONE
         }
-        vh.name.text = dataSource[position].name
-        vh.img.setBackgroundResource(dataSource[position].image)
-
         return view
     }
 
     override fun getItem(position: Int): Any? {
-        return dataSource[position];
+        return data[position];
     }
 
     override fun getCount(): Int {
-        return dataSource.size;
+        return data.size;
     }
 
     override fun getItemId(position: Int): Long {
         return position.toLong();
-    }
-
-    private class ItemHolder(view: View?) {
-        val name: TextView
-        val img: ImageView
-
-        init {
-            name = view?.findViewById(R.id.name_dropdown) as TextView
-            img = view.findViewById(R.id.image_dropdown) as ImageView
-        }
     }
 }

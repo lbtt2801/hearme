@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.model.CardPayment
-import com.lbtt2801.hearme.view.profile_settings.PaymentFragment
+import com.lbtt2801.hearme.view.fragments.profile_settings.PaymentFragment
 
 class CardPaymentAdapter(context: PaymentFragment, arrayList: ArrayList<CardPayment>): RecyclerView.Adapter<CardPaymentAdapter.ViewHolder>() {
     private val context: Context

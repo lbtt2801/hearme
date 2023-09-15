@@ -3,10 +3,7 @@ package com.lbtt2801.hearme.data.adapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.lbtt2801.hearme.MainActivity
-import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.ViewListBrowseBinding
 import com.lbtt2801.hearme.model.Category
 
