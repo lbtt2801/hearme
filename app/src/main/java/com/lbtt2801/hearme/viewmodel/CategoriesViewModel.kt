@@ -13,6 +13,10 @@ class CategoriesViewModel : ViewModel() {
 
     private lateinit var lst: ArrayList<Category>
 
+    init {
+        getListDataCategories()
+    }
+
     fun getListDataCategories() {
         lst = CategoriesData.dataCategory()
         _lstDataCategories.postValue(lst)

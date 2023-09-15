@@ -19,6 +19,10 @@ class UserViewModel : ViewModel() {
 
     private lateinit var lst: ArrayList<User>
 
+    init {
+        getListDataUser()
+    }
+
     fun getListDataUser() {
         lst = UsersData.data()
         lst.first { it.email == "phuongviet.huit@gmail.com" }.apply {
@@ -210,7 +214,7 @@ class UserViewModel : ViewModel() {
         return !lstDataUser.value?.first { it.email == email }?.blackListMusic?.none { it.musicID == music.musicID }!!
     }
 
-    fun updateListFollowers(email: String, user: User, isFollow: Boolean) {
+    fun updateFollowersList(email: String, user: User, isFollow: Boolean) {
         if (isFollow) {
             lst.first { it.email == email }.apply {
                 this.listFollowers.add(user)
@@ -218,6 +222,19 @@ class UserViewModel : ViewModel() {
         } else {
             lst.first { it.email == email }.apply {
                 this.listFollowers.removeIf { it.email == user.email }
+            }
+        }
+        _lstDataUser.postValue(lst)
+    }
+
+    fun updateFollowingArtistList(email: String, artist: Artist, isFollowing: Boolean) {
+        if (isFollowing) {
+            lst.first { it.email == email }.apply {
+                this.listArtistsFollowing.add(artist)
+            }
+        } else {
+            lst.first { it.email == email }.apply {
+                this.listArtistsFollowing.removeIf { it.artistId == artist.artistId }
             }
         }
         _lstDataUser.postValue(lst)

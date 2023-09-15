@@ -13,6 +13,10 @@ class MusicViewModel : ViewModel() {
 
     private lateinit var lst: ArrayList<Music>
 
+    init {
+        getListDataMusics()
+    }
+
     fun getListDataMusics() {
         lst = MusicsData.dataMusic()
         _lstDataMusics.postValue(lst)

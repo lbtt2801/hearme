@@ -77,11 +77,8 @@ class ViewDetailsSongFragment : Fragment() {
 
         binding.spinnerDropDownMore.adapter =
             MoreSongDropdownAdapter(binding.spinnerDropDownMore.context, MoreSongData.data(), 1)
-
-//        binding.cbAddLoveList.setOnClickListener() { onClickCBAddLoveList(it) }
-//        onClickCBAddPlayedMusic(view)
-//        onClickCBAddDownList(view)
         onClickItemSpinner(view)
+
         displayRecyclerViewMoreLikeThis()
     }
 
@@ -133,20 +130,6 @@ class ViewDetailsSongFragment : Fragment() {
                     }
                 }
             }
-    }
-
-    private fun onClickCBAddDownList(view: View) {
-        binding.cbAddDownList.isChecked =
-            user?.listMusicsDownloaded?.none { it.musicID == musicID } != true
-    }
-
-    private fun onClickCBAddPlayedMusic(view: View) {
-        binding.cbAddPlaylist.isChecked =
-            user?.listPlayedMusic?.none { it.musicID == musicID } != true
-    }
-
-    private fun onClickCBAddLoveList(view: View) {
-
     }
 
     private fun displayRecyclerViewMoreLikeThis() {

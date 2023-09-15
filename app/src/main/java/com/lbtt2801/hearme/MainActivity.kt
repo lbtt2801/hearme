@@ -64,17 +64,17 @@ class MainActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
         viewModelTopicSearch.getListDataTopicSearch()
-        viewModelRecentSearch.getListDataRecentSearches()
-        viewModelMusic.getListDataMusics()
-        viewModelArtist.getListDataArtists()
-        viewModelCategory.getListDataCategories()
+
         viewModelEmail.selectedItem.observe(this, Observer {
             Toast.makeText(this, "$it", Toast.LENGTH_SHORT).show()
             email = it
             Toast.makeText(this, "viewModelEmail -> $email", Toast.LENGTH_SHORT).show()
 
         })
-        viewModelUser.getListDataUser()
+
+        //*************************************************************************************************************************************************************
+        //Không get listdata của các viewmodel ở đây, khai báo "by viewModels()" ở trên thì hàm init trong viewmodel sẽ chạy, giúp xoay màn hình không bị mất dữ liệu
+        //*************************************************************************************************************************************************************
 
         if (savedInstanceState != null) {
             email = savedInstanceState.getString("email").toString()
