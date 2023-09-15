@@ -15,6 +15,10 @@ class TopicSearchViewModel : ViewModel() {
 
     private lateinit var lst: ArrayList<TopicSearch>
 
+    init {
+        getListDataTopicSearch()
+    }
+
     fun getListDataTopicSearch() {
         lst = TopicSearchData.data()
         _lstDataTopicSearch.postValue(lst)

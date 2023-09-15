@@ -7,13 +7,16 @@ import android.util.Log
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.appcompat.widget.AppCompatCheckedTextView
+import androidx.appcompat.widget.AppCompatToggleButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
+import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.model.Time
 import com.lbtt2801.hearme.model.TopicSearch
@@ -289,6 +292,46 @@ fun clickDownList(checkBox: CheckBox, music: Music) {
                 isDownloaded
             )
         }
+    }
+}
+
+
+@BindingAdapter("app:setFollowButton")
+fun setFollowButton(toggleButton: ToggleButton, artist: Artist) {
+    val mainActivity = toggleButton.context as MainActivity
+    val user =
+        mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }
+
+    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) {
+        toggleButton.isChecked =
+            user?.listArtistsFollowing?.none { it.artistId == artist.artistId } == false
+    }
+}
+
+@BindingAdapter("app:clickFollowButton")
+fun clickFollowButton(toggleButton: ToggleButton, artist: Artist) {
+    val mainActivity = toggleButton.context as MainActivity
+
+    toggleButton.setOnClickListener() {
+        var isFollowing = false
+        if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listArtistsFollowing?.none { it.artistId == artist.artistId } == true) {
+            isFollowing = true
+            mainActivity.showSnack(
+                toggleButton,
+                "You following ${artist.artistName}!"
+            )
+        } else {
+            isFollowing = false
+            mainActivity.showSnack(
+                toggleButton,
+                "You unfollow ${artist.artistName}!"
+            )
+        }
+        mainActivity.viewModelUser.updateFollowingArtistList(
+            mainActivity.email,
+            artist,
+            isFollowing
+        )
     }
 }
 

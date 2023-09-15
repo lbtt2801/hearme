@@ -13,6 +13,10 @@ class RecentSearchViewModel : ViewModel() {
 
     private lateinit var lst: ArrayList<RecentSearch>
 
+    init {
+        getListDataRecentSearches()
+    }
+
     fun getListDataRecentSearches() {
         lst = RecentSearchesData.data()
         _lstDataRecentSearch.postValue(lst)

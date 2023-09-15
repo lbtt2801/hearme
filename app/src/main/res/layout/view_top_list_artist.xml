@@ -92,7 +92,9 @@
                     android:textAllCaps="false"
                     android:textOff="Follow"
                     android:textOn="Following"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    app:clickFollowButton="@{artist}"
+                    app:setFollowButton="@{artist}" />
 
             </LinearLayout>
         </LinearLayout>

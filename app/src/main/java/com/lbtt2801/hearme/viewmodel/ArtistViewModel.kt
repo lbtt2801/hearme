@@ -19,6 +19,10 @@ class ArtistViewModel : ViewModel() {
 
     private lateinit var lst: ArrayList<Artist>
 
+    init {
+        getListDataArtists()
+    }
+
     fun getListDataArtists() {
         lst = ArtistsData.dataArtist()
         lst.forEach {
