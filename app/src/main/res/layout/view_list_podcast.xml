@@ -132,15 +132,19 @@
             app:layout_constraintTop_toBottomOf="@+id/tvDuration"
             app:setDownList="@{music}" />
 
-        <ImageView
-            android:id="@+id/ic_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.lbtt2801.hearme.data.control.CustomSpinner
+            android:id="@+id/spinner_drop_down_more"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/ic_more"
+            android:background="@drawable/ic_more"
+            android:dropDownVerticalOffset="25dp"
+            android:elevation="100dp"
+            android:popupBackground="@drawable/bg_dropdown_song_more"
+            android:spinnerMode="dropdown"
             app:layout_constraintStart_toEndOf="@+id/ic_download"
-            app:layout_constraintTop_toBottomOf="@+id/tvDuration" />
+            app:layout_constraintTop_toTopOf="@+id/ic_download" />
 
         <ImageView
             android:id="@+id/ic_play"

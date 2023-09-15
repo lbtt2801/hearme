@@ -168,7 +168,7 @@
             app:destination="@id/itemExploreFragment" />
         <action
             android:id="@+id/action_item_nav_explore_to_viewArtistFragment"
-            app:destination="@id/viewArtistFragment" />
+            app:destination="@id/viewDetailsSongFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemExploreFragment"
@@ -304,8 +304,8 @@
             app:destination="@id/paymentFragment" />
     </fragment>
     <fragment
-        android:id="@+id/viewArtistFragment"
-        android:name="com.lbtt2801.hearme.view.fragments.search.ViewArtistFragment"
-        android:label="ViewArtistFragment"
-        tools:layout="@layout/fragment_view_artist" />
+        android:id="@+id/viewDetailsSongFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsSongFragment"
+        android:label="ViewDetailsSongFragment"
+        tools:layout="@layout/fragment_view_details_song" />
 </navigation>

@@ -1,6 +1,6 @@
 package com.lbtt2801.hearme.model
 
-import java.util.Date
+import java.util.*
 
 data class Music(
     val musicID: String,
@@ -12,7 +12,4 @@ data class Music(
     val category: Category,
     val artist: Artist,
     val isAlbum: Boolean
-//    var isLoveList: Boolean = false,
-//    var isPlayList: Boolean = false,
-//    var isDownList: Boolean = false
 )

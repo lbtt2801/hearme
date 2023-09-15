@@ -35,7 +35,7 @@ import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    private lateinit var navController: NavController
+    lateinit var navController: NavController
     val viewModelTopicSearch: TopicSearchViewModel by viewModels()
     private val viewModelRecentSearch: RecentSearchViewModel by viewModels()
     private val viewModelMusic: MusicViewModel by viewModels()
