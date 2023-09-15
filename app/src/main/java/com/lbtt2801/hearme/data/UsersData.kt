@@ -29,7 +29,7 @@ class UsersData {
                         false, // true if user the first sign in
                         ArtistsData.dataArtist() //listArtistsFollowing
                             .filter { it.artistId == " ar001" || it.artistId == "ar002" || it.artistId == "ar004" } as ArrayList<Artist>,
-                        ArrayList(),
+                        ArrayList(), //listFollowers
 //                        UsersData.data() //listFollowers
 //                            .filter { it.email == "lebuitantruong@gmail.com" } as ArrayList<User>,
                         MusicsData.dataMusic() //listMusicsLoved
@@ -40,6 +40,7 @@ class UsersData {
                             .filter { it.musicID == "ms004" || it.musicID == "ms009" } as ArrayList<Music>,
                         MusicsData.dataMusic() //listPlayedMusic
                             .filter { it.musicID == "ms004" || it.musicID == "ms010" || it.musicID == "ms012" || it.musicID == "ms009" } as ArrayList<Music>,
+                        ArrayList() //blackListMusic
                     )
                 )
                 add(
@@ -70,6 +71,7 @@ class UsersData {
                             .filter { it.musicID == "ms003" || it.musicID == "ms012" || it.musicID == "ms009" } as ArrayList<Music>,
                         MusicsData.dataMusic() //listPlayedMusic
                             .filter { it.musicID == "ms003" || it.musicID == "ms009" || it.musicID == "ms010" } as ArrayList<Music>,
+                        ArrayList() //blackListMusic
                     )
                 )
                 add(
@@ -100,6 +102,7 @@ class UsersData {
                             .filter { it.musicID == "ms005" || it.musicID == "ms004" || it.musicID == "ms001" } as ArrayList<Music>,
                         MusicsData.dataMusic() //listPlayedMusic
                             .filter { it.musicID == "ms002" || it.musicID == "ms003" || it.musicID == "ms007" } as ArrayList<Music>,
+                        ArrayList() //blackListMusic
                     )
                 )
             }

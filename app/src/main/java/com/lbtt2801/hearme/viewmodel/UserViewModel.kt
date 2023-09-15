@@ -134,6 +134,8 @@ class UserViewModel : ViewModel() {
             }
         }
         _lstDataUser.postValue(lst)
+        Log.v(TAG, "blackListMusic -> ${lstDataUser.value?.first { it.email == email }?.blackListMusic?.size}")
+        Log.v(TAG, "listMusicsLoved -> ${lstDataUser.value?.first { it.email == email }?.listMusicsLoved?.size}")
     }
 
     fun updateListPlayedMusic(email: String, music: Music, isLove: Boolean) {
@@ -160,6 +162,47 @@ class UserViewModel : ViewModel() {
             }
         }
         _lstDataUser.postValue(lst)
+    }
+
+    fun updateBlackListMusic(email: String, music: Music, isDontPlay: Boolean) {
+        if (isDontPlay) {
+            lst.first { it.email == email }.apply {
+                this.blackListMusic.add(music)
+                this.listMusicsDownloaded.removeIf { it.musicID == music.musicID }
+                this.listPlayedMusic.removeIf { it.musicID == music.musicID }
+                this.listMusicsLoved.removeIf { it.musicID == music.musicID }
+                this.listMusicsListened.removeIf { it.musicID == music.musicID }
+            }
+            lst
+        } else {
+            lst.first { it.email == email }.apply {
+                this.blackListMusic.removeIf { it.musicID == music.musicID }
+            }
+        }
+        Log.v(
+            TAG,
+            "blackListMusic -> ${lstDataUser.value?.first { it.email == email }?.blackListMusic?.size}"
+        )
+        Log.v(
+            TAG,
+            "listMusicsDownloaded -> ${lstDataUser.value?.first { it.email == email }?.listMusicsDownloaded?.size}"
+        )
+        Log.v(
+            TAG,
+            "listPlayedMusic -> ${lstDataUser.value?.first { it.email == email }?.listPlayedMusic?.size}"
+        )
+        Log.v(
+            TAG,
+            "listMusicsLoved -> ${lstDataUser.value?.first { it.email == email }?.listMusicsLoved?.size}"
+        )
+        Log.v(
+            TAG,
+            "listMusicsListened -> ${lstDataUser.value?.first { it.email == email }?.listMusicsListened?.size}"
+        )
+    }
+
+    fun isMusicInBlackList(email: String, music: Music): Boolean {
+        return !lstDataUser.value?.first { it.email == email }?.blackListMusic?.none { it.musicID == music.musicID }!!
     }
 
     fun updateListFollowers(email: String, user: User, isFollow: Boolean) {

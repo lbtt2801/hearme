@@ -14,7 +14,7 @@
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
         android:paddingBottom="48dp"
-        tools:context=".view.accountssetup.FillYourProfileFragment">
+        tools:context=".view.fragments.accountssetup.FillYourProfileFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <ScrollView

@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="24dp"
-            tools:context=".view.NewReleasesFragment">
+            tools:context=".view.fragments.NewReleasesFragment">
 
             <TextView
                 android:id="@+id/tvTheBest"

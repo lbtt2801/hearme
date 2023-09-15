@@ -24,7 +24,8 @@ data class User(
     val listMusicsLoved: ArrayList<Music> = ArrayList(), //Love
     val listMusicsListened: ArrayList<Music> = ArrayList(), //History
     val listMusicsDownloaded: ArrayList<Music> = ArrayList(), //Downloaded
-    val listPlayedMusic: ArrayList<Music> = ArrayList() //Play list
+    val listPlayedMusic: ArrayList<Music> = ArrayList(), //Play list
+    val blackListMusic: ArrayList<Music> = ArrayList()
 ) {
     val isDataValid: Boolean
         get() = (!TextUtils.isEmpty(email))

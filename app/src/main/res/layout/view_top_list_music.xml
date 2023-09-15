@@ -93,7 +93,7 @@
                     android:background="@color/transparent"
                     android:src="@drawable/ic_play" />
 
-                <Spinner
+                <com.lbtt2801.hearme.data.control.CustomSpinner
                     android:id="@+id/spinner_drop_down_more"
                     android:layout_width="20dp"
                     android:layout_height="20dp"

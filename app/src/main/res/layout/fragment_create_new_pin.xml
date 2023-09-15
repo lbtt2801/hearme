@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".view.accountssetup.CreateNewPinFragment">
+        tools:context=".view.fragments.accountssetup.CreateNewPinFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <LinearLayout

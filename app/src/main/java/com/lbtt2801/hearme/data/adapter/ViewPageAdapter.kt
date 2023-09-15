@@ -4,9 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.lbtt2801.hearme.view.homeactionmenu.PodcastNotificationFragment
-import com.lbtt2801.hearme.view.homeactionmenu.SongNotificationFragment
-import com.lbtt2801.hearme.view.onboardingsignupsignin.SplashScreenFragment
+import com.lbtt2801.hearme.view.fragments.homeactionmenu.PodcastNotificationFragment
+import com.lbtt2801.hearme.view.fragments.homeactionmenu.SongNotificationFragment
+import com.lbtt2801.hearme.view.fragments.onboardingsignupsignin.SplashScreenFragment
 
 class ViewPageAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle): FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".view.accountssetup.FollowArtistsFragment">
+        tools:context=".view.fragments.accountssetup.FollowArtistsFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <LinearLayout

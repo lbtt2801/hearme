@@ -15,7 +15,7 @@
             android:paddingTop="32dp"
             android:paddingRight="24dp"
             android:paddingBottom="24dp"
-            tools:context=".view.homeactionmenu.HomeFragment">
+            tools:context=".view.fragments.homeactionmenu.HomeFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

@@ -1,20 +1,13 @@
 package com.lbtt2801.hearme.data.adapter
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ToggleButton
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.model.TopicSearch
-import com.lbtt2801.hearme.view.search.ExploreFragment
-import com.lbtt2801.hearme.viewmodel.TopicSearchViewModel
-import kotlin.math.acos
 
 class TopicSearchAdapter(private val data: ArrayList<TopicSearch>) :
     RecyclerView.Adapter<TopicSearchAdapter.ViewHolder>() {

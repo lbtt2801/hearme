@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="24dp"
-            tools:context=".view.homeactionmenu.SongNotificationFragment">
+            tools:context=".view.fragments.homeactionmenu.SongNotificationFragment">
 
             <TextView
                 android:id="@+id/tvToday"

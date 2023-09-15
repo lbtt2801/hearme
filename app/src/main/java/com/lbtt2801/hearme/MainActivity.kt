@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.inputmethodservice.InputMethodService
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
@@ -27,7 +26,6 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
