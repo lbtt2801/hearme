@@ -1,36 +1,36 @@
-package com.lbtt2801.hearme.view.fragments.homeactionmenu
+package com.lbtt2801.hearme.view.fragments.library
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.ViewPageAdapter
-import com.lbtt2801.hearme.databinding.FragmentNotificationBinding
+import com.lbtt2801.hearme.databinding.FragmentHistoryBinding
 
-class NotificationFragment : Fragment() {
-
-    private var _binding: FragmentNotificationBinding? = null
+class HistoryFragment : Fragment() {
+    private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         val activity: MainActivity = (activity as MainActivity)
         activity.customToolbar(
             "VISIBLE",
-            "Notification",
+            "History",
             null,
             R.color.transparent,
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back),
-            true
+            showIcMore = true,
+            showIcFilter = false,
+            showIcSearch = true
         )
         activity.showBottomNav("GONE")
         (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
@@ -38,7 +38,7 @@ class NotificationFragment : Fragment() {
         }
 
         _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_notification, container, false)
+            DataBindingUtil.inflate(inflater, R.layout.fragment_history, container, false)
         return binding.root
     }
 

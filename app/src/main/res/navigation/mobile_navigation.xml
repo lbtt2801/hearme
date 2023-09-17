@@ -293,6 +293,9 @@
         <action
             android:id="@+id/action_paymentFragment_to_addNewCardFragment"
             app:destination="@id/addNewCardFragment" />
+        <action
+            android:id="@+id/action_paymentFragment_to_reviewSummaryFragment"
+            app:destination="@id/reviewSummaryFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewCardFragment"
@@ -308,4 +311,23 @@
         android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsSongFragment"
         android:label="ViewDetailsSongFragment"
         tools:layout="@layout/fragment_view_details_song" />
+    <fragment
+        android:id="@+id/reviewSummaryFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.profile_settings.ReviewSummaryFragment"
+        android:label="fragment_review_summary"
+        tools:layout="@layout/fragment_review_summary" />
+    <fragment
+        android:id="@+id/item_nav_library"
+        android:name="com.lbtt2801.hearme.view.fragments.library.MyLibraryFragment"
+        android:label="MyLibraryFragment"
+        tools:layout="@layout/fragment_my_library" >
+        <action
+            android:id="@+id/action_item_nav_library_to_historyFragment"
+            app:destination="@id/historyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.library.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
 </navigation>

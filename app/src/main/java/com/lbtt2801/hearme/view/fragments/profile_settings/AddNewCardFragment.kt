@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.text.isDigitsOnly
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -16,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentAddNewCardBinding
+import com.lbtt2801.hearme.model.CardPayment
 import java.util.Calendar
 
 
@@ -23,9 +23,10 @@ class AddNewCardFragment : Fragment() {
     private var _binding: FragmentAddNewCardBinding? = null
     private val binding get() = _binding!!
     private lateinit var mainActivity: MainActivity
-    var strNameCard = 15
     var strLength = 1
-    var lstNumberCard: List<String> = listOf("*","*","*","*"," ","*","*","*","*"," ","*","*","*","*"," ","*","*","*","*")
+    private var strCoin = ""
+    private var strTime = ""
+    private var intBackground = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,144 +62,112 @@ class AddNewCardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val bundle = this.arguments
+        if (bundle != null) {
+            strCoin = bundle.getString("coin", "coin_error")
+            strTime = bundle.getString("time", "time_error")
+            intBackground = bundle.getInt("background",R.color.transparent)
+        }
+
+        binding.edtCardName.requestFocus()
+
+        binding.edtCardName.addTextChangedListener {
+            if (it.toString().length < 5)
+                binding.edtCardName.error = "Please enter the card name !!"
+            else binding.edtCardNumber.isEnabled = true
+        }
+
         binding.edtCardNumber.addTextChangedListener(textWatcher)
-
-//        binding.edtCardNumber.addTextChangedListener {
-//            var s = it.toString()
-//            if (s.length == 4 || s.length == 9 || s.length == 14)  {
-//                s += " "
-//                binding.edtCardNumber.setText(s)
-//                binding.edtCardNumber.setSelection(s.lastIndex + 1)
-//            } else if (s.length == 19)
-//                mainActivity.hideKeyBoard()
-//        }
-
-//        binding.edtCardNumber.addTextChangedListener { editable ->
-////            var s = editable.toString()
-////            if (s.length == 4 || s.length == 9 || s.length == 14)  {
-////                s += " "
-////                binding.edtCardNumber.setText(s)
-////                binding.edtCardNumber.setSelection(s.lastIndex + 1)
-////            } else if (s.length == 19)
-////                mainActivity.hideKeyBoard()
-//
-//            var str = editable.toString()
-//            val strX = str.filter { it != '*' && it != ' '}
-//            if (strX.length < strNameCard) {
-//                Toast.makeText(context, "strx: ${strX.length}", Toast.LENGTH_SHORT).show()
-//                for (i in 0 until strNameCard)
-//                { // 1234_1234_1234_1234
-//                    if (str.length == 4 || str.length == 9 || str.length == 14) {
-//                        str += " "
-//                    }
-//
-//                    str += '*'
-//                }
-//                strNameCard --
-//                binding.edtCardNumber.setText(str)
-//            }
-//        }
-
-//        binding.edtCardNumber.doAfterTextChanged { editable ->
-//            var str = editable.toString()
-//            var strX = str.filter { it.isDigit() }
-//            var strY = str.filter { it != '*'}
-//            val check: Boolean
-//            if (strX.length == strLength) {
-//                for (i in 0 until strNameCard)
-//                { // 1234_1234_1234_1234
-//                    if (strX.length == 4 || strX.length == 9 || strX.length == 14) {
-//                        strX += "_"
-//                    }
-//
-//                    strX += '*'
-//
-//                }
-//                strNameCard --
-//                strLength++
-//                binding.edtCardNumber.setText(strX)
-//                binding.edtCardNumber.setSelection(strLength -1 )
-//            }
-//        }
-
-
 
         binding.edtDob.setOnClickListener {
             mainActivity.hideKeyBoard()
-            calendarDialog()
+            calendarDialog(it)
+            binding.edtCVV.isEnabled = true
+            binding.edtCVV.requestFocus()
         }
 
         binding.edtCVV.addTextChangedListener {
-            if (it.toString().length == 3)
+            if (it.toString().length == 3) {
                 mainActivity.hideKeyBoard()
+                binding.btnAddNewCard.isEnabled = true
+            }
         }
 
         binding.btnAddNewCard.setOnClickListener {
             val strName = "**** **** **** *"
             val name = binding.edtCardNumber.text.toString().substring(16)
-            val bundle = Bundle()
-            bundle.putInt("img", R.drawable.mastercard)
-            bundle.putString("name", strName.plus(name))
-            this.arguments = bundle
+            val bundlePayment = Bundle()
+            bundlePayment.putInt("img", R.drawable.mastercard)
+            bundlePayment.putString("name", strName.plus(name))
+            bundlePayment.putString("coin", strCoin)
+            bundlePayment.putString("time", strTime)
+            bundlePayment.putInt("background", intBackground)
+            this.arguments = bundlePayment
 
-            findNavController().navigate(R.id.action_addNewCardFragment_to_paymentFragment, bundle)
+            findNavController().navigate(R.id.action_addNewCardFragment_to_paymentFragment, bundlePayment)
         }
 
     }
 
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-//            var str = s.toString()
-//            var strX = str.filter { it.isDigit() }
-//            var strY = str.filter { it != '*'}
-//            val check: Boolean
-//            if (strX.length == strLength) {
-//                for (i in 0 until strNameCard)
-//                { // 1234_1234_1234_1234
-//                    if (strX.length == 4 || strX.length == 9 || strX.length == 14) {
-//                        strX += "_"
-//                    }
-//                    strX += '*'
-//                }
-//                strNameCard --
-//                strLength++
-//                binding.edtCardNumber.setText(strX)
-//                binding.edtCardNumber.setSelection(strLength -1 )
-//            }
+
         }
+        
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
         }
+        
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            var str = s.toString()
-//            var strX = str.filter { it.isDigit() }
-            var strX = str.filter { it != '*'}
-            val check: Boolean
-//            Toast.makeText(context, "S: ${strX.length}", Toast.LENGTH_SHORT).show()
-            if (strX.length == strLength) {
-                for (i in 0 until strNameCard)
-                { // 1234_1234_1234_1234
-                    if (strX.length == 4 || strX.length == 9 || strX.length == 14) {
-                        strX += "_"
-                    }
+            val str = s.toString()
+            val strNumber = str.filter { it.isDigit() }
+            var strResult = str.filter { it != '*'}
 
-                    strX += '*'
+            // Lấy chuỗi khi dài hơn 4 đã xuất hiện khoảng trắng
+            strResult = if (strNumber.length > 12) {
+                str.substring(0, strNumber.length + 3)
+            } else if (strNumber.length > 8) {
+                str.substring(0, strNumber.length + 2)
+            } else if (strNumber.length > 4) {
+                str.substring(0, strNumber.length + 1)
+            } else strNumber
 
-                }
-                strNameCard --
-                strLength++
-                binding.edtCardNumber.setText(strX)
-                binding.edtCardNumber.setSelection(strLength - 1 )
+            var lengthSTRX = strResult.length
+
+            if (strResult.length == 19) {
+                mainActivity.hideKeyBoard()
+                binding.edtDob.isEnabled = true
+                binding.edtDob.requestFocus()
             }
-            else {
-                str = str.substring(3,3)
-                binding.edtCardNumber.setText(str)
+
+            if (lengthSTRX == strLength) {
+
+                // Tính độ dài chuỗi để thực hiện việc setText chỉ một lần
+                if (strResult.length == 4 || strResult.length == 9 || strResult.length == 14)
+                    strLength += 2
+                else strLength ++
+
+                // Thêm các dấu sao còn thiếu
+                if (lengthSTRX > 15)
+                    lengthSTRX -= 3
+                else if (lengthSTRX > 10)
+                    lengthSTRX -= 2
+                else if (lengthSTRX > 5)
+                    lengthSTRX -= 1
+
+                for (i in lengthSTRX until 16) {
+                    if (strResult.length == 4 || strResult.length == 9 || strResult.length == 14)
+                        strResult += " "
+                    strResult += '*'
+                }
+
+                binding.edtCardNumber.setText(strResult)
                 binding.edtCardNumber.setSelection(strLength - 1 )
             }
         }
     }
 
-    private fun calendarDialog() {
+    private fun calendarDialog(it: View?) {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH) + 1

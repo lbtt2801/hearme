@@ -16,6 +16,10 @@ class PremiumFragment : Fragment() {
     private var _binding: FragmentPremiumBinding? = null
     private val binding get() = _binding!!
     private lateinit var mainActivity: MainActivity
+    private var strCoin = ""
+    private var strTime = ""
+    val bundle = Bundle()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -45,15 +49,39 @@ class PremiumFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.cardVip1.setOnClickListener {
-            findNavController().navigate(R.id.action_premiumFragment_to_paymentFragment)
+            strCoin = binding.tvCoinVip1.text.toString()
+            strTime = binding.tvTimeVip1.text.toString()
+
+            bundle.putString("coin", strCoin)
+            bundle.putString("time", strTime)
+            bundle.putInt("background", R.color.orange)
+            this.arguments = bundle
+
+            findNavController().navigate(R.id.action_premiumFragment_to_paymentFragment, bundle)
         }
 
         binding.cardVip2.setOnClickListener {
-            findNavController().navigate(R.id.action_premiumFragment_to_paymentFragment)
+            strCoin = binding.tvCoinVip2.text.toString()
+            strTime = binding.tvTimeVip2.text.toString()
+
+            bundle.putString("coin", strCoin)
+            bundle.putString("time", strTime)
+            bundle.putInt("background", R.color.purple)
+            this.arguments = bundle
+
+            findNavController().navigate(R.id.action_premiumFragment_to_paymentFragment, bundle)
         }
 
         binding.cardVip3.setOnClickListener {
-            findNavController().navigate(R.id.action_premiumFragment_to_paymentFragment)
+            strCoin = binding.tvCoinVip3.text.toString()
+            strTime = binding.tvTimeVip3.text.toString()
+
+            bundle.putString("coin", strCoin)
+            bundle.putString("time", strTime)
+            bundle.putInt("background", R.color.red)
+            this.arguments = bundle
+
+            findNavController().navigate(R.id.action_premiumFragment_to_paymentFragment, bundle)
         }
     }
 

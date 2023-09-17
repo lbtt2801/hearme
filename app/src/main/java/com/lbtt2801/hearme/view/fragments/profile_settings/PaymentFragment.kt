@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -24,6 +25,13 @@ class PaymentFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
 
     private var arrayList = ArrayList<CardPayment>()
+    private var img = -1
+    private var name = ""
+    private var intLogo = -1
+    private var strNameCard = ""
+    private var strCoin = ""
+    private var strTime = ""
+    private var intBackground = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,10 +69,15 @@ class PaymentFragment : Fragment() {
 
         val bundle = this.arguments
         if (bundle != null) {
-            val img = bundle.getInt("img")
-            val name = bundle.getString("name", "**** **** **** ****")
+            img = bundle.getInt("img", R.drawable.logo_default)
+            name = bundle.getString("name", "name_error")
 
-            arrayList.add(CardPayment(img, name, true))
+            if (name != "name_error")
+                arrayList.add(CardPayment(img, name, true))
+
+            strCoin = bundle.getString("coin", "coin_error")
+            strTime = bundle.getString("time", "time_error")
+            intBackground = bundle.getInt("background",R.color.transparent)
         }
 
         val adapter = CardPaymentAdapter(this, initData())
@@ -74,7 +87,46 @@ class PaymentFragment : Fragment() {
         binding.recyclerView.adapter = adapter
 
         binding.btnAddNewCard.setOnClickListener {
-            findNavController().navigate(R.id.action_paymentFragment_to_addNewCardFragment)
+            val bundleNewCard = Bundle()
+            bundleNewCard.putString("coin", strCoin)
+            bundleNewCard.putString("time", strTime)
+            bundleNewCard.putInt("background", intBackground)
+            findNavController().navigate(R.id.action_paymentFragment_to_addNewCardFragment, bundleNewCard)
+        }
+
+        binding.btnContinue.setOnClickListener {
+            val nameItemChecked = arrayList.first  { it.isSelected }
+            when (nameItemChecked.name) {
+                "Paypal" -> {
+                    intLogo = R.drawable.paypal
+                    strNameCard = "Paypal"
+                }
+
+                "Google Pay" -> {
+                    intLogo = R.drawable.google
+                    strNameCard = "Google Pay"
+                }
+
+                "Apple Pay" -> {
+                    intLogo = R.drawable.apple
+                    strNameCard = "Apple Pay"
+                }
+
+                else -> {
+                    intLogo = R.drawable.mastercard
+                    strNameCard = name
+                }
+            }
+
+            val bundleReview = Bundle()
+            bundleReview.putString("coin", strCoin)
+            bundleReview.putString("time", strTime)
+            bundleReview.putInt("background", intBackground)
+            bundleReview.putString("nameCard", strNameCard)
+            bundleReview.putInt("imgCard", intLogo)
+            this.arguments = bundleReview
+
+            findNavController().navigate(R.id.action_paymentFragment_to_reviewSummaryFragment, bundleReview)
         }
     }
 

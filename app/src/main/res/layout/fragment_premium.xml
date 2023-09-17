@@ -64,6 +64,7 @@
                         android:layout_marginTop="15dp"
                         android:gravity="center">
                         <TextView
+                            android:id="@+id/tvCoinVip1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="$9.99"
@@ -72,6 +73,7 @@
                             android:textSize="32sp"
                             android:layout_marginEnd="8dp"/>
                         <TextView
+                            android:id="@+id/tvTimeVip1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="/month"
@@ -170,6 +172,7 @@
                         android:layout_marginTop="15dp"
                         android:gravity="center">
                         <TextView
+                            android:id="@+id/tvCoinVip2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="$19.99"
@@ -178,6 +181,7 @@
                             android:textSize="32sp"
                             android:layout_marginEnd="8dp"/>
                         <TextView
+                            android:id="@+id/tvTimeVip2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="/3 month"
@@ -276,6 +280,7 @@
                         android:layout_marginTop="15dp"
                         android:gravity="center">
                         <TextView
+                            android:id="@+id/tvCoinVip3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="$29.99"
@@ -284,6 +289,7 @@
                             android:textSize="32sp"
                             android:layout_marginEnd="8dp"/>
                         <TextView
+                            android:id="@+id/tvTimeVip3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="/6 month"

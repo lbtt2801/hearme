@@ -39,6 +39,7 @@ class ProfileFragment : Fragment() {
             true
         )
         email = mainActivity.email
+        mainActivity.showBottomNav("VISIBLE")
         binding.tvLanguage.text = mainActivity.language
         return binding.root
     }
