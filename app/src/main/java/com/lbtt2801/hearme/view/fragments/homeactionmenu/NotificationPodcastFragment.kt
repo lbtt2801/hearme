@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.MusicAdapter
-import com.lbtt2801.hearme.databinding.FragmentSongTabBinding
+import com.lbtt2801.hearme.databinding.FragmentPodcastNotificationBinding
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.viewmodel.HomeViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
@@ -23,12 +23,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TabSongFragment : Fragment() {
-    private var _binding: FragmentSongTabBinding? = null
+class NotificationPodcastFragment : Fragment() {
+    private var _binding: FragmentPodcastNotificationBinding? = null
     private val binding get() = _binding!!
     private lateinit var musicAdapter: MusicAdapter
     private lateinit var mainActivity: MainActivity
-    private var lst: ArrayList<Music>? = null
+    private var lst: ArrayList<Music>?= null
     private var email: String? = ""
 
     private val userViewModel: UserViewModel by activityViewModels()
@@ -40,11 +40,14 @@ class TabSongFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_song_tab, container, false)
+        _binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_podcast_notification,
+            container,
+            false
+        )
         lst = ArrayList()
         mainActivity = activity as MainActivity
-        mainActivity.checkInHistory = true
         email = mainActivity.email
         return binding.root
     }
@@ -67,14 +70,14 @@ class TabSongFragment : Fragment() {
                     it.release
                 ).compareTo(
                     currentDate
-                ) == 0 && it.category.categoryID != "ca002"
+                ) == 0 && it.category.categoryID == "ca002"
             } as ArrayList<Music>)
             displayRecyclerViewYesterday(lst?.filter {
                 formatter.format(
                     it.release
                 ).compareTo(
                     yesterdayDate
-                ) == 0 && it.category.categoryID != "ca002"
+                ) == 0 && it.category.categoryID == "ca002"
             } as ArrayList<Music>)
         })
         viewModel.getListDataMusic()
@@ -84,10 +87,13 @@ class TabSongFragment : Fragment() {
             binding.recyclerViewYesterday.isVisible = false
             lst = userViewModel.lstDataUser.value?.first { it.email == email }?.listMusicsLoved  // list history
             if (lst == null) {
-                binding.tvToday.text = "There is no history of listening to Song !!"
+                binding.tvToday.text = "There is no history of listening to Podcast !!"
                 binding.recyclerViewToday.isVisible = false
             } else {
-                binding.tvToday.isVisible = false
+                binding.tvToday.isVisible = true
+                binding.tvYesterday.isVisible = true
+                binding.recyclerViewYesterday.isVisible = true
+                binding.recyclerViewToday.isVisible = true
                 displayRecyclerViewToday(lst!!)
             }
         }
@@ -95,15 +101,13 @@ class TabSongFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mainActivity.checkInHistory = false
         _binding = null
     }
 
     private fun displayRecyclerViewToday(lstData: ArrayList<Music>) {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
-        musicAdapter =
-            MusicAdapter(lstData, 1)
+        musicAdapter = MusicAdapter(lstData, 2)
         binding.recyclerViewToday.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter
@@ -114,7 +118,7 @@ class TabSongFragment : Fragment() {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
         musicAdapter =
-            MusicAdapter(lstData, 1)
+            MusicAdapter(lstData, 2)
         binding.recyclerViewYesterday.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter

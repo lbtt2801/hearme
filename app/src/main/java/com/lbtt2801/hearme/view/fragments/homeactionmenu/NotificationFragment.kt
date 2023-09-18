@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
-import com.lbtt2801.hearme.data.adapter.ViewPageAdapter
+import com.lbtt2801.hearme.data.adapter.ViewPageNotificationAdapter
 import com.lbtt2801.hearme.databinding.FragmentNotificationBinding
 
 class NotificationFragment : Fragment() {
@@ -48,8 +48,8 @@ class NotificationFragment : Fragment() {
         val tabLayout = binding.tabLayout
         val viewPage2 = binding.viewPager2
 
-        val viewPageAdapter = ViewPageAdapter(childFragmentManager, lifecycle)
-        viewPage2.adapter = viewPageAdapter
+        val viewPageNotificationAdapter = ViewPageNotificationAdapter(childFragmentManager, lifecycle)
+        viewPage2.adapter = viewPageNotificationAdapter
 
         TabLayoutMediator(tabLayout, viewPage2) { tab, position ->
             when (position) {
