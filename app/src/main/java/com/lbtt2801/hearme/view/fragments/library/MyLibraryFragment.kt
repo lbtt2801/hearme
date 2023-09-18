@@ -69,6 +69,14 @@ class MyLibraryFragment : Fragment() {
         binding.tvSeeAll.setOnClickListener {
             findNavController().navigate(R.id.action_item_nav_library_to_historyFragment)
         }
+
+        binding.linearPlayLists.setOnClickListener {
+            findNavController().navigate(R.id.action_item_nav_library_to_playListFragment)
+        }
+
+        binding.linearDownloads.setOnClickListener {
+            findNavController().navigate(R.id.action_item_nav_library_to_downloadsFragment)
+        }
     }
     override fun onDestroyView() {
         super.onDestroyView()

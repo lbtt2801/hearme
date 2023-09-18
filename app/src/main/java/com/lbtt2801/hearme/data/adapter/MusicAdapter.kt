@@ -223,7 +223,25 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
 
                             }
                             7 -> { // Share
-
+                                val isDown: Boolean
+                                if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listMusicsDownloaded?.none { it.musicID == music.musicID } == true) {
+                                    isDown = true
+                                    mainActivity.showSnack(
+                                        v,
+                                        "You added ${music.musicName} to List Downloaded!"
+                                    )
+                                } else {
+                                    isDown = false
+                                    mainActivity.showSnack(
+                                        v,
+                                        "You removed ${music.musicName} from List Downloaded!"
+                                    )
+                                }
+                                mainActivity.viewModelUser.updateListMusicsDownloaded(
+                                    mainActivity.email,
+                                    music,
+                                    isDown
+                                )
                             }
                         }
                     }

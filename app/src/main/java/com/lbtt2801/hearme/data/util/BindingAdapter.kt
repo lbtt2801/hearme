@@ -136,13 +136,13 @@ fun clickLoveList(checkBox: CheckBox, music: Music) {
 
 @BindingAdapter("app:setPlayList")
 fun setPlayList(checkBox: CheckBox, music: Music) {
-    val mainActivity = checkBox.context as MainActivity
-    val user =
-        mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }
-    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) {
-        checkBox.isChecked =
-            user?.listPlayedMusic?.none { it.musicID == music.musicID } == false
-    }
+//    val mainActivity = checkBox.context as MainActivity
+//    val user =
+//        mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }
+//    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) {
+//        checkBox.isChecked =
+//            user?.listPlayedMusic?.none { it.musicID == music.musicID } == false
+//    }
 }
 
 @BindingAdapter("app:clickPlayList")
@@ -193,24 +193,24 @@ fun clickPlayList(checkBox: CheckBox, music: Music) {
                 }
             }.create().show()
         } else {
-            if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listPlayedMusic?.none { it.musicID == music.musicID } == true) {
-                isLove = true
-                mainActivity.showSnack(
-                    checkBox,
-                    "You added ${music.musicName} to playlist!"
-                )
-            } else {
-                isLove = false
-                mainActivity.showSnack(
-                    checkBox,
-                    "You removed ${music.musicName} from playlist!"
-                )
-            }
-            mainActivity.viewModelUser.updateListPlayedMusic(
-                mainActivity.email,
-                music,
-                isLove
-            )
+//            if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listPlayedMusic?.none { it.musicID == music.musicID } == true) {
+//                isLove = true
+//                mainActivity.showSnack(
+//                    checkBox,
+//                    "You added ${music.musicName} to playlist!"
+//                )
+//            } else {
+//                isLove = false
+//                mainActivity.showSnack(
+//                    checkBox,
+//                    "You removed ${music.musicName} from playlist!"
+//                )
+//            }
+//            mainActivity.viewModelUser.updateListPlayedMusic(
+//                mainActivity.email,
+//                music,
+//                isLove
+//            )
         }
     }
 }

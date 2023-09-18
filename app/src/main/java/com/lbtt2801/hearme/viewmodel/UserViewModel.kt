@@ -23,7 +23,7 @@ class UserViewModel : ViewModel() {
         getListDataUser()
     }
 
-    fun getListDataUser() {
+    private fun getListDataUser() {
         lst = UsersData.data()
         lst.first { it.email == "phuongviet.huit@gmail.com" }.apply {
             this.listFollowers.add(
@@ -150,11 +150,11 @@ class UserViewModel : ViewModel() {
     fun updateListPlayedMusic(email: String, music: Music, isLove: Boolean) {
         if (isLove) {
             lst.first { it.email == email }.apply {
-                this.listPlayedMusic.add(music)
+//                this.listPlayedMusic.add(music)
             }
         } else {
             lst.first { it.email == email }.apply {
-                this.listPlayedMusic.removeIf { it.musicID == music.musicID }
+//                this.listPlayedMusic.removeIf { it.musicID == music.musicID }
             }
         }
         _lstDataUser.postValue(lst)
@@ -178,7 +178,7 @@ class UserViewModel : ViewModel() {
             lst.first { it.email == email }.apply {
                 this.blackListMusic.add(music)
                 this.listMusicsDownloaded.removeIf { it.musicID == music.musicID }
-                this.listPlayedMusic.removeIf { it.musicID == music.musicID }
+//                this.listPlayedMusic.removeIf { it.musicID == music.musicID }
                 this.listMusicsLoved.removeIf { it.musicID == music.musicID }
                 this.listMusicsListened.removeIf { it.musicID == music.musicID }
             }
@@ -196,10 +196,10 @@ class UserViewModel : ViewModel() {
             TAG,
             "listMusicsDownloaded -> ${lstDataUser.value?.first { it.email == email }?.listMusicsDownloaded?.size}"
         )
-        Log.v(
-            TAG,
-            "listPlayedMusic -> ${lstDataUser.value?.first { it.email == email }?.listPlayedMusic?.size}"
-        )
+//        Log.v(
+//            TAG,
+//            "listPlayedMusic -> ${lstDataUser.value?.first { it.email == email }?.listPlayedMusic?.size}"
+//        )
         Log.v(
             TAG,
             "listMusicsLoved -> ${lstDataUser.value?.first { it.email == email }?.listMusicsLoved?.size}"

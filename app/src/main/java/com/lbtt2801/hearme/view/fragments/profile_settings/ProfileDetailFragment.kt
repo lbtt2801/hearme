@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.MusicAdapter
+import com.lbtt2801.hearme.data.adapter.PlaylistAdapter
 import com.lbtt2801.hearme.databinding.FragmentProfileDetailBinding
 import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.model.Playlist
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class ProfileDetailFragment : Fragment() {
@@ -65,7 +67,7 @@ class ProfileDetailFragment : Fragment() {
         fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
         val follower = userViewModel.lstDataUser.value?.first { it.email == email }?.listFollowers
         val following = userViewModel.lstDataUser.value?.first { it.email == email }?.listArtistsFollowing
-        val lstData = userViewModel.lstDataUser.value?.first { it.email == email }?.listPlayedMusic
+        val lstData = userViewModel.lstDataUser.value?.first { it.email == email }?.listPlaylist
 
         binding.imgAvatar.background = avatar?.let { ContextCompat.getDrawable(requireContext(), it) }
         binding.tvNameUser.text = fullName.toString()
@@ -85,12 +87,12 @@ class ProfileDetailFragment : Fragment() {
         _binding = null
     }
 
-    private fun displayRecyclerView(lstData: ArrayList<Music>) {
+    private fun displayRecyclerView(lstData: ArrayList<Playlist>) {
         val layoutRecyclerView = GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
-        val musicAdapter = MusicAdapter(lstData, 0)
+        val playlistAdapter = PlaylistAdapter(lstData, 0)
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerView
-            adapter = musicAdapter
+            adapter = playlistAdapter
         }
     }
 
