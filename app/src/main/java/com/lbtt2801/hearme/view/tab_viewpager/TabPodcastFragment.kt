@@ -1,4 +1,4 @@
-package com.lbtt2801.hearme.view.fragments.homeactionmenu
+package com.lbtt2801.hearme.view.tab_viewpager
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.MusicAdapter
-import com.lbtt2801.hearme.databinding.FragmentPodcastNotificationBinding
+import com.lbtt2801.hearme.databinding.FragmentTabPodcastBinding
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.viewmodel.HomeViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
@@ -23,12 +23,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class NotificationPodcastFragment : Fragment() {
-    private var _binding: FragmentPodcastNotificationBinding? = null
+class TabPodcastFragment : Fragment() {
+    private var _binding: FragmentTabPodcastBinding? = null
     private val binding get() = _binding!!
     private lateinit var musicAdapter: MusicAdapter
     private lateinit var mainActivity: MainActivity
-    private var lst: ArrayList<Music>?= null
+    private var lst: ArrayList<Music>? = null
     private var email: String? = ""
 
     private val userViewModel: UserViewModel by activityViewModels()
@@ -38,11 +38,11 @@ class NotificationPodcastFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_podcast_notification,
+            R.layout.fragment_tab_podcast,
             container,
             false
         )
@@ -56,31 +56,51 @@ class NotificationPodcastFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.lstDataMusic.observe((activity as MainActivity), Observer { musicList ->
-            lst = musicList as ArrayList<Music>
-            val formatter = SimpleDateFormat("dd/MM/yyyy")
-            val calToday = Calendar.getInstance()
-            val calYesterday = Calendar.getInstance()
-            calYesterday.add(Calendar.DATE, -1)
-            val currentDate = formatter.format(calToday.time) // format date now
-            val yesterdayDate = formatter.format(calYesterday.time) // format yesterday date
+        if (mainActivity.checkInHistory) {
+            binding.tvYesterday.isVisible = false
+            binding.recyclerViewYesterday.isVisible = false
+            lst =
+                userViewModel.lstDataUser.value?.first { it.email == email }?.listMusicsLoved  // list history
+            if (lst == null) {
+                binding.tvToday.text = "There is no history of listening to Podcast !!"
+                binding.recyclerViewToday.isVisible = false
+                binding.tvToday.isVisible = true
+                binding.tvYesterday.isVisible = false
+                binding.recyclerViewYesterday.isVisible = false
+                binding.recyclerViewToday.isVisible = false
+            } else {
+                binding.tvToday.isVisible = false
+                binding.recyclerViewToday.isVisible = true
+                displayRecyclerViewToday(lst!!)
+            }
+        }
+        else {
+            viewModel.lstDataMusic.observe((activity as MainActivity), Observer { musicList ->
+                lst = musicList as ArrayList<Music>
+                val formatter = SimpleDateFormat("dd/MM/yyyy")
+                val calToday = Calendar.getInstance()
+                val calYesterday = Calendar.getInstance()
+                calYesterday.add(Calendar.DATE, -1)
+                val currentDate = formatter.format(calToday.time) // format date now
+                val yesterdayDate = formatter.format(calYesterday.time) // format yesterday date
 
-            displayRecyclerViewToday(lst?.filter {
-                formatter.format(
-                    it.release
-                ).compareTo(
-                    currentDate
-                ) == 0 && it.category.categoryID == "ca002"
-            } as ArrayList<Music>)
-            displayRecyclerViewYesterday(lst?.filter {
-                formatter.format(
-                    it.release
-                ).compareTo(
-                    yesterdayDate
-                ) == 0 && it.category.categoryID == "ca002"
-            } as ArrayList<Music>)
-        })
-        viewModel.getListDataMusic()
+                displayRecyclerViewToday(lst?.filter {
+                    formatter.format(
+                        it.release
+                    ).compareTo(
+                        currentDate
+                    ) == 0 && it.category.categoryID == "ca002"
+                } as ArrayList<Music>)
+                displayRecyclerViewYesterday(lst?.filter {
+                    formatter.format(
+                        it.release
+                    ).compareTo(
+                        yesterdayDate
+                    ) == 0 && it.category.categoryID == "ca002"
+                } as ArrayList<Music>)
+            })
+            viewModel.getListDataMusic()
+        }
     }
 
     override fun onDestroyView() {

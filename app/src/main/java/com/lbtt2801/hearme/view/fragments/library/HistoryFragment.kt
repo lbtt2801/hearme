@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
-import com.lbtt2801.hearme.data.adapter.ViewPageLibraryAdapter
+import com.lbtt2801.hearme.data.adapter.ViewPageAdapter
 import com.lbtt2801.hearme.databinding.FragmentHistoryBinding
 
 class HistoryFragment : Fragment() {
@@ -39,6 +39,7 @@ class HistoryFragment : Fragment() {
 
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_history, container, false)
+        activity.checkInHistory = true
         return binding.root
     }
 
@@ -48,8 +49,8 @@ class HistoryFragment : Fragment() {
         val tabLayout = binding.tabLayout
         val viewPage2 = binding.viewPager2
 
-        val viewPageLibraryFragment = ViewPageLibraryAdapter(childFragmentManager, lifecycle)
-        viewPage2.adapter = viewPageLibraryFragment
+        val viewPageFragment = ViewPageAdapter(childFragmentManager, lifecycle)
+        viewPage2.adapter = viewPageFragment
 
         TabLayoutMediator(tabLayout, viewPage2) { tab, position ->
             when (position) {
@@ -65,5 +66,6 @@ class HistoryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        (activity as MainActivity).checkInHistory = false
     }
 }
