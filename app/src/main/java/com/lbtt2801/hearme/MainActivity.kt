@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     var checkRemember = true
     var checkInHome = false
+    var checkInHistory = false
     var language: String = "English (US)"
 
     override fun onCreate(savedInstanceState: Bundle?) {

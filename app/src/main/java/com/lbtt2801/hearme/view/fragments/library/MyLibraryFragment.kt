@@ -37,6 +37,7 @@ class MyLibraryFragment : Fragment() {
 
         mainActivity = (activity as MainActivity)
 
+        mainActivity.showBottomNav("VISIBLE")
         mainActivity.customToolbar(
             "VISIBLE",
             "My Library",
