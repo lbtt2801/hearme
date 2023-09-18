@@ -90,7 +90,9 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginRight="20dp"
+                    android:adjustViewBounds="true"
                     android:background="@color/transparent"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_play" />
 
                 <com.lbtt2801.hearme.data.control.CustomSpinner

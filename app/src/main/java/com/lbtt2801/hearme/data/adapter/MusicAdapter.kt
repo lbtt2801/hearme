@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.LinearLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.MainActivity
@@ -15,10 +16,19 @@ import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MoreSongData
 import com.lbtt2801.hearme.databinding.*
 import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.view.fragments.homeactionmenu.HomeFragment
+import com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment
+import com.lbtt2801.hearme.view.fragments.homeactionmenu.TrendingNowFragment
+import com.lbtt2801.hearme.view.fragments.search.ExploreFragment
+import com.lbtt2801.hearme.view.fragments.search.ViewDetailsSongFragment
 import kotlin.math.roundToInt
 
 
-class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: Int) :
+class MusicAdapter(
+    private val dataMusics: ArrayList<Music>,
+    private val type: Int,
+    private val fragment: Fragment
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val HOME = 0
@@ -63,7 +73,10 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
         when (holder) {
             is HomeViewHolder -> {
                 holder.bind(dataMusics[position])
-                destination = R.id.action_item_nav_home_to_viewDetailsSongFragment
+                if (fragment is HomeFragment)
+                    destination = R.id.action_item_nav_home_to_viewDetailsSongFragment
+                else if (fragment is TrendingNowFragment)
+                    destination = R.id.action_trendingNowFragment_to_viewDetailsSongFragment
             }
             is SongNotificationViewHolder -> {
                 holder.bind(dataMusics[position])
@@ -84,7 +97,11 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
             }
             is SongList2ViewHolder -> {
                 holder.bind(dataMusics[position])
-                destination = R.id.action_item_nav_explore_to_viewDetailsSongFragment
+                if (fragment is ExploreFragment)
+                    destination = R.id.action_item_nav_explore_to_viewDetailsSongFragment
+                else if (fragment is ViewDetailsSongFragment) {
+                    destination = R.id.action_viewDetailsSongFragment_to_viewDetailsArtistFragment
+                }
             }
         }
         holder.itemView.setOnClickListener() {
@@ -117,7 +134,8 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
             mainActivity.initSpinnerMore(
                 binding.spinnerDropDownMore,
                 dataMusics[absoluteAdapterPosition],
-                0
+                0,
+                fragment
             )
         }
     }
@@ -156,7 +174,8 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
             mainActivity.initSpinnerMore(
                 binding.spinnerDropDownMore,
                 dataMusics[absoluteAdapterPosition],
-                0
+                0,
+                fragment
             )
         }
     }
@@ -174,7 +193,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
 
         fun bind(music: Music) {
             binding.music = music
-
+          
             binding.spinnerDropDownMore.adapter =
                 MoreSongDropdownAdapter(binding.spinnerDropDownMore.context, MoreSongData.data(), 1)
 
@@ -246,6 +265,14 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
                         }
                     }
                 }
+//            val notificationFragment = NotificationFragment()
+//            val mainActivity = binding.spinnerDropDownMore.context as MainActivity
+//            mainActivity.initSpinnerMore(
+//                binding.spinnerDropDownMore,
+//                dataMusics[absoluteAdapterPosition],
+//                1,
+//                notificationFragment
+//            )
         }
     }
 
@@ -267,7 +294,8 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
             mainActivity.initSpinnerMore(
                 binding.spinnerDropDownMore,
                 dataMusics[absoluteAdapterPosition],
-                0
+                0,
+                fragment
             )
         }
     }

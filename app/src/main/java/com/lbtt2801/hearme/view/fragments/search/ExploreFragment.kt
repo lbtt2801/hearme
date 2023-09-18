@@ -273,10 +273,10 @@ class ExploreFragment : Fragment() {
         musicAdapter = if (listPodcastOfArtist.isNotEmpty()) {
             MusicAdapter(
                 listFoundPodcast.union(listPodcastOfArtist).toList() as ArrayList<Music>,
-                2
+                2, this
             )
         } else {
-            MusicAdapter(listFoundPodcast, 2)
+            MusicAdapter(listFoundPodcast, 2, this)
         }
 
         includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearchPodcasts.recyclerViewEpisode.apply {
@@ -300,7 +300,7 @@ class ExploreFragment : Fragment() {
         musicAdapter =
             MusicAdapter(
                 listFoundMusic,
-                4
+                4, this
             )
 
         includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.recyclerViewFoundList.apply {
@@ -348,7 +348,7 @@ class ExploreFragment : Fragment() {
         musicAdapter =
             MusicAdapter(
                 listFoundMusic,
-                6
+                6, this
             )
 
         includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.recyclerViewFoundList.apply {
@@ -377,7 +377,7 @@ class ExploreFragment : Fragment() {
         musicAdapter =
             MusicAdapter(
                 listFoundMusic,
-                3
+                3, this
             )
         artistAdapter =
             ArtistAdapter(

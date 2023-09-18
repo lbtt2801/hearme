@@ -119,6 +119,9 @@
         <action
             android:id="@+id/action_notificationFragment_to_viewDetailsSongFragment"
             app:destination="@id/viewDetailsSongFragment" />
+        <action
+            android:id="@+id/action_notificationFragment_to_viewDetailsArtistFragment"
+            app:destination="@id/viewDetailsArtistFragment" />
     </fragment>
     <fragment
         android:id="@+id/followArtistsFragment"
@@ -163,7 +166,11 @@
     <fragment
         android:id="@+id/trendingNowFragment"
         android:name="com.lbtt2801.hearme.view.fragments.homeactionmenu.TrendingNowFragment"
-        android:label="TrendingNowFragment" />
+        android:label="TrendingNowFragment" >
+        <action
+            android:id="@+id/action_trendingNowFragment_to_viewDetailsSongFragment"
+            app:destination="@id/viewDetailsSongFragment" />
+    </fragment>
     <fragment
         android:id="@+id/popularArtistsFragment"
         android:name="com.lbtt2801.hearme.view.fragments.homeactionmenu.PopularArtistsFragment"
@@ -323,7 +330,11 @@
         android:id="@+id/viewDetailsSongFragment"
         android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsSongFragment"
         android:label="ViewDetailsSongFragment"
-        tools:layout="@layout/fragment_view_details_song" />
+        tools:layout="@layout/fragment_view_details_song" >
+        <action
+            android:id="@+id/action_viewDetailsSongFragment_to_viewDetailsArtistFragment"
+            app:destination="@id/viewDetailsArtistFragment" />
+    </fragment>
     <fragment
         android:id="@+id/reviewSummaryFragment"
         android:name="com.lbtt2801.hearme.view.fragments.profile_settings.ReviewSummaryFragment"
