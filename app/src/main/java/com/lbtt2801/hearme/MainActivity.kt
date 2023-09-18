@@ -46,12 +46,13 @@ import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
     val viewModelTopicSearch: TopicSearchViewModel by viewModels()
     private val viewModelRecentSearch: RecentSearchViewModel by viewModels()
     private val viewModelMusic: MusicViewModel by viewModels()
     private val viewModelArtist: ArtistViewModel by viewModels()
     private val viewModelCategory: CategoriesViewModel by viewModels()
+    private val viewModelPlaylist: PlaylistViewModel by viewModels()
     private val viewModelEmail: EmailViewModel by viewModels()
     val viewModelUser: UserViewModel by viewModels()
 
@@ -461,24 +462,24 @@ class MainActivity : AppCompatActivity() {
                                     }
                                 }.create().show()
                             } else {
-                                if (viewModelUser.lstDataUser.value?.first { it.email == email }?.listPlayedMusic?.none { it.musicID == music.musicID } == true) {
-                                    isAdd = true
-                                    showSnack(
-                                        v,
-                                        "You added ${music.musicName} to playlist!"
-                                    )
-                                } else {
-                                    isAdd = false
-                                    showSnack(
-                                        v,
-                                        "You removed ${music.musicName} from playlist!"
-                                    )
-                                }
-                                viewModelUser.updateListPlayedMusic(
-                                    email,
-                                    music,
-                                    isAdd
-                                )
+//                                if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listPlayedMusic?.none { it.musicID == music.musicID } == true) {
+//                                    isAdd = true
+//                                    mainActivity.showSnack(
+//                                        v,
+//                                        "You added ${music.musicName} to playlist!"
+//                                    )
+//                                } else {
+//                                    isAdd = false
+//                                    mainActivity.showSnack(
+//                                        v,
+//                                        "You removed ${music.musicName} from playlist!"
+//                                    )
+//                                }
+//                                mainActivity.viewModelUser.updateListPlayedMusic(
+//                                    mainActivity.email,
+//                                    music,
+//                                    isAdd
+//                                )
                             }
                         }
                         3 -> { // Add to blacklist
@@ -503,7 +504,25 @@ class MainActivity : AppCompatActivity() {
                             )
                         }
                         4 -> { // Down
-
+                            val isDown: Boolean
+                            if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listMusicsDownloaded?.none { it.musicID == music.musicID } == true) {
+                                isDown = true
+                                mainActivity.showSnack(
+                                    v,
+                                    "You added ${music.musicName} to List Downloaded!"
+                                )
+                            } else {
+                                isDown = false
+                                mainActivity.showSnack(
+                                    v,
+                                    "You removed ${music.musicName} from List Downloaded!"
+                                )
+                            }
+                            mainActivity.viewModelUser.updateListMusicsDownloaded(
+                                mainActivity.email,
+                                music,
+                                isDown
+                            )
                         }
                         5 -> { // View artist
                             var designation: Int? = null

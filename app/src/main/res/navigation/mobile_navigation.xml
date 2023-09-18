@@ -348,12 +348,37 @@
         <action
             android:id="@+id/action_item_nav_library_to_historyFragment"
             app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_item_nav_library_to_playListFragment"
+            app:destination="@id/playListFragment" />
+        <action
+            android:id="@+id/action_item_nav_library_to_downloadsFragment"
+            app:destination="@id/downloadsFragment" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.lbtt2801.hearme.view.fragments.library.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/playListFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.library.PlayListFragment"
+        android:label="fragment_play_list"
+        tools:layout="@layout/fragment_play_list" >
+        <action
+            android:id="@+id/action_playListFragment_to_playlistDetailFragment"
+            app:destination="@id/playlistDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playlistDetailFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.library.PlaylistDetailFragment"
+        android:label="fragment_playlist_detail"
+        tools:layout="@layout/fragment_playlist_detail" />
+    <fragment
+        android:id="@+id/downloadsFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.library.DownloadsFragment"
+        android:label="fragment_downloads"
+        tools:layout="@layout/fragment_downloads" />
     <fragment
         android:id="@+id/viewDetailsArtistFragment"
         android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistFragment"

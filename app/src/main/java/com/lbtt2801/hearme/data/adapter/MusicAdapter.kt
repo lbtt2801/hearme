@@ -193,7 +193,78 @@ class MusicAdapter(
 
         fun bind(music: Music) {
             binding.music = music
+          
+            binding.spinnerDropDownMore.adapter =
+                MoreSongDropdownAdapter(binding.spinnerDropDownMore.context, MoreSongData.data(), 1)
 
+            binding.spinnerDropDownMore.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
+
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        v: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val music = dataMusics[absoluteAdapterPosition]
+                        val mainActivity = v?.context as MainActivity
+
+                        when (position) {
+                            3 -> { // Add to blacklist
+                                val isDontPlay: Boolean
+                                if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.blackListMusic?.none { it.musicID == music.musicID } == true) {
+                                    isDontPlay = true
+                                    mainActivity.showSnack(
+                                        v,
+                                        "You added ${music.musicName} to blacklist!"
+                                    )
+                                } else {
+                                    isDontPlay = false
+                                    mainActivity.showSnack(
+                                        v,
+                                        "You removed ${music.musicName} from blacklist!"
+                                    )
+                                }
+                                music.let {
+                                    mainActivity.viewModelUser.updateBlackListMusic(
+                                        mainActivity.email,
+                                        it,
+                                        isDontPlay
+                                    )
+                                }
+                            }
+                            5 -> { // View artist
+
+                            }
+                            6 -> { // Go to album
+
+                            }
+                            7 -> { // Share
+                                val isDown: Boolean
+                                if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listMusicsDownloaded?.none { it.musicID == music.musicID } == true) {
+                                    isDown = true
+                                    mainActivity.showSnack(
+                                        v,
+                                        "You added ${music.musicName} to List Downloaded!"
+                                    )
+                                } else {
+                                    isDown = false
+                                    mainActivity.showSnack(
+                                        v,
+                                        "You removed ${music.musicName} from List Downloaded!"
+                                    )
+                                }
+                                mainActivity.viewModelUser.updateListMusicsDownloaded(
+                                    mainActivity.email,
+                                    music,
+                                    isDown
+                                )
+                            }
+                        }
+                    }
+                }
 //            val notificationFragment = NotificationFragment()
 //            val mainActivity = binding.spinnerDropDownMore.context as MainActivity
 //            mainActivity.initSpinnerMore(

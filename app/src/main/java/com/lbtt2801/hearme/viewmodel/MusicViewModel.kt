@@ -17,7 +17,7 @@ class MusicViewModel : ViewModel() {
         getListDataMusics()
     }
 
-    fun getListDataMusics() {
+    private fun getListDataMusics() {
         lst = MusicsData.dataMusic()
         _lstDataMusics.postValue(lst)
     }

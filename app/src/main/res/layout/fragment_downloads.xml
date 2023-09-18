@@ -111,11 +111,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@+id/btnPlay"
-                tools:listitem="@layout/view_list_song" />
-
+                tools:listitem="@layout/view_list_song_library"
+                app:layout_constraintTop_toBottomOf="@+id/btnPlay"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

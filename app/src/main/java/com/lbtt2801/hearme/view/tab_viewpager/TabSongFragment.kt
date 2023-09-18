@@ -56,8 +56,8 @@ class TabSongFragment : Fragment() {
         if (mainActivity.checkInHistory) {
             binding.tvYesterday.isVisible = false
             binding.recyclerViewYesterday.isVisible = false
-            lst =
-                userViewModel.lstDataUser.value?.first { it.email == email }?.listMusicsListened  // list history
+            lst = userViewModel.lstDataUser.value?.first { it.email == email }?.listMusicsListened  // list history
+            lst = lst?.filter { it.category.categoryID != "ca002" } as ArrayList<Music>
             if (lst == null) {
                 binding.tvToday.text = "There is no history of listening to Podcast !!"
                 binding.recyclerViewToday.isVisible = false
