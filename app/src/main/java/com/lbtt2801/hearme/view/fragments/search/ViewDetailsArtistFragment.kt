@@ -56,7 +56,7 @@ class ViewDetailsArtistFragment : Fragment() {
     }
 
     private fun displayRecyclerViewPopularSongs() {
-        musicAdapter = MusicAdapter(dataSongs,6)
+        musicAdapter = MusicAdapter(dataSongs,6,this)
         binding.recyclerViewPopularSongs.apply {
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
             adapter = musicAdapter

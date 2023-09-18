@@ -70,8 +70,7 @@ class TabSongFragment : Fragment() {
                 binding.recyclerViewToday.isVisible = true
                 displayRecyclerViewToday(lst!!, 5)
             }
-        }
-        else {
+        } else {
             viewModel.lstDataMusic.observe((activity as MainActivity), Observer { musicList ->
                 lst = musicList as ArrayList<Music>
                 val formatter = SimpleDateFormat("dd/MM/yyyy")
@@ -110,7 +109,7 @@ class TabSongFragment : Fragment() {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
 
-        musicAdapter = MusicAdapter(lstData, type)
+        musicAdapter = MusicAdapter(lstData, type, this)
 
         binding.recyclerViewToday.apply {
             layoutManager = layoutRecyclerViewMusic
@@ -122,7 +121,7 @@ class TabSongFragment : Fragment() {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
         musicAdapter =
-            MusicAdapter(lstData, 1)
+            MusicAdapter(lstData, 1, this)
         binding.recyclerViewYesterday.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter

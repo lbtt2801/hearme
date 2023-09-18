@@ -111,7 +111,7 @@ class TabPodcastFragment : Fragment() {
     private fun displayRecyclerViewToday(lstData: ArrayList<Music>) {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
-        musicAdapter = MusicAdapter(lstData, 2)
+        musicAdapter = MusicAdapter(lstData, 2,this)
         binding.recyclerViewToday.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter
@@ -122,7 +122,7 @@ class TabPodcastFragment : Fragment() {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
         musicAdapter =
-            MusicAdapter(lstData, 2)
+            MusicAdapter(lstData, 2,this)
         binding.recyclerViewYesterday.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter
