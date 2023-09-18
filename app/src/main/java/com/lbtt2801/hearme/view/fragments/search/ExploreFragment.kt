@@ -348,7 +348,7 @@ class ExploreFragment : Fragment() {
         musicAdapter =
             MusicAdapter(
                 listFoundMusic,
-                5
+                6
             )
 
         includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.recyclerViewFoundList.apply {

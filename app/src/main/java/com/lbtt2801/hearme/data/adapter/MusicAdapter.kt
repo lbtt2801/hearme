@@ -1,7 +1,6 @@
 package com.lbtt2801.hearme.data.adapter
 
 import android.app.ActionBar.LayoutParams
-import android.app.AlertDialog
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,15 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.LinearLayout
-import android.widget.Spinner
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MoreSongData
-import com.lbtt2801.hearme.data.control.CustomSpinner
 import com.lbtt2801.hearme.databinding.*
-import com.lbtt2801.hearme.model.MoreSong
 import com.lbtt2801.hearme.model.Music
 import kotlin.math.roundToInt
 
@@ -31,6 +27,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
         const val MUSIC_LIST = 3
         const val ALBUM_LIST = 4
         const val LIBRARY_SONG_LIST = 5
+        const val SONG_LIST_2 = 6
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -41,6 +38,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
             3 -> MUSIC_LIST
             4 -> ALBUM_LIST
             5 -> LIBRARY_SONG_LIST
+            6 -> SONG_LIST_2
             else -> MUSIC_LIST
         }
     }
@@ -53,6 +51,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
             MUSIC_LIST -> TopMusicViewHolder(parent)
             ALBUM_LIST -> AlbumViewHolder(parent)
             LIBRARY_SONG_LIST -> LibraryListSongViewHolder(parent)
+            SONG_LIST_2 -> SongList2ViewHolder(parent)
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -60,23 +59,66 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
     override fun getItemCount(): Int = dataMusics.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        var destination: Int? = null
         when (holder) {
-            is HomeViewHolder -> holder.bind(dataMusics[position])
-            is SongNotificationViewHolder -> holder.bind(dataMusics[position])
-            is PodcastNotificationViewHolder -> holder.bind(dataMusics[position])
-            is LibraryListSongViewHolder -> holder.bind(dataMusics[position])
+            is HomeViewHolder -> {
+                holder.bind(dataMusics[position])
+                destination = R.id.action_item_nav_home_to_viewDetailsSongFragment
+            }
+            is SongNotificationViewHolder -> {
+                holder.bind(dataMusics[position])
+                destination = R.id.action_notificationFragment_to_viewDetailsSongFragment
+            }
+            is PodcastNotificationViewHolder -> {
+                holder.bind(dataMusics[position])
+            }
+            is LibraryListSongViewHolder -> {
+                holder.bind(dataMusics[position])
+            }
             is TopMusicViewHolder -> {
                 holder.bind(dataMusics[position])
-                holder.itemView.setOnClickListener() {
-                    it.findNavController()
-                        .navigate(R.id.action_item_nav_explore_to_viewDetailsSongFragment,
-                            Bundle().apply {
-                                putString("musicID", dataMusics[position].musicID)
-                            }
-                        )
-                }
+                destination = R.id.action_item_nav_explore_to_viewDetailsSongFragment
             }
-            is AlbumViewHolder -> holder.bind(dataMusics[position])
+            is AlbumViewHolder -> {
+                holder.bind(dataMusics[position])
+            }
+            is SongList2ViewHolder -> {
+                holder.bind(dataMusics[position])
+                destination = R.id.action_item_nav_explore_to_viewDetailsSongFragment
+            }
+        }
+        holder.itemView.setOnClickListener() {
+            if (destination != null) {
+                it.findNavController()
+                    .navigate(destination,
+                        Bundle().apply {
+                            putString("musicID", dataMusics[position].musicID)
+                        }
+                    )
+            }
+        }
+    }
+
+    inner class SongList2ViewHolder private constructor(
+        val binding: ViewListSong2Binding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        constructor(parent: ViewGroup) : this(
+            ViewListSong2Binding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+
+        fun bind(music: Music) {
+            binding.music = music
+
+            val mainActivity = binding.spinnerDropDownMore.context as MainActivity
+            mainActivity.initSpinnerMore(
+                binding.spinnerDropDownMore,
+                dataMusics[absoluteAdapterPosition],
+                0
+            )
         }
     }
 
