@@ -16,6 +16,6 @@
         android:clipToPadding="false"
         android:paddingBottom="24dp"
         android:visibility="visible"
-        tools:listitem="@layout/view_top_list_artist" />
+        tools:listitem="@layout/view_list_artist" />
 
 </LinearLayout>

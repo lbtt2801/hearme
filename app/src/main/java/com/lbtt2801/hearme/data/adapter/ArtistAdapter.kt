@@ -1,13 +1,14 @@
 package com.lbtt2801.hearme.data.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.lbtt2801.hearme.MainActivity
-import com.lbtt2801.hearme.databinding.ViewFollowArtistsBinding
+import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.ViewHomeArtistBinding
 import com.lbtt2801.hearme.databinding.ViewPodcastAndShowBinding
-import com.lbtt2801.hearme.databinding.ViewTopListArtistBinding
+import com.lbtt2801.hearme.databinding.ViewListArtistBinding
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
@@ -21,7 +22,8 @@ class ArtistAdapter(
         const val HOME = 0
         const val POPULAR_ARTISTS = 1
         const val SAVED = 2
-        const val FOLLOW_ARTISTS = 3
+
+        //        const val FOLLOW_ARTISTS = 3
         const val ARTISTS_LIST = 4
         const val PODCAST_AND_SHOW = 5
     }
@@ -30,7 +32,7 @@ class ArtistAdapter(
         return when (type) {
             0 -> HOME
             1 -> POPULAR_ARTISTS
-            3 -> FOLLOW_ARTISTS
+//            3 -> FOLLOW_ARTISTS
             4 -> ARTISTS_LIST
             5 -> PODCAST_AND_SHOW
             else -> SAVED
@@ -42,19 +44,38 @@ class ArtistAdapter(
             HOME -> HomeViewHolder(parent)
 //            TOPIC_LIST -> InterestViewHolder(parent)
 //            SAVED -> SavedViewHolder(parent)
-            FOLLOW_ARTISTS -> ArtistViewHolderFollowArtists(parent)
-            ARTISTS_LIST -> TopArtistViewHolder(parent)
+//            FOLLOW_ARTISTS -> ArtistViewHolderFollowArtists(parent)
+            ARTISTS_LIST -> ListArtistViewHolder(parent)
             PODCAST_AND_SHOW -> PodcastAndShowViewHolder(parent)
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        var destination: Int? = null
         when (holder) {
-            is HomeViewHolder -> holder.bind(dataArtists[position])
-            is ArtistViewHolderFollowArtists -> holder.bind(dataArtists[position])
-            is TopArtistViewHolder -> holder.bind(dataArtists[position])
-            is PodcastAndShowViewHolder -> holder.bind(dataArtists[position])
+            is HomeViewHolder -> {
+                holder.bind(dataArtists[position])
+                destination = R.id.action_item_nav_home_to_viewDetailsArtistFragment
+            }
+//            is ArtistViewHolderFollowArtists -> holder.bind(dataArtists[position])
+            is ListArtistViewHolder -> {
+                holder.bind(dataArtists[position])
+                destination = R.id.action_item_nav_explore_to_viewDetailsArtistFragment
+            }
+            is PodcastAndShowViewHolder -> {
+                holder.bind(dataArtists[position])
+            }
+        }
+        holder.itemView.setOnClickListener() {
+            if (destination != null) {
+                it.findNavController()
+                    .navigate(destination,
+                        Bundle().apply {
+                            putString("artistID", dataArtists[position].artistId)
+                        }
+                    )
+            }
         }
     }
 
@@ -76,36 +97,36 @@ class ArtistAdapter(
         }
     }
 
-    inner class ArtistViewHolderFollowArtists private constructor(
-        val binding: ViewFollowArtistsBinding,
+//    inner class ArtistViewHolderFollowArtists private constructor(
+//        val binding: ViewFollowArtistsBinding,
+//    ) : RecyclerView.ViewHolder(binding.root) {
+//        constructor(parent: ViewGroup) : this(
+//            ViewFollowArtistsBinding.inflate(
+//                LayoutInflater.from(parent.context),
+//                parent,
+//                false
+//            )
+//        )
+//
+//        fun bind(artist: Artist) {
+//            binding.artist = artist
+//
+//            binding.toggleButtonFollow.setOnCheckedChangeListener() { compound, isChecked ->
+//                val activity = compound.context as MainActivity
+//                userViewModel.updateFollowingArtists(
+//                    activity.email,
+//                    dataArtists[absoluteAdapterPosition],
+//                    isChecked
+//                )
+//            }
+//        }
+//    }
+
+    inner class ListArtistViewHolder private constructor(
+        val binding: ViewListArtistBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
-            ViewFollowArtistsBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-
-        fun bind(artist: Artist) {
-            binding.artist = artist
-
-            binding.toggleButtonFollow.setOnCheckedChangeListener() { compound, isChecked ->
-                val activity = compound.context as MainActivity
-                userViewModel.updateFollowingArtists(
-                    activity.email,
-                    dataArtists[absoluteAdapterPosition],
-                    isChecked
-                )
-            }
-        }
-    }
-
-    inner class TopArtistViewHolder private constructor(
-        val binding: ViewTopListArtistBinding,
-    ) : RecyclerView.ViewHolder(binding.root) {
-        constructor(parent: ViewGroup) : this(
-            ViewTopListArtistBinding.inflate(
+            ViewListArtistBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

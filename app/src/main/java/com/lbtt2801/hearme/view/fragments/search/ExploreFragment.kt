@@ -338,7 +338,8 @@ class ExploreFragment : Fragment() {
     private fun displayRecyclerFoundSongsList(p0: String): Boolean {
         val listFoundMusic: ArrayList<Music> =
             musicViewModel.lstDataMusics.value?.filter {
-                it.musicName.trim().lowercase().contains(p0.trim().lowercase())
+                it.musicName.trim().lowercase()
+                    .contains(p0.trim().lowercase()) && it.category.categoryID != "ca002"
             } as ArrayList<Music>
 
         if (listFoundMusic.isEmpty())
@@ -347,7 +348,7 @@ class ExploreFragment : Fragment() {
         musicAdapter =
             MusicAdapter(
                 listFoundMusic,
-                3
+                6
             )
 
         includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.recyclerViewFoundList.apply {
@@ -361,7 +362,8 @@ class ExploreFragment : Fragment() {
     private fun displayRecyclerFoundTopList(p0: String): Boolean {
         val listFoundMusic: ArrayList<Music> =
             musicViewModel.lstDataMusics.value?.sortedByDescending { it.totalListeners }?.filter {
-                it.musicName.trim().lowercase().contains(p0.trim().lowercase())
+                it.musicName.trim().lowercase()
+                    .contains(p0.trim().lowercase()) && it.category.categoryID != "ca002"
             } as ArrayList<Music>
         val listFoundArtist: ArrayList<Artist> =
             artistViewModel.lstDataArtists.value?.sortedByDescending { it.totalNumberOfListeners }
