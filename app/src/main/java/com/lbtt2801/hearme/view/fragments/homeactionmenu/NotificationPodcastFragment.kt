@@ -81,22 +81,6 @@ class NotificationPodcastFragment : Fragment() {
             } as ArrayList<Music>)
         })
         viewModel.getListDataMusic()
-
-        if (mainActivity.checkInHistory) {
-            binding.tvYesterday.isVisible = false
-            binding.recyclerViewYesterday.isVisible = false
-            lst = userViewModel.lstDataUser.value?.first { it.email == email }?.listMusicsLoved  // list history
-            if (lst == null) {
-                binding.tvToday.text = "There is no history of listening to Podcast !!"
-                binding.recyclerViewToday.isVisible = false
-            } else {
-                binding.tvToday.isVisible = true
-                binding.tvYesterday.isVisible = true
-                binding.recyclerViewYesterday.isVisible = true
-                binding.recyclerViewToday.isVisible = true
-                displayRecyclerViewToday(lst!!)
-            }
-        }
     }
 
     override fun onDestroyView() {

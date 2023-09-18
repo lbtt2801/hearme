@@ -12,7 +12,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.ViewPageLibraryAdapter
-import com.lbtt2801.hearme.data.adapter.ViewPageNotificationAdapter
 import com.lbtt2801.hearme.databinding.FragmentHistoryBinding
 
 class HistoryFragment : Fragment() {
@@ -34,7 +33,7 @@ class HistoryFragment : Fragment() {
             showIcSearch = true
         )
         activity.showBottomNav("GONE")
-        (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
+        activity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
         }
 

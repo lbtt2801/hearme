@@ -28,6 +28,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
         const val PODCAST_LIST = 2
         const val MUSIC_LIST = 3
         const val ALBUM_LIST = 4
+        const val LIBRARY_SONG_LIST = 5
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -37,6 +38,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
             2 -> PODCAST_LIST
             3 -> MUSIC_LIST
             4 -> ALBUM_LIST
+            5 -> LIBRARY_SONG_LIST
             else -> MUSIC_LIST
         }
     }
@@ -48,6 +50,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
             PODCAST_LIST -> PodcastNotificationViewHolder(parent)
             MUSIC_LIST -> TopMusicViewHolder(parent)
             ALBUM_LIST -> AlbumViewHolder(parent)
+            LIBRARY_SONG_LIST -> LibraryListSongViewHolder(parent)
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -59,6 +62,7 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
             is HomeViewHolder -> holder.bind(dataMusics[position])
             is SongNotificationViewHolder -> holder.bind(dataMusics[position])
             is PodcastNotificationViewHolder -> holder.bind(dataMusics[position])
+            is LibraryListSongViewHolder -> holder.bind(dataMusics[position])
             is TopMusicViewHolder -> {
                 holder.bind(dataMusics[position])
                 holder.itemView.setOnClickListener() {
@@ -554,6 +558,22 @@ class MusicAdapter(private val dataMusics: ArrayList<Music>, private val type: I
                 }
                 binding.containerView.layoutParams = paramsContainer
             }
+        }
+    }
+
+    inner class LibraryListSongViewHolder private constructor(
+        val binding: ViewListSongLibraryBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        constructor(parent: ViewGroup) : this(
+            ViewListSongLibraryBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+
+        fun bind(music: Music) {
+            binding.music = music
         }
     }
 }
