@@ -71,7 +71,7 @@ class FollowArtistsFragment : Fragment() {
     private var displayRecyclerView: Observer<ArrayList<Artist>?> =
         Observer<ArrayList<Artist>?> { artistArrayList ->
             val layout = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
-            artistAdapter = artistArrayList?.let { ArtistAdapter(it, 3, userViewModel) }!!
+            artistAdapter = artistArrayList?.let { ArtistAdapter(it, 4, userViewModel) }!!
             binding.recyclerView.apply {
                 layoutManager = layout
                 adapter = artistAdapter

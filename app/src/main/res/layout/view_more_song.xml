@@ -29,6 +29,8 @@
                 android:id="@+id/image_dropdown"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_play" />
 
             <TextView

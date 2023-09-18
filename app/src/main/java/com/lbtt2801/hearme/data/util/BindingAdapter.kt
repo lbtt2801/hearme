@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.widget.AppCompatCheckedTextView
-import androidx.appcompat.widget.AppCompatToggleButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.google.android.material.card.MaterialCardView
@@ -20,6 +19,8 @@ import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.model.Time
 import com.lbtt2801.hearme.model.TopicSearch
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -392,4 +393,11 @@ fun setWidthContainerAlbum(shapeableImageView: ShapeableImageView, music: Music)
     params.width = (displayMetrics.widthPixels / 2) - (24 * 2 + 25)
     params.height = (displayMetrics.widthPixels / 2) - (24 * 2 + 25)
     shapeableImageView.layoutParams = params
+}
+
+@BindingAdapter("app:changeFormatNumber")
+fun changeFormatNumber(textView: TextView, number: Int) {
+    val formatter: NumberFormat = DecimalFormat("#,###")
+    val changedNumber = formatter.format(number)
+    textView.text = "$changedNumber monthly listeners"
 }

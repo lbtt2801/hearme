@@ -75,65 +75,13 @@ class ViewDetailsSongFragment : Fragment() {
         val duration = "${music?.duration?.minute}:${music?.duration?.second}"
         binding.textViewDuration.text = duration
 
-        binding.spinnerDropDownMore.adapter =
-            MoreSongDropdownAdapter(binding.spinnerDropDownMore.context, MoreSongData.data(), 1)
-        onClickItemSpinner(view)
+        music?.let { mainActivity.initSpinnerMore(binding.spinnerDropDownMore, it, 1) }
 
         displayRecyclerViewMoreLikeThis()
     }
 
-    private fun onClickItemSpinner(view: View) {
-        binding.spinnerDropDownMore.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
-
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    v: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    when (position) {
-                        3 -> { // Add to blacklist
-                            val isDontPlay: Boolean
-                            if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.blackListMusic?.none { it.musicID == music?.musicID } == true) {
-                                isDontPlay = true
-                                mainActivity.showSnack(
-                                    view,
-                                    "You added ${music?.musicName} to blacklist!"
-                                )
-                            } else {
-                                isDontPlay = false
-                                mainActivity.showSnack(
-                                    view,
-                                    "You removed ${music?.musicName} from blacklist!"
-                                )
-                            }
-                            music?.let {
-                                mainActivity.viewModelUser.updateBlackListMusic(
-                                    mainActivity.email,
-                                    it,
-                                    isDontPlay
-                                )
-                            }
-                        }
-                        5 -> { // View artist
-
-                        }
-                        6 -> { // Go to album
-
-                        }
-                        7 -> { // Share
-
-                        }
-                    }
-                }
-            }
-    }
-
     private fun displayRecyclerViewMoreLikeThis() {
-        musicAdapter = musicsMoreLikeThis?.let { MusicAdapter(it, 3) }!!
+        musicAdapter = musicsMoreLikeThis?.let { MusicAdapter(it, 5) }!!
         binding.recyclerViewMusicMoreLikeThis.apply {
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
             adapter = musicAdapter

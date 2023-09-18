@@ -1,5 +1,6 @@
 package com.lbtt2801.hearme
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
@@ -15,6 +16,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -28,7 +30,11 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
+import com.lbtt2801.hearme.data.MoreSongData
+import com.lbtt2801.hearme.data.adapter.MoreSongDropdownAdapter
+import com.lbtt2801.hearme.data.control.CustomSpinner
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
+import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.viewmodel.*
 import kotlin.system.exitProcess
 
@@ -333,5 +339,175 @@ class MainActivity : AppCompatActivity() {
         }
 
         return edtEmail.plus("@$str2")
+    }
+
+    fun initSpinnerMore(spinnerDropDownMore: CustomSpinner, music: Music, type: Int) {
+        spinnerDropDownMore.adapter =
+            MoreSongDropdownAdapter(spinnerDropDownMore.context, MoreSongData.data(), type)
+
+        spinnerDropDownMore.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    v: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val mainActivity = v?.context as MainActivity
+
+                    when (position) {
+                        1 -> { // Add to love list
+                            var isLove = false
+                            if (mainActivity.viewModelUser.isMusicInBlackList(
+                                    mainActivity.email,
+                                    music
+                                )
+                            ) {
+                                val builder = AlertDialog.Builder(v.context)
+                                builder.apply {
+                                    setTitle("Confirm")
+                                    setMessage("${music.musicName} is putting into blacklist, are you want to remove it?")
+                                    setPositiveButton(
+                                        "YES"
+                                    ) { dialog, _ ->
+                                        mainActivity.viewModelUser.apply {
+                                            updateBlackListMusic(
+                                                mainActivity.email,
+                                                music,
+                                                false
+                                            )
+                                            updateListMusicsLoved(
+                                                mainActivity.email,
+                                                music,
+                                                true
+                                            )
+                                        }
+                                        mainActivity.showSnack(
+                                            v,
+                                            "You added ${music.musicName} to love list!"
+                                        )
+                                        dialog.dismiss()
+                                    }
+                                    setNegativeButton("NO") { dialog, _ ->
+                                        dialog.dismiss()
+                                    }
+                                }.create().show()
+                            } else {
+                                if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listMusicsLoved?.none { it.musicID == music.musicID } == true) {
+                                    isLove = true
+                                    mainActivity.showSnack(
+                                        v,
+                                        "You added ${music.musicName} to love list!"
+                                    )
+                                } else {
+                                    isLove = false
+                                    mainActivity.showSnack(
+                                        v,
+                                        "You removed ${music.musicName} from love list!"
+                                    )
+                                }
+                                mainActivity.viewModelUser.updateListMusicsLoved(
+                                    mainActivity.email,
+                                    music,
+                                    isLove
+                                )
+                            }
+                        }
+                        2 -> { // Add to playlist
+                            val isAdd: Boolean
+                            if (mainActivity.viewModelUser.isMusicInBlackList(
+                                    mainActivity.email,
+                                    music
+                                )
+                            ) {
+                                val builder = AlertDialog.Builder(v.context)
+                                builder.apply {
+                                    setTitle("Confirm")
+                                    setMessage("${music.musicName} is putting into blacklist, are you want to remove it?")
+                                    setPositiveButton(
+                                        "YES"
+                                    ) { dialog, _ ->
+                                        mainActivity.viewModelUser.apply {
+                                            updateBlackListMusic(
+                                                mainActivity.email,
+                                                music,
+                                                false
+                                            )
+                                            updateListPlayedMusic(
+                                                mainActivity.email,
+                                                music,
+                                                true
+                                            )
+                                        }
+                                        mainActivity.showSnack(
+                                            v,
+                                            "You added ${music.musicName} to playlist!"
+                                        )
+                                        dialog.dismiss()
+                                    }
+                                    setNegativeButton("NO") { dialog, _ ->
+                                        dialog.dismiss()
+                                    }
+                                }.create().show()
+                            } else {
+                                if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listPlayedMusic?.none { it.musicID == music.musicID } == true) {
+                                    isAdd = true
+                                    mainActivity.showSnack(
+                                        v,
+                                        "You added ${music.musicName} to playlist!"
+                                    )
+                                } else {
+                                    isAdd = false
+                                    mainActivity.showSnack(
+                                        v,
+                                        "You removed ${music.musicName} from playlist!"
+                                    )
+                                }
+                                mainActivity.viewModelUser.updateListPlayedMusic(
+                                    mainActivity.email,
+                                    music,
+                                    isAdd
+                                )
+                            }
+                        }
+                        3 -> { // Add to blacklist
+                            val isDontPlay: Boolean
+                            if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.blackListMusic?.none { it.musicID == music.musicID } == true) {
+                                isDontPlay = true
+                                mainActivity.showSnack(
+                                    v,
+                                    "You added ${music.musicName} to blacklist!"
+                                )
+                            } else {
+                                isDontPlay = false
+                                mainActivity.showSnack(
+                                    v,
+                                    "You removed ${music.musicName} from blacklist!"
+                                )
+                            }
+                            mainActivity.viewModelUser.updateBlackListMusic(
+                                mainActivity.email,
+                                music,
+                                isDontPlay
+                            )
+                        }
+                        4 -> { // Down
+
+                        }
+                        5 -> { // View artist
+
+                        }
+                        6 -> { // Go to album
+
+                        }
+                        7 -> { // Share
+
+                        }
+                    }
+                }
+            }
     }
 }

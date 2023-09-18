@@ -38,6 +38,7 @@
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/img_music"
+                    app:setImage="@{music.image}"
                     app:shapeAppearanceOverlay="@style/roundedConorImageview2" />
 
                 <TextView
@@ -220,7 +221,7 @@
                         android:nestedScrollingEnabled="false"
                         android:paddingTop="24dp"
                         android:paddingBottom="24dp"
-                        tools:listitem="@layout/view_top_list_music" />
+                        tools:listitem="@layout/view_list_song" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

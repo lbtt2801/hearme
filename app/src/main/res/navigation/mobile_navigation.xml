@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_item_nav_home_to_notificationFragment"
             app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_item_nav_home_to_viewDetailsArtistFragment"
+            app:destination="@id/viewDetailsArtistFragment" />
+        <action
+            android:id="@+id/action_item_nav_home_to_viewDetailsSongFragment"
+            app:destination="@id/viewDetailsSongFragment" />
     </fragment>
 
     <fragment
@@ -109,7 +115,11 @@
         android:id="@+id/notificationFragment"
         android:name="com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment"
         android:label="NotificationFragment"
-        tools:layout="@layout/fragment_notification" />
+        tools:layout="@layout/fragment_notification" >
+        <action
+            android:id="@+id/action_notificationFragment_to_viewDetailsSongFragment"
+            app:destination="@id/viewDetailsSongFragment" />
+    </fragment>
     <fragment
         android:id="@+id/followArtistsFragment"
         android:name="com.lbtt2801.hearme.view.fragments.accountssetup.FollowArtistsFragment"
@@ -167,8 +177,11 @@
             android:id="@+id/action_navigation_explore_to_itemExploreFragment"
             app:destination="@id/itemExploreFragment" />
         <action
-            android:id="@+id/action_item_nav_explore_to_viewArtistFragment"
+            android:id="@+id/action_item_nav_explore_to_viewDetailsSongFragment"
             app:destination="@id/viewDetailsSongFragment" />
+        <action
+            android:id="@+id/action_item_nav_explore_to_viewDetailsArtistFragment"
+            app:destination="@id/viewDetailsArtistFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemExploreFragment"
@@ -330,4 +343,9 @@
         android:name="com.lbtt2801.hearme.view.fragments.library.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/viewDetailsArtistFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistFragment"
+        android:label="ViewDetailsArtistFragment"
+        tools:layout="@layout/fragment_view_details_artist"/>
 </navigation>
