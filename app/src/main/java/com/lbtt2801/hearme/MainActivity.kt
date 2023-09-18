@@ -26,6 +26,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -35,6 +36,10 @@ import com.lbtt2801.hearme.data.adapter.MoreSongDropdownAdapter
 import com.lbtt2801.hearme.data.control.CustomSpinner
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
 import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment
+import com.lbtt2801.hearme.view.fragments.search.ExploreFragment
+import com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistFragment
+import com.lbtt2801.hearme.view.fragments.search.ViewDetailsSongFragment
 import com.lbtt2801.hearme.viewmodel.*
 import kotlin.system.exitProcess
 
@@ -341,7 +346,12 @@ class MainActivity : AppCompatActivity() {
         return edtEmail.plus("@$str2")
     }
 
-    fun initSpinnerMore(spinnerDropDownMore: CustomSpinner, music: Music, type: Int) {
+    fun initSpinnerMore(
+        spinnerDropDownMore: CustomSpinner,
+        music: Music,
+        type: Int,
+        fromFragment: Fragment
+    ) {
         spinnerDropDownMore.adapter =
             MoreSongDropdownAdapter(spinnerDropDownMore.context, MoreSongData.data(), type)
 
@@ -352,17 +362,15 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
-                    v: View?,
+                    v: View,
                     position: Int,
                     id: Long
                 ) {
-                    val mainActivity = v?.context as MainActivity
-
                     when (position) {
                         1 -> { // Add to love list
                             var isLove = false
-                            if (mainActivity.viewModelUser.isMusicInBlackList(
-                                    mainActivity.email,
+                            if (viewModelUser.isMusicInBlackList(
+                                    email,
                                     music
                                 )
                             ) {
@@ -373,19 +381,19 @@ class MainActivity : AppCompatActivity() {
                                     setPositiveButton(
                                         "YES"
                                     ) { dialog, _ ->
-                                        mainActivity.viewModelUser.apply {
+                                        viewModelUser.apply {
                                             updateBlackListMusic(
-                                                mainActivity.email,
+                                                email,
                                                 music,
                                                 false
                                             )
                                             updateListMusicsLoved(
-                                                mainActivity.email,
+                                                email,
                                                 music,
                                                 true
                                             )
                                         }
-                                        mainActivity.showSnack(
+                                        showSnack(
                                             v,
                                             "You added ${music.musicName} to love list!"
                                         )
@@ -396,21 +404,21 @@ class MainActivity : AppCompatActivity() {
                                     }
                                 }.create().show()
                             } else {
-                                if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listMusicsLoved?.none { it.musicID == music.musicID } == true) {
+                                if (viewModelUser.lstDataUser.value?.first { it.email == email }?.listMusicsLoved?.none { it.musicID == music.musicID } == true) {
                                     isLove = true
-                                    mainActivity.showSnack(
+                                    showSnack(
                                         v,
                                         "You added ${music.musicName} to love list!"
                                     )
                                 } else {
                                     isLove = false
-                                    mainActivity.showSnack(
+                                    showSnack(
                                         v,
                                         "You removed ${music.musicName} from love list!"
                                     )
                                 }
-                                mainActivity.viewModelUser.updateListMusicsLoved(
-                                    mainActivity.email,
+                                viewModelUser.updateListMusicsLoved(
+                                    email,
                                     music,
                                     isLove
                                 )
@@ -418,8 +426,8 @@ class MainActivity : AppCompatActivity() {
                         }
                         2 -> { // Add to playlist
                             val isAdd: Boolean
-                            if (mainActivity.viewModelUser.isMusicInBlackList(
-                                    mainActivity.email,
+                            if (viewModelUser.isMusicInBlackList(
+                                    email,
                                     music
                                 )
                             ) {
@@ -430,19 +438,19 @@ class MainActivity : AppCompatActivity() {
                                     setPositiveButton(
                                         "YES"
                                     ) { dialog, _ ->
-                                        mainActivity.viewModelUser.apply {
+                                        viewModelUser.apply {
                                             updateBlackListMusic(
-                                                mainActivity.email,
+                                                email,
                                                 music,
                                                 false
                                             )
                                             updateListPlayedMusic(
-                                                mainActivity.email,
+                                                email,
                                                 music,
                                                 true
                                             )
                                         }
-                                        mainActivity.showSnack(
+                                        showSnack(
                                             v,
                                             "You added ${music.musicName} to playlist!"
                                         )
@@ -453,21 +461,21 @@ class MainActivity : AppCompatActivity() {
                                     }
                                 }.create().show()
                             } else {
-                                if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listPlayedMusic?.none { it.musicID == music.musicID } == true) {
+                                if (viewModelUser.lstDataUser.value?.first { it.email == email }?.listPlayedMusic?.none { it.musicID == music.musicID } == true) {
                                     isAdd = true
-                                    mainActivity.showSnack(
+                                    showSnack(
                                         v,
                                         "You added ${music.musicName} to playlist!"
                                     )
                                 } else {
                                     isAdd = false
-                                    mainActivity.showSnack(
+                                    showSnack(
                                         v,
                                         "You removed ${music.musicName} from playlist!"
                                     )
                                 }
-                                mainActivity.viewModelUser.updateListPlayedMusic(
-                                    mainActivity.email,
+                                viewModelUser.updateListPlayedMusic(
+                                    email,
                                     music,
                                     isAdd
                                 )
@@ -475,21 +483,21 @@ class MainActivity : AppCompatActivity() {
                         }
                         3 -> { // Add to blacklist
                             val isDontPlay: Boolean
-                            if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.blackListMusic?.none { it.musicID == music.musicID } == true) {
+                            if (viewModelUser.lstDataUser.value?.first { it.email == email }?.blackListMusic?.none { it.musicID == music.musicID } == true) {
                                 isDontPlay = true
-                                mainActivity.showSnack(
+                                showSnack(
                                     v,
                                     "You added ${music.musicName} to blacklist!"
                                 )
                             } else {
                                 isDontPlay = false
-                                mainActivity.showSnack(
+                                showSnack(
                                     v,
                                     "You removed ${music.musicName} from blacklist!"
                                 )
                             }
-                            mainActivity.viewModelUser.updateBlackListMusic(
-                                mainActivity.email,
+                            viewModelUser.updateBlackListMusic(
+                                email,
                                 music,
                                 isDontPlay
                             )
@@ -498,7 +506,31 @@ class MainActivity : AppCompatActivity() {
 
                         }
                         5 -> { // View artist
-
+                            var designation: Int? = null
+                            when (fromFragment) {
+                                is ExploreFragment -> {
+                                    designation =
+                                        R.id.action_item_nav_explore_to_viewDetailsArtistFragment
+                                }
+                                is NotificationFragment -> {
+                                    designation =
+                                        R.id.action_notificationFragment_to_viewDetailsArtistFragment
+                                }
+                                is ViewDetailsSongFragment -> {
+                                    designation =
+                                        R.id.action_viewDetailsSongFragment_to_viewDetailsArtistFragment
+                                }
+                                is ViewDetailsArtistFragment -> {
+                                    showSnack(v, "You are here!")
+                                }
+                            }
+                            if (designation != null) {
+                                navController.navigate(
+                                    designation,
+                                    Bundle().apply {
+                                        putString("artistID", music.artist.artistId)
+                                    })
+                            }
                         }
                         6 -> { // Go to album
 

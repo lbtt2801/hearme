@@ -94,7 +94,7 @@ class PodcastFragment : Fragment() {
     private fun displayRecyclerViewMusic(lstData: ArrayList<Music>) {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
-        musicAdapter = MusicAdapter(lstData, 0)
+        musicAdapter = MusicAdapter(lstData, 0,this)
         binding.recyclerViewPopularPodcasts.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter

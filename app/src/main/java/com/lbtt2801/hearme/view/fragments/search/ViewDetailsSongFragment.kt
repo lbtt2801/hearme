@@ -75,13 +75,13 @@ class ViewDetailsSongFragment : Fragment() {
         val duration = "${music?.duration?.minute}:${music?.duration?.second}"
         binding.textViewDuration.text = duration
 
-        music?.let { mainActivity.initSpinnerMore(binding.spinnerDropDownMore, it, 1) }
+        music?.let { mainActivity.initSpinnerMore(binding.spinnerDropDownMore, it, 1, this) }
 
         displayRecyclerViewMoreLikeThis()
     }
 
     private fun displayRecyclerViewMoreLikeThis() {
-        musicAdapter = musicsMoreLikeThis?.let { MusicAdapter(it, 5) }!!
+        musicAdapter = musicsMoreLikeThis?.let { MusicAdapter(it, 6, this) }!!
         binding.recyclerViewMusicMoreLikeThis.apply {
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
             adapter = musicAdapter

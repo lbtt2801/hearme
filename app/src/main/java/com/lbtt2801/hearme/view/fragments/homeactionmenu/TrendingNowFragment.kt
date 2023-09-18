@@ -66,7 +66,7 @@ class TrendingNowFragment : Fragment() {
     private fun displayRecyclerView(lstData: ArrayList<Music>) {
         val layoutRecyclerView =
             GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
-        musicAdapter = MusicAdapter(lstData, 0)
+        musicAdapter = MusicAdapter(lstData, 0,this)
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerView
             adapter = musicAdapter
