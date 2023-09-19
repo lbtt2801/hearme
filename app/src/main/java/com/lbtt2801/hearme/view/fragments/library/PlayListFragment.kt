@@ -11,7 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -33,7 +35,7 @@ class PlayListFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private lateinit var playlistAdapter: PlaylistAdapter
     private var lst: ArrayList<Playlist>? = null
-    private var email: String? = ""
+    private var email: String = ""
 
     private val userViewModel: UserViewModel by activityViewModels()
     private val viewModel by lazy {
@@ -70,16 +72,20 @@ class PlayListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.lstDataPlaylist.observe((activity as MainActivity), Observer {
-            lst = userViewModel.lstDataUser.value?.first { it.email == email }?.listPlaylist
-            if (lst != null)
-                displayRecyclerView(lst!!)
+//        viewModel.lstDataPlaylist.observe((activity as MainActivity), Observer {
+//            lst = userViewModel.lstDataUser.value?.first { it.email == email }?.listPlaylist
+//            if (lst != null)
+//                displayRecyclerView(lst!!)
+//        })
+//        viewModel.getListDataPlaylist()
+
+        userViewModel.lstDataPlaylist.observe((activity as MainActivity), Observer {
+            displayRecyclerView(it as ArrayList<Playlist>)
         })
 
         binding.btnAddNewPlayList.setOnClickListener {
             showDialogBottom()
         }
-
 
     }
 
@@ -113,23 +119,28 @@ class PlayListFragment : Fragment() {
         dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.show()
 
-        val tvTitle: TextView = dialog.findViewById(R.id.tvTitle)
+        val edtTitle: EditText = dialog.findViewById(R.id.edtNamePlaylist)
         val btnYes: Button = dialog.findViewById(R.id.btnYes)
-        val btnNo: Button = dialog.findViewById(R.id.btnCancel)
 
         btnYes.setOnClickListener {
+            userViewModel.addPlaylist(
+                Playlist(
+                    "pl000",
+                    edtTitle.text.toString(),
+                    R.drawable.ic_playlist_added,
+                )
+            )
+
 //            lst?.add(
 //                Playlist(
 //                    "pl000",
-//                    tvTitle.text.toString(),
+//                    edtTitle.text.toString(),
 //                    R.drawable.ic_playlist_added,
 //                )
 //            )
+
             dialog.dismiss()
         }
 
-        btnNo.setOnClickListener {
-            dialog.dismiss()
-        }
     }
 }

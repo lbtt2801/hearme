@@ -6,21 +6,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lbtt2801.hearme.R
+import com.lbtt2801.hearme.data.PlaylistData
 import com.lbtt2801.hearme.data.UsersData
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.model.Playlist
 import com.lbtt2801.hearme.model.User
 import java.util.Date
 
 class UserViewModel : ViewModel() {
     private val _lstDataUser = MutableLiveData<ArrayList<User>>()
+    private val _lstDataPlaylist = MutableLiveData<List<Playlist>>()
+
     val lstDataUser: LiveData<ArrayList<User>>
         get() = _lstDataUser
 
+    val lstDataPlaylist: LiveData<List<Playlist>>
+        get() = _lstDataPlaylist
+
     private lateinit var lst: ArrayList<User>
+    private lateinit var lstPlaylist: ArrayList<Playlist>
 
     init {
         getListDataUser()
+        getListDataPlaylist()
     }
 
     private fun getListDataUser() {
@@ -238,5 +247,14 @@ class UserViewModel : ViewModel() {
             }
         }
         _lstDataUser.postValue(lst)
+    }
+
+    private fun getListDataPlaylist() {
+        lstPlaylist = PlaylistData.dataPlaylist()
+        _lstDataPlaylist.postValue(lstPlaylist)
+    }
+    fun addPlaylist(playlist: Playlist) {
+        lstPlaylist.add(0, playlist)
+        _lstDataPlaylist.postValue(lstPlaylist)
     }
 }

@@ -21,6 +21,7 @@ import com.lbtt2801.hearme.data.adapter.MusicAdapter
 import com.lbtt2801.hearme.databinding.FragmentDownloadsBinding
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.model.Time
+import com.lbtt2801.hearme.view.fragments.onboardingsignupsignin.SignInFragment
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 import java.util.Date
 
@@ -46,7 +47,7 @@ class DownloadsFragment : Fragment() {
 
         mainActivity.customToolbar(
             "VISIBLE",
-            "Playlists",
+            "Downloads",
             null,
             R.color.transparent,
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back),
@@ -78,7 +79,7 @@ class DownloadsFragment : Fragment() {
     private fun displayRecyclerView(lstData: ArrayList<Music>) {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
-        musicAdapter = MusicAdapter(lstData, 5)
+        musicAdapter = MusicAdapter(lstData, 5, SignInFragment())
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter

@@ -505,21 +505,21 @@ class MainActivity : AppCompatActivity() {
                         }
                         4 -> { // Down
                             val isDown: Boolean
-                            if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listMusicsDownloaded?.none { it.musicID == music.musicID } == true) {
+                            if (viewModelUser.lstDataUser.value?.first { it.email == email }?.listMusicsDownloaded?.none { it.musicID == music.musicID } == true) {
                                 isDown = true
-                                mainActivity.showSnack(
+                                showSnack(
                                     v,
                                     "You added ${music.musicName} to List Downloaded!"
                                 )
                             } else {
                                 isDown = false
-                                mainActivity.showSnack(
+                                showSnack(
                                     v,
                                     "You removed ${music.musicName} from List Downloaded!"
                                 )
                             }
-                            mainActivity.viewModelUser.updateListMusicsDownloaded(
-                                mainActivity.email,
+                            viewModelUser.updateListMusicsDownloaded(
+                                email,
                                 music,
                                 isDown
                             )
