@@ -77,6 +77,10 @@ class MyLibraryFragment : Fragment() {
         binding.linearDownloads.setOnClickListener {
             findNavController().navigate(R.id.action_item_nav_library_to_downloadsFragment)
         }
+
+        binding.linearPodcasts.setOnClickListener {
+            findNavController().navigate(R.id.action_item_nav_library_to_podcastLibraryFragment)
+        }
     }
     override fun onDestroyView() {
         super.onDestroyView()

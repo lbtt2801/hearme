@@ -254,7 +254,7 @@ class UserViewModel : ViewModel() {
         _lstDataPlaylist.postValue(lstPlaylist)
     }
     fun addPlaylist(playlist: Playlist) {
-        lstPlaylist.add(0, playlist)
+        lstPlaylist.add(playlist)
         _lstDataPlaylist.postValue(lstPlaylist)
     }
 }

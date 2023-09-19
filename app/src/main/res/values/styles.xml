@@ -57,7 +57,5 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
-    <style name="SpinnerTheme" parent="android:Widget.Spinner">
-        <item name="android:background">@drawable/ic_shuffle</item>
-    </style>
+
 </resources>

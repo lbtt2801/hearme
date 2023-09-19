@@ -89,7 +89,7 @@ class ProfileDetailFragment : Fragment() {
 
     private fun displayRecyclerView(lstData: ArrayList<Playlist>) {
         val layoutRecyclerView = GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
-        val playlistAdapter = PlaylistAdapter(lstData, 0)
+        val playlistAdapter = PlaylistAdapter(lstData, 1)
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerView
             adapter = playlistAdapter

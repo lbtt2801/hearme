@@ -153,6 +153,7 @@ class MusicAdapter(
 
         fun bind(music: Music) {
             binding.music = music
+
         }
     }
 
@@ -339,6 +340,14 @@ class MusicAdapter(
 
         fun bind(music: Music) {
             binding.music = music
+
+            val mainActivity = binding.spinnerDropDownMore.context as MainActivity
+            mainActivity.initSpinnerMore(
+                binding.spinnerDropDownMore,
+                dataMusics[absoluteAdapterPosition],
+                0,
+                fragment
+            )
         }
     }
 }
