@@ -354,6 +354,9 @@
         <action
             android:id="@+id/action_item_nav_library_to_downloadsFragment"
             app:destination="@id/downloadsFragment" />
+        <action
+            android:id="@+id/action_item_nav_library_to_podcastLibraryFragment"
+            app:destination="@id/podcastLibraryFragment" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
@@ -384,4 +387,9 @@
         android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistFragment"
         android:label="ViewDetailsArtistFragment"
         tools:layout="@layout/fragment_view_details_artist"/>
+    <fragment
+        android:id="@+id/podcastLibraryFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.library.PodcastLibraryFragment"
+        android:label="fragment_podcast_library"
+        tools:layout="@layout/fragment_podcast_library" />
 </navigation>

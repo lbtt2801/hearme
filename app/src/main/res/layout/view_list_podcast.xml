@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="12sp"
             android:layout_marginStart="12dp"
-            android:text="56:42 mins"
+            app:setDuration="@{music.duration}"
             android:textColor="@color/greyscale_900"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/line"

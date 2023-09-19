@@ -26,7 +26,8 @@ import java.util.*
 
 @BindingAdapter("app:setImage")
 fun setImage(imageView: ImageView, id: Int) {
-    imageView.setImageResource(id)
+//    imageView.setImageResource(id)
+    imageView.background = ContextCompat.getDrawable(imageView.context, id)
 }
 
 @BindingAdapter("app:setDate")

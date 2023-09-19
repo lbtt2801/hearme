@@ -17,8 +17,10 @@ import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.MusicAdapter
 import com.lbtt2801.hearme.databinding.FragmentPlaylistDetailBinding
 import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.model.Playlist
 import com.lbtt2801.hearme.viewmodel.HomeViewModel
 import com.lbtt2801.hearme.viewmodel.MusicViewModel
+import com.lbtt2801.hearme.viewmodel.UserViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
@@ -27,8 +29,10 @@ class PlaylistDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var mainActivity: MainActivity
     private lateinit var musicAdapter: MusicAdapter
-    private var lst: ArrayList<Music>?= null
+    private var lst = ArrayList<Playlist>()
+    private var idPlaylist = ""
 
+    private val userViewModel: UserViewModel by activityViewModels()
     private val viewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
     }
@@ -62,11 +66,20 @@ class PlaylistDetailFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.lstDataMusic.observe((activity as MainActivity), Observer {
-            displayRecyclerView(it as ArrayList<Music>)
-        })
+        binding.imgAvatar.background =
+            arguments?.getInt("img")?.let { ContextCompat.getDrawable(requireContext(), it) }
+        binding.tvTitle.text = arguments?.getString("name")
+        binding.tvNumber.text = arguments?.getString("size")
+        idPlaylist = arguments?.getString("id").toString()
 
-        viewModel.getListDataMusic()
+        userViewModel.lstDataPlaylist.observe((activity as MainActivity), Observer { playlists ->
+            lst = playlists as ArrayList<Playlist>
+            var lstMusic: ArrayList<Music>? = null
+            lstMusic = lst.find { it.playlistID == "pl001" }?.listMusic
+            if (lstMusic != null) {
+                displayRecyclerView(lstMusic)
+            }
+        })
     }
 
     override fun onDestroyView() {

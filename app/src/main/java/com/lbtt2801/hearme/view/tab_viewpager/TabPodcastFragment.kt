@@ -24,8 +24,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class TabPodcastFragment : Fragment() {
-    private var _binding: FragmentTabPodcastBinding? = null
-    private val binding get() = _binding!!
+//    private var _binding: FragmentTabPodcastBinding? = null
+//    private val binding get() = _binding!!
+    private lateinit var binding: FragmentTabPodcastBinding
     private lateinit var musicAdapter: MusicAdapter
     private lateinit var mainActivity: MainActivity
     private var lst: ArrayList<Music>? = null
@@ -40,7 +41,7 @@ class TabPodcastFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_tab_podcast,
             container,
@@ -106,7 +107,7 @@ class TabPodcastFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+//        _binding = null
     }
 
     private fun displayRecyclerViewToday(lstData: ArrayList<Music>) {

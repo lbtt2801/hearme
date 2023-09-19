@@ -10,8 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.TextView
+import android.widget.EditText
+import android.widget.Spinner
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -32,13 +35,12 @@ class PlayListFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var mainActivity: MainActivity
     private lateinit var playlistAdapter: PlaylistAdapter
-    private var lst: ArrayList<Playlist>? = null
-    private var email: String? = ""
+    private var lst = ArrayList<Playlist>()
+    private var email: String = ""
+    private var spinnerItems = arrayOf("Recently Added", "Added Before")
+    private var check = false
 
     private val userViewModel: UserViewModel by activityViewModels()
-    private val viewModel by lazy {
-        ViewModelProvider(this)[HomeViewModel::class.java]
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,16 +72,36 @@ class PlayListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.lstDataPlaylist.observe((activity as MainActivity), Observer {
-            lst = userViewModel.lstDataUser.value?.first { it.email == email }?.listPlaylist
-            if (lst != null)
-                displayRecyclerView(lst!!)
+        userViewModel.lstDataPlaylist.observe((activity as MainActivity), Observer {
+            lst = it as ArrayList<Playlist>
+            var lstMain = lst.reversed() as ArrayList<Playlist>
+
+            binding.spinner.setSelection(0)
+            binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    if (p2 == 0) {
+                        if (check)
+                            lstMain = lst.reversed() as ArrayList<Playlist>
+                        displayRecyclerView(lstMain)
+                    } else {
+                        check = true
+                        lstMain = lst
+                        displayRecyclerView(lstMain)
+                    }
+                }
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
+            }
+
+            displayRecyclerView(lstMain)
         })
+
+        val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.style_spinner, spinnerItems)
+        binding.spinner.adapter = spinnerAdapter
 
         binding.btnAddNewPlayList.setOnClickListener {
             showDialogBottom()
         }
-
 
     }
 
@@ -91,7 +113,10 @@ class PlayListFragment : Fragment() {
     private fun displayRecyclerView(lstData: ArrayList<Playlist>) {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
-        playlistAdapter = PlaylistAdapter(lstData, 0)
+        playlistAdapter = PlaylistAdapter(lstData, 0) {
+            findNavController().navigate(R.id.action_playListFragment_to_playlistDetailFragment, it)
+        }
+
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = playlistAdapter
@@ -113,23 +138,30 @@ class PlayListFragment : Fragment() {
         dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.show()
 
-        val tvTitle: TextView = dialog.findViewById(R.id.tvTitle)
+        val edtTitle: EditText = dialog.findViewById(R.id.edtNamePlaylist)
         val btnYes: Button = dialog.findViewById(R.id.btnYes)
         val btnNo: Button = dialog.findViewById(R.id.btnCancel)
+        val spinner: Spinner = dialog.findViewById(R.id.spinnerDialog)
+
+        val spinnerItemsDialog = arrayOf("Public", "Private")
+        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, spinnerItemsDialog)
+        spinner.adapter = spinnerAdapter
 
         btnYes.setOnClickListener {
-//            lst?.add(
-//                Playlist(
-//                    "pl000",
-//                    tvTitle.text.toString(),
-//                    R.drawable.ic_playlist_added,
-//                )
-//            )
+            userViewModel.addPlaylist(
+                Playlist(
+                    "pl000",
+                    edtTitle.text.toString(),
+                    R.drawable.ic_playlist_added,
+                )
+            )
+
             dialog.dismiss()
         }
 
         btnNo.setOnClickListener {
             dialog.dismiss()
         }
+
     }
 }
