@@ -51,13 +51,11 @@ class TabYourLikesFragment : Fragment() {
             lst = arrayList.first { user -> user.email == email }.listMusicsLoved
 
             if (lst.isNotEmpty()) {
-                val lstData = lst.filter { it.category.categoryID == "ca002" } as ArrayList<Music>
-                val lstP1 = lst.filter { it.category.categoryID == "ca002" } as ArrayList<Music>
+                val lstP1 = lst
                 val lstP0 = ArrayList<Music>()
 
-                // dao nguoc mang lstData gan cho lstP0
-                for (i in lstData.indices) {
-                    lstP0.add(i, lstData.removeLast())
+                for (i in lst.indices) {
+                    lstP0.add(i, lst[lst.lastIndex - i])
                 }
 
                 binding.spinner.onItemSelectedListener =

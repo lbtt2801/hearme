@@ -81,6 +81,18 @@ class MyLibraryFragment : Fragment() {
         binding.linearPodcasts.setOnClickListener {
             findNavController().navigate(R.id.action_item_nav_library_to_podcastLibraryFragment)
         }
+
+        binding.linearAlbums.setOnClickListener {
+            findNavController().navigate(R.id.action_item_nav_library_to_albumsFragment)
+        }
+
+        binding.linearSongs.setOnClickListener {
+            findNavController().navigate(R.id.action_item_nav_library_to_songFragment)
+        }
+
+        binding.linearArtists.setOnClickListener {
+            findNavController().navigate(R.id.action_item_nav_library_to_artistsFragment)
+        }
     }
     override fun onDestroyView() {
         super.onDestroyView()

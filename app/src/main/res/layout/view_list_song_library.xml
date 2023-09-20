@@ -49,7 +49,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{music.artist.artistName}"
+                    app:setTextSongs="@{music}"
                     android:textColor="@color/greyscale_700"
                     android:textSize="12sp"
                     android:layout_marginTop="10dp"/>
@@ -68,8 +68,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginRight="20dp"
-                    android:background="@color/transparent"
-                    android:src="@drawable/ic_play" />
+                    android:background="@drawable/ic_play"/>
 
                 <com.lbtt2801.hearme.data.control.CustomSpinner
                     android:id="@+id/spinner_drop_down_more"

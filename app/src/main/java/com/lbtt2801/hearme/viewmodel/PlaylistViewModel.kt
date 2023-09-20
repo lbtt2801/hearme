@@ -27,8 +27,8 @@ class PlaylistViewModel: ViewModel() {
         _lstDataPlaylist.postValue(lst)
     }
 
-    fun addDataPlaylist(id: String, name: String, img: Int, lstMusic: ArrayList<Music>) {
-        lst.add( Playlist( id, name, img, lstMusic ) )
-        _lstDataPlaylist.postValue(lst)
-    }
+//    fun addDataPlaylist(id: String, name: String, img: Int, lstMusic: ArrayList<Music>) {
+//        lst.add( Playlist( id, name, img, lstMusic ) )
+//        _lstDataPlaylist.postValue(lst)
+//    }
 }
