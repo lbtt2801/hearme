@@ -462,24 +462,27 @@ class MainActivity : AppCompatActivity() {
                                     }
                                 }.create().show()
                             } else {
-//                                if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listPlayedMusic?.none { it.musicID == music.musicID } == true) {
-//                                    isAdd = true
-//                                    mainActivity.showSnack(
-//                                        v,
-//                                        "You added ${music.musicName} to playlist!"
-//                                    )
-//                                } else {
-//                                    isAdd = false
-//                                    mainActivity.showSnack(
-//                                        v,
-//                                        "You removed ${music.musicName} from playlist!"
-//                                    )
-//                                }
-//                                mainActivity.viewModelUser.updateListPlayedMusic(
-//                                    mainActivity.email,
-//                                    music,
-//                                    isAdd
-//                                )
+                                if (viewModelUser.lstDataUser.value?.first { it.email == email }?.listPlaylist?.get(
+                                        0
+                                    )?.listMusic?.none { it.musicID == music.musicID } == true
+                                ) {
+                                    isAdd = true
+                                    showSnack(
+                                        v,
+                                        "You added ${music.musicName} to playlist 'My Favorite Pop Songs'!"
+                                    )
+                                } else {
+                                    isAdd = false
+                                    showSnack(
+                                        v,
+                                        "You removed ${music.musicName} from playlist 'My Favorite Pop Songs'!"
+                                    )
+                                }
+                                viewModelUser.updateListPlayedMusic(
+                                    email,
+                                    music,
+                                    isAdd
+                                )
                             }
                         }
                         3 -> { // Add to blacklist
@@ -552,9 +555,18 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                         6 -> { // Go to album
+                            Toast.makeText(v.context, "Go to album", Toast.LENGTH_SHORT).show()
+                        }
+                        7 -> { // Mark as Played
+                            Toast.makeText(v.context, "Mark as Played", Toast.LENGTH_SHORT).show()
 
                         }
-                        7 -> { // Share
+                        8 -> { // Go to Podcast
+                            Toast.makeText(v.context, "Go to Podcast", Toast.LENGTH_SHORT).show()
+
+                        }
+                        9 -> { // Share
+                            Toast.makeText(v.context, "Share", Toast.LENGTH_SHORT).show()
 
                         }
                     }

@@ -34,21 +34,30 @@ class UserViewModel : ViewModel() {
 
     private fun getListDataUser() {
         lst = UsersData.data()
-        lst.first { it.email == "phuongviet.huit@gmail.com" }.apply {
-            this.listFollowers.add(
-                UsersData.data().first { it.email == "lebuitantruong@gmail.com" })
-        }
-        lst.first { it.email == "lebuitantruong@gmail.com" }.apply {
-            this.listFollowers.add(
-                UsersData.data().first { it.email == "phuongviet.huit@gmail.com" })
-        }
-        lst.first { it.email == "123456@gmail.com" }.apply {
-            this.listFollowers.apply {
-                add(UsersData.data().first { it.email == "phuongviet.huit@gmail.com" })
-                add(UsersData.data().first { it.email == "lebuitantruong@gmail.com" })
+        updateFollowingList("phuongviet.huit@gmail.com", lst[1], true)
+        updateFollowingList("phuongviet.huit@gmail.com", lst[2], true)
+        updateFollowingList("phuongviet.huit@gmail.com", lst[3], true)
+        updateFollowingList("lebuitantruong@gmail.com", lst[0], true)
+        updateFollowingList("lebuitantruong@gmail.com", lst[2], true)
+        updateFollowingList("lebuitantruong@gmail.com", lst[3], true)
+        updateFollowingList("lebuitantruong@gmail.com", lst[4], true)
 
-            }
-        }
+
+//        lst.first { it.email == "phuongviet.huit@gmail.com" }.apply {
+//            this.listUserFollowing.add(
+//                UsersData.data().first { it.email == "lebuitantruong@gmail.com" })
+//        }
+//        lst.first { it.email == "lebuitantruong@gmail.com" }.apply {
+//            this.listUserFollowing.add(
+//                UsersData.data().first { it.email == "phuongviet.huit@gmail.com" })
+//        }
+//        lst.first { it.email == "123456@gmail.com" }.apply {
+//            this.listUserFollowing.apply {
+//                add(UsersData.data().first { it.email == "phuongviet.huit@gmail.com" })
+//                add(UsersData.data().first { it.email == "lebuitantruong@gmail.com" })
+//
+//            }
+//        }
         _lstDataUser.postValue(lst)
     }
 
@@ -159,11 +168,11 @@ class UserViewModel : ViewModel() {
     fun updateListPlayedMusic(email: String, music: Music, isLove: Boolean) {
         if (isLove) {
             lst.first { it.email == email }.apply {
-//                this.listPlayedMusic.add(music)
+                this.listPlaylist[0].listMusic.add(music)
             }
         } else {
             lst.first { it.email == email }.apply {
-//                this.listPlayedMusic.removeIf { it.musicID == music.musicID }
+                this.listPlaylist[0].listMusic.removeIf { it.musicID == music.musicID }
             }
         }
         _lstDataUser.postValue(lst)
@@ -236,15 +245,46 @@ class UserViewModel : ViewModel() {
         return !lstDataUser.value?.first { it.email == email }?.blackListMusic?.none { it.musicID == music.musicID }!!
     }
 
+    fun updateFollowingList(email: String, user: User, isFollow: Boolean) {
+        if (isFollow) {
+            lst.first { it.email == email }.apply {
+                this.listUserFollowing.add(user)
+            }
+            Log.v(
+                TAG,
+                "updateFollowingList -> ${lst.first { it.email == email }.listUserFollowing.size}"
+            )
+            updateFollowersList(user.email, lst.first { it.email == email }, true)
+        } else {
+            lst.first { it.email == email }.apply {
+                this.listUserFollowing.removeIf { it.email == user.email }
+            }
+            Log.v(
+                TAG,
+                "updateFollowingList -> ${lst.first { it.email == email }.listUserFollowing.size}"
+            )
+            updateFollowersList(user.email, lst.first { it.email == email }, false)
+        }
+        _lstDataUser.postValue(lst)
+    }
+
     fun updateFollowersList(email: String, user: User, isFollow: Boolean) {
         if (isFollow) {
             lst.first { it.email == email }.apply {
                 this.listFollowers.add(user)
             }
+            Log.v(
+                TAG,
+                "updateFollowersList -> ${lst.first { it.email == email }.listFollowers.size}"
+            )
         } else {
             lst.first { it.email == email }.apply {
                 this.listFollowers.removeIf { it.email == user.email }
             }
+            Log.v(
+                TAG,
+                "updateFollowersList -> ${lst.first { it.email == email }.listFollowers.size}"
+            )
         }
         _lstDataUser.postValue(lst)
     }
@@ -266,6 +306,7 @@ class UserViewModel : ViewModel() {
         lstPlaylist = PlaylistData.dataPlaylist()
         _lstDataPlaylist.postValue(lstPlaylist)
     }
+
     fun addPlaylist(playlist: Playlist) {
         lstPlaylist.add(playlist)
         _lstDataPlaylist.postValue(lstPlaylist)

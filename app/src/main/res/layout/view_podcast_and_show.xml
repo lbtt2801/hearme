@@ -23,7 +23,6 @@
             android:adjustViewBounds="true"
             app:setImage="@{artist.image}"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_podcast"
             app:shapeAppearanceOverlay="@style/roundedConorImageview2" />
 
         <TextView

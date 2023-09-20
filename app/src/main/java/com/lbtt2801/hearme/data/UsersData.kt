@@ -40,7 +40,8 @@ class UsersData {
                         MusicsData.dataMusic() //listMusicsDownloaded
                             .filter { it.musicID == "ms004" || it.musicID == "ms009" } as ArrayList<Music>,
                         ArrayList(), //listMusicsQueued
-                        PlaylistData.dataPlaylist().filter { it.playlistID == "pl001" || it.playlistID == "pl003" } as ArrayList<Playlist>,
+                        PlaylistData.dataPlaylist()
+                            .filter { it.playlistID == "pl001" || it.playlistID == "pl003" } as ArrayList<Playlist>,
 //                        MusicsData.dataMusic() //listPlayedMusic
 //                            .filter { it.musicID == "ms004" || it.musicID == "ms010" || it.musicID == "ms012" || it.musicID == "ms009" } as ArrayList<Music>,
                         ArrayList() //blackListMusic
@@ -108,10 +109,113 @@ class UsersData {
                         MusicsData.dataMusic() //listMusicDownloaded
                             .filter { it.musicID == "ms005" || it.musicID == "ms004" || it.musicID == "ms001" } as ArrayList<Music>,
                         ArrayList(), //listMusicsQueued
-                        PlaylistData.dataPlaylist().filter { it.playlistID == "pl001" || it.playlistID == "pl002" } as ArrayList<Playlist>,
+                        PlaylistData.dataPlaylist()
+                            .filter { it.playlistID == "pl001" || it.playlistID == "pl002" } as ArrayList<Playlist>,
 //                        MusicsData.dataMusic() //listPlayedMusic
 //                            .filter { it.musicID == "ms002" || it.musicID == "ms003" || it.musicID == "ms007" } as ArrayList<Music>,
                         ArrayList() //blackListMusic
+                    )
+                )
+                add(
+                    User(
+                        "userso1@gmail.com",
+                        "userso1",
+                        "b@gmail.com",
+                        R.drawable.img_music,
+                        "User so 1",
+                        "Acc Clone",
+                        Date("28/01/2002"),
+                        "VN",
+                        "32 846 79 25",
+                        4567,
+                        true, // true is male, false is female,
+                        false,
+                        false, // true if user the first sign in
+                    )
+                )
+                add(
+                    User(
+                        "userso2@gmail.com",
+                        "userso2",
+                        "b@gmail.com",
+                        R.drawable.img_music,
+                        "User so 2",
+                        "Acc Clone",
+                        Date("28/01/2002"),
+                        "VN",
+                        "32 846 79 25",
+                        4567,
+                        true, // true is male, false is female,
+                        false,
+                        false, // true if user the first sign in
+                    )
+                )
+                add(
+                    User(
+                        "userso3@gmail.com",
+                        "userso3",
+                        "b@gmail.com",
+                        R.drawable.img_music,
+                        "User so 3",
+                        "Acc Clone",
+                        Date("28/01/2002"),
+                        "VN",
+                        "32 846 79 25",
+                        4567,
+                        true, // true is male, false is female,
+                        false,
+                        false, // true if user the first sign in
+                    )
+                )
+                add(
+                    User(
+                        "userso4@gmail.com",
+                        "userso4",
+                        "b@gmail.com",
+                        R.drawable.img_music,
+                        "User so 4",
+                        "Acc Clone",
+                        Date("28/01/2002"),
+                        "VN",
+                        "32 846 79 25",
+                        4567,
+                        true, // true is male, false is female,
+                        false,
+                        false, // true if user the first sign in
+                    )
+                )
+                add(
+                    User(
+                        "userso5@gmail.com",
+                        "userso5",
+                        "b@gmail.com",
+                        R.drawable.img_music,
+                        "User so 5",
+                        "Acc Clone",
+                        Date("28/01/2002"),
+                        "VN",
+                        "32 846 79 25",
+                        4567,
+                        true, // true is male, false is female,
+                        false,
+                        false, // true if user the first sign in
+                    )
+                )
+                add(
+                    User(
+                        "userso6@gmail.com",
+                        "userso6",
+                        "b@gmail.com",
+                        R.drawable.img_music,
+                        "User so 6",
+                        "Acc Clone",
+                        Date("28/01/2002"),
+                        "VN",
+                        "32 846 79 25",
+                        4567,
+                        true, // true is male, false is female,
+                        false,
+                        false, // true if user the first sign in
                     )
                 )
             }

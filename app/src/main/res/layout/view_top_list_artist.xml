@@ -29,7 +29,7 @@
                 android:layout_marginRight="16dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/image_katyperry_artist"
+                app:setImage="@{artist.image}"
                 app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
             <LinearLayout

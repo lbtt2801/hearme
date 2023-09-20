@@ -65,6 +65,7 @@ class ArtistAdapter(
             }
             is PodcastAndShowViewHolder -> {
                 holder.bind(dataArtists[position])
+                destination = R.id.action_item_nav_explore_to_viewDetailsArtistOfPodcastFragment
             }
         }
         holder.itemView.setOnClickListener() {

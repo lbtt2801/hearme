@@ -133,8 +133,8 @@
                             android:button="@drawable/selector_play_list_check_box"
                             android:buttonTint="@color/color_selector_check_box"
                             android:checked="false"
-                            app:clickPlayList="@{music}"
-                            app:setPlayList="@{music}" />
+                            app:clickQueueList="@{music}"
+                            app:setQueueList="@{music}" />
 
                         <CheckBox
                             android:id="@+id/cb_add_down_list"

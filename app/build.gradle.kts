@@ -72,4 +72,6 @@ dependencies {
 
     // kotlin
 //    implementation("kotlin")
+
+    implementation("kr.co.prnd:readmore-textview:1.0.0")
 }

@@ -115,7 +115,7 @@
         android:id="@+id/notificationFragment"
         android:name="com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment"
         android:label="NotificationFragment"
-        tools:layout="@layout/fragment_notification" >
+        tools:layout="@layout/fragment_notification">
         <action
             android:id="@+id/action_notificationFragment_to_viewDetailsSongFragment"
             app:destination="@id/viewDetailsSongFragment" />
@@ -166,7 +166,7 @@
     <fragment
         android:id="@+id/trendingNowFragment"
         android:name="com.lbtt2801.hearme.view.fragments.homeactionmenu.TrendingNowFragment"
-        android:label="TrendingNowFragment" >
+        android:label="TrendingNowFragment">
         <action
             android:id="@+id/action_trendingNowFragment_to_viewDetailsSongFragment"
             app:destination="@id/viewDetailsSongFragment" />
@@ -189,6 +189,12 @@
         <action
             android:id="@+id/action_item_nav_explore_to_viewDetailsArtistFragment"
             app:destination="@id/viewDetailsArtistFragment" />
+        <action
+            android:id="@+id/action_item_nav_explore_to_viewDetailsArtistOfPodcastFragment"
+            app:destination="@id/viewDetailsArtistOfPodcastFragment" />
+        <action
+            android:id="@+id/action_item_nav_explore_to_viewDetailsPodcastFragment"
+            app:destination="@id/viewDetailsPodcastFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemExploreFragment"
@@ -330,7 +336,7 @@
         android:id="@+id/viewDetailsSongFragment"
         android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsSongFragment"
         android:label="ViewDetailsSongFragment"
-        tools:layout="@layout/fragment_view_details_song" >
+        tools:layout="@layout/fragment_view_details_song">
         <action
             android:id="@+id/action_viewDetailsSongFragment_to_viewDetailsArtistFragment"
             app:destination="@id/viewDetailsArtistFragment" />
@@ -344,7 +350,7 @@
         android:id="@+id/item_nav_library"
         android:name="com.lbtt2801.hearme.view.fragments.library.MyLibraryFragment"
         android:label="MyLibraryFragment"
-        tools:layout="@layout/fragment_my_library" >
+        tools:layout="@layout/fragment_my_library">
         <action
             android:id="@+id/action_item_nav_library_to_historyFragment"
             app:destination="@id/historyFragment" />
@@ -376,7 +382,7 @@
         android:id="@+id/playListFragment"
         android:name="com.lbtt2801.hearme.view.fragments.library.PlayListFragment"
         android:label="fragment_play_list"
-        tools:layout="@layout/fragment_play_list" >
+        tools:layout="@layout/fragment_play_list">
         <action
             android:id="@+id/action_playListFragment_to_playlistDetailFragment"
             app:destination="@id/playlistDetailFragment" />
@@ -395,7 +401,7 @@
         android:id="@+id/viewDetailsArtistFragment"
         android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistFragment"
         android:label="ViewDetailsArtistFragment"
-        tools:layout="@layout/fragment_view_details_artist"/>
+        tools:layout="@layout/fragment_view_details_artist" />
     <fragment
         android:id="@+id/podcastLibraryFragment"
         android:name="com.lbtt2801.hearme.view.fragments.library.PodcastLibraryFragment"
@@ -416,4 +422,18 @@
         android:name="com.lbtt2801.hearme.view.fragments.library.ArtistsFragment"
         android:label="fragment_artists"
         tools:layout="@layout/fragment_artists" />
+    <fragment
+        android:id="@+id/viewDetailsArtistOfPodcastFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistOfPodcastFragment"
+        android:label="ViewDetailsArtistOfPodcastFragment"
+        tools:layout="@layout/fragment_view_details_artist_of_podcast" >
+        <action
+            android:id="@+id/action_viewDetailsArtistOfPodcastFragment_to_viewDetailsPodcastFragment"
+            app:destination="@id/viewDetailsPodcastFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewDetailsPodcastFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsPodcastFragment"
+        android:label="ViewDetailsPodcastFragment"
+        tools:layout="@layout/fragment_view_details_podcast" />
 </navigation>
