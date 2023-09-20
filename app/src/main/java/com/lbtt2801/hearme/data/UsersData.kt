@@ -39,6 +39,7 @@ class UsersData {
                             .filter { it.musicID == "ms001" || it.musicID == "ms002" || it.musicID == "ms005" || it.musicID == "ms008" || it.musicID == "ms011" } as ArrayList<Music>,
                         MusicsData.dataMusic() //listMusicsDownloaded
                             .filter { it.musicID == "ms004" || it.musicID == "ms009" } as ArrayList<Music>,
+                        ArrayList(), //listMusicsQueued
                         PlaylistData.dataPlaylist().filter { it.playlistID == "pl001" || it.playlistID == "pl003" } as ArrayList<Playlist>,
 //                        MusicsData.dataMusic() //listPlayedMusic
 //                            .filter { it.musicID == "ms004" || it.musicID == "ms010" || it.musicID == "ms012" || it.musicID == "ms009" } as ArrayList<Music>,
@@ -71,6 +72,7 @@ class UsersData {
                             .filter { it.musicID == "ms002" || it.musicID == "ms006" || it.musicID == "ms007" || it.musicID == "ms001" || it.musicID == "ms004" } as ArrayList<Music>,
                         MusicsData.dataMusic() //listMusicDownloaded
                             .filter { it.musicID == "ms003" || it.musicID == "ms012" || it.musicID == "ms009" } as ArrayList<Music>,
+                        ArrayList(), //listMusicsQueued
                         PlaylistData.dataPlaylist().filter { it.playlistID == "pl001" || it.playlistID == "pl002" || it.playlistID == "pl003" } as ArrayList<Playlist>,
 //                        MusicsData.dataMusic() //listPlayedMusic
 //                            .filter { it.musicID == "ms003" || it.musicID == "ms009" || it.musicID == "ms010" } as ArrayList<Music>,
@@ -103,6 +105,7 @@ class UsersData {
                             .filter { it.musicID == "ms009" || it.musicID == "ms007" || it.musicID == "ms005" || it.musicID == "ms010" || it.musicID == "ms011" } as ArrayList<Music>,
                         MusicsData.dataMusic() //listMusicDownloaded
                             .filter { it.musicID == "ms005" || it.musicID == "ms004" || it.musicID == "ms001" } as ArrayList<Music>,
+                        ArrayList(), //listMusicsQueued
                         PlaylistData.dataPlaylist().filter { it.playlistID == "pl001" || it.playlistID == "pl002" } as ArrayList<Playlist>,
 //                        MusicsData.dataMusic() //listPlayedMusic
 //                            .filter { it.musicID == "ms002" || it.musicID == "ms003" || it.musicID == "ms007" } as ArrayList<Music>,
