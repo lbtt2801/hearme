@@ -24,6 +24,7 @@ data class User(
     val listMusicsLoved: ArrayList<Music> = ArrayList(), //Love
     val listMusicsListened: ArrayList<Music> = ArrayList(), //History
     val listMusicsDownloaded: ArrayList<Music> = ArrayList(), //Downloaded
+    val listMusicsQueue: ArrayList<Music> = ArrayList(), //Queue
     val listPlaylist: ArrayList<Playlist> = ArrayList(), //Play list
     val blackListMusic: ArrayList<Music> = ArrayList()
 ) {

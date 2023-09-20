@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -23,7 +24,7 @@ class TabDownloadedFragment : Fragment() {
     private lateinit var binding: FragmentTabDownloadedBinding
     private lateinit var mainActivity: MainActivity
     private lateinit var musicAdapter: MusicAdapter
-    private var lst: ArrayList<Music>? = null
+    private var lst: ArrayList<Music> = ArrayList()
     private var email: String? = ""
     private var spinnerItems = arrayOf("Recently Added", "Added Before")
 
@@ -36,23 +37,7 @@ class TabDownloadedFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_downloaded, container, false)
 
         mainActivity = (activity as MainActivity)
-        lst = ArrayList()
         email = mainActivity.email
-
-        mainActivity.customToolbar(
-            "VISIBLE",
-            "Downloads",
-            null,
-            R.color.transparent,
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back),
-            showIcMore = true,
-            showIcFilter = false,
-            showIcSearch = true
-        )
-        mainActivity.showBottomNav("GONE")
-        mainActivity.binding.toolBar.setNavigationOnClickListener {
-            findNavController().popBackStack()
-        }
 
         return binding.root
     }
@@ -65,10 +50,16 @@ class TabDownloadedFragment : Fragment() {
 
         userViewModel.lstDataUser.observe((activity as MainActivity), Observer { arrayList ->
             lst = arrayList.first { user -> user.email == email }.listMusicsDownloaded
-            val lstP0 = lst as ArrayList<Music>
-            val lstP1 = lst as ArrayList<Music>
-            if (!lst.isNullOrEmpty()) {
-                val lstData: List<Music> = lst!!.filter { it.category.categoryID == "ca002" }
+
+            if (lst.isNotEmpty()) {
+                val lstData = lst.filter { it.category.categoryID == "ca002" } as ArrayList<Music>
+                val lstP1 = lst.filter { it.category.categoryID == "ca002" } as ArrayList<Music>
+                val lstP0 = ArrayList<Music>()
+
+                // dao nguoc mang lstData gan cho lstP0
+                for (i in lstData.indices) {
+                    lstP0.add(i, lstData.removeLast())
+                }
 
                 binding.spinner.setSelection(0)
                 binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

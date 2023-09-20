@@ -297,6 +297,87 @@ fun clickDownList(checkBox: CheckBox, music: Music) {
     }
 }
 
+@BindingAdapter("app:setQueueList")
+fun setQueueList(checkBox: CheckBox, music: Music) {
+    val mainActivity = checkBox.context as MainActivity
+    val user =
+        mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }
+    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) {
+        checkBox.isChecked =
+            user?.listMusicsQueue?.none { it.musicID == music.musicID } == false
+    }
+}
+
+@BindingAdapter("app:clickQueueList")
+fun clickQueueList(checkBox: CheckBox, music: Music) {
+    val mainActivity = checkBox.context as MainActivity
+    checkBox.setOnClickListener() {
+        var isQueued = false
+
+        if (mainActivity.viewModelUser.isMusicInBlackList(
+                mainActivity.email,
+                music
+            )
+        ) {
+            val builder = AlertDialog.Builder(checkBox.context)
+            builder.apply {
+                setTitle("Confirm")
+                setMessage("${music.musicName} is putting into blacklist, are you want to remove it?")
+                setPositiveButton(
+                    "YES"
+                ) { dialog, _ ->
+                    mainActivity.viewModelUser.apply {
+                        music.let {
+                            updateBlackListMusic(
+                                mainActivity.email,
+                                it,
+                                false
+                            )
+                            updateListMusicsQueued(
+                                mainActivity.email,
+                                it,
+                                true
+                            )
+                        }
+                    }
+                    mainActivity.showSnack(
+                        checkBox,
+                        "You added ${music.musicName} to queued list!"
+                    )
+                    dialog.dismiss()
+                }
+                setNegativeButton("NO") { dialog, _ ->
+                    mainActivity.viewModelUser.updateListMusicsQueued(
+                        mainActivity.email,
+                        music,
+                        false
+                    )
+                    dialog.dismiss()
+                }
+            }.create().show()
+        } else {
+            if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }?.listMusicsQueue?.none { it.musicID == music.musicID } == true) {
+                isQueued = true
+                mainActivity.showSnack(
+                    checkBox,
+                    "You added ${music.musicName} to queued list!"
+                )
+            } else {
+                isQueued = false
+                mainActivity.showSnack(
+                    checkBox,
+                    "You removed ${music.musicName} from queued list!"
+                )
+            }
+            mainActivity.viewModelUser.updateListMusicsQueued(
+                mainActivity.email,
+                music,
+                isQueued
+            )
+        }
+    }
+}
+
 
 @BindingAdapter("app:setFollowButton")
 fun setFollowButton(toggleButton: ToggleButton, artist: Artist) {

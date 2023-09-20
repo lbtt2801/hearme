@@ -169,6 +169,19 @@ class UserViewModel : ViewModel() {
         _lstDataUser.postValue(lst)
     }
 
+    fun updateListMusicsQueued(email: String, music: Music, isQueue: Boolean) {
+        if (isQueue) {
+            lst.first { it.email == email }.apply {
+                this.listMusicsQueue.add(music)
+            }
+        } else {
+            lst.first { it.email == email }.apply {
+                this.listMusicsQueue.removeIf { it.musicID == music.musicID }
+            }
+        }
+        _lstDataUser.postValue(lst)
+    }
+
     fun updateListMusicsDownloaded(email: String, music: Music, isDownloaded: Boolean) {
         if (isDownloaded) {
             lst.first { it.email == email }.apply {

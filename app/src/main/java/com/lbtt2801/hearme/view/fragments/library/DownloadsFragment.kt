@@ -72,8 +72,14 @@ class DownloadsFragment : Fragment() {
 
         lst = userViewModel.lstDataUser.value?.first { it.email == email }?.listMusicsDownloaded
 
-        val lstP0 = lst!!.reversed() as ArrayList<Music>
+        val lstTemp = lst
         val lstP1 = lst as ArrayList<Music>
+        val lstP0 = ArrayList<Music>()
+        if (lstTemp != null) {
+            for (i in lstTemp.indices) {
+                lstP0.add(i, lstTemp.removeLast())
+            }
+        }
 
         val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.style_spinner, spinnerItems)
         binding.spinner.adapter = spinnerAdapter

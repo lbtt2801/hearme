@@ -112,10 +112,12 @@
             android:button="@drawable/selector_play_list_check_box"
             android:buttonTint="@color/color_selector_check_box"
             android:checked="false"
-            app:clickPlayList="@{music}"
             app:layout_constraintStart_toEndOf="@+id/ic_heart"
             app:layout_constraintTop_toBottomOf="@+id/tvDuration"
-            app:setPlayList="@{music}" />
+            app:clickQueueList="@{music}"
+            app:setQueueList="@{music}" />
+<!--            app:clickPlayList="@{music}"-->
+<!--            app:setPlayList="@{music}" />-->
 
         <CheckBox
             android:id="@+id/ic_download"
