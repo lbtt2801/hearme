@@ -43,6 +43,7 @@ class ExploreFragment : Fragment() {
     private lateinit var recentSearchesAdapter: RecentSearchesAdapter
     private lateinit var musicAdapter: MusicAdapter
     private lateinit var artistAdapter: ArtistAdapter
+    private lateinit var userAdapter: UserAdapter
 
     private lateinit var includeTopsSongsArtistsAlbumsPlaylistsProfiles: ContainerSearchResultBinding
 
@@ -209,7 +210,13 @@ class ExploreFragment : Fragment() {
                                 displayRecyclerFoundPlaylistsList(p0)
                             }
                             "Profiles" -> {
-                                displayRecyclerFoundProfilesList(p0)
+                                if (displayRecyclerFoundProfilesList(p0)) {
+                                    includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.root.visibility =
+                                        View.VISIBLE
+                                } else {
+                                    includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeNotfoundSearch.root.visibility =
+                                        View.VISIBLE
+                                }
                             }
                         }
                     }
@@ -229,7 +236,21 @@ class ExploreFragment : Fragment() {
     }
 
     private fun displayRecyclerFoundProfilesList(p0: String): Boolean {
-        return false
+        val listFoundUser: ArrayList<User> = userViewModel.lstDataUser.value?.filter {
+            it.fullName.trim().lowercase().contains(p0.trim().lowercase())
+        } as ArrayList<User>
+
+        if (listFoundUser.isEmpty()) {
+            return false
+        }
+
+        userAdapter = UserAdapter(listFoundUser, 0)
+        includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.recyclerViewFoundList.apply {
+            layoutManager = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
+            adapter = userAdapter
+        }
+
+        return true
     }
 
     private fun displayRecyclerFoundPlaylistsList(p0: String): Boolean {

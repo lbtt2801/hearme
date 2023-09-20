@@ -2,6 +2,7 @@ package com.lbtt2801.hearme.data.adapter
 
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
+import android.graphics.Color
 import android.util.DisplayMetrics
 import android.util.Log
 import android.widget.CheckBox
@@ -15,11 +16,8 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
-import com.lbtt2801.hearme.model.Artist
-import com.lbtt2801.hearme.model.Music
-import com.lbtt2801.hearme.model.Playlist
-import com.lbtt2801.hearme.model.Time
-import com.lbtt2801.hearme.model.TopicSearch
+import com.lbtt2801.hearme.data.control.CustomTextViewShowMoreOrLess
+import com.lbtt2801.hearme.model.*
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -419,6 +417,46 @@ fun clickFollowButton(toggleButton: ToggleButton, artist: Artist) {
     }
 }
 
+@BindingAdapter("app:setUserFollowButton")
+fun setUserFollowButton(toggleButton: ToggleButton, myFollower: User) {
+    val mainActivity = toggleButton.context as MainActivity
+    val myUser =
+        mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }
+
+    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) { _ ->
+        toggleButton.isChecked = myUser?.listUserFollowing?.any { it.email == myFollower.email } == true
+    }
+}
+
+@BindingAdapter("app:clickUserFollowButton")
+fun clickUserFollowButton(toggleButton: ToggleButton, myFollower: User) {
+    val mainActivity = toggleButton.context as MainActivity
+    val myUser =
+        mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }
+
+    toggleButton.setOnClickListener() {
+        var isFollowing = false
+        if (mainActivity.viewModelUser.lstDataUser.value?.first { it.email == myUser?.email }?.listUserFollowing?.none { it.email == myFollower.email } == true) {
+            isFollowing = true
+            mainActivity.showSnack(
+                toggleButton,
+                "You following ${myFollower.fullName}!"
+            )
+        } else {
+            isFollowing = false
+            mainActivity.showSnack(
+                toggleButton,
+                "You unfollow ${myFollower.fullName}!"
+            )
+        }
+        mainActivity.viewModelUser.updateFollowingList(
+            mainActivity.email,
+            myFollower,
+            isFollowing
+        )
+    }
+}
+
 @BindingAdapter("app:setBackgroundTint")
 fun setBackgroundTint(cardView: MaterialCardView, color: Int) {
     cardView.backgroundTintList = ContextCompat.getColorStateList(cardView.context, color)
@@ -492,5 +530,6 @@ fun setTextAlbums(textView: TextView, playlist: Playlist) {
 
 @BindingAdapter("app:setTextSongs")
 fun setTextSongs(textView: TextView, music: Music) {
-    textView.text = "${music.artist.artistName}  |  ${music.duration.minute}:${music.duration.second} mins"
+    textView.text =
+        "${music.artist.artistName}  |  ${music.duration.minute}:${music.duration.second} mins"
 }

@@ -3,6 +3,7 @@ package com.lbtt2801.hearme.data.adapter
 import android.annotation.SuppressLint
 import com.lbtt2801.hearme.R
 import android.content.Context
+import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import com.lbtt2801.hearme.model.MoreSong
-import com.lbtt2801.hearme.model.Music
 
 
 class MoreSongDropdownAdapter(
@@ -21,45 +20,49 @@ class MoreSongDropdownAdapter(
     private val type: Int
 ) :
     BaseAdapter() {
+    private lateinit var txtName: TextView
+    private lateinit var image: ImageView
+    private lateinit var container: LinearLayout
+    private lateinit var bottomLine: View
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View = LayoutInflater.from(context)
             .inflate(R.layout.view_more_song, parent, false)
 
-        val txtName = view.findViewById<TextView>(R.id.name_dropdown)
-        val image = view.findViewById<ImageView>(R.id.image_dropdown)
-        val container = view.findViewById<LinearLayout>(R.id.container_item_dropdown)
-        val line = view.findViewById<View>(R.id.view_bottom_line_item)
+        txtName = view.findViewById(R.id.name_dropdown)
+        image = view.findViewById(R.id.image_dropdown)
+        container = view.findViewById(R.id.container_item_dropdown)
+        bottomLine = view.findViewById(R.id.view_bottom_line_item)
 
         txtName.text = data[position].name
         image.setImageResource(data[position].image)
 
         if (position == 0) {
-            txtName.visibility = View.GONE
-            image.visibility = View.GONE
-            view.visibility = View.GONE
-            container.visibility = View.GONE
-            line.visibility = View.GONE
+            visibleView(view, View.GONE)
         }
 
-        if (position == 7) {
-            line.visibility = View.GONE
+        if (position == 9) {
+            bottomLine.visibility = View.GONE
         }
 
-        if (type == 1) {
-            if (position == 1 || position == 2 || position == 4) {
-                txtName.visibility = View.GONE
-                image.visibility = View.GONE
-                view.visibility = View.GONE
-                container.visibility = View.GONE
-                line.visibility = View.GONE
+        if (type == 0) {
+            if (position == 7 || position == 8) {
+                visibleView(view, View.GONE)
+            }
+        } else if (type == 1) {
+            if (position == 1 || position == 2 || position == 4 || position == 7 || position == 8) {
+                visibleView(view, View.GONE)
+            }
+        } else if (type == 2) {
+            if (position == 1 || position == 2 || position == 3 || position == 4 || position == 5 || position == 6) {
+                visibleView(view, View.GONE)
             }
         }
         return view
     }
 
-    override fun getItem(position: Int): Any? {
+    override fun getItem(position: Int): Any {
         return data[position];
     }
 
@@ -69,5 +72,13 @@ class MoreSongDropdownAdapter(
 
     override fun getItemId(position: Int): Long {
         return position.toLong();
+    }
+
+    private fun visibleView(view: View, isVisible: Int) {
+        txtName.visibility = isVisible
+        image.visibility = isVisible
+        view.visibility = isVisible
+        container.visibility = isVisible
+        bottomLine.visibility = isVisible
     }
 }

@@ -29,7 +29,7 @@
                 android:layout_marginRight="16dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/image_firework_music"
+                app:setImage="@{music.image}"
                 app:shapeAppearanceOverlay="@style/roundedConorImageview" />
 
             <LinearLayout

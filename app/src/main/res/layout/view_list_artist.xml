@@ -29,7 +29,7 @@
                 android:layout_marginRight="16dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/image_katyperry_artist"
+                app:setImage="@{artist.image}"
                 app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
             <LinearLayout
@@ -82,6 +82,7 @@
                     android:paddingRight="16dp"
                     android:paddingBottom="6dp"
                     android:textAllCaps="false"
+                    android:textColor="@color/color_selector_text_toggle_button_follow"
                     android:textOff="Follow"
                     android:textOn="Following"
                     android:textSize="14dp"

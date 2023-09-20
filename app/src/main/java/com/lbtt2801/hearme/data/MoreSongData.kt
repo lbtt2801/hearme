@@ -15,6 +15,8 @@ class MoreSongData {
                 add(MoreSong(R.drawable.ic_light_down, "Download"))
                 add(MoreSong(R.drawable.ic_profile, "View Artist"))
                 add(MoreSong(R.drawable.ic_playback, "Go to Album"))
+                add(MoreSong(R.drawable.ic_check_box, "Mark as Played"))
+                add(MoreSong(R.drawable.ic_podcast, "Go to Podcast"))
                 add(MoreSong(R.drawable.ic_share, "Share"))
             }
             return data

@@ -11,5 +11,6 @@ data class Music(
     val release: Date,
     val category: Category,
     val artist: Artist,
-    val isAlbum: Boolean
+    val isAlbum: Boolean,
+    val information: String? = null
 )

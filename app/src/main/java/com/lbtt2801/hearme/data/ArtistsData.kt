@@ -25,27 +25,59 @@ class ArtistsData {
                 )
                 add(
                     Artist(
-                        "ar004", "Ryan Jones", R.drawable.img_artist, 0, false
+                        "ar004",
+                        "Ryan Jones",
+                        R.drawable.img_artist,
+                        0,
+                        true,
                     )
                 )
                 add(
                     Artist(
-                        "ar005", "Jamie Gray", R.drawable.img_artist, 0, false
+                        "ar005",
+                        "Jamie Gray",
+                        R.drawable.img_artist,
+                        0,
+                        true,
                     )
                 )
                 add(
                     Artist(
-                        "ar006", "Troye Sivan", R.drawable.img_artist, 0, false
+                        "ar006",
+                        "Troye Sivan",
+                        R.drawable.img_artist,
+                        0,
+                        true,
                     )
                 )
                 add(
                     Artist(
-                        "ar007", "Apple Talk", R.drawable.img_artist, 0, false
+                        "ar007",
+                        "Apple Talk",
+                        R.drawable.image_apple_talk,
+                        0,
+                        false,
+                        "Gravis est aegrum curare, quam aegrum sequi, sed id futurum tempore, cum multum laboris et doloris est. Magnum hoc spectaculum et unum cacumen ostendit. Per id videre possumus eum esse doctorem disertum."
                     )
                 )
                 add(
                     Artist(
-                        "ar008", "Dr. Death", R.drawable.img_artist, 0, false
+                        "ar008",
+                        "Dr. Death",
+                        R.drawable.image_dr_death,
+                        0,
+                        false,
+                        "Gravis est aegrum curare, quam aegrum sequi, sed id futurum tempore, cum multum laboris et doloris est. Magnum hoc spectaculum et unum cacumen ostendit. Per id videre possumus eum esse doctorem disertum."
+                    )
+                )
+                add(
+                    Artist(
+                        "ar009",
+                        "The Jordan Harbinger Show",
+                        R.drawable.image_jordan_show,
+                        0,
+                        false,
+                        "Gravis est aegrum curare, quam aegrum sequi, sed id futurum tempore, cum multum laboris et doloris est. Magnum hoc spectaculum et unum cacumen ostendit. Per id videre possumus eum esse doctorem disertum."
                     )
                 )
             }
