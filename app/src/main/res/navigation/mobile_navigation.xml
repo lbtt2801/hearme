@@ -357,6 +357,15 @@
         <action
             android:id="@+id/action_item_nav_library_to_podcastLibraryFragment"
             app:destination="@id/podcastLibraryFragment" />
+        <action
+            android:id="@+id/action_item_nav_library_to_albumsFragment"
+            app:destination="@id/albumsFragment" />
+        <action
+            android:id="@+id/action_item_nav_library_to_songFragment"
+            app:destination="@id/songFragment" />
+        <action
+            android:id="@+id/action_item_nav_library_to_artistsFragment"
+            app:destination="@id/artistsFragment" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
@@ -392,4 +401,19 @@
         android:name="com.lbtt2801.hearme.view.fragments.library.PodcastLibraryFragment"
         android:label="fragment_podcast_library"
         tools:layout="@layout/fragment_podcast_library" />
+    <fragment
+        android:id="@+id/albumsFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.library.AlbumsFragment"
+        android:label="fragment_albums"
+        tools:layout="@layout/fragment_albums" />
+    <fragment
+        android:id="@+id/songFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.library.SongFragment"
+        android:label="fragment_song"
+        tools:layout="@layout/fragment_song" />
+    <fragment
+        android:id="@+id/artistsFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.library.ArtistsFragment"
+        android:label="fragment_artists"
+        tools:layout="@layout/fragment_artists" />
 </navigation>

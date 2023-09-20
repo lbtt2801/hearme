@@ -17,6 +17,7 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.model.Playlist
 import com.lbtt2801.hearme.model.Time
 import com.lbtt2801.hearme.model.TopicSearch
 import java.text.DecimalFormat
@@ -482,4 +483,14 @@ fun changeFormatNumber(textView: TextView, number: Int) {
     val formatter: NumberFormat = DecimalFormat("#,###")
     val changedNumber = formatter.format(number)
     textView.text = "$changedNumber monthly listeners"
+}
+
+@BindingAdapter("app:setTextAlbums")
+fun setTextAlbums(textView: TextView, playlist: Playlist) {
+    textView.text = "${playlist.artist?.artistName}  |  ${playlist.release}"
+}
+
+@BindingAdapter("app:setTextSongs")
+fun setTextSongs(textView: TextView, music: Music) {
+    textView.text = "${music.artist.artistName}  |  ${music.duration.minute}:${music.duration.second} mins"
 }

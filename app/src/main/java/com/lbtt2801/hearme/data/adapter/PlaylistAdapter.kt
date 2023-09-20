@@ -4,28 +4,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.lbtt2801.hearme.MainActivity
+import com.lbtt2801.hearme.databinding.ViewItemAlbumBinding
 import com.lbtt2801.hearme.databinding.ViewItemPlaylistBinding
 import com.lbtt2801.hearme.databinding.ViewListPlaylistBinding
-import com.lbtt2801.hearme.databinding.ViewPlaylistBinding
 import com.lbtt2801.hearme.model.Playlist
-import com.lbtt2801.hearme.view.fragments.library.PlaylistDetailFragment
 
 class PlaylistAdapter(
-    private val dataplaylist: ArrayList<Playlist>,
+    private val dataPlaylist: ArrayList<Playlist>,
     private val type: Int,
-    val onItemClick: ((Bundle) -> Unit)? = null,
+    private val onItemClick: ((Bundle) -> Unit)? = null,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val LIBRARY = 0
         const val PROFILE_DETAIL = 1
+        const val ALBUMS = 2
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (type) {
             0 -> LIBRARY
             1 -> PROFILE_DETAIL
+            2 -> ALBUMS
             else -> LIBRARY
         }
     }
@@ -34,6 +34,7 @@ class PlaylistAdapter(
         return when (viewType) {
             LIBRARY -> LibraryViewHolder(parent)
             PROFILE_DETAIL -> ProfileDetailViewHolder(parent)
+            ALBUMS -> AlbumsViewHolder(parent)
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -41,25 +42,28 @@ class PlaylistAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is LibraryViewHolder -> {
-                holder.bind(dataplaylist[position])
+                holder.bind(dataPlaylist[position])
                 holder.itemView.setOnClickListener {
                     val param = Bundle().apply {
-                        putInt("img", dataplaylist[position].image)
-                        putString("id", dataplaylist[position].playlistID)
-                        putString("name", dataplaylist[position].playlistName)
-                        putString("size", dataplaylist[position].size)
+                        putInt("img", dataPlaylist[position].image)
+                        putString("id", dataPlaylist[position].playlistID)
+                        putString("name", dataPlaylist[position].playlistName)
+                        putString("size", dataPlaylist[position].size)
 //                        putInt("position", position)
                     }
                     onItemClick?.invoke(param)
                 }
             }
             is ProfileDetailViewHolder -> {
-                holder.bind(dataplaylist[position])
+                holder.bind(dataPlaylist[position])
+            }
+            is AlbumsViewHolder -> {
+                holder.bind(dataPlaylist[position])
             }
         }
     }
 
-    override fun getItemCount(): Int = dataplaylist.size
+    override fun getItemCount(): Int = dataPlaylist.size
 
     inner class LibraryViewHolder private constructor(
         val binding: ViewListPlaylistBinding,
@@ -82,6 +86,22 @@ class PlaylistAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
             ViewItemPlaylistBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+
+        fun bind(playlist: Playlist) {
+            binding.playlist = playlist
+        }
+    }
+
+    inner class AlbumsViewHolder private constructor(
+        val binding: ViewItemAlbumBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
+        constructor(parent: ViewGroup) : this(
+            ViewItemAlbumBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

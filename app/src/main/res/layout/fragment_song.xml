@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.fragments.library.DownloadsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.fragments.library.SongFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/view_list_song_2"
+                tools:listitem="@layout/view_list_song"
                 app:layout_constraintTop_toBottomOf="@+id/btnPlay"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
