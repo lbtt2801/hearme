@@ -15,6 +15,7 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MusicsData
 import com.lbtt2801.hearme.model.*
+import com.squareup.picasso.Picasso
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -23,9 +24,12 @@ import kotlin.collections.ArrayList
 
 @BindingAdapter("app:setImage")
 fun setImage(imageView: ImageView, id: Int) {
-    imageView.setImageResource(id)
-//    imageView.background = ContextCompat.getDrawable(imageView.context, id)
-    imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+    Picasso.get().load(id).placeholder(R.drawable.progress_icon).error(R.drawable.ellipse).fit()
+        .centerCrop()
+        .into(imageView)
+//    imageView.setImageResource(id)
+////    imageView.background = ContextCompat.getDrawable(imageView.context, id)
+//    imageView.scaleType = ImageView.ScaleType.CENTER_CROP
 }
 
 @BindingAdapter("app:setDate")

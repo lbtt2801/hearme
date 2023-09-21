@@ -54,9 +54,9 @@ class UserViewModel : ViewModel() {
     }
 
     fun addDataUser(email: String, pass: String) {
-        lst.add(User(email, pass, null, R.drawable.avt_home))
+        lst.add(User(email = email, password = pass, avatar = R.drawable.avatar_1))
         _lstDataUser.postValue(lst)
-        Log.v(TAG, "${lstDataUser.value.toString()}")
+        Log.v(TAG, "addDataUser -> ${lstDataUser.value?.size}")
     }
 
     fun checkDuplicateEmails(email: String): Boolean {
@@ -72,7 +72,7 @@ class UserViewModel : ViewModel() {
         dob: Date,
         secondaryEmail: String,
         phoneNumber: String,
-        image: Int = R.drawable.avt_home
+        image: Int
     ) {
         lst.first { it.email == email }.apply {
             this.fullName = fullName
@@ -294,7 +294,7 @@ class UserViewModel : ViewModel() {
         _lstDataUser.postValue(lst)
     }
 
-   fun getListDataPlaylist() {
+    fun getListDataPlaylist() {
         lstPlaylist = PlaylistData.dataPlaylist()
         _lstDataPlaylist.postValue(lstPlaylist)
     }

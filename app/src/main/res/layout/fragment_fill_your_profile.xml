@@ -48,6 +48,7 @@
                         app:srcCompat="@drawable/ellipse" />
 
                     <ImageButton
+                        android:id="@+id/button_photo_picker"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
