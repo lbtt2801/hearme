@@ -9,7 +9,7 @@ data class User(
     val email: String,
     var password: String,
     var secondaryEmail: String? = null,
-    var avatar: Int = R.drawable.logo,
+    var avatar: Int = R.drawable.avatar_1,
     var fullName: String = "User 404",
     var nickName: String? = null,
     var dob: Date? = null,

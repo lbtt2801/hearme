@@ -1,9 +1,16 @@
 package com.lbtt2801.hearme.view.fragments.accountssetup
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
@@ -11,6 +18,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.net.ParseException
 import androidx.databinding.DataBindingUtil
@@ -21,6 +29,9 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentFillYourProfileBinding
 import com.lbtt2801.hearme.viewmodel.UserViewModel
+import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
+import java.io.FileNotFoundException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,11 +40,26 @@ class FillYourProfileFragment : Fragment() {
     private lateinit var binding: FragmentFillYourProfileBinding
     private lateinit var mainActivity: MainActivity
     private var email: String? = null
+    private var bitmapAvatar: Bitmap? = null
 
     private val userViewModel: UserViewModel by activityViewModels()
 
     private var isValidEmail = false
     private var isValidPhone = false
+
+    private val changeImage =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val data = it.data
+                val avatar = data?.data
+                bitmapAvatar = decodeUriAsBitmap(requireContext(), avatar)
+                Picasso.get().load(avatar).transform(CropCircleTransformation())
+                    .placeholder(R.drawable.progress_icon)
+                    .error(R.drawable.ellipse).fit().centerCrop().into(binding.imageViewAvatar)
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +80,11 @@ class FillYourProfileFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.buttonPhotoPicker.setOnClickListener() {
+            val pickImg = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            changeImage.launch(pickImg)
+        }
 
         binding.ccp.registerCarrierNumberEditText(binding.edtPhoneNumber)
         binding.ccp.setPhoneNumberValidityChangeListener {
@@ -76,8 +107,12 @@ class FillYourProfileFragment : Fragment() {
                 if (!isValidEmail || !isValidPhone) {
                     mainActivity.showSnack(view, "Invalid Email or Phone!")
                 } else {
-                    val phone =
-                        "${binding.ccp.selectedCountryCodeAsInt} ${binding.edtPhoneNumber.text}"
+                    val phone = "${binding.edtPhoneNumber.text}"
+//                        "${binding.ccp.selectedCountryCodeAsInt} ${binding.edtPhoneNumber.text}"
+
+                    //Còn lỗi
+                    val drawableId: Int = binding.imageViewAvatar.tag.toString().toInt()
+
                     email?.let {
                         stringToDate(binding.edtDob.text.toString())?.let { it1 ->
                             userViewModel.updateUserInfo(
@@ -86,7 +121,8 @@ class FillYourProfileFragment : Fragment() {
                                 binding.edtNickName.text.toString(),
                                 it1,
                                 binding.edtEmail.text.toString(),
-                                phone
+                                phone,
+                                drawableId
                             )
                         }
                     }
@@ -137,5 +173,21 @@ class FillYourProfileFragment : Fragment() {
             e.printStackTrace()
         }
         return dateConverted
+    }
+
+    fun decodeUriAsBitmap(context: Context, uri: Uri?): Bitmap? {
+        var bitmap: Bitmap? = null //from   w  ww  . j  a  v  a2s.  c om
+        bitmap = try {
+            BitmapFactory.decodeStream(
+                uri?.let {
+                    context
+                        .contentResolver.openInputStream(it)
+                }
+            )
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+            return null
+        }
+        return bitmap
     }
 }

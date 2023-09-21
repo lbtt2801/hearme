@@ -74,4 +74,7 @@ dependencies {
 //    implementation("kotlin")
 
     implementation("kr.co.prnd:readmore-textview:1.0.0")
+
+    implementation("com.squareup.picasso:picasso:2.8")
+    implementation("jp.wasabeef:picasso-transformations:2.4.0")
 }
