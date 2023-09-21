@@ -94,8 +94,9 @@ class MyLibraryFragment : Fragment() {
             findNavController().navigate(R.id.action_item_nav_library_to_artistsFragment)
         }
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
+
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 

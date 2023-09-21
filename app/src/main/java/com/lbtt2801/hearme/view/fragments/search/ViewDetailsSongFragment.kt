@@ -99,5 +99,9 @@ class ViewDetailsSongFragment : Fragment() {
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
         }
+
+        binding.btnPlay.setOnClickListener {
+            findNavController().navigate(R.id.songPlayFragment)
+        }
     }
 }
