@@ -12,5 +12,6 @@ data class Music(
     val category: Category,
     val artist: Artist,
     val isAlbum: Boolean,
-    val information: String? = null
+    val information: String? = null,
+    var isPlaying: Boolean? = false
 )

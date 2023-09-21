@@ -64,11 +64,16 @@
                 android:orientation="horizontal"
                 android:visibility="visible">
 
-                <ImageButton
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_playing"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginRight="20dp"
-                    android:background="@drawable/ic_play"/>
+                    android:background="@drawable/selector_play_check_box"
+                    android:button="@color/transparent"
+                    android:checked="false"
+                    app:clickPlayForCheckBox="@{music}"
+                    app:setPlay="@{music}" />
 
                 <com.lbtt2801.hearme.data.control.CustomSpinner
                     android:id="@+id/spinner_drop_down_more"

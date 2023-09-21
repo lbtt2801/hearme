@@ -111,18 +111,19 @@
             app:setCategory="@{music.isAlbum}" />
 
 
-        <ImageButton
-            android:id="@+id/ic_play"
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cb_playing"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginRight="20dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:background="@color/transparent"
-            android:src="@drawable/ic_play"
+            android:background="@drawable/selector_play_check_box"
+            android:button="@color/transparent"
+            android:checked="false"
+            app:clickPlayForCheckBox="@{music}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/spinner_drop_down_more"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:setPlay="@{music}" />
 
         <com.lbtt2801.hearme.data.control.CustomSpinner
             android:id="@+id/spinner_drop_down_more"

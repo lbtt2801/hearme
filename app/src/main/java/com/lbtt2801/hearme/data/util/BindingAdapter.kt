@@ -2,13 +2,10 @@ package com.lbtt2801.hearme.data.adapter
 
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
-import android.graphics.Color
 import android.util.DisplayMetrics
 import android.util.Log
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.ToggleButton
+import android.widget.*
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -17,7 +14,6 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MusicsData
-import com.lbtt2801.hearme.data.control.CustomTextViewShowMoreOrLess
 import com.lbtt2801.hearme.model.*
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -461,6 +457,68 @@ fun clickUserFollowButton(toggleButton: ToggleButton, myFollower: User) {
     }
 }
 
+
+@BindingAdapter("app:setPlay")
+fun setPlay(checkBox: CheckBox, music: Music) {
+    val mainActivity = checkBox.context as MainActivity
+
+    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) { _ ->
+        checkBox.isChecked =
+            music.isPlaying == true
+    }
+}
+
+@BindingAdapter("app:clickPlayForCheckBox")
+fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
+    val mainActivity = checkBox.context as MainActivity
+
+    checkBox.setOnClickListener() {
+        var isPlaying = false
+        if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
+            isPlaying = true
+            mainActivity.showSnack(
+                checkBox,
+                "You are playing ${music.musicName}!"
+            )
+            // Chuyễn trang và put bundle ở đây
+        } else {
+            isPlaying = false
+            mainActivity.showSnack(
+                checkBox,
+                "You stop playing ${music.musicName}!"
+            )
+        }
+        mainActivity.viewModelMusic.updatePlaying(
+            music,
+            isPlaying
+        )
+    }
+}
+
+@BindingAdapter("app:clickPlayForButton")
+fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
+    val mainActivity = appCompatButton.context as MainActivity
+
+    appCompatButton.setOnClickListener() {
+        if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
+            mainActivity.viewModelMusic.updatePlaying(
+                music,
+                true
+            )
+            mainActivity.showSnack(
+                appCompatButton,
+                "You are playing ${music.musicName}!"
+            )
+            // Chuyễn trang và put bundle ở đây
+        } else {
+            mainActivity.showSnack(
+                appCompatButton,
+                "You listening ${music.musicName}!"
+            )
+        }
+    }
+}
+
 @BindingAdapter("app:setBackgroundTint")
 fun setBackgroundTint(cardView: MaterialCardView, color: Int) {
     cardView.backgroundTintList = ContextCompat.getColorStateList(cardView.context, color)
@@ -541,7 +599,7 @@ fun setTextSongs(textView: TextView, music: Music) {
 @BindingAdapter("app:setNumberOfFollowers")
 fun setNumberOfFollowers(textView: TextView, arrayList: ArrayList<User>) {
     val mainActivity = textView.context as MainActivity
-    mainActivity.viewModelUser.lstDataUser.observe(mainActivity){
+    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) {
         textView.text = arrayList.size.toString()
     }
 }
@@ -549,7 +607,7 @@ fun setNumberOfFollowers(textView: TextView, arrayList: ArrayList<User>) {
 @BindingAdapter("app:setNumberOfUserFollowing")
 fun setNumberOfUserFollowing(textView: TextView, arrayList: ArrayList<User>) {
     val mainActivity = textView.context as MainActivity
-    mainActivity.viewModelUser.lstDataUser.observe(mainActivity){
+    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) {
         textView.text = arrayList.size.toString()
     }
 }
