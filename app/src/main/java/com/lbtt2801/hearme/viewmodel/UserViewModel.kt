@@ -37,27 +37,19 @@ class UserViewModel : ViewModel() {
         updateFollowingList("phuongviet.huit@gmail.com", lst[1], true)
         updateFollowingList("phuongviet.huit@gmail.com", lst[2], true)
         updateFollowingList("phuongviet.huit@gmail.com", lst[3], true)
+        updateFollowingList("phuongviet.huit@gmail.com", lst[4], true)
+        updateFollowingList("phuongviet.huit@gmail.com", lst[5], true)
+
         updateFollowingList("lebuitantruong@gmail.com", lst[0], true)
-        updateFollowingList("lebuitantruong@gmail.com", lst[2], true)
-        updateFollowingList("lebuitantruong@gmail.com", lst[3], true)
         updateFollowingList("lebuitantruong@gmail.com", lst[4], true)
+        updateFollowingList("lebuitantruong@gmail.com", lst[5], true)
+        updateFollowingList("lebuitantruong@gmail.com", lst[6], true)
+        updateFollowingList("lebuitantruong@gmail.com", lst[7], true)
 
+        updateFollowingList("123456@gmail.com", lst[4], true)
+        updateFollowingList("123456@gmail.com", lst[5], true)
+        updateFollowingList("123456@gmail.com", lst[6], true)
 
-//        lst.first { it.email == "phuongviet.huit@gmail.com" }.apply {
-//            this.listUserFollowing.add(
-//                UsersData.data().first { it.email == "lebuitantruong@gmail.com" })
-//        }
-//        lst.first { it.email == "lebuitantruong@gmail.com" }.apply {
-//            this.listUserFollowing.add(
-//                UsersData.data().first { it.email == "phuongviet.huit@gmail.com" })
-//        }
-//        lst.first { it.email == "123456@gmail.com" }.apply {
-//            this.listUserFollowing.apply {
-//                add(UsersData.data().first { it.email == "phuongviet.huit@gmail.com" })
-//                add(UsersData.data().first { it.email == "lebuitantruong@gmail.com" })
-//
-//            }
-//        }
         _lstDataUser.postValue(lst)
     }
 
