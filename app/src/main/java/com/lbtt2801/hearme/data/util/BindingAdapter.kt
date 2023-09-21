@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.navigation.findNavController
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
 import com.lbtt2801.hearme.MainActivity
@@ -473,6 +474,7 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
     val mainActivity = checkBox.context as MainActivity
 
     checkBox.setOnClickListener() {
+        it.findNavController().navigate(R.id.songPlayFragment)
         var isPlaying = false
         if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
             isPlaying = true
@@ -500,6 +502,7 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
     val mainActivity = appCompatButton.context as MainActivity
 
     appCompatButton.setOnClickListener() {
+        it.findNavController().navigate(R.id.songPlayFragment)
         if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
             mainActivity.viewModelMusic.updatePlaying(
                 music,

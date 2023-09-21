@@ -14,49 +14,56 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgAvatar"
-                android:layout_width="380dp"
-                android:layout_height="380dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/img_music"
-                app:shapeAppearance="@style/roundedConorImageview2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Starboy"
-                android:textColor="@color/greyscale_900"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/imgAvatar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <TextView
-                android:id="@+id/tvDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="The Weeknd, Daft Punk"
-                android:textColor="@color/greyscale_700"
-                android:textSize="18sp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <ImageView
-                android:id="@+id/lineDivider"
+            <LinearLayout
+                android:id="@+id/linearDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/line_divider"
-                android:layout_marginVertical="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvDetail"/>
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgAvatar"
+                    android:layout_width="380dp"
+                    android:layout_height="380dp"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/img_music"
+                    app:shapeAppearance="@style/roundedConorImageview2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Starboy"
+                    android:textColor="@color/greyscale_900"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/imgAvatar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tvDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="The Weeknd, Daft Punk"
+                    android:textColor="@color/greyscale_700"
+                    android:textSize="18sp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/lineDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line_divider"
+                    android:layout_marginVertical="20dp"/>
+            </LinearLayout>
+
 
             <androidx.appcompat.widget.AppCompatSeekBar
                 android:id="@+id/seekBar"
@@ -90,6 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="16dp"
                 android:gravity="center">
 
                 <ImageButton
@@ -129,6 +137,106 @@
                     android:layout_weight="1"/>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center">
+                <ImageButton
+                    android:id="@+id/btnSpeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_speed"
+                    android:background="@color/transparent"
+                    android:layout_weight="1"/>
+                <ImageButton
+                    android:id="@+id/btnTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_timer"
+                    android:background="@color/transparent"
+                    android:layout_weight="1"/>
+                <ImageButton
+                    android:id="@+id/btnCast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_cast"
+                    android:background="@color/transparent"
+                    android:layout_weight="1"/>
+                <ImageButton
+                    android:id="@+id/btnMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_more"
+                    android:background="@color/transparent"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearCache"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/ic_arrow_up"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDetail" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lyrics"
+                    android:textStyle="bold"
+                    android:layout_marginTop="7dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/greyscale_900"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLyrics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/line_divider"
+                    android:layout_marginVertical="24dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDetail"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lyrics"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:textColor="@color/greyscale_900"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green_100"
+                    app:cardCornerRadius="25dp">
+                    <TextView
+                        android:id="@+id/tvLyrics"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:padding="32dp"
+                        android:text="I'm tired"
+                        android:textColor="@color/green_500"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
 
         </LinearLayout>
 
