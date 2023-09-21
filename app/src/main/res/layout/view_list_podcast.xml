@@ -79,11 +79,11 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="12sp"
             android:layout_marginStart="12dp"
-            app:setDuration="@{music.duration}"
             android:textColor="@color/greyscale_900"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/line"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            app:setDuration="@{music.duration}" />
 
         <!--        android:src="@drawable/ic_light_heart"-->
         <CheckBox
@@ -112,12 +112,12 @@
             android:button="@drawable/selector_play_list_check_box"
             android:buttonTint="@color/color_selector_check_box"
             android:checked="false"
+            app:clickQueueList="@{music}"
             app:layout_constraintStart_toEndOf="@+id/ic_heart"
             app:layout_constraintTop_toBottomOf="@+id/tvDuration"
-            app:clickQueueList="@{music}"
             app:setQueueList="@{music}" />
-<!--            app:clickPlayList="@{music}"-->
-<!--            app:setPlayList="@{music}" />-->
+        <!--            app:clickPlayList="@{music}"-->
+        <!--            app:setPlayList="@{music}" />-->
 
         <CheckBox
             android:id="@+id/ic_download"
@@ -148,15 +148,18 @@
             app:layout_constraintStart_toEndOf="@+id/ic_download"
             app:layout_constraintTop_toTopOf="@+id/ic_download" />
 
-        <ImageView
-            android:id="@+id/ic_play"
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cb_playing"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_play"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/selector_play_check_box"
+            android:button="@color/transparent"
+            android:checked="false"
+            app:clickPlayForCheckBox="@{music}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/spinner_drop_down_more" />
+            app:layout_constraintTop_toTopOf="@id/spinner_drop_down_more"
+            app:setPlay="@{music}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

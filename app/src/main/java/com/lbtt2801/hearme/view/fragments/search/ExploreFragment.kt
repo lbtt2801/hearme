@@ -237,7 +237,9 @@ class ExploreFragment : Fragment() {
 
     private fun displayRecyclerFoundProfilesList(p0: String): Boolean {
         val listFoundUser: ArrayList<User> = userViewModel.lstDataUser.value?.filter {
-            it.fullName.trim().lowercase().contains(p0.trim().lowercase())
+            it.email != mainActivity.email &&
+                    it.fullName.trim().lowercase()
+                        .contains(p0.trim().lowercase())
         } as ArrayList<User>
 
         if (listFoundUser.isEmpty()) {

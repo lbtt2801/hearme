@@ -1,7 +1,9 @@
 package com.lbtt2801.hearme.view.fragments.homeactionmenu
 
+import android.content.ContentValues.TAG
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -132,13 +134,17 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         mainActivity.checkInHome = false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 
     private fun displayRecyclerViewMusic(lstData: ArrayList<Music>) {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
-        musicAdapter = MusicAdapter(lstData, 0,this)
+        musicAdapter = MusicAdapter(lstData, 0, this)
         binding.recyclerViewTrending.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter

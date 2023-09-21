@@ -21,4 +21,14 @@ class MusicViewModel : ViewModel() {
         lst = MusicsData.dataMusic()
         _lstDataMusics.postValue(lst)
     }
+
+    fun updatePlaying(music: Music, isPlaying: Boolean) {
+        lst.forEach {
+            it.isPlaying = false
+        }
+        lst.first { it.musicID == music.musicID }.apply {
+            this.isPlaying = isPlaying
+        }
+        _lstDataMusics.postValue(lst)
+    }
 }

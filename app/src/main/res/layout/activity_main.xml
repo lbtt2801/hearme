@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menu="@menu/menu_toolbar"
-            app:navigationIcon="@drawable/avt_home">
+            app:navigationIcon="@drawable/avatar_1">
 
             <LinearLayout
                 android:id="@+id/container_tool_bar"

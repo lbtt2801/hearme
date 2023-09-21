@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -16,13 +17,13 @@ import com.lbtt2801.hearme.databinding.FragmentTabFollowBinding
 import com.lbtt2801.hearme.model.User
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
-class TabFollowFragment(page: Int) : Fragment() {
+class TabFollowFragment(page: Int,  userEmail: String) : Fragment() {
     private lateinit var binding: FragmentTabFollowBinding
     private lateinit var mainActivity: MainActivity
     private lateinit var userAdapter: UserAdapter
     private var lstFollowers: ArrayList<User> = ArrayList()
     private var lstFollowing: ArrayList<User> = ArrayList()
-    private var email: String? = ""
+    private var email = userEmail
     private val getPage = page
     private val userViewModel: UserViewModel by activityViewModels()
     override fun onCreateView(
@@ -32,7 +33,6 @@ class TabFollowFragment(page: Int) : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_follow, container, false)
 
         mainActivity = (activity as MainActivity)
-        email = mainActivity.email
 
         return binding.root
     }
