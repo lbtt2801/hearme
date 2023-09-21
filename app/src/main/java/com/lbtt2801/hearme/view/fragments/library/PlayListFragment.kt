@@ -39,7 +39,7 @@ class PlayListFragment : Fragment() {
     private var lst = ArrayList<Playlist>()
     private var email: String = ""
     private var spinnerItems = arrayOf("Recently Added", "Added Before")
-    private var check = false
+    private var checkVisible = true
 
     private val userViewModel: UserViewModel by activityViewModels()
 
@@ -73,25 +73,35 @@ class PlayListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        userViewModel.lstDataPlaylist.observe((activity as MainActivity), Observer {
-            lst = it as ArrayList<Playlist>
-            val lstP1 = lst
-            val lstP0 = ArrayList<Playlist>()
-            for (i in lst.indices) {
-                lstP0.add(i, lst[lst.lastIndex - i])
+        userViewModel.lstDataPlaylist.observe(viewLifecycleOwner) { viewModelList ->
+            lst.clear()
+            lst.addAll(viewModelList)
+            val renderArrayList = arrayListOf<Playlist>()
+            lst.reversed().forEach { playlist ->
+                renderArrayList.add(playlist)
             }
-            binding.spinner.setSelection(0)
-            binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    if (p2 == 0)
-                        displayRecyclerView(lstP0)
-                    else
-                        displayRecyclerView(lstP1)
+            if (checkVisible)
+            displayRecyclerView(renderArrayList)
+        }
+
+        binding.spinner.setSelection(0)
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val lstP1 = lst
+                val lstP0 = ArrayList<Playlist>()
+                for (i in lst.indices) {
+                    lstP0.add(i, lst[lst.lastIndex - i])
                 }
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                }
+
+                if (p2 == 0)
+                    displayRecyclerView(lstP0)
+                else
+                    displayRecyclerView(lstP1)
             }
-        })
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
 
         val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.style_spinner, spinnerItems)
         binding.spinner.adapter = spinnerAdapter
@@ -117,6 +127,7 @@ class PlayListFragment : Fragment() {
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = playlistAdapter
+            playlistAdapter.notifyDataSetChanged()
         }
     }
 
@@ -143,6 +154,15 @@ class PlayListFragment : Fragment() {
         val spinnerItemsDialog = arrayOf("Public", "Private")
         val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, spinnerItemsDialog)
         spinner.adapter = spinnerAdapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                checkVisible = p2 != 1
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
 
         btnYes.setOnClickListener {
             userViewModel.addPlaylist(

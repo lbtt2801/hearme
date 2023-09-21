@@ -46,27 +46,31 @@ class TabQueueFragment : Fragment() {
         val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.style_spinner, spinnerItems)
         binding.spinner.adapter = spinnerAdapter
 
-        userViewModel.lstDataUser.observe(mainActivity, Observer { arrayList ->
+        userViewModel.lstDataUser.observe((activity as MainActivity), Observer { arrayList ->
             lst = arrayList.first { user -> user.email == email }.listMusicsQueue
 
-            if (lst.isNotEmpty()) {
-                val lstP1 = lst
-                val lstP0 = ArrayList<Music>()
+            val renderArrayList = arrayListOf<Music>()
+            lst.reversed().forEach { music ->
+                renderArrayList.add(music)
+            }
+            displayRecyclerView(renderArrayList)
 
-                for (i in lst.indices) {
-                    lstP0.add(i, lst[lst.lastIndex - i])
+            binding.spinner.setSelection(0)
+            binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    val lstP1 = lst
+                    val lstP0 = ArrayList<Music>()
+
+                    for (i in lst.indices) {
+                        lstP0.add(i, lst[lst.lastIndex - i])
+                    }
+                    if (p2 == 0)
+                        displayRecyclerView(lstP0)
+                    else
+                        displayRecyclerView(lstP1)
                 }
+                override fun onNothingSelected(p0: AdapterView<*>?) {
 
-                binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                        if (p2 == 0)
-                            displayRecyclerView(lstP0)
-                        else
-                            displayRecyclerView(lstP1)
-                    }
-                    override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                    }
                 }
             }
         })

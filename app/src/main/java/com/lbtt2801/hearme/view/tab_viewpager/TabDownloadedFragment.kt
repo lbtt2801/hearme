@@ -19,6 +19,7 @@ import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.MusicAdapter
 import com.lbtt2801.hearme.databinding.FragmentTabDownloadedBinding
 import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.model.Playlist
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 class TabDownloadedFragment : Fragment() {
     private lateinit var binding: FragmentTabDownloadedBinding
@@ -26,7 +27,7 @@ class TabDownloadedFragment : Fragment() {
     private lateinit var musicAdapter: MusicAdapter
     private var lst: ArrayList<Music> = ArrayList()
     private var email: String? = ""
-    private var spinnerItems = arrayOf("Recently Added", "Added Before")
+    private var spinnerItems = arrayOf("Recently Downloaded", "Downloaded Before")
 
     private val userViewModel: UserViewModel by activityViewModels()
 
@@ -51,27 +52,28 @@ class TabDownloadedFragment : Fragment() {
         userViewModel.lstDataUser.observe((activity as MainActivity), Observer { arrayList ->
             lst = arrayList.first { user -> user.email == email }.listMusicsDownloaded
 
-            if (lst.isNotEmpty()) {
-                val lstData = lst.filter { it.category.categoryID == "ca002" } as ArrayList<Music>
-                val lstP1 = lst.filter { it.category.categoryID == "ca002" } as ArrayList<Music>
-                val lstP0 = ArrayList<Music>()
+            val renderArrayList = arrayListOf<Music>()
+            lst.reversed().forEach { music ->
+                renderArrayList.add(music)
+            }
+            displayRecyclerView(renderArrayList)
 
-                // dao nguoc mang lstData gan cho lstP0
-                for (i in lstData.indices) {
-                    lstP0.add(i, lstData.removeLast())
+            binding.spinner.setSelection(0)
+            binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    val lstP1 = lst
+                    val lstP0 = ArrayList<Music>()
+
+                    for (i in lst.indices) {
+                        lstP0.add(i, lst[lst.lastIndex - i])
+                    }
+                    if (p2 == 0)
+                        displayRecyclerView(lstP0)
+                    else
+                        displayRecyclerView(lstP1)
                 }
+                override fun onNothingSelected(p0: AdapterView<*>?) {
 
-                binding.spinner.setSelection(0)
-                binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                        if (p2 == 0)
-                            displayRecyclerView(lstP0)
-                        else
-                            displayRecyclerView(lstP1)
-                    }
-                    override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                    }
                 }
             }
         })

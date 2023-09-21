@@ -5,56 +5,91 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
+import com.lbtt2801.hearme.data.adapter.ArtistAdapter
+import com.lbtt2801.hearme.databinding.FragmentTabSingerBinding
+import com.lbtt2801.hearme.model.Artist
+import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.viewmodel.HomeViewModel
+import com.lbtt2801.hearme.viewmodel.UserViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [TabSingerFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class TabSingerFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentTabSingerBinding
+    private lateinit var artistAdapter: ArtistAdapter
+    private lateinit var mainActivity: MainActivity
+    private var lst = ArrayList<Artist>()
+    private var email: String? = ""
+    private var spinnerItems = arrayOf("Recently Downloaded", "Downloaded Before")
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val userViewModel: UserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab_singer, container, false)
+    ): View {
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_tab_singer, container, false)
+        mainActivity = activity as MainActivity
+        email = mainActivity.email
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TapSingerFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TabSingerFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onResume() {
+        super.onResume()
+
+        val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.style_spinner, spinnerItems)
+        binding.spinner.adapter = spinnerAdapter
+
+        userViewModel.lstDataUser.observe((activity as MainActivity), Observer { arrayList ->
+            val lstMusic = arrayList.first { user -> user.email == email }.listMusicsDownloaded
+            val lstMusicSong = lstMusic.filter { it.category.categoryID != "ca002"}
+            lst.clear()
+            for (i in lstMusicSong) {
+                lst.add(i.artist)
+            }
+
+            if (lst.isNotEmpty()) {
+                val lstP1 = lst
+                val lstP0 = ArrayList<Artist>()
+
+                for (i in lst.indices) {
+                    lstP0.add(i, lst[lst.lastIndex - i])
+                }
+
+                binding.spinner.setSelection(0)
+                binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                        if (p2 == 0)
+                            displayRecyclerView(lstP0)
+                        else
+                            displayRecyclerView(lstP1)
+                    }
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                    }
                 }
             }
+        })
+
+    }
+
+    private fun displayRecyclerView(lstData: ArrayList<Artist>) {
+        val layoutRecyclerView =
+            LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
+
+        artistAdapter = ArtistAdapter(lstData, 6)
+
+        binding.recyclerView.apply {
+            layoutManager = layoutRecyclerView
+            adapter = artistAdapter
+        }
     }
 }

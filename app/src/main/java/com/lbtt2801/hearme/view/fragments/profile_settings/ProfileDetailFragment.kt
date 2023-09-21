@@ -66,7 +66,7 @@ class ProfileDetailFragment : Fragment() {
         avatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
         fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
         val follower = userViewModel.lstDataUser.value?.first { it.email == email }?.listFollowers
-        val following = userViewModel.lstDataUser.value?.first { it.email == email }?.listArtistsFollowing
+        val following = userViewModel.lstDataUser.value?.first { it.email == email }?.listUserFollowing
         val lstData = userViewModel.lstDataUser.value?.first { it.email == email }?.listPlaylist
 
         binding.imgAvatar.background = avatar?.let { ContextCompat.getDrawable(requireContext(), it) }

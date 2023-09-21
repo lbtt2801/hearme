@@ -1,4 +1,4 @@
-package com.lbtt2801.hearme.view.fragments.library
+package com.lbtt2801.hearme.view.fragments.search
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,11 +12,12 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.ViewPageAdapter
+import com.lbtt2801.hearme.data.adapter.ViewPageArtistAdapter
 import com.lbtt2801.hearme.data.adapter.ViewPageFollowAdapter
-import com.lbtt2801.hearme.databinding.FragmentHistoryBinding
+import com.lbtt2801.hearme.databinding.FragmentFollowerDetailBinding
 
-class HistoryFragment : Fragment() {
-    private var _binding: FragmentHistoryBinding? = null
+class FollowerDetailFragment : Fragment() {
+    private var _binding: FragmentFollowerDetailBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +26,7 @@ class HistoryFragment : Fragment() {
         val activity: MainActivity = (activity as MainActivity)
         activity.customToolbar(
             "VISIBLE",
-            "History",
+            "",
             null,
             R.color.transparent,
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back),
@@ -39,8 +40,7 @@ class HistoryFragment : Fragment() {
         }
 
         _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_history, container, false)
-        activity.checkInHistory = true
+            DataBindingUtil.inflate(inflater, R.layout.fragment_follower_detail, container, false)
         return binding.root
     }
 
@@ -50,16 +50,16 @@ class HistoryFragment : Fragment() {
         val tabLayout = binding.tabLayout
         val viewPage2 = binding.viewPager2
 
-        val viewPageFragment = ViewPageAdapter(childFragmentManager, lifecycle)
-        viewPage2.adapter = viewPageFragment
+        val viewPageFollowAdapter = ViewPageFollowAdapter(childFragmentManager, lifecycle)
+        viewPage2.adapter = viewPageFollowAdapter
 
         TabLayoutMediator(tabLayout, viewPage2) { tab, position ->
             when (position) {
                 0 -> {
-                    tab.text = "Songs"
+                    tab.text = "Followers"
                 }
 
-                1 -> tab.text = "Podcasts"
+                1 -> tab.text = "Following"
             }
         }.attach()
     }
@@ -67,6 +67,5 @@ class HistoryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        (activity as MainActivity).checkInHistory = false
     }
 }

@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.ViewHomeArtistBinding
+import com.lbtt2801.hearme.databinding.ViewItemArtistBinding
 import com.lbtt2801.hearme.databinding.ViewPodcastAndShowBinding
 import com.lbtt2801.hearme.databinding.ViewListArtistBinding
 import com.lbtt2801.hearme.model.Artist
@@ -15,7 +16,7 @@ import com.lbtt2801.hearme.viewmodel.UserViewModel
 class ArtistAdapter(
     private val dataArtists: ArrayList<Artist>,
     private val type: Int,
-    private val userViewModel: UserViewModel
+    private val userViewModel: UserViewModel?= null
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
@@ -26,6 +27,7 @@ class ArtistAdapter(
         //        const val FOLLOW_ARTISTS = 3
         const val ARTISTS_LIST = 4
         const val PODCAST_AND_SHOW = 5
+        const val ARTISTS_LIB = 6
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -35,6 +37,7 @@ class ArtistAdapter(
 //            3 -> FOLLOW_ARTISTS
             4 -> ARTISTS_LIST
             5 -> PODCAST_AND_SHOW
+            6 -> ARTISTS_LIB
             else -> SAVED
         }
     }
@@ -47,6 +50,7 @@ class ArtistAdapter(
 //            FOLLOW_ARTISTS -> ArtistViewHolderFollowArtists(parent)
             ARTISTS_LIST -> ListArtistViewHolder(parent)
             PODCAST_AND_SHOW -> PodcastAndShowViewHolder(parent)
+            ARTISTS_LIB -> ArtistViewHolder(parent)
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -66,6 +70,9 @@ class ArtistAdapter(
             is PodcastAndShowViewHolder -> {
                 holder.bind(dataArtists[position])
                 destination = R.id.action_item_nav_explore_to_viewDetailsArtistOfPodcastFragment
+            }
+            is ArtistViewHolder -> {
+                holder.bind(dataArtists[position])
             }
         }
         holder.itemView.setOnClickListener() {
@@ -171,5 +178,21 @@ class ArtistAdapter(
 //            binding.topic = topic
 //        }
 //    }
+
+    inner class ArtistViewHolder private constructor(
+        val binding: ViewItemArtistBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        constructor(parent: ViewGroup) : this(
+            ViewItemArtistBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+
+        fun bind(artist: Artist) {
+            binding.artist = artist
+        }
+    }
 
 }
