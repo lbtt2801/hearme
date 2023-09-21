@@ -23,6 +23,7 @@ import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 @BindingAdapter("app:setImage")
 fun setImage(imageView: ImageView, id: Int) {
@@ -426,7 +427,8 @@ fun setUserFollowButton(toggleButton: ToggleButton, myFollower: User) {
         mainActivity.viewModelUser.lstDataUser.value?.first { it.email == mainActivity.email }
 
     mainActivity.viewModelUser.lstDataUser.observe(mainActivity) { _ ->
-        toggleButton.isChecked = myUser?.listUserFollowing?.any { it.email == myFollower.email } == true
+        toggleButton.isChecked =
+            myUser?.listUserFollowing?.any { it.email == myFollower.email } == true
     }
 }
 
@@ -534,6 +536,22 @@ fun setTextAlbums(textView: TextView, playlist: Playlist) {
 fun setTextSongs(textView: TextView, music: Music) {
     textView.text =
         "${music.artist.artistName}  |  ${music.duration.minute}:${music.duration.second} mins"
+}
+
+@BindingAdapter("app:setNumberOfFollowers")
+fun setNumberOfFollowers(textView: TextView, arrayList: ArrayList<User>) {
+    val mainActivity = textView.context as MainActivity
+    mainActivity.viewModelUser.lstDataUser.observe(mainActivity){
+        textView.text = arrayList.size.toString()
+    }
+}
+
+@BindingAdapter("app:setNumberOfUserFollowing")
+fun setNumberOfUserFollowing(textView: TextView, arrayList: ArrayList<User>) {
+    val mainActivity = textView.context as MainActivity
+    mainActivity.viewModelUser.lstDataUser.observe(mainActivity){
+        textView.text = arrayList.size.toString()
+    }
 }
 
 @BindingAdapter("app:setTextArtist")

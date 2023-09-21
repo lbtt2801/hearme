@@ -195,6 +195,9 @@
         <action
             android:id="@+id/action_item_nav_explore_to_viewDetailsPodcastFragment"
             app:destination="@id/viewDetailsPodcastFragment" />
+        <action
+            android:id="@+id/action_item_nav_explore_to_viewDetailsProfileFragment"
+            app:destination="@id/viewDetailsProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemExploreFragment"
@@ -426,7 +429,7 @@
         android:id="@+id/viewDetailsArtistOfPodcastFragment"
         android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistOfPodcastFragment"
         android:label="ViewDetailsArtistOfPodcastFragment"
-        tools:layout="@layout/fragment_view_details_artist_of_podcast" >
+        tools:layout="@layout/fragment_view_details_artist_of_podcast">
         <action
             android:id="@+id/action_viewDetailsArtistOfPodcastFragment_to_viewDetailsPodcastFragment"
             app:destination="@id/viewDetailsPodcastFragment" />
@@ -436,4 +439,18 @@
         android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsPodcastFragment"
         android:label="ViewDetailsPodcastFragment"
         tools:layout="@layout/fragment_view_details_podcast" />
+    <fragment
+        android:id="@+id/viewDetailsProfileFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsProfileFragment"
+        android:label="ViewDetailsProfileFragment"
+        tools:layout="@layout/fragment_view_details_profile" >
+        <action
+            android:id="@+id/action_viewDetailsProfileFragment_to_followerDetailFragment"
+            app:destination="@id/followerDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/followerDetailFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.search.FollowerDetailFragment"
+        android:label="fragment_follower_detail"
+        tools:layout="@layout/fragment_follower_detail" />
 </navigation>

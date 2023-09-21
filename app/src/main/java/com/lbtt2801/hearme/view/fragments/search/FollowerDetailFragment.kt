@@ -19,11 +19,17 @@ import com.lbtt2801.hearme.databinding.FragmentFollowerDetailBinding
 class FollowerDetailFragment : Fragment() {
     private var _binding: FragmentFollowerDetailBinding? = null
     private val binding get() = _binding!!
+
+    private var email: String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val activity: MainActivity = (activity as MainActivity)
+        email = arguments?.getString("emailID")
+
+
         activity.customToolbar(
             "VISIBLE",
             "",
@@ -50,7 +56,8 @@ class FollowerDetailFragment : Fragment() {
         val tabLayout = binding.tabLayout
         val viewPage2 = binding.viewPager2
 
-        val viewPageFollowAdapter = ViewPageFollowAdapter(childFragmentManager, lifecycle)
+        val viewPageFollowAdapter =
+            email?.let { ViewPageFollowAdapter(childFragmentManager, lifecycle, it) }
         viewPage2.adapter = viewPageFollowAdapter
 
         TabLayoutMediator(tabLayout, viewPage2) { tab, position ->

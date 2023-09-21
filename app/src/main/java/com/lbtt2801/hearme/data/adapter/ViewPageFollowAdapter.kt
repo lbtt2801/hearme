@@ -6,16 +6,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.lbtt2801.hearme.view.tab_viewpager.TabFollowFragment
 
-class ViewPageFollowAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle): FragmentStateAdapter(fragmentManager, lifecycle) {
+class ViewPageFollowAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle, var email: String): FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {
         return 2
     }
 
     override fun createFragment(position: Int): Fragment {
         return  when (position) {
-            0 -> { TabFollowFragment(0) }
-            1 -> { TabFollowFragment(1) }
-            else -> { TabFollowFragment(0) }
+            0 -> { TabFollowFragment(0, email) }
+            1 -> { TabFollowFragment(1, email) }
+            else -> { TabFollowFragment(0, email) }
         }
     }
 }

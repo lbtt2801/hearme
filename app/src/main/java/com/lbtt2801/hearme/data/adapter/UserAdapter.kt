@@ -37,7 +37,7 @@ class UserAdapter(
         when (holder) {
             is SearchProfileViewHolder -> {
                 holder.bind(dataUsers[position])
-                destination = R.id.action_item_nav_home_to_viewDetailsArtistFragment
+                destination = R.id.action_item_nav_explore_to_viewDetailsProfileFragment
             }
         }
         holder.itemView.setOnClickListener() {
