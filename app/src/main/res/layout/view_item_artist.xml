@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="artist"
+            type="com.lbtt2801.hearme.model.Artist" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="24dp"
+        android:orientation="horizontal">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgArtist"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerCrop"
+            app:setImage="@{artist.image}"
+            app:shapeAppearance="@style/circleImageView"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{artist.artistName}"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/greyscale_900"/>
+            <TextView
+                android:id="@+id/tvDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/greyscale_700"
+                app:setTextArtist="@{artist}"/>
+        </LinearLayout>
+
+        <com.lbtt2801.hearme.data.control.CustomSpinner
+            android:id="@+id/spinner_drop_down_more"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/ic_more"
+            android:dropDownVerticalOffset="25dp"
+            android:elevation="100dp"
+            android:popupBackground="@drawable/bg_dropdown_song_more"
+            android:spinnerMode="dropdown"
+            app:layout_constraintStart_toEndOf="@+id/ic_download"
+            app:layout_constraintTop_toTopOf="@+id/ic_download" />
+
+    </LinearLayout>
+
+</layout>

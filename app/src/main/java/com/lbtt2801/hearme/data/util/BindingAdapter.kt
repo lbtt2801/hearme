@@ -16,6 +16,7 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
+import com.lbtt2801.hearme.data.MusicsData
 import com.lbtt2801.hearme.data.control.CustomTextViewShowMoreOrLess
 import com.lbtt2801.hearme.model.*
 import java.text.DecimalFormat
@@ -25,8 +26,9 @@ import java.util.*
 
 @BindingAdapter("app:setImage")
 fun setImage(imageView: ImageView, id: Int) {
-//    imageView.setImageResource(id)
-    imageView.background = ContextCompat.getDrawable(imageView.context, id)
+    imageView.setImageResource(id)
+//    imageView.background = ContextCompat.getDrawable(imageView.context, id)
+    imageView.scaleType = ImageView.ScaleType.CENTER_CROP
 }
 
 @BindingAdapter("app:setDate")
@@ -532,4 +534,13 @@ fun setTextAlbums(textView: TextView, playlist: Playlist) {
 fun setTextSongs(textView: TextView, music: Music) {
     textView.text =
         "${music.artist.artistName}  |  ${music.duration.minute}:${music.duration.second} mins"
+}
+
+@BindingAdapter("app:setTextArtist")
+fun setTextArtist(textView: TextView, artist: Artist) {
+    val lstMusicsData = MusicsData.dataMusic()
+    val lst = lstMusicsData.filter { it.artist.artistId == artist.artistId }
+    if (artist.isSinger)
+        textView.text = "${lst.size} Songs"
+    else textView.text = "${lst.size} Episodes"
 }

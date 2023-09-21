@@ -121,7 +121,7 @@ class TabSongFragment : Fragment() {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
         musicAdapter =
-            MusicAdapter(lstData, 1, this)
+            MusicAdapter(lstData, 5, this)
         binding.recyclerViewYesterday.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter

@@ -294,7 +294,7 @@ class UserViewModel : ViewModel() {
         _lstDataUser.postValue(lst)
     }
 
-    private fun getListDataPlaylist() {
+   fun getListDataPlaylist() {
         lstPlaylist = PlaylistData.dataPlaylist()
         _lstDataPlaylist.postValue(lstPlaylist)
     }

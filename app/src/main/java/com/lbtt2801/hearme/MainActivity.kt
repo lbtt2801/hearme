@@ -3,6 +3,7 @@ package com.lbtt2801.hearme
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
@@ -22,6 +23,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
@@ -65,6 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        requestRuntimePermission()
         val window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
@@ -565,6 +568,7 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(v.context, "Go to Podcast", Toast.LENGTH_SHORT).show()
 
                         }
+
                         9 -> { // Share
                             Toast.makeText(v.context, "Share", Toast.LENGTH_SHORT).show()
 
@@ -572,5 +576,30 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+    }
+
+    // For requesting permission
+    private fun requestRuntimePermission() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 13)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 13) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+            else
+                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 13)
+        }
     }
 }

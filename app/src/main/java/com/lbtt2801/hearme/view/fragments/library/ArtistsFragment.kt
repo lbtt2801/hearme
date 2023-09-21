@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.ViewPageAdapter
+import com.lbtt2801.hearme.data.adapter.ViewPageArtistAdapter
 import com.lbtt2801.hearme.databinding.FragmentArtistsBinding
 
 class ArtistsFragment : Fragment() {
@@ -49,8 +50,8 @@ class ArtistsFragment : Fragment() {
         val tabLayout = binding.tabLayout
         val viewPage2 = binding.viewPager2
 
-        val viewPageAdapter = ViewPageAdapter(childFragmentManager, lifecycle)
-        viewPage2.adapter = viewPageAdapter
+        val viewPageArtistAdapter = ViewPageArtistAdapter(childFragmentManager, lifecycle)
+        viewPage2.adapter = viewPageArtistAdapter
 
         TabLayoutMediator(tabLayout, viewPage2) { tab, position ->
             when (position) {
