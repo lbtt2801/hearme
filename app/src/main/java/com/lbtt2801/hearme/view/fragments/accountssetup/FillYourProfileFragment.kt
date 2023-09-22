@@ -40,7 +40,7 @@ class FillYourProfileFragment : Fragment() {
     private lateinit var binding: FragmentFillYourProfileBinding
     private lateinit var mainActivity: MainActivity
     private var email: String? = null
-    private var bitmapAvatar: Bitmap? = null
+    private var avatarUri: Uri? = null
 
     private val userViewModel: UserViewModel by activityViewModels()
 
@@ -53,9 +53,8 @@ class FillYourProfileFragment : Fragment() {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val data = it.data
-                val avatar = data?.data
-                bitmapAvatar = decodeUriAsBitmap(requireContext(), avatar)
-                Picasso.get().load(avatar).transform(CropCircleTransformation())
+                avatarUri = data?.data
+                Picasso.get().load(avatarUri).transform(CropCircleTransformation())
                     .placeholder(R.drawable.progress_icon)
                     .error(R.drawable.ellipse).fit().centerCrop().into(binding.imageViewAvatar)
             }
@@ -63,7 +62,7 @@ class FillYourProfileFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(
             inflater,
@@ -111,7 +110,7 @@ class FillYourProfileFragment : Fragment() {
 //                        "${binding.ccp.selectedCountryCodeAsInt} ${binding.edtPhoneNumber.text}"
 
                     //Còn lỗi
-                    val drawableId: Int = binding.imageViewAvatar.tag.toString().toInt()
+//                    val drawableId: Int = binding.imageViewAvatar.tag.toString().toInt()
 
                     email?.let {
                         stringToDate(binding.edtDob.text.toString())?.let { it1 ->
@@ -122,11 +121,11 @@ class FillYourProfileFragment : Fragment() {
                                 it1,
                                 binding.edtEmail.text.toString(),
                                 phone,
-                                drawableId
+                                avatarUri
                             )
                         }
                     }
-                    Log.v(TAG, userViewModel.lstDataUser.value.toString())
+                    Log.v(TAG, userViewModel.lstDataUser.value?.size.toString())
                     findNavController().navigate(
                         R.id.action_fillYourProfileFragment_to_createNewPinFragment
                     )

@@ -6,16 +6,12 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.Button
@@ -233,7 +229,7 @@ class MainActivity : AppCompatActivity() {
         showIcSearch: Boolean = false,
         showIcNotification: Boolean = false,
         showIcEdit: Boolean = false,
-        showIcScan: Boolean = false
+        showIcScan: Boolean = false,
     ) {
         //Toolbar visibility
         when (isVisible.lowercase()) {
@@ -287,7 +283,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun changeSizeBitmap(image: Int, width: Int, height: Int): Drawable {
+    fun changeSizeDrawable(image: Int, width: Int, height: Int): Drawable {
         val drawable: Drawable = if (image != null)
             resources.getDrawable(image)
         else
@@ -305,6 +301,23 @@ class MainActivity : AppCompatActivity() {
             Snackbar.LENGTH_SHORT
         )
         snack.show()
+    }
+
+    fun changeSizeBitmap(bm: Bitmap, newWidth: Int, newHeight: Int): Bitmap? {
+        val width = bm.width
+        val height = bm.height
+        val scaleWidth = newWidth.toFloat() / width
+        val scaleHeight = newHeight.toFloat() / height
+        // CREATE A MATRIX FOR THE MANIPULATION
+        val matrix = Matrix()
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight)
+
+        // "RECREATE" THE NEW BITMAP
+        val resizedBitmap = Bitmap.createBitmap(
+            bm, 0, 0, width, height, matrix, false)
+        bm.recycle()
+        return resizedBitmap
     }
 
     fun protectedPhone(phone: String): String {
@@ -354,7 +367,7 @@ class MainActivity : AppCompatActivity() {
         spinnerDropDownMore: CustomSpinner,
         music: Music,
         type: Int,
-        fromFragment: Fragment
+        fromFragment: Fragment,
     ) {
         spinnerDropDownMore.adapter =
             MoreSongDropdownAdapter(spinnerDropDownMore.context, MoreSongData.data(), type)
@@ -368,7 +381,7 @@ class MainActivity : AppCompatActivity() {
                     parent: AdapterView<*>?,
                     v: View,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     when (position) {
                         1 -> { // Add to love list
@@ -596,7 +609,7 @@ class MainActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: IntArray
+        grantResults: IntArray,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 13) {

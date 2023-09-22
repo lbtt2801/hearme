@@ -1,8 +1,15 @@
 package com.lbtt2801.hearme.view.fragments.homeactionmenu
 
+import android.content.ContentResolver
 import android.content.ContentValues.TAG
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +35,8 @@ import com.lbtt2801.hearme.viewmodel.ArtistViewModel
 import com.lbtt2801.hearme.viewmodel.HomeViewModel
 import com.lbtt2801.hearme.viewmodel.MusicViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
+import java.io.FileNotFoundException
+
 
 class HomeFragment : Fragment() {
 
@@ -38,8 +47,8 @@ class HomeFragment : Fragment() {
     private lateinit var chartAdapter: ChartAdapter
     private lateinit var mainActivity: MainActivity
     private var email: String? = ""
-    private var avatar: Drawable? = null
-    private var convertedAvatar: Int? = null
+    private var drawableAvatar: Int? = null
+    private var uriAvatar: Uri? = null
     private var fullName: String? = ""
 
     private val musicViewModel: MusicViewModel by activityViewModels()
@@ -50,14 +59,10 @@ class HomeFragment : Fragment() {
         ViewModelProvider(this)[HomeViewModel::class.java]
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         mainActivity = activity as MainActivity
@@ -72,13 +77,42 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        convertedAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
+        drawableAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
+        if (drawableAvatar == null) {
+            uriAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatarUri
+            Log.v(TAG, "UriAvatar -> $uriAvatar")
+            Log.v(TAG,
+                "get MediaStore Image Path -> ${
+                    getImagePath(mainActivity.contentResolver,
+                        uriAvatar)
+                }")
+            if (uriAvatar == null) {
+                drawableAvatar = R.drawable.ellipse
+            } else {
+//                val galleryImageUrls = mutableListOf<Uri>()
+//                val columns = arrayOf(MediaStore.Images.Media._ID)
+//                val orderBy = MediaStore.Images.Media.DATE_TAKEN
+//
+//                mainActivity.contentResolver.query(
+//                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, columns,
+//                    null, null, null
+//                )?.use { cursor ->
+//                    val idColumn = cursor.getColumnIndex(MediaStore.Images.Media._ID)
+//
+//                    while (cursor.moveToNext()) {
+//                        val id = cursor.getLong(idColumn)
+//
+//                                galleryImageUrls.add(ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+//                                    id))
+//                    }
+//                }
+            }
+        }
         fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
     }
 
     override fun onResume() {
         super.onResume()
-        avatar = convertedAvatar?.let { mainActivity.changeSizeBitmap(it, 48, 48) }
 
         binding.tvSeeTrendingNow.setOnClickListener {
             findNavController().navigate(R.id.trendingNowFragment)
@@ -110,12 +144,22 @@ class HomeFragment : Fragment() {
         viewModel.getListDataChart()
 
         mainActivity.showBottomNav("VISIBLE")
+
         mainActivity.customToolbar(
             "VISIBLE",
             null,
             fullName,
             R.color.transparent,
-            avatar,
+            navIcon = if (drawableAvatar != null) {
+                mainActivity.changeSizeDrawable(drawableAvatar!!, 48, 48)
+            } else {
+                val bitmap = try {
+                    MediaStore.Images.Media.getBitmap(mainActivity.contentResolver, uriAvatar)
+                } catch (e: FileNotFoundException) {
+                    BitmapFactory.decodeResource(mainActivity.resources, R.drawable.ellipse)
+                }
+                BitmapDrawable(mainActivity.changeSizeBitmap(bitmap, 128 * 3, 128 * 3))
+            },
             showIcMore = false,
             showIcFilter = false,
             showIcSearch = true,
@@ -169,5 +213,19 @@ class HomeFragment : Fragment() {
             layoutManager = layoutRecyclerViewChart
             adapter = chartAdapter
         }
+    }
+
+    fun getImagePath(cr: ContentResolver, uri: Uri?): String? {
+        var result: String? = null
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cur = cr.query(uri!!, projection, null, null, null)
+        if (cur != null) {
+            val columnIndex = cur
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cur.moveToFirst()
+            result = cur.getString(columnIndex)
+            cur.close()
+        }
+        return result
     }
 }

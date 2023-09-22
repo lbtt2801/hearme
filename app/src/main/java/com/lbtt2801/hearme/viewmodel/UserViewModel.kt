@@ -1,6 +1,8 @@
 package com.lbtt2801.hearme.viewmodel
 
 import android.content.ContentValues.TAG
+import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +14,7 @@ import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.model.Playlist
 import com.lbtt2801.hearme.model.User
+import com.squareup.picasso.Picasso
 import java.util.Date
 
 class UserViewModel : ViewModel() {
@@ -54,7 +57,7 @@ class UserViewModel : ViewModel() {
     }
 
     fun addDataUser(email: String, pass: String) {
-        lst.add(User(email = email, password = pass, avatar = R.drawable.avatar_1))
+        lst.add(User(email = email, password = pass))
         _lstDataUser.postValue(lst)
         Log.v(TAG, "addDataUser -> ${lstDataUser.value?.size}")
     }
@@ -72,7 +75,7 @@ class UserViewModel : ViewModel() {
         dob: Date,
         secondaryEmail: String,
         phoneNumber: String,
-        image: Int
+        avatar: Uri? = null,
     ) {
         lst.first { it.email == email }.apply {
             this.fullName = fullName
@@ -80,7 +83,7 @@ class UserViewModel : ViewModel() {
             this.dob = dob
             this.secondaryEmail = secondaryEmail
             this.phone = phoneNumber
-            this.avatar = image
+            this.avatarUri = avatar
         }
         _lstDataUser.postValue(lst)
     }
@@ -91,7 +94,7 @@ class UserViewModel : ViewModel() {
         nickName: String,
         dob: Date,
         phoneNumber: String,
-        gender: Boolean
+        gender: Boolean,
     ) {
         lst.first { it.email == email }.apply {
             this.fullName = fullName
