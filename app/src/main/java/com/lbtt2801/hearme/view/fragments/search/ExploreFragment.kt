@@ -59,7 +59,7 @@ class ExploreFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         Log.v(TAG, "onCreateView saveInstanceTextSearch -> $saveInstanceTextSearch")
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
@@ -136,7 +136,8 @@ class ExploreFragment : Fragment() {
                 findNavController().navigate(R.id.podcastFragment, it)
             else if (it.getInt("position") == 2)
                 findNavController().navigate(R.id.itemExploreFragment, it)
-            else findNavController().navigate(R.id.itemExploreFragment, it)
+            else
+                findNavController().navigate(R.id.itemExploreFragment, it)
         }
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerView

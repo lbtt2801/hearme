@@ -1,41 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="chart"
             type="com.lbtt2801.hearme.model.Chart" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp">
 
-        <com.google.android.material.card.MaterialCardView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/cardView"
-            android:layout_width="match_parent"
+            android:layout_width="160dp"
             android:layout_height="160dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_bg_01"
             app:layout_constraintStart_toStartOf="parent"
-            app:cardCornerRadius="50dp">
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/roundedConorImageview" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:setImage="@{chart.image}"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{chart.chartName}"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:textColor="@color/on_button"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:elevation="5dp"
+            android:gravity="center"
+            android:text="@{chart.chartName}"
+            android:textColor="@color/on_button"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/cardView"
+            app:layout_constraintLeft_toLeftOf="@id/cardView"
+            app:layout_constraintRight_toRightOf="@id/cardView"
+            app:layout_constraintTop_toTopOf="@id/cardView" />
 
-        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
