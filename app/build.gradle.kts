@@ -77,4 +77,6 @@ dependencies {
 
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("jp.wasabeef:picasso-transformations:2.4.0")
+
+    implementation("androidx.media:media:1.6.0")
 }
