@@ -21,22 +21,27 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentSongPlayBinding
+import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.viewmodel.MusicViewModel
 import java.util.concurrent.TimeUnit
 
 class SongPlayFragment : Fragment() {
     private lateinit var binding: FragmentSongPlayBinding
     private lateinit var mainActivity: MainActivity
     private lateinit var runnable: Runnable
+    private lateinit var musicID: String
     private var handler = Handler()
     private var mediaPlayer = MediaPlayer()
     private var positionSong = 1 // vi tri bai hat da chon
     private var lstData = ArrayList<Int>()
+    private var music: Music? = null
 
-
+    private val musicViewModel: MusicViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -68,6 +73,12 @@ class SongPlayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        musicID = arguments?.getString("musicID").toString()
+        music = musicViewModel.lstDataMusics.value?.first { it.musicID == musicID }
+
+        binding.imgAvatar.background = music?.let { ContextCompat.getDrawable(requireContext(), it.image) }
+        binding.tvTitle.text = music?.musicName
+        binding.tvDetail.text = music?.artist?.artistName
     }
 
     override fun onResume() {
@@ -169,7 +180,7 @@ class SongPlayFragment : Fragment() {
     }
 
     private fun setResourcesWithMusic() {
-//        sendNotificationMedia()
+        sendNotificationMedia(requireContext())
         mediaPlayer = MediaPlayer.create(context, lstData[positionSong]) // get Song in positionSong
         binding.seekBar.progress = 0
         binding.seekBar.max = mediaPlayer.duration
@@ -180,19 +191,21 @@ class SongPlayFragment : Fragment() {
         binding.btnPlay.setImageResource(R.drawable.ic_pause_80)
     }
 
-    fun sendNotificationMedia(context: Context) {
+    @SuppressLint("MissingPermission")
+    private fun sendNotificationMedia(context: Context) {
         val notificationManagerCompat = NotificationManagerCompat.from(context)
         val mediaSession = MediaSessionCompat(context, "MediaNotification")
 
-        val notification = NotificationCompat.Builder(context, "CHANNEL_ID")
+        val notification = NotificationCompat.Builder(context, "HEAR_ME_APP")
             // Show controls on lock screen even when user hides sensitive content.
 //            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setSmallIcon(R.drawable.ic_bold_heart)
-            .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_bold_heart_w))
-            .setContentTitle("Wonderful music")
-            .setContentText("My Awesome Band")
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setCategory(NotificationCompat.CATEGORY_PROGRESS)
+            .setSmallIcon(R.drawable.logo_default)
+            .setLargeIcon(music?.image?.let { BitmapFactory.decodeResource(resources, it) })
+            .setSubText("Hearme App")
+            .setContentTitle(music?.musicName)
+            .setContentText(music?.artist?.artistName)
+//            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
             // Add media control buttons that invoke intents in your media service
             .addAction(R.drawable.ic_previous, "Previous", null) // #0
             .addAction(R.drawable.ic_pause, "Pause", null) // #1
@@ -200,11 +213,9 @@ class SongPlayFragment : Fragment() {
             // Apply the media style template
             .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
                 .setShowActionsInCompactView(0,1,2/* #1: pause button \*/)
-                .setMediaSession(mediaSession.sessionToken))
-
+                .setMediaSession(mediaSession.getSessionToken()))
             .build()
 
-
-//        notificationManagerCompat.notify(1, notification)
+        notificationManagerCompat.notify(1, notification)
     }
 }

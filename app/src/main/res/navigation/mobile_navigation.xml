@@ -343,6 +343,9 @@
         <action
             android:id="@+id/action_viewDetailsSongFragment_to_viewDetailsArtistFragment"
             app:destination="@id/viewDetailsArtistFragment" />
+        <action
+            android:id="@+id/action_viewDetailsSongFragment_to_songPlayFragment"
+            app:destination="@id/songPlayFragment" />
     </fragment>
     <fragment
         android:id="@+id/reviewSummaryFragment"
