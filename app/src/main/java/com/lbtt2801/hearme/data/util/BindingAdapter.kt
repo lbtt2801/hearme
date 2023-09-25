@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.widget.*
@@ -470,7 +471,7 @@ fun clickUserFollowButton(toggleButton: ToggleButton, myFollower: User) {
 fun setPlay(checkBox: CheckBox, music: Music) {
     val mainActivity = checkBox.context as MainActivity
 
-    mainActivity.viewModelMusic.lstDataMusics.observe(mainActivity) { _ ->
+    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) { _ ->
         checkBox.isChecked =
             music.isPlaying == true
     }
@@ -489,6 +490,8 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
                 "You are playing ${music.musicName}!"
             )
             // Chuyễn trang và put bundle ở đây
+            it.findNavController().navigate(R.id.songPlayFragment, Bundle().apply {
+                putString("musicID", music.musicID)})
             it.findNavController()
                 .navigate(R.id.songPlayFragment // R.id.action_notificationFragment_to_songPlayFragment
                     ,Bundle().apply {
@@ -531,6 +534,8 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
                         putString("musicID", music.musicID)
                     }
                 )
+            it.findNavController().navigate(R.id.action_viewDetailsSongFragment_to_songPlayFragment, Bundle().apply {
+                putString("musicID", music.musicID)})
         } else {
             mainActivity.showSnack(
                 appCompatButton,
