@@ -25,7 +25,8 @@ import com.lbtt2801.hearme.databinding.FragmentExploreBinding
 import com.lbtt2801.hearme.model.*
 import com.lbtt2801.hearme.viewmodel.*
 
-class ExploreFragment : Fragment() {
+class ExploreFragment : Fragment(),
+    RecentSearchesAdapter.RecentSearchAdapterCallBack {
     private lateinit var binding: FragmentExploreBinding
     private lateinit var mainActivity: MainActivity
     private lateinit var categoryAdapter: CategoryAdapter
@@ -45,6 +46,8 @@ class ExploreFragment : Fragment() {
     private lateinit var userAdapter: UserAdapter
 
     private lateinit var includeTopsSongsArtistsAlbumsPlaylistsProfiles: ContainerSearchResultBinding
+
+    private var nameCallBack: String? = null
 
     private var saveInstanceTextSearch: String = ""
 
@@ -83,6 +86,10 @@ class ExploreFragment : Fragment() {
         viewModel.getListDataArtist()
 
         initSearchBar()
+
+        binding.textClearAll.setOnClickListener() {
+            recentSearchViewModel.deleteAll()
+        }
     }
 
     private fun displayRecyclerViewTopicSearch(data: ArrayList<TopicSearch>) {
@@ -148,6 +155,7 @@ class ExploreFragment : Fragment() {
                 mainActivity.showBottomNav("GONE")
                 mainActivity.customToolbar("GONE")
                 if (p0 != null) {
+                    recentSearchViewModel.updateDataRecentSearch(p0)
                     topicSearchViewModel.lstDataTopicSearch.observe(requireActivity()) { data ->
                         includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeNotfoundSearch.root.visibility =
                             View.GONE
@@ -224,7 +232,6 @@ class ExploreFragment : Fragment() {
                 binding.containerRecentSearches.visibility = View.VISIBLE
                 mainActivity.showBottomNav("GONE")
                 mainActivity.customToolbar("GONE")
-
                 return true
             }
         })
@@ -418,9 +425,14 @@ class ExploreFragment : Fragment() {
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
         recentSearchesAdapter =
             RecentSearchesAdapter(lstData)
+        recentSearchesAdapter.setCallBack(this)
         binding.recyclerViewRecentSearches.apply {
             layoutManager = layout
             adapter = recentSearchesAdapter
         }
+    }
+
+    override fun setQuery(name: String) {
+        binding.searchView.setQuery(name, true)
     }
 }

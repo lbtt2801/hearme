@@ -17,8 +17,28 @@ class RecentSearchViewModel : ViewModel() {
         getListDataRecentSearches()
     }
 
-    fun getListDataRecentSearches() {
+    private fun getListDataRecentSearches() {
         lst = RecentSearchesData.data()
+        _lstDataRecentSearch.postValue(lst)
+    }
+
+    fun updateDataRecentSearch(query: String) {
+        if (lst.none { it.name == query }) {
+            lst.add(0, RecentSearch(query))
+        } else {
+            lst.removeIf { it.name == query }
+            lst.add(0, RecentSearch(query))
+        }
+        _lstDataRecentSearch.postValue(lst)
+    }
+
+    fun delete(query: String) {
+        lst.removeIf { it.name == query }
+        _lstDataRecentSearch.postValue(lst)
+    }
+
+    fun deleteAll() {
+        lst.removeAll(lst.toSet())
         _lstDataRecentSearch.postValue(lst)
     }
 }

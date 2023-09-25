@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
     val viewModelTopicSearch: TopicSearchViewModel by viewModels()
-    private val viewModelRecentSearch: RecentSearchViewModel by viewModels()
+    val viewModelRecentSearch: RecentSearchViewModel by viewModels()
     val viewModelMusic: MusicViewModel by viewModels()
     private val viewModelArtist: ArtistViewModel by viewModels()
     private val viewModelCategory: CategoriesViewModel by viewModels()
@@ -78,7 +78,8 @@ class MainActivity : AppCompatActivity() {
     var email: String = ""
 
     var checkRemember = true
-//    var checkInHome = false
+
+    //    var checkInHome = false
     var checkInHistory = false
     var language: String = "English (US)"
     var mediaPlayer = MediaPlayer()
