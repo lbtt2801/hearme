@@ -18,8 +18,9 @@
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/menu_toolbar"
-            app:navigationIcon="@drawable/avatar_1">
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            app:menu="@menu/menu_toolbar">
 
             <LinearLayout
                 android:id="@+id/container_tool_bar"
@@ -58,9 +59,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:ellipsize="marquee"
                         android:gravity="center_vertical"
                         android:lineSpacingExtra="3sp"
-                        android:text="Andrew Ainsley"
+                        android:maxLines="1"
+                        android:text="Andrew Ainsleys"
                         android:textColor="@color/greyscale_900"
                         android:textSize="20sp"
                         android:textStyle="bold" />

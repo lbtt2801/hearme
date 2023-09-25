@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_item_nav_home_to_viewDetailsSongFragment"
             app:destination="@id/viewDetailsSongFragment" />
+        <action
+            android:id="@+id/action_item_nav_home_to_item_nav_explore"
+            app:destination="@id/item_nav_explore" />
     </fragment>
 
     <fragment
@@ -82,7 +85,9 @@
             app:destination="@id/signUpFragment" />
         <action
             android:id="@+id/action_signInFragment_to_item_nav_home"
-            app:destination="@id/item_nav_home" />
+            app:destination="@id/item_nav_home"
+            app:popUpTo="@id/mobile_navigation"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/fillYourProfileFragment"
@@ -394,7 +399,7 @@
         android:id="@+id/playlistDetailFragment"
         android:name="com.lbtt2801.hearme.view.fragments.library.PlaylistDetailFragment"
         android:label="fragment_playlist_detail"
-        tools:layout="@layout/fragment_playlist_detail" >
+        tools:layout="@layout/fragment_playlist_detail">
         <action
             android:id="@+id/action_playlistDetailFragment_to_songPlayFragment"
             app:destination="@id/songPlayFragment" />
@@ -403,7 +408,7 @@
         android:id="@+id/downloadsFragment"
         android:name="com.lbtt2801.hearme.view.fragments.library.DownloadsFragment"
         android:label="fragment_downloads"
-        tools:layout="@layout/fragment_downloads" >
+        tools:layout="@layout/fragment_downloads">
         <action
             android:id="@+id/action_downloadsFragment_to_songPlayFragment"
             app:destination="@id/songPlayFragment" />
@@ -427,7 +432,7 @@
         android:id="@+id/songFragment"
         android:name="com.lbtt2801.hearme.view.fragments.library.SongFragment"
         android:label="fragment_song"
-        tools:layout="@layout/fragment_song" >
+        tools:layout="@layout/fragment_song">
         <action
             android:id="@+id/action_songFragment_to_songPlayFragment"
             app:destination="@id/songPlayFragment" />
@@ -455,7 +460,7 @@
         android:id="@+id/viewDetailsProfileFragment"
         android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsProfileFragment"
         android:label="ViewDetailsProfileFragment"
-        tools:layout="@layout/fragment_view_details_profile" >
+        tools:layout="@layout/fragment_view_details_profile">
         <action
             android:id="@+id/action_viewDetailsProfileFragment_to_followerDetailFragment"
             app:destination="@id/followerDetailFragment" />
@@ -474,7 +479,7 @@
         android:id="@+id/tabDownloadedFragment"
         android:name="com.lbtt2801.hearme.view.tab_viewpager.TabDownloadedFragment"
         android:label="fragment_tab_downloaded"
-        tools:layout="@layout/fragment_tab_downloaded" >
+        tools:layout="@layout/fragment_tab_downloaded">
         <action
             android:id="@+id/action_tabDownloadedFragment_to_songPlayFragment"
             app:destination="@id/songPlayFragment" />
@@ -483,7 +488,7 @@
         android:id="@+id/tabPodcastersFragment"
         android:name="com.lbtt2801.hearme.view.tab_viewpager.TabPodcastersFragment"
         android:label="fragment_tab_podcasters"
-        tools:layout="@layout/fragment_tab_podcasters" >
+        tools:layout="@layout/fragment_tab_podcasters">
         <action
             android:id="@+id/action_tabPodcastersFragment_to_songPlayFragment"
             app:destination="@id/songPlayFragment" />
@@ -491,7 +496,7 @@
     <fragment
         android:id="@+id/tabSongFragment"
         android:name="com.lbtt2801.hearme.view.tab_viewpager.TabSongFragment"
-        android:label="TabSongFragment" >
+        android:label="TabSongFragment">
         <action
             android:id="@+id/action_tabSongFragment_to_songPlayFragment"
             app:destination="@id/songPlayFragment" />
@@ -499,7 +504,7 @@
     <fragment
         android:id="@+id/tabPodcastFragment"
         android:name="com.lbtt2801.hearme.view.tab_viewpager.TabPodcastFragment"
-        android:label="TabPodcastFragment" >
+        android:label="TabPodcastFragment">
         <action
             android:id="@+id/action_tabPodcastFragment_to_songPlayFragment"
             app:destination="@id/songPlayFragment" />
