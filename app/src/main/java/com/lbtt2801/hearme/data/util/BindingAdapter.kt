@@ -2,6 +2,7 @@ package com.lbtt2801.hearme.data.adapter
 
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
+import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.widget.*
@@ -478,7 +479,6 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
     val mainActivity = checkBox.context as MainActivity
 
     checkBox.setOnClickListener() {
-        it.findNavController().navigate(R.id.songPlayFragment)
         var isPlaying = false
         if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
             isPlaying = true
@@ -487,8 +487,17 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
                 "You are playing ${music.musicName}!"
             )
             // Chuyễn trang và put bundle ở đây
+            it.findNavController().navigate(R.id.songPlayFragment, Bundle().apply {
+                putString("musicID", music.musicID)})
+            it.findNavController()
+                .navigate(R.id.songPlayFragment // R.id.action_notificationFragment_to_songPlayFragment
+                    ,Bundle().apply {
+                        putString("musicID", music.musicID)
+                    }
+                )
         } else {
             isPlaying = false
+            mainActivity.mediaPlayer.stop()
             mainActivity.showSnack(
                 checkBox,
                 "You stop playing ${music.musicName}!"
@@ -506,7 +515,6 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
     val mainActivity = appCompatButton.context as MainActivity
 
     appCompatButton.setOnClickListener() {
-        it.findNavController().navigate(R.id.songPlayFragment)
         if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
             mainActivity.viewModelMusic.updatePlaying(
                 music,
@@ -517,6 +525,14 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
                 "You are playing ${music.musicName}!"
             )
             // Chuyễn trang và put bundle ở đây
+            it.findNavController()
+                .navigate(R.id.songPlayFragment // R.id.action_viewDetailsSongFragment_to_songPlayFragment
+                    ,Bundle().apply {
+                        putString("musicID", music.musicID)
+                    }
+                )
+            it.findNavController().navigate(R.id.action_viewDetailsSongFragment_to_songPlayFragment, Bundle().apply {
+                putString("musicID", music.musicID)})
         } else {
             mainActivity.showSnack(
                 appCompatButton,

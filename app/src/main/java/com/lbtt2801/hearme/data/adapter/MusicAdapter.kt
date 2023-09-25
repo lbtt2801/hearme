@@ -3,6 +3,7 @@ package com.lbtt2801.hearme.data.adapter
 import android.app.ActionBar.LayoutParams
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MoreSongData
 import com.lbtt2801.hearme.databinding.*
 import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.view.dialogs.AuthorizationProgressDialog.Companion.TAG
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.HomeFragment
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.TrendingNowFragment

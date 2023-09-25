@@ -2,13 +2,19 @@ package com.lbtt2801.hearme.view.fragments.search
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
+import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,22 +27,29 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.lbtt2801.hearme.MainActivity
+import com.lbtt2801.hearme.MusicService
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentSongPlayBinding
+import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.viewmodel.MusicViewModel
 import java.util.concurrent.TimeUnit
 
-class SongPlayFragment : Fragment() {
+class SongPlayFragment : Fragment(), ServiceConnection {
     private lateinit var binding: FragmentSongPlayBinding
     private lateinit var mainActivity: MainActivity
     private lateinit var runnable: Runnable
+    private lateinit var musicID: String
     private var handler = Handler()
-    private var mediaPlayer = MediaPlayer()
+//    var mediaPlayer = MediaPlayer()
     private var positionSong = 1 // vi tri bai hat da chon
     private var lstData = ArrayList<Int>()
+    private var music: Music? = null
+    var musicService: MusicService? = null
 
-
+    private val musicViewModel: MusicViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -62,17 +75,32 @@ class SongPlayFragment : Fragment() {
         lstData.add(R.raw.shape_of_you_nokia)
         lstData.add(R.raw.shape_of_you_nokia)
 
+        Log.v(TAG, "Create fragment")
+
+        // For Starting Service
+//        val intent = Intent(this, MusicService::class.java)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        musicID = arguments?.getString("musicID").toString()
+        music = musicViewModel.lstDataMusics.value?.first { it.musicID == musicID }
+//        binding.music = music
+        binding.imgAvatar.background =
+            music?.let { ContextCompat.getDrawable(requireContext(), it.image) }
+        binding.tvTitle.text = music?.musicName
+        binding.tvDetail.text = music?.artist?.artistName
+        binding.btnPlay.isChecked = music?.isPlaying == true
+
     }
 
     override fun onResume() {
         super.onResume()
 
+        Log.v(TAG, "onResume")
         Toast.makeText(context, "Size lstData: ${lstData.size}", Toast.LENGTH_SHORT).show()
 
 //        mediaPlayer = MediaPlayer.create(context, R.raw.shape_of_you_nokia)
@@ -82,7 +110,7 @@ class SongPlayFragment : Fragment() {
         binding.seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(p0: SeekBar?, position: Int, changed: Boolean) {
                 if (changed) {
-                    mediaPlayer.seekTo(position)
+                    mainActivity.mediaPlayer.seekTo(position)
                 }
             }
 
@@ -95,15 +123,14 @@ class SongPlayFragment : Fragment() {
         })
 
         runnable = Runnable {
-            binding.seekBar.progress = mediaPlayer.currentPosition
-            binding.tvTimeStart.text = convertToMMSS(mediaPlayer.currentPosition)
+            binding.seekBar.progress = mainActivity.mediaPlayer.currentPosition
+            binding.tvTimeStart.text = convertToMMSS(mainActivity.mediaPlayer.currentPosition)
             handler.postDelayed(runnable, 1000)
         }
         handler.postDelayed(runnable, 1000)
 
         // music off because time run end
-        mediaPlayer.setOnCompletionListener {
-            binding.btnPlay.setImageResource(R.drawable.ic_play_80)
+        mainActivity.mediaPlayer.setOnCompletionListener {
             binding.seekBar.progress = 0
 
 //            // tu dong phat bai ke tiep con BUG
@@ -121,12 +148,12 @@ class SongPlayFragment : Fragment() {
         }
 
         binding.btnPlay.setOnClickListener {
-            if (!mediaPlayer.isPlaying) {
-                mediaPlayer.start()
-                binding.btnPlay.setImageResource(R.drawable.ic_pause_80)
+            if (!mainActivity.mediaPlayer.isPlaying) {
+                mainActivity.mediaPlayer.start()
+                music?.isPlaying = true
             } else {
-                mediaPlayer.pause()
-                binding.btnPlay.setImageResource(R.drawable.ic_play_80)
+                mainActivity.mediaPlayer.pause()
+                music?.isPlaying = false
             }
         }
 
@@ -134,7 +161,7 @@ class SongPlayFragment : Fragment() {
             if (positionSong == lstData.size - 1)
                 return@setOnClickListener
             positionSong += 1
-            mediaPlayer.reset()
+            mainActivity.mediaPlayer.reset()
             setResourcesWithMusic()
 
         }
@@ -143,18 +170,18 @@ class SongPlayFragment : Fragment() {
             if (positionSong == 0)
                 return@setOnClickListener
             positionSong -= 1
-            mediaPlayer.reset()
+            mainActivity.mediaPlayer.reset()
             setResourcesWithMusic()
         }
 
         binding.btnForward.setOnClickListener {
-            if (mediaPlayer.isPlaying)
-                mediaPlayer.seekTo(mediaPlayer.currentPosition + 10000)
+            if (mainActivity.mediaPlayer.isPlaying)
+                mainActivity.mediaPlayer.seekTo(mainActivity.mediaPlayer.currentPosition + 10000)
         }
 
         binding.btnBackward.setOnClickListener {
-            if (mediaPlayer.isPlaying)
-                mediaPlayer.seekTo(mediaPlayer.currentPosition - 10000)
+            if (mainActivity.mediaPlayer.isPlaying)
+                mainActivity.mediaPlayer.seekTo(mainActivity.mediaPlayer.currentPosition - 10000)
         }
     }
 
@@ -168,43 +195,73 @@ class SongPlayFragment : Fragment() {
         )
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.v(TAG, "onDestroy")
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.v(TAG, "onDestroyView")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.v(TAG, "onDetach")
+    }
+
     private fun setResourcesWithMusic() {
-//        sendNotificationMedia()
-        mediaPlayer = MediaPlayer.create(context, lstData[positionSong]) // get Song in positionSong
+//        showNotificationMedia(requireContext())
+        if (music != null)
+            mainActivity.showNotificationMedia(music!!)
+
+//        mainActivity.mediaPlayer = MediaPlayer.create(context, lstData[positionSong]) // get Song in positionSong
+
         binding.seekBar.progress = 0
-        binding.seekBar.max = mediaPlayer.duration
+        binding.seekBar.max = mainActivity.mediaPlayer.duration
 
-        binding.tvTimeEnd.text = convertToMMSS(mediaPlayer.duration)
+        binding.tvTimeEnd.text = convertToMMSS(mainActivity.mediaPlayer.duration)
 
-        mediaPlayer.start()
-        binding.btnPlay.setImageResource(R.drawable.ic_pause_80)
+
+        if (music?.isPlaying == true)
+            mainActivity.mediaPlayer.start()
+//        mediaPlayer.start()
+
     }
 
-    fun sendNotificationMedia(context: Context) {
-        val notificationManagerCompat = NotificationManagerCompat.from(context)
-        val mediaSession = MediaSessionCompat(context, "MediaNotification")
+    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        val binder = service as MusicService.MyBinder
+        musicService = binder.currentService()
+    }
 
-        val notification = NotificationCompat.Builder(context, "CHANNEL_ID")
-            // Show controls on lock screen even when user hides sensitive content.
-//            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setSmallIcon(R.drawable.ic_bold_heart)
-            .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_bold_heart_w))
-            .setContentTitle("Wonderful music")
-            .setContentText("My Awesome Band")
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setCategory(NotificationCompat.CATEGORY_PROGRESS)
-            // Add media control buttons that invoke intents in your media service
-            .addAction(R.drawable.ic_previous, "Previous", null) // #0
-            .addAction(R.drawable.ic_pause, "Pause", null) // #1
-            .addAction(R.drawable.ic_next, "Next", null) // #2
-            // Apply the media style template
-            .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
-                .setShowActionsInCompactView(0,1,2/* #1: pause button \*/)
-                .setMediaSession(mediaSession.sessionToken))
+    override fun onServiceDisconnected(p0: ComponentName?) {
+        musicService = null
+    }
 
-            .build()
-
-
+//    @SuppressLint("MissingPermission")
+//    private fun showNotificationMedia(context: Context) {
+//        val notificationManagerCompat = NotificationManagerCompat.from(context)
+//        val mediaSession = MediaSessionCompat(context, "MediaNotification")
+//
+//        val notification = NotificationCompat.Builder(context, "HEAR_ME_APP")
+//            // Show controls on lock screen even when user hides sensitive content.
+////            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+//            .setSmallIcon(R.drawable.logo_default)
+//            .setLargeIcon(music?.image?.let { BitmapFactory.decodeResource(resources, it) })
+//            .setSubText("Hearme App")
+//            .setContentTitle(music?.musicName)
+//            .setContentText(music?.artist?.artistName)
+////            .setPriority(NotificationCompat.PRIORITY_HIGH)
+//            .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
+//            // Add media control buttons that invoke intents in your media service
+//            .addAction(R.drawable.ic_previous, "Previous", null) // #0
+//            .addAction(R.drawable.ic_pause, "Pause", null) // #1
+//            .addAction(R.drawable.ic_next, "Next", null) // #2
+//            // Apply the media style template
+//            .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
+//                .setShowActionsInCompactView(0,1,2/* #1: pause button \*/)
+//                .setMediaSession(mediaSession.sessionToken))
+//            .build()
+//
 //        notificationManagerCompat.notify(1, notification)
-    }
+//    }
 }

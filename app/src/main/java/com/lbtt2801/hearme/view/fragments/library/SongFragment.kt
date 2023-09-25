@@ -86,6 +86,17 @@ class SongFragment : Fragment() {
                 }
             }
         }
+
+        binding.btnShuffle.setOnClickListener {
+            if (lst != null) {
+                lst!!.shuffle()
+                findNavController().navigate(R.id.songPlayFragment,
+                    Bundle().apply {
+                        putString("musicID", lst!![0].musicID)
+                    }
+                )
+            }
+        }
     }
 
     override fun onDestroyView() {

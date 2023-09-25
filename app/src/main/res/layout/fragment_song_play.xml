@@ -4,6 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".view.fragments.search.SongPlayFragment">
 
+    <data>
+
+        <variable
+            name="music"
+            type="com.lbtt2801.hearme.model.Music" />
+
+        <variable
+            name="media"
+            type="android.media.MediaPlayer" />
+    </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -123,13 +134,16 @@
                     android:background="@color/transparent"
                     android:src="@drawable/ic_backward" />
 
-                <ImageButton
+                <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/btnPlay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_weight="1"
-                    android:background="@color/transparent"
-                    android:src="@drawable/ic_play_80" />
+                    android:background="@drawable/selector_play_check_box"
+                    android:button="@color/transparent"
+                    android:checked="false"/>
+<!--                    app:clickPlayForCheckBox="@{music}"-->
+<!--                    app:setPlay="@{music}" />-->
 
                 <ImageButton
                     android:id="@+id/btnForward"
