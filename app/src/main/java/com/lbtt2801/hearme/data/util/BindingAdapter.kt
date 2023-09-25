@@ -2,8 +2,6 @@ package com.lbtt2801.hearme.data.adapter
 
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
-import android.media.MediaPlayer
-import android.os.Bundle
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
@@ -19,7 +17,6 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MusicsData
 import com.lbtt2801.hearme.model.*
-import com.lbtt2801.hearme.view.fragments.search.SongPlayFragment
 import com.squareup.picasso.Picasso
 import java.text.DecimalFormat
 import java.text.NumberFormat
