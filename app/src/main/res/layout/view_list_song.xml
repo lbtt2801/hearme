@@ -120,9 +120,9 @@
             android:button="@color/transparent"
             android:checked="false"
             app:clickPlayForCheckBox="@{music}"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/spinner_drop_down_more"
-            app:layout_constraintTop_toTopOf="parent"
             app:setPlay="@{music}" />
 
         <com.lbtt2801.hearme.data.control.CustomSpinner

@@ -81,7 +81,7 @@ class PlayListFragment : Fragment() {
                 renderArrayList.add(playlist)
             }
             if (checkVisible)
-            displayRecyclerView(renderArrayList)
+                displayRecyclerView(renderArrayList)
         }
 
         binding.spinner.setSelection(0)

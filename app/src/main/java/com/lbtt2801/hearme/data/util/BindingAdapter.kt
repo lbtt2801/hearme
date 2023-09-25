@@ -2,6 +2,8 @@ package com.lbtt2801.hearme.data.adapter
 
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
+import android.media.MediaPlayer
+import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.widget.*
@@ -16,6 +18,7 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MusicsData
 import com.lbtt2801.hearme.model.*
+import com.lbtt2801.hearme.view.fragments.search.SongPlayFragment
 import com.squareup.picasso.Picasso
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -467,7 +470,7 @@ fun clickUserFollowButton(toggleButton: ToggleButton, myFollower: User) {
 fun setPlay(checkBox: CheckBox, music: Music) {
     val mainActivity = checkBox.context as MainActivity
 
-    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) { _ ->
+    mainActivity.viewModelMusic.lstDataMusics.observe(mainActivity) { _ ->
         checkBox.isChecked =
             music.isPlaying == true
     }
@@ -478,7 +481,6 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
     val mainActivity = checkBox.context as MainActivity
 
     checkBox.setOnClickListener() {
-        it.findNavController().navigate(R.id.songPlayFragment)
         var isPlaying = false
         if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
             isPlaying = true
@@ -487,8 +489,15 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
                 "You are playing ${music.musicName}!"
             )
             // Chuyễn trang và put bundle ở đây
+            it.findNavController()
+                .navigate(R.id.songPlayFragment // R.id.action_notificationFragment_to_songPlayFragment
+                    ,Bundle().apply {
+                        putString("musicID", music.musicID)
+                    }
+                )
         } else {
             isPlaying = false
+            mainActivity.mediaPlayer.stop()
             mainActivity.showSnack(
                 checkBox,
                 "You stop playing ${music.musicName}!"
@@ -506,7 +515,6 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
     val mainActivity = appCompatButton.context as MainActivity
 
     appCompatButton.setOnClickListener() {
-        it.findNavController().navigate(R.id.songPlayFragment)
         if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
             mainActivity.viewModelMusic.updatePlaying(
                 music,
@@ -517,6 +525,12 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
                 "You are playing ${music.musicName}!"
             )
             // Chuyễn trang và put bundle ở đây
+            it.findNavController()
+                .navigate(R.id.songPlayFragment // R.id.action_viewDetailsSongFragment_to_songPlayFragment
+                    ,Bundle().apply {
+                        putString("musicID", music.musicID)
+                    }
+                )
         } else {
             mainActivity.showSnack(
                 appCompatButton,

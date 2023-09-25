@@ -30,12 +30,10 @@ class PlaylistDetailFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private lateinit var musicAdapter: MusicAdapter
     private var lst = ArrayList<Playlist>()
+    private var lstMusic = ArrayList<Music>()
     private var idPlaylist = ""
 
     private val userViewModel: UserViewModel by activityViewModels()
-    private val viewModel by lazy {
-        ViewModelProvider(this)[HomeViewModel::class.java]
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,12 +72,22 @@ class PlaylistDetailFragment : Fragment() {
 
         userViewModel.lstDataPlaylist.observe((activity as MainActivity), Observer { playlists ->
             lst = playlists as ArrayList<Playlist>
-            var lstMusic: ArrayList<Music>? = null
-            lstMusic = lst.find { it.playlistID == "pl001" }?.listMusic
-            if (lstMusic != null) {
-                displayRecyclerView(lstMusic)
-            }
+
+            lstMusic = lst.find { it.playlistID == idPlaylist }!!.listMusic
+            displayRecyclerView(lstMusic)
         })
+
+        binding.btnShuffle.setOnClickListener {
+            lstMusic.shuffle()
+            findNavController().navigate(R.id.songPlayFragment,
+                Bundle().apply {
+                    putString("musicID", lstMusic[0].musicID)
+                }
+            )
+
+        }
+
+
     }
 
     override fun onDestroyView() {

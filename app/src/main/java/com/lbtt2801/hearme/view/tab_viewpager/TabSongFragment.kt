@@ -25,23 +25,22 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class TabSongFragment : Fragment() {
-    private var _binding: FragmentTabSongBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentTabSongBinding
     private lateinit var musicAdapter: MusicAdapter
     private lateinit var mainActivity: MainActivity
     private var lst: ArrayList<Music>? = null
     private var email: String? = ""
 
     private val userViewModel: UserViewModel by activityViewModels()
-    private val viewModel by lazy {
-        ViewModelProvider(this)[HomeViewModel::class.java]
-    }
+//    private val viewModel by lazy {
+//        ViewModelProvider(this)[HomeViewModel::class.java]
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding =
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_tab_song, container, false)
         lst = ArrayList()
         mainActivity = activity as MainActivity
@@ -71,7 +70,7 @@ class TabSongFragment : Fragment() {
                 displayRecyclerViewToday(lst!!, 5)
             }
         } else {
-            viewModel.lstDataMusic.observe((activity as MainActivity), Observer { musicList ->
+            mainActivity.viewModelMusic.lstDataMusics.observe((activity as MainActivity), Observer { musicList ->
                 lst = musicList as ArrayList<Music>
                 val formatter = SimpleDateFormat("dd/MM/yyyy")
                 val calToday = Calendar.getInstance()
@@ -95,14 +94,9 @@ class TabSongFragment : Fragment() {
                     ) == 0 && it.category.categoryID != "ca002"
                 } as ArrayList<Music>)
             })
-            viewModel.getListDataMusic()
+//            viewModel.getListDataMusic()
         }
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun displayRecyclerViewToday(lstData: ArrayList<Music>, type: Int) {

@@ -20,8 +20,7 @@ import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.viewmodel.MusicViewModel
 
 class TrendingNowFragment : Fragment() {
-    private var _binding: FragmentTrendingNowBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentTrendingNowBinding
     private lateinit var musicAdapter: MusicAdapter
     private val viewModelMusic: MusicViewModel by activityViewModels()
 
@@ -29,7 +28,7 @@ class TrendingNowFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding =
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_trending_now, container, false)
         return binding.root
     }
@@ -56,11 +55,6 @@ class TrendingNowFragment : Fragment() {
             displayRecyclerView(list.sortedByDescending { it.totalListeners }
                 .take(5) as ArrayList<Music>)
         })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun displayRecyclerView(lstData: ArrayList<Music>) {
