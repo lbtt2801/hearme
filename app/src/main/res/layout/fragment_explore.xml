@@ -104,6 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
+                android:overScrollMode="never"
                 android:paddingTop="24dp"
                 android:paddingBottom="24dp"
                 tools:listitem="@layout/view_recent_search" />
