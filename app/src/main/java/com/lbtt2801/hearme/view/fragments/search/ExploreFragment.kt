@@ -26,8 +26,7 @@ import com.lbtt2801.hearme.model.*
 import com.lbtt2801.hearme.viewmodel.*
 
 class ExploreFragment : Fragment() {
-    private var _binding: FragmentExploreBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentExploreBinding
     private lateinit var mainActivity: MainActivity
     private lateinit var categoryAdapter: CategoryAdapter
     private val viewModel by lazy {
@@ -62,7 +61,7 @@ class ExploreFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         Log.v(TAG, "onCreateView saveInstanceTextSearch -> $saveInstanceTextSearch")
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
         mainActivity = (activity as MainActivity)
         includeTopsSongsArtistsAlbumsPlaylistsProfiles =
             binding.includeTopsSongsArtistsAlbumsPlaylistsProfiles
@@ -121,11 +120,6 @@ class ExploreFragment : Fragment() {
         super.onSaveInstanceState(outState)
         outState.putString("textSearch", saveInstanceTextSearch)
         Log.v(TAG, "onSaveInstanceState saveInstanceTextSearch -> $saveInstanceTextSearch")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun displayRecyclerView(lstData: ArrayList<Category>) {

@@ -66,7 +66,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         mainActivity = activity as MainActivity
-        mainActivity.checkInHome = true
+//        mainActivity.checkInHome = true
         email = mainActivity.email
         Toast.makeText(requireContext(), "home -> $email", Toast.LENGTH_SHORT).show()
         if (savedInstanceState != null) {
@@ -177,7 +177,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mainActivity.checkInHome = false
+//        mainActivity.checkInHome = false
     }
 
     override fun onDestroy() {

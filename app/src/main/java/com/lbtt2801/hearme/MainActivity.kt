@@ -2,6 +2,7 @@ package com.lbtt2801.hearme
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -11,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
@@ -22,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -34,7 +37,10 @@ import com.lbtt2801.hearme.data.adapter.MoreSongDropdownAdapter
 import com.lbtt2801.hearme.data.control.CustomSpinner
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
 import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.view.fragments.homeactionmenu.HomeFragment
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment
+import com.lbtt2801.hearme.view.fragments.library.MyLibraryFragment
+import com.lbtt2801.hearme.view.fragments.profile_settings.ProfileFragment
 import com.lbtt2801.hearme.view.fragments.search.ExploreFragment
 import com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistFragment
 import com.lbtt2801.hearme.view.fragments.search.ViewDetailsSongFragment
@@ -45,6 +51,7 @@ import kotlin.system.exitProcess
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    private lateinit var navHostFragment: NavHostFragment
     val viewModelTopicSearch: TopicSearchViewModel by viewModels()
     private val viewModelRecentSearch: RecentSearchViewModel by viewModels()
     val viewModelMusic: MusicViewModel by viewModels()
@@ -57,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     var email: String = ""
 
     var checkRemember = true
-    var checkInHome = false
+//    var checkInHome = false
     var checkInHistory = false
     var language: String = "English (US)"
 
@@ -93,7 +100,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "savedInstanceState -> $email", Toast.LENGTH_SHORT).show()
         }
 
-        val navHostFragment =
+        navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navHostFragment.navController
 
@@ -132,9 +139,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (!checkInHome)
+        val count = navHostFragment.childFragmentManager.backStackEntryCount
+        if (count == 0) {
+            showDialogBox()
+        } else {
             super.onBackPressed()
-        else showDialogBox()
+            navHostFragment.childFragmentManager.addOnBackStackChangedListener {
+                if (navHostFragment.childFragmentManager.backStackEntryCount < count) {
+                    val count2 = navHostFragment.childFragmentManager.backStackEntryCount
+                    when (navHostFragment.childFragmentManager.fragments.first()) {
+                        is HomeFragment -> {
+                            binding.bottomNavView.menu.getItem(0).isChecked = true
+                        }
+                        is ExploreFragment -> {
+                            binding.bottomNavView.menu.getItem(1).isChecked = true
+                        }
+                        is MyLibraryFragment -> {
+                            binding.bottomNavView.menu.getItem(2).isChecked = true
+                        }
+                        is ProfileFragment -> {
+                            binding.bottomNavView.menu.getItem(3).isChecked = true
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun showDialogBox() {
