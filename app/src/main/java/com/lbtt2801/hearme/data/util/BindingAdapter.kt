@@ -1,4 +1,4 @@
-package com.lbtt2801.hearme.data.adapter
+package com.lbtt2801.hearme.data.util
 
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
@@ -487,8 +487,6 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
                 "You are playing ${music.musicName}!"
             )
             // Chuyễn trang và put bundle ở đây
-            it.findNavController().navigate(R.id.songPlayFragment, Bundle().apply {
-                putString("musicID", music.musicID)})
             it.findNavController()
                 .navigate(R.id.songPlayFragment // R.id.action_notificationFragment_to_songPlayFragment
                     ,Bundle().apply {
@@ -531,8 +529,6 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
                         putString("musicID", music.musicID)
                     }
                 )
-            it.findNavController().navigate(R.id.action_viewDetailsSongFragment_to_songPlayFragment, Bundle().apply {
-                putString("musicID", music.musicID)})
         } else {
             mainActivity.showSnack(
                 appCompatButton,

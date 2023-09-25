@@ -152,7 +152,7 @@ class SongPlayFragment : Fragment(), ServiceConnection {
                 mainActivity.mediaPlayer.start()
                 music?.isPlaying = true
             } else {
-                mainActivity.mediaPlayer.pause()
+                mainActivity.mediaPlayer.stop()
                 music?.isPlaying = false
             }
         }
