@@ -8,8 +8,8 @@ import android.os.IBinder
 
 class MusicService: Service() {
     private  var myBinder = MyBinder()
-    var mediaPlayer: MediaPlayer?= null
-    override fun onBind(p0: Intent?): IBinder? {
+    var mediaPlayer = MediaPlayer()
+    override fun onBind(p0: Intent?): IBinder {
         return myBinder
     }
 

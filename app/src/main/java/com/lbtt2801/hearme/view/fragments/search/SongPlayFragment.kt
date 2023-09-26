@@ -1,28 +1,19 @@
 package com.lbtt2801.hearme.view.fragments.search
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.ContentValues.TAG
-import android.content.Context
-import android.content.Intent
 import android.content.ServiceConnection
-import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
-import android.support.v4.media.session.MediaSessionCompat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -43,11 +34,11 @@ class SongPlayFragment : Fragment(), ServiceConnection {
     private lateinit var runnable: Runnable
     private lateinit var musicID: String
     private var handler = Handler()
-//    var mediaPlayer = MediaPlayer()
+//    private var mediaPlayer = MediaPlayer()
     private var positionSong = 1 // vi tri bai hat da chon
     private var lstData = ArrayList<Int>()
     private var music: Music? = null
-    var musicService: MusicService? = null
+    var musicService = MusicService()
 
     private val musicViewModel: MusicViewModel by activityViewModels()
     override fun onCreateView(
@@ -110,7 +101,7 @@ class SongPlayFragment : Fragment(), ServiceConnection {
         binding.seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(p0: SeekBar?, position: Int, changed: Boolean) {
                 if (changed) {
-                    mainActivity.mediaPlayer.seekTo(position)
+                    musicService.mediaPlayer.seekTo(position)
                 }
             }
 
@@ -123,14 +114,14 @@ class SongPlayFragment : Fragment(), ServiceConnection {
         })
 
         runnable = Runnable {
-            binding.seekBar.progress = mainActivity.mediaPlayer.currentPosition
-            binding.tvTimeStart.text = convertToMMSS(mainActivity.mediaPlayer.currentPosition)
+            binding.seekBar.progress = musicService.mediaPlayer.currentPosition
+            binding.tvTimeStart.text = convertToMMSS(musicService.mediaPlayer.currentPosition)
             handler.postDelayed(runnable, 1000)
         }
         handler.postDelayed(runnable, 1000)
 
         // music off because time run end
-        mainActivity.mediaPlayer.setOnCompletionListener {
+        musicService.mediaPlayer.setOnCompletionListener {
             binding.seekBar.progress = 0
 
 //            // tu dong phat bai ke tiep con BUG
@@ -148,11 +139,11 @@ class SongPlayFragment : Fragment(), ServiceConnection {
         }
 
         binding.btnPlay.setOnClickListener {
-            if (!mainActivity.mediaPlayer.isPlaying) {
-                mainActivity.mediaPlayer.start()
+            if (!musicService.mediaPlayer.isPlaying) {
+                musicService.mediaPlayer.start()
                 music?.isPlaying = true
             } else {
-                mainActivity.mediaPlayer.stop()
+                musicService.mediaPlayer.stop()
                 music?.isPlaying = false
             }
         }
@@ -161,7 +152,7 @@ class SongPlayFragment : Fragment(), ServiceConnection {
             if (positionSong == lstData.size - 1)
                 return@setOnClickListener
             positionSong += 1
-            mainActivity.mediaPlayer.reset()
+            musicService.mediaPlayer.reset()
             setResourcesWithMusic()
 
         }
@@ -170,18 +161,18 @@ class SongPlayFragment : Fragment(), ServiceConnection {
             if (positionSong == 0)
                 return@setOnClickListener
             positionSong -= 1
-            mainActivity.mediaPlayer.reset()
+            musicService.mediaPlayer.reset()
             setResourcesWithMusic()
         }
 
         binding.btnForward.setOnClickListener {
-            if (mainActivity.mediaPlayer.isPlaying)
-                mainActivity.mediaPlayer.seekTo(mainActivity.mediaPlayer.currentPosition + 10000)
+            if (musicService.mediaPlayer.isPlaying)
+                musicService.mediaPlayer.seekTo(musicService.mediaPlayer.currentPosition + 10000)
         }
 
         binding.btnBackward.setOnClickListener {
-            if (mainActivity.mediaPlayer.isPlaying)
-                mainActivity.mediaPlayer.seekTo(mainActivity.mediaPlayer.currentPosition - 10000)
+            if (musicService.mediaPlayer.isPlaying)
+                musicService.mediaPlayer.seekTo(musicService.mediaPlayer.currentPosition - 10000)
         }
     }
 
@@ -214,16 +205,16 @@ class SongPlayFragment : Fragment(), ServiceConnection {
         if (music != null)
             mainActivity.showNotificationMedia(music!!)
 
-//        mainActivity.mediaPlayer = MediaPlayer.create(context, lstData[positionSong]) // get Song in positionSong
+        musicService.mediaPlayer = MediaPlayer.create(context, lstData[positionSong]) // get Song in positionSong
 
         binding.seekBar.progress = 0
-        binding.seekBar.max = mainActivity.mediaPlayer.duration
+        binding.seekBar.max = musicService.mediaPlayer.duration
 
-        binding.tvTimeEnd.text = convertToMMSS(mainActivity.mediaPlayer.duration)
+        binding.tvTimeEnd.text = convertToMMSS(musicService.mediaPlayer.duration)
 
 
         if (music?.isPlaying == true)
-            mainActivity.mediaPlayer.start()
+            musicService.mediaPlayer.start()
 //        mediaPlayer.start()
 
     }
@@ -234,7 +225,7 @@ class SongPlayFragment : Fragment(), ServiceConnection {
     }
 
     override fun onServiceDisconnected(p0: ComponentName?) {
-        musicService = null
+        musicService = MusicService()
     }
 
 //    @SuppressLint("MissingPermission")
