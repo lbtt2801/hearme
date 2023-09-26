@@ -39,26 +39,24 @@ class ViewDetailsArtistOfPodcastFragment : Fragment() {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_view_details_artist_of_podcast, container, false
         )
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
         mainActivity = activity as MainActivity
         artistID = arguments?.getString("artistID").toString()
         artist = artistViewModel.lstDataArtists.value?.first { it.artistId == artistID }!!
         dataSongs =
             musicViewModel.lstDataMusics.value?.filter { it.artist.artistId == artistID } as ArrayList<Music>
         binding.artist = artist
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         musicAdapter = MusicAdapter(dataSongs, 2, this)
         binding.recyclerViewListPodcasts.apply {
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
             adapter = musicAdapter
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
         mainActivity.showBottomNav("GONE")
         mainActivity.customToolbar(
             "VISIBLE",

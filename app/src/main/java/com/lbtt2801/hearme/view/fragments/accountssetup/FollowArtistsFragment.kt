@@ -39,12 +39,13 @@ class FollowArtistsFragment : Fragment() {
             container,
             false
         )
-        mainActivity = (activity as MainActivity)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
+        mainActivity = (activity as MainActivity)
+
         artistViewModel.lstDataArtists.observe(viewLifecycleOwner, displayRecyclerView)
 
         val direction =
@@ -55,10 +56,7 @@ class FollowArtistsFragment : Fragment() {
         binding.btnContinue.setOnClickListener() {
             findNavController().navigate(direction)
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
         mainActivity.customToolbar(
             "VISIBLE", "Set Your Fingerprint", null, R.color.transparent,
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)

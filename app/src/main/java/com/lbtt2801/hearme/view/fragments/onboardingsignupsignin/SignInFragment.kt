@@ -37,10 +37,6 @@ class SignInFragment : Fragment() {
 
     private val viewModelUser: UserViewModel by activityViewModels()
 
-//    private val viewModel by lazy {
-//        ViewModelProvider(this)[UserViewModel::class.java]
-//    }
-
     private val emailViewModel: EmailViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -48,12 +44,13 @@ class SignInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false)
-        mainActivity = activity as MainActivity
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
+        mainActivity = activity as MainActivity
+
         viewModelUser.lstDataUser.observe(viewLifecycleOwner) {
             Log.v(TAG, "SignIn -> ${it.size}")
         }
@@ -120,10 +117,6 @@ class SignInFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         getDataLogin()
 
@@ -155,8 +148,8 @@ class SignInFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 

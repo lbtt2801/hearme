@@ -17,7 +17,7 @@ import com.lbtt2801.hearme.databinding.FragmentTabFollowBinding
 import com.lbtt2801.hearme.model.User
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
-class TabFollowFragment(page: Int,  userEmail: String) : Fragment() {
+class TabFollowFragment(page: Int, userEmail: String) : Fragment() {
     private lateinit var binding: FragmentTabFollowBinding
     private lateinit var mainActivity: MainActivity
     private lateinit var userAdapter: UserAdapter
@@ -31,14 +31,13 @@ class TabFollowFragment(page: Int,  userEmail: String) : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_follow, container, false)
-
-        mainActivity = (activity as MainActivity)
-
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        mainActivity = (activity as MainActivity)
+
         userViewModel.lstDataUser.observe(viewLifecycleOwner, Observer {
             lstFollowers = it.first { user -> user.email == email }.listFollowers
             lstFollowing = it.first { user -> user.email == email }.listUserFollowing
@@ -52,7 +51,7 @@ class TabFollowFragment(page: Int,  userEmail: String) : Fragment() {
     private fun displayRecyclerView(lstData: ArrayList<User>) {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
-        userAdapter = UserAdapter(lstData, 0)
+        userAdapter = UserAdapter(lstData, 0, this)
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = userAdapter

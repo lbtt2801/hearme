@@ -26,10 +26,17 @@ class ProfileFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
         mainActivity = activity as MainActivity
+        email = mainActivity.email
+        binding.tvLanguage.text = mainActivity.language
         mainActivity.customToolbar(
             "VISIBLE",
             "Profile",
@@ -38,19 +45,12 @@ class ProfileFragment : Fragment() {
             ContextCompat.getDrawable(requireContext(), R.drawable.logo_nav),
             true
         )
-        email = mainActivity.email
         mainActivity.showBottomNav("VISIBLE")
-        binding.tvLanguage.text = mainActivity.language
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         avatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
         fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
 
-        binding.imgAvatar.background = avatar?.let { ContextCompat.getDrawable(requireContext(), it) }
+        binding.imgAvatar.background =
+            avatar?.let { ContextCompat.getDrawable(requireContext(), it) }
         binding.tvNameUser.text = fullName
         binding.tvEmailUser.text = email
 
@@ -84,9 +84,8 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
-
 }

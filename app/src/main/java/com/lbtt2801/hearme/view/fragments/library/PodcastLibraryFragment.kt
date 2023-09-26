@@ -26,7 +26,11 @@ class PodcastLibraryFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_podcast_library, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         mainActivity = (activity as MainActivity)
 
         mainActivity.customToolbar(
@@ -44,12 +48,6 @@ class PodcastLibraryFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-
         val tabLayout = binding.tabLayout
         val viewPage2 = binding.viewPager2
 
@@ -65,8 +63,8 @@ class PodcastLibraryFragment : Fragment() {
         }.attach()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 }

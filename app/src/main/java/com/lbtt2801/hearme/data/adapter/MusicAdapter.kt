@@ -9,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
@@ -21,16 +23,14 @@ import com.lbtt2801.hearme.view.dialogs.AuthorizationProgressDialog.Companion.TA
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.HomeFragment
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.TrendingNowFragment
-import com.lbtt2801.hearme.view.fragments.search.ExploreFragment
-import com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistOfPodcastFragment
-import com.lbtt2801.hearme.view.fragments.search.ViewDetailsSongFragment
+import com.lbtt2801.hearme.view.fragments.search.*
 import kotlin.math.roundToInt
 
 
 class MusicAdapter(
     private val dataMusics: ArrayList<Music>,
     private val type: Int,
-    private val fragment: Fragment
+    private val fragment: Fragment,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
@@ -103,13 +103,25 @@ class MusicAdapter(
             }
             is AlbumViewHolder -> {
                 holder.bind(dataMusics[position])
+                destination = R.id.action_item_nav_explore_to_viewDetailsAlbumFragment
             }
             is SongList2ViewHolder -> {
                 holder.bind(dataMusics[position])
-                if (fragment is ExploreFragment)
-                    destination = R.id.action_item_nav_explore_to_viewDetailsSongFragment
-                else if (fragment is ViewDetailsSongFragment) {
-                    destination = R.id.action_viewDetailsSongFragment_to_viewDetailsArtistFragment
+                when (fragment) {
+                    is ExploreFragment -> destination =
+                        R.id.action_item_nav_explore_to_viewDetailsSongFragment
+                    is ViewDetailsSongFragment -> {
+                        destination =
+                            R.id.viewDetailsSongFragment
+                    }
+                    is ViewDetailsArtistFragment -> {
+                        destination =
+                            R.id.action_viewDetailsArtistFragment_to_viewDetailsSongFragment
+                    }
+                    is ViewDetailsAlbumFragment -> {
+                        destination =
+                            R.id.action_viewDetailsAlbumFragment_to_viewDetailsSongFragment
+                    }
                 }
             }
         }
@@ -126,7 +138,7 @@ class MusicAdapter(
     }
 
     inner class SongList2ViewHolder private constructor(
-        val binding: ViewListSong2Binding
+        val binding: ViewListSong2Binding,
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
             ViewListSong2Binding.inflate(
@@ -150,7 +162,7 @@ class MusicAdapter(
     }
 
     inner class HomeViewHolder private constructor(
-        val binding: ViewHomeTrendingBinding
+        val binding: ViewHomeTrendingBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
             ViewHomeTrendingBinding.inflate(
@@ -167,7 +179,7 @@ class MusicAdapter(
     }
 
     inner class SongNotificationViewHolder private constructor(
-        val binding: ViewListSongBinding
+        val binding: ViewListSongBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
             ViewListSongBinding.inflate(
@@ -191,7 +203,7 @@ class MusicAdapter(
     }
 
     inner class PodcastNotificationViewHolder private constructor(
-        val binding: ViewListPodcastBinding
+        val binding: ViewListPodcastBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
             ViewListPodcastBinding.inflate(
@@ -239,7 +251,7 @@ class MusicAdapter(
     }
 
     inner class AlbumViewHolder private constructor(
-        val binding: ViewAlbumBinding
+        val binding: ViewAlbumBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
             ViewAlbumBinding.inflate(
@@ -257,7 +269,15 @@ class MusicAdapter(
                     LayoutParams.MATCH_PARENT,
                     LayoutParams.WRAP_CONTENT
                 ).apply {
-                    marginEnd = (12 * Resources.getSystem().displayMetrics.density).roundToInt()
+                    marginEnd = (6 * Resources.getSystem().displayMetrics.density).roundToInt()
+                }
+                binding.containerView.layoutParams = paramsContainer
+            } else {
+                val paramsContainer = LinearLayout.LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.WRAP_CONTENT
+                ).apply {
+                    marginStart = (6 * Resources.getSystem().displayMetrics.density).roundToInt()
                 }
                 binding.containerView.layoutParams = paramsContainer
             }
@@ -265,7 +285,7 @@ class MusicAdapter(
     }
 
     inner class LibraryListSongViewHolder private constructor(
-        val binding: ViewListSongLibraryBinding
+        val binding: ViewListSongLibraryBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
             ViewListSongLibraryBinding.inflate(

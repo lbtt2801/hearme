@@ -38,7 +38,11 @@ class PaymentFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_payment, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         mainActivity = (activity as MainActivity)
 
         mainActivity.customToolbar(
@@ -61,12 +65,6 @@ class PaymentFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         val bundle = this.arguments
         if (bundle != null) {
             img = bundle.getInt("img", R.drawable.logo_default)
@@ -77,13 +75,14 @@ class PaymentFragment : Fragment() {
 
             strCoin = bundle.getString("coin", "coin_error")
             strTime = bundle.getString("time", "time_error")
-            intBackground = bundle.getInt("background",R.color.transparent)
+            intBackground = bundle.getInt("background", R.color.transparent)
         }
 
         val adapter = CardPaymentAdapter(this, initData())
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.itemAnimator = DefaultItemAnimator()
-        binding.recyclerView.addItemDecoration(DividerItemDecoration(requireContext(),LinearLayoutManager.VERTICAL))
+        binding.recyclerView.addItemDecoration(DividerItemDecoration(requireContext(),
+            LinearLayoutManager.VERTICAL))
         binding.recyclerView.adapter = adapter
 
         binding.btnAddNewCard.setOnClickListener {
@@ -91,11 +90,12 @@ class PaymentFragment : Fragment() {
             bundleNewCard.putString("coin", strCoin)
             bundleNewCard.putString("time", strTime)
             bundleNewCard.putInt("background", intBackground)
-            findNavController().navigate(R.id.action_paymentFragment_to_addNewCardFragment, bundleNewCard)
+            findNavController().navigate(R.id.action_paymentFragment_to_addNewCardFragment,
+                bundleNewCard)
         }
 
         binding.btnContinue.setOnClickListener {
-            val nameItemChecked = arrayList.first  { it.isSelected }
+            val nameItemChecked = arrayList.first { it.isSelected }
             when (nameItemChecked.name) {
                 "Paypal" -> {
                     intLogo = R.drawable.paypal
@@ -126,13 +126,18 @@ class PaymentFragment : Fragment() {
             bundleReview.putInt("imgCard", intLogo)
             this.arguments = bundleReview
 
-            findNavController().navigate(R.id.action_paymentFragment_to_reviewSummaryFragment, bundleReview)
+            findNavController().navigate(R.id.action_paymentFragment_to_reviewSummaryFragment,
+                bundleReview)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         arrayList.clear()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 

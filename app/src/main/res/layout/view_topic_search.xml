@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="12dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatToggleButton
-        android:id="@+id/toggle_buttn_topic"
+    <data>
+
+        <variable
+            name="topicSearch"
+            type="com.lbtt2801.hearme.model.TopicSearch" />
+    </data>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/selector_bg_topic_search"
-        android:letterSpacing="0.01"
-        android:minWidth="68dp"
-        android:minHeight="38dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="8dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="8dp"
-        android:text="Top"
-        android:textAllCaps="false"
-        android:textColor="@color/color_text_topic_search"
-        android:textOff="Top"
-        android:textOn="Top"
-        android:textSize="16sp" />
+        android:layout_marginEnd="12dp">
 
-</LinearLayout>
+        <androidx.appcompat.widget.AppCompatToggleButton
+            android:id="@+id/toggle_buttn_topic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_bg_topic_search"
+            android:letterSpacing="0.01"
+            android:minWidth="68dp"
+            android:minHeight="38dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="8dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="8dp"
+            android:text="@{topicSearch.name}"
+            android:textAllCaps="false"
+            android:textColor="@color/color_text_topic_search"
+            android:textOff="@{topicSearch.name}"
+            android:textOn="@{topicSearch.name}"
+            android:textSize="16sp"
+            app:clickTopicSearch="@{topicSearch}"
+            app:setTopicSearch="@{topicSearch}" />
+
+    </LinearLayout>
+</layout>

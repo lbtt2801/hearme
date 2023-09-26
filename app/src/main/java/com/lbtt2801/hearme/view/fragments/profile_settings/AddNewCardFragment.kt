@@ -32,8 +32,13 @@ class AddNewCardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_new_card, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_add_new_card, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         mainActivity = (activity as MainActivity)
 
         mainActivity.customToolbar(
@@ -56,17 +61,11 @@ class AddNewCardFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         val bundle = this.arguments
         if (bundle != null) {
             strCoin = bundle.getString("coin", "coin_error")
             strTime = bundle.getString("time", "time_error")
-            intBackground = bundle.getInt("background",R.color.transparent)
+            intBackground = bundle.getInt("background", R.color.transparent)
         }
 
         binding.edtCardName.requestFocus()
@@ -104,24 +103,24 @@ class AddNewCardFragment : Fragment() {
             bundlePayment.putInt("background", intBackground)
             this.arguments = bundlePayment
 
-            findNavController().navigate(R.id.action_addNewCardFragment_to_paymentFragment, bundlePayment)
+            findNavController().navigate(R.id.action_addNewCardFragment_to_paymentFragment,
+                bundlePayment)
         }
-
     }
 
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
 
         }
-        
+
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
         }
-        
+
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             val str = s.toString()
             val strNumber = str.filter { it.isDigit() }
-            var strResult = str.filter { it != '*'}
+            var strResult = str.filter { it != '*' }
 
             // Lấy chuỗi khi dài hơn 4 đã xuất hiện khoảng trắng
             strResult = if (strNumber.length > 12) {
@@ -145,7 +144,7 @@ class AddNewCardFragment : Fragment() {
                 // Tính độ dài chuỗi để thực hiện việc setText chỉ một lần
                 if (strResult.length == 4 || strResult.length == 9 || strResult.length == 14)
                     strLength += 2
-                else strLength ++
+                else strLength++
 
                 // Thêm các dấu sao còn thiếu
                 if (lengthSTRX > 15)
@@ -162,7 +161,7 @@ class AddNewCardFragment : Fragment() {
                 }
 
                 binding.edtCardNumber.setText(strResult)
-                binding.edtCardNumber.setSelection(strLength - 1 )
+                binding.edtCardNumber.setSelection(strLength - 1)
             }
         }
     }
@@ -181,8 +180,8 @@ class AddNewCardFragment : Fragment() {
         dialog.show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 }

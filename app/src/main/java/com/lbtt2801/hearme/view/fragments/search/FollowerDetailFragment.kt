@@ -11,8 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
-import com.lbtt2801.hearme.data.adapter.ViewPageAdapter
-import com.lbtt2801.hearme.data.adapter.ViewPageArtistAdapter
 import com.lbtt2801.hearme.data.adapter.ViewPageFollowAdapter
 import com.lbtt2801.hearme.databinding.FragmentFollowerDetailBinding
 
@@ -20,17 +18,26 @@ class FollowerDetailFragment : Fragment() {
     private var _binding: FragmentFollowerDetailBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var mainActivity: MainActivity
+
     private var email: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
-        val activity: MainActivity = (activity as MainActivity)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_follower_detail, container, false)
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainActivity = (activity as MainActivity)
         email = arguments?.getString("emailID")
 
 
-        activity.customToolbar(
+        mainActivity.customToolbar(
             "VISIBLE",
             "",
             null,
@@ -40,18 +47,10 @@ class FollowerDetailFragment : Fragment() {
             showIcFilter = false,
             showIcSearch = true
         )
-        activity.showBottomNav("GONE")
-        activity.binding.toolBar.setNavigationOnClickListener() {
+        mainActivity.showBottomNav("GONE")
+        mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
         }
-
-        _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_follower_detail, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         val tabLayout = binding.tabLayout
         val viewPage2 = binding.viewPager2
@@ -71,8 +70,8 @@ class FollowerDetailFragment : Fragment() {
         }.attach()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 }

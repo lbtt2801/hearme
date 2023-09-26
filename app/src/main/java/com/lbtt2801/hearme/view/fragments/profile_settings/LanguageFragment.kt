@@ -19,10 +19,14 @@ class LanguageFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_language, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         mainActivity = activity as MainActivity
         mainActivity.customToolbar(
             "VISIBLE",
@@ -37,12 +41,6 @@ class LanguageFragment : Fragment() {
         mainActivity.binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         when (mainActivity.language) {
             "English (US)" -> binding.rdoUS.isChecked = true
@@ -108,8 +106,8 @@ class LanguageFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 }

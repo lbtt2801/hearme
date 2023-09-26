@@ -41,30 +41,20 @@ class ViewDetailsArtistFragment : Fragment() {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_view_details_artist, container, false
         )
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
         mainActivity = activity as MainActivity
         artistID = arguments?.getString("artistID").toString()
         artist = artistViewModel.lstDataArtists.value?.first { it.artistId == artistID }!!
         dataSongs =
             musicViewModel.lstDataMusics.value?.filter { it.artist.artistId == artistID && !it.isAlbum } as ArrayList<Music>
         binding.artist = artist
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         displayRecyclerViewPopularSongs()
-    }
 
-    private fun displayRecyclerViewPopularSongs() {
-        musicAdapter = MusicAdapter(dataSongs,6,this)
-        binding.recyclerViewPopularSongs.apply {
-            layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-            adapter = musicAdapter
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
         mainActivity.showBottomNav("GONE")
         mainActivity.customToolbar(
             "VISIBLE",
@@ -73,6 +63,14 @@ class ViewDetailsArtistFragment : Fragment() {
         )
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
+        }
+    }
+
+    private fun displayRecyclerViewPopularSongs() {
+        musicAdapter = MusicAdapter(dataSongs,6,this)
+        binding.recyclerViewPopularSongs.apply {
+            layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+            adapter = musicAdapter
         }
     }
 }

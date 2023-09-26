@@ -40,7 +40,11 @@ class PlaylistDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_playlist_detail, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         mainActivity = (activity as MainActivity)
 
         mainActivity.customToolbar(
@@ -57,12 +61,6 @@ class PlaylistDetailFragment : Fragment() {
         mainActivity.binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         binding.imgAvatar.background =
             arguments?.getInt("img")?.let { ContextCompat.getDrawable(requireContext(), it) }
@@ -90,8 +88,8 @@ class PlaylistDetailFragment : Fragment() {
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 

@@ -35,7 +35,11 @@ class AlbumsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_albums, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         mainActivity = (activity as MainActivity)
         email = mainActivity.email
 
@@ -53,12 +57,6 @@ class AlbumsFragment : Fragment() {
         mainActivity.binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.style_spinner, spinnerItems)
         binding.spinner.adapter = spinnerAdapter

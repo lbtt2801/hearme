@@ -70,15 +70,14 @@ class FillYourProfileFragment : Fragment() {
             container,
             false
         )
-        mainActivity = (activity as MainActivity)
-        email = mainActivity.email
-        Toast.makeText(requireContext(), "$email", Toast.LENGTH_SHORT).show()
         return binding.root
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
+        mainActivity = (activity as MainActivity)
+        email = mainActivity.email
 
         binding.buttonPhotoPicker.setOnClickListener() {
             val pickImg = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
@@ -101,16 +100,12 @@ class FillYourProfileFragment : Fragment() {
         binding.btnContinue.setOnClickListener() {
             isValidEmail = isValidEmail(binding.edtEmail.text)
             if (binding.edtFullName.text.isEmpty() || binding.edtNickName.text.isEmpty() || binding.edtDob.text.isEmpty() || binding.edtEmail.text.isEmpty() || binding.edtPhoneNumber.text.isEmpty()) {
-                mainActivity.showSnack(view, "Enter full information, please!")
+                mainActivity.showSnack(requireView(), "Enter full information, please!")
             } else {
                 if (!isValidEmail || !isValidPhone) {
-                    mainActivity.showSnack(view, "Invalid Email or Phone!")
+                    mainActivity.showSnack(requireView(), "Invalid Email or Phone!")
                 } else {
                     val phone = "${binding.edtPhoneNumber.text}"
-//                        "${binding.ccp.selectedCountryCodeAsInt} ${binding.edtPhoneNumber.text}"
-
-                    //Còn lỗi
-//                    val drawableId: Int = binding.imageViewAvatar.tag.toString().toInt()
 
                     email?.let {
                         stringToDate(binding.edtDob.text.toString())?.let { it1 ->
@@ -132,10 +127,7 @@ class FillYourProfileFragment : Fragment() {
                 }
             }
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
         mainActivity.customToolbar(
             "VISIBLE", "Fill Your Profile", null, R.color.transparent,
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)

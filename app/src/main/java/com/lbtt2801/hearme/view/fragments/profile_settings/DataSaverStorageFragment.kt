@@ -26,7 +26,11 @@ class DataSaverStorageFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_data_saver_storage, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         (activity as MainActivity).customToolbar(
             "VISIBLE",
             "Data Saver & Storage",
@@ -41,16 +45,6 @@ class DataSaverStorageFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        val stat = StatFs(Environment.getExternalStorageDirectory().path)
-//        val bytesAvailable: Long = stat.blockSizeLong * stat.availableBlocksLong
-//        val megAvailable = bytesAvailable / (1024 * 1024)
-//        binding.tvCapacityFree.text = megAvailable.toString()
-
         val iPath: File = Environment.getDataDirectory()
         val iStat = StatFs(iPath.path)
         val iBlockSize = iStat.blockSizeLong
@@ -60,15 +54,15 @@ class DataSaverStorageFragment : Fragment() {
         val iTotalSpace = formatSize(iTotalBlocks * iBlockSize)
 
         binding.tvCapacityFree.text = iAvailableSpace
-        
+
         binding.layoutCache.setOnClickListener {
             deleteCache(requireContext())
             Toast.makeText(context, "Clear cache successfully !", Toast.LENGTH_SHORT).show()
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 

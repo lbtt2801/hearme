@@ -38,9 +38,8 @@ class PopularArtistsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onResume() {
+        super.onResume()
         (activity as MainActivity).customToolbar(
             "VISIBLE",
             "Popular Artists",
@@ -62,8 +61,8 @@ class PopularArtistsFragment : Fragment() {
         })
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 

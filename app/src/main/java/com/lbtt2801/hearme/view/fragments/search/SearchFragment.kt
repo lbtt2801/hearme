@@ -24,12 +24,13 @@ class SearchFragment : Fragment() {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_search, container, false
         )
-        mainActivity = activity as MainActivity
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        mainActivity = activity as MainActivity
+
         mainActivity.showBottomNav("GONE")
         mainActivity.customToolbar(
             "visible",

@@ -34,7 +34,11 @@ class MyLibraryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_library, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         mainActivity = (activity as MainActivity)
 
         mainActivity.showBottomNav("VISIBLE")
@@ -52,12 +56,6 @@ class MyLibraryFragment : Fragment() {
         mainActivity.binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         musicViewModel.lstDataMusics.observe((activity as MainActivity), Observer { list ->
             displayRecyclerView(list.sortedByDescending { it.totalListeners }
