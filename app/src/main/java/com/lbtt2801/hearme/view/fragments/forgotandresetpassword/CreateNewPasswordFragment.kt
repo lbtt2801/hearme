@@ -32,7 +32,7 @@ class CreateNewPasswordFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(
             inflater,
@@ -40,13 +40,13 @@ class CreateNewPasswordFragment : Fragment() {
             container,
             false
         )
-        mainActivity = activity as MainActivity
-        email = mainActivity.email
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
+        mainActivity = activity as MainActivity
+        email = mainActivity.email
 
         binding.edtPassword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -62,7 +62,7 @@ class CreateNewPasswordFragment : Fragment() {
                         imageTintColor =
                             ColorStateList.valueOf(
                                 ContextCompat.getColor(
-                                    view.context,
+                                    requireContext(),
                                     R.color.greyscale_900
                                 )
                             )
@@ -70,7 +70,7 @@ class CreateNewPasswordFragment : Fragment() {
                         imageTintColor =
                             ColorStateList.valueOf(
                                 ContextCompat.getColor(
-                                    view.context,
+                                    requireContext(),
                                     R.color.greyscale_500
                                 )
                             )
@@ -97,7 +97,7 @@ class CreateNewPasswordFragment : Fragment() {
                         imageTintColor =
                             ColorStateList.valueOf(
                                 ContextCompat.getColor(
-                                    view.context,
+                                    requireContext(),
                                     R.color.greyscale_900
                                 )
                             )
@@ -105,7 +105,7 @@ class CreateNewPasswordFragment : Fragment() {
                         imageTintColor =
                             ColorStateList.valueOf(
                                 ContextCompat.getColor(
-                                    view.context,
+                                    requireContext(),
                                     R.color.greyscale_500
                                 )
                             )
@@ -124,7 +124,7 @@ class CreateNewPasswordFragment : Fragment() {
                 edt.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
                 binding.imageVisiblePass.setImageDrawable(
                     ContextCompat.getDrawable(
-                        view.context,
+                        requireContext(),
                         R.drawable.ic_visible
                     )
                 )
@@ -134,7 +134,7 @@ class CreateNewPasswordFragment : Fragment() {
                     InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                 binding.imageVisiblePass.setImageDrawable(
                     ContextCompat.getDrawable(
-                        view.context,
+                        requireContext(),
                         R.drawable.ic_invisible
                     )
                 )
@@ -150,7 +150,7 @@ class CreateNewPasswordFragment : Fragment() {
                 edt.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
                 binding.imageVisibleRePass.setImageDrawable(
                     ContextCompat.getDrawable(
-                        view.context,
+                        requireContext(),
                         R.drawable.ic_visible
                     )
                 )
@@ -160,7 +160,7 @@ class CreateNewPasswordFragment : Fragment() {
                     InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                 binding.imageVisibleRePass.setImageDrawable(
                     ContextCompat.getDrawable(
-                        view.context,
+                        requireContext(),
                         R.drawable.ic_invisible
                     )
                 )
@@ -190,10 +190,7 @@ class CreateNewPasswordFragment : Fragment() {
                 mainActivity.showSnack(it, "Password and Re-password aren't similar!")
             }
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
         mainActivity.customToolbar(
             "VISIBLE", "Create New Password", null, R.color.transparent,
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)

@@ -52,8 +52,10 @@ import com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment
 import com.lbtt2801.hearme.view.fragments.library.MyLibraryFragment
 import com.lbtt2801.hearme.view.fragments.profile_settings.ProfileFragment
 import com.lbtt2801.hearme.view.fragments.search.ExploreFragment
+import com.lbtt2801.hearme.view.fragments.search.ViewDetailsAlbumFragment
 import com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistFragment
 import com.lbtt2801.hearme.view.fragments.search.ViewDetailsSongFragment
+import com.lbtt2801.hearme.view.tab_viewpager.TabSongFragment
 import com.lbtt2801.hearme.viewmodel.*
 import kotlin.system.exitProcess
 
@@ -591,7 +593,7 @@ class MainActivity : AppCompatActivity() {
                                     designation =
                                         R.id.action_item_nav_explore_to_viewDetailsArtistFragment
                                 }
-                                is NotificationFragment -> {
+                                is TabSongFragment -> {
                                     designation =
                                         R.id.action_notificationFragment_to_viewDetailsArtistFragment
                                 }
@@ -601,6 +603,10 @@ class MainActivity : AppCompatActivity() {
                                 }
                                 is ViewDetailsArtistFragment -> {
                                     showSnack(v, "You are here!")
+                                }
+                                is ViewDetailsAlbumFragment -> {
+                                    designation =
+                                        R.id.action_viewDetailsAlbumFragment_to_viewDetailsArtistFragment
                                 }
                             }
                             if (designation != null) {
@@ -686,7 +692,7 @@ class MainActivity : AppCompatActivity() {
             .addAction(R.drawable.ic_next, "Next", null) // #2
             // Apply the media style template
             .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
-                .setShowActionsInCompactView(0,1,2/* #1: pause button \*/)
+                .setShowActionsInCompactView(0, 1, 2/* #1: pause button \*/)
                 .setMediaSession(mediaSession.sessionToken))
             .build()
 

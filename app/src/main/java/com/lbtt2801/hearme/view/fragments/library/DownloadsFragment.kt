@@ -36,7 +36,11 @@ class DownloadsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_downloads, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         mainActivity = (activity as MainActivity)
         email = mainActivity.email
 
@@ -54,12 +58,6 @@ class DownloadsFragment : Fragment() {
         mainActivity.binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         lst = userViewModel.lstDataUser.value?.first { it.email == email }?.listMusicsDownloaded
 
@@ -97,8 +95,8 @@ class DownloadsFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 

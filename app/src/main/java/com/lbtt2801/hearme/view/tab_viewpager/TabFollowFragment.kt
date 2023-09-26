@@ -31,14 +31,13 @@ class TabFollowFragment(page: Int,  userEmail: String) : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_follow, container, false)
-
-        mainActivity = (activity as MainActivity)
-
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        mainActivity = (activity as MainActivity)
+
         userViewModel.lstDataUser.observe(viewLifecycleOwner, Observer {
             lstFollowers = it.first { user -> user.email == email }.listFollowers
             lstFollowing = it.first { user -> user.email == email }.listUserFollowing

@@ -19,16 +19,17 @@ class LetYouInFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_let_you_in, container, false)
-        mainActivity = (activity as MainActivity)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
+        mainActivity = (activity as MainActivity)
+
         binding.btnSignIn.setOnClickListener {
             findNavController().navigate(R.id.action_letYouInFragment_to_signInFragment)
         }
@@ -36,10 +37,7 @@ class LetYouInFragment : Fragment() {
         binding.tvSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_letYouInFragment_to_signUpFragment)
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
         binding.tvSignUp.setOnClickListener { onClickSignUp(it) }
         mainActivity.showBottomNav("gone")
         mainActivity.customToolbar(
@@ -62,8 +60,8 @@ class LetYouInFragment : Fragment() {
         findNavController().navigate(R.id.signUpFragment)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 }

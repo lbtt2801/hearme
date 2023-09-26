@@ -22,7 +22,13 @@ class NotificationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_notification, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         val activity: MainActivity = (activity as MainActivity)
         activity.customToolbar(
             "VISIBLE",
@@ -36,15 +42,6 @@ class NotificationFragment : Fragment() {
         (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
         }
-
-        _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_notification, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         val tabLayout = binding.tabLayout
         val viewPage2 = binding.viewPager2
 

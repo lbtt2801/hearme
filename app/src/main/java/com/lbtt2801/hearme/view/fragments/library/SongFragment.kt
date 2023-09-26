@@ -36,7 +36,11 @@ class SongFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_song, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         mainActivity = (activity as MainActivity)
         email = mainActivity.email
 
@@ -54,12 +58,6 @@ class SongFragment : Fragment() {
         mainActivity.binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         lst = userViewModel.lstDataUser.value?.first { it.email == email }?.listMusicsDownloaded
         lst = lst?.filter { it.category.categoryID != "ca002" } as ArrayList<Music>
@@ -82,6 +80,7 @@ class SongFragment : Fragment() {
                     else
                         displayRecyclerView(lstP1)
                 }
+
                 override fun onNothingSelected(p0: AdapterView<*>?) {
                 }
             }
@@ -99,8 +98,8 @@ class SongFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 

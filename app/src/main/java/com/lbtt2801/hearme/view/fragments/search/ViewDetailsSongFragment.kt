@@ -3,6 +3,8 @@ package com.lbtt2801.hearme.view.fragments.search
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,7 +37,7 @@ class ViewDetailsSongFragment : Fragment() {
 
     private lateinit var musicID: String
     private var artist: Artist? = null
-    var music: Music? = null
+    private var music: Music? = null
     private var musicsMoreLikeThis: ArrayList<Music>? = arrayListOf()
     private var user: User? = null
 
@@ -43,11 +45,16 @@ class ViewDetailsSongFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_view_details_song, container, false
         )
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
         mainActivity = activity as MainActivity
         musicID = arguments?.getString("musicID").toString()
         artist = musicViewModel.lstDataMusics.value?.first { it.musicID == musicID }?.artist
@@ -56,15 +63,11 @@ class ViewDetailsSongFragment : Fragment() {
             musicViewModel.lstDataMusics.value?.filter { it.artist.artistId == artist?.artistId && it.musicID != musicID } as ArrayList<Music>?
         user = userViewModel.lstDataUser.value?.first { it.email == mainActivity.email }
         binding.music = music
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         binding.imageArtist.setImageDrawable(
             artist?.image?.let {
                 ContextCompat.getDrawable(
-                    view.context,
+                    requireContext(),
                     it
                 )
             }
@@ -75,21 +78,16 @@ class ViewDetailsSongFragment : Fragment() {
         val duration = "${music?.duration?.minute}:${music?.duration?.second}"
         binding.textViewDuration.text = duration
 
-        music?.let { mainActivity.initSpinnerMore(binding.spinnerDropDownMore, it, 1, this) }
-
+        Handler(Looper.getMainLooper()).postDelayed({
+            music?.let {
+                mainActivity.initSpinnerMore(binding.spinnerDropDownMore,
+                    it,
+                    1,
+                    this)
+            }
+        }, 200)
         displayRecyclerViewMoreLikeThis()
-    }
 
-    private fun displayRecyclerViewMoreLikeThis() {
-        musicAdapter = musicsMoreLikeThis?.let { MusicAdapter(it, 6, this) }!!
-        binding.recyclerViewMusicMoreLikeThis.apply {
-            layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-            adapter = musicAdapter
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
         mainActivity.showBottomNav("GONE")
         mainActivity.customToolbar(
             "VISIBLE",
@@ -102,6 +100,14 @@ class ViewDetailsSongFragment : Fragment() {
 
         binding.btnPlay.setOnClickListener {
             findNavController().navigate(R.id.songPlayFragment)
+        }
+    }
+
+    private fun displayRecyclerViewMoreLikeThis() {
+        musicAdapter = musicsMoreLikeThis?.let { MusicAdapter(it, 6, this) }!!
+        binding.recyclerViewMusicMoreLikeThis.apply {
+            layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+            adapter = musicAdapter
         }
     }
 }

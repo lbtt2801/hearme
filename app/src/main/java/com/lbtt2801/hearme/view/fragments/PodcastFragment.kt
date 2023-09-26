@@ -46,8 +46,8 @@ class PodcastFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
         (activity as MainActivity).showBottomNav("VISIBLE")
 
         (activity as MainActivity).customToolbar(
@@ -83,11 +83,10 @@ class PodcastFragment : Fragment() {
             displayRecyclerViewCategory(it as ArrayList<Category>)
         })
         viewModel.getListDataArtist()
-
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 

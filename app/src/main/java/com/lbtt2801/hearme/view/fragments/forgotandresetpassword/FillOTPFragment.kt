@@ -39,14 +39,19 @@ class FillOTPFragment : Fragment() {
                 container,
                 false
             )
-        mainActivity = activity as MainActivity
-        email = mainActivity.email
-        method = arguments?.getString("method")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainActivity = activity as MainActivity
+        email = mainActivity.email
+        method = arguments?.getString("method")
+
         binding.textSendCode.text = "Code has been send to $method"
 
         binding.edtNum4.setOnClickListener() {
@@ -126,13 +131,10 @@ class FillOTPFragment : Fragment() {
                 findNavController().navigate(R.id.action_fillOTPFragment_to_createNewPasswordFragment)
             } else {
                 editState(binding.btnVerify, "up")
-                mainActivity.showSnack(view, "Incorrect code, try again!")
+                view?.let { it1 -> mainActivity.showSnack(it1, "Incorrect code, try again!") }
             }
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
         mainActivity.customToolbar(
             "VISIBLE", "Forgot Password", null, R.color.transparent,
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)

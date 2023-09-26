@@ -43,15 +43,14 @@ class TabSongFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_tab_song, container, false)
         lst = ArrayList()
-        mainActivity = activity as MainActivity
-        email = mainActivity.email
         return binding.root
     }
 
     @SuppressLint("SimpleDateFormat")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onResume() {
+        super.onResume()
+        mainActivity = activity as MainActivity
+        email = mainActivity.email
         if (mainActivity.checkInHistory) {
             binding.tvYesterday.isVisible = false
             binding.recyclerViewYesterday.isVisible = false
@@ -96,7 +95,6 @@ class TabSongFragment : Fragment() {
             })
 //            viewModel.getListDataMusic()
         }
-
     }
 
     private fun displayRecyclerViewToday(lstData: ArrayList<Music>, type: Int) {

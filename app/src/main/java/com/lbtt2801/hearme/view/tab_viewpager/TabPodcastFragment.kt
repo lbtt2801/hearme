@@ -24,7 +24,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class TabPodcastFragment : Fragment() {
-//    private var _binding: FragmentTabPodcastBinding? = null
+    //    private var _binding: FragmentTabPodcastBinding? = null
 //    private val binding get() = _binding!!
     private lateinit var binding: FragmentTabPodcastBinding
     private lateinit var musicAdapter: MusicAdapter
@@ -48,15 +48,15 @@ class TabPodcastFragment : Fragment() {
             false
         )
         lst = ArrayList()
-        mainActivity = activity as MainActivity
-        email = mainActivity.email
+
         return binding.root
     }
 
     @SuppressLint("SimpleDateFormat")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onResume() {
+        super.onResume()
+        mainActivity = activity as MainActivity
+        email = mainActivity.email
         if (mainActivity.checkInHistory) {
             binding.tvYesterday.isVisible = false
             binding.recyclerViewYesterday.isVisible = false
@@ -75,8 +75,7 @@ class TabPodcastFragment : Fragment() {
                 binding.recyclerViewToday.isVisible = true
                 displayRecyclerViewToday(lst!!)
             }
-        }
-        else {
+        } else {
             viewModel.lstDataMusic.observe((activity as MainActivity), Observer { musicList ->
                 lst = musicList as ArrayList<Music>
                 val formatter = SimpleDateFormat("dd/MM/yyyy")
@@ -113,7 +112,7 @@ class TabPodcastFragment : Fragment() {
     private fun displayRecyclerViewToday(lstData: ArrayList<Music>) {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
-        musicAdapter = MusicAdapter(lstData, 2,this)
+        musicAdapter = MusicAdapter(lstData, 2, this)
         binding.recyclerViewToday.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter
@@ -124,7 +123,7 @@ class TabPodcastFragment : Fragment() {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
         musicAdapter =
-            MusicAdapter(lstData, 2,this)
+            MusicAdapter(lstData, 2, this)
         binding.recyclerViewYesterday.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter

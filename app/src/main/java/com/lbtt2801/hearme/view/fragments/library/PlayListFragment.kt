@@ -48,7 +48,11 @@ class PlayListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_play_list, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         mainActivity = (activity as MainActivity)
         email = mainActivity.email
 
@@ -66,12 +70,6 @@ class PlayListFragment : Fragment() {
         mainActivity.binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         userViewModel.lstDataPlaylist.observe(viewLifecycleOwner) { viewModelList ->
             lst.clear()
@@ -112,8 +110,8 @@ class PlayListFragment : Fragment() {
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 

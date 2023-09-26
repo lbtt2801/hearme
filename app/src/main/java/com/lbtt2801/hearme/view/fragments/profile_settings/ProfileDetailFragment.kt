@@ -33,8 +33,12 @@ class ProfileDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_detail, container, false)
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
         mainActivity = activity as MainActivity
         email = mainActivity.email
 
@@ -57,12 +61,6 @@ class ProfileDetailFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         avatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
         fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
         val follower = userViewModel.lstDataUser.value?.first { it.email == email }?.listFollowers
@@ -79,11 +77,10 @@ class ProfileDetailFragment : Fragment() {
         }
 
         lstData?.let { displayRecyclerView(it) }
-
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 

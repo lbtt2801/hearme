@@ -34,16 +34,13 @@ class TabYourLikesFragment : Fragment() {
     ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_tab_you_like, container, false)
-
-        mainActivity = (activity as MainActivity)
-        email = mainActivity.email
-
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-
+        mainActivity = (activity as MainActivity)
+        email = mainActivity.email
         val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.style_spinner, spinnerItems)
         binding.spinner.adapter = spinnerAdapter
 

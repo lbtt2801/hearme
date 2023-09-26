@@ -23,7 +23,7 @@ class SelectMethodFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(
                 inflater,
@@ -31,12 +31,13 @@ class SelectMethodFragment : Fragment() {
                 container,
                 false
             )
-        mainActivity = activity as MainActivity
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
+        mainActivity = activity as MainActivity
+
         viewModel.lstDataUser.value?.first { it.email == mainActivity.email }.apply {
             binding.textPhone.text = "+${mainActivity.protectedPhone(this?.phone.toString())}"
             binding.textEmail.text = mainActivity.protectedEmail(this?.email.toString())
@@ -66,7 +67,7 @@ class SelectMethodFragment : Fragment() {
             } else if (binding.btnEmail.isChecked) {
                 binding.textEmail.text.toString()
             } else {
-                mainActivity.showSnack(view, "Please, let's choose one method!")
+                view?.let { it1 -> mainActivity.showSnack(it1, "Please, let's choose one method!") }
                 return@setOnClickListener
             }
             findNavController().navigate(
@@ -75,10 +76,7 @@ class SelectMethodFragment : Fragment() {
                     putString("method", method)
                 })
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
         mainActivity.customToolbar(
             "VISIBLE", "Forgot Password", null, R.color.transparent,
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)

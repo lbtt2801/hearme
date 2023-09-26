@@ -28,14 +28,10 @@ class CreateNewPinFragment : Fragment() {
     private lateinit var num3: String
     private lateinit var num4: String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?,
+    ): View {
         binding =
             DataBindingUtil.inflate(
                 inflater,
@@ -43,14 +39,13 @@ class CreateNewPinFragment : Fragment() {
                 container,
                 false
             )
-        mainActivity = activity as MainActivity
-        email = mainActivity.email
-        Toast.makeText(requireContext(), "$email", Toast.LENGTH_SHORT).show()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
+        mainActivity = activity as MainActivity
+        email = mainActivity.email
 
         binding.edtNum1.isEnabled = false
         binding.edtNum2.isEnabled = false
@@ -132,10 +127,7 @@ class CreateNewPinFragment : Fragment() {
                     })
             }
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
         mainActivity.customToolbar(
             "VISIBLE", "Create New PIN", null, R.color.transparent,
             ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back)
@@ -171,11 +163,6 @@ class CreateNewPinFragment : Fragment() {
                     num4 = numbersList[3]
                     binding.edtNum4.setText(num4)
                     passCode = num1 + num2 + num3 + num4
-                    Toast.makeText(
-                        requireContext(),
-                        "${numbersList.toString()}",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
             }
         }

@@ -33,8 +33,22 @@ class TrendingNowFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun displayRecyclerView(lstData: ArrayList<Music>) {
+        val layoutRecyclerView =
+            GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
+        musicAdapter = MusicAdapter(lstData, 0,this)
+        binding.recyclerView.apply {
+            layoutManager = layoutRecyclerView
+            adapter = musicAdapter
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModelMusic.lstDataMusics.observe((activity as MainActivity), Observer { list ->
+            displayRecyclerView(list.sortedByDescending { it.totalListeners }
+                .take(5) as ArrayList<Music>)
+        })
 
         (activity as MainActivity).customToolbar(
             "VISIBLE",
@@ -49,21 +63,6 @@ class TrendingNowFragment : Fragment() {
 
         (activity as MainActivity).binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
-        }
-
-        viewModelMusic.lstDataMusics.observe((activity as MainActivity), Observer { list ->
-            displayRecyclerView(list.sortedByDescending { it.totalListeners }
-                .take(5) as ArrayList<Music>)
-        })
-    }
-
-    private fun displayRecyclerView(lstData: ArrayList<Music>) {
-        val layoutRecyclerView =
-            GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
-        musicAdapter = MusicAdapter(lstData, 0,this)
-        binding.recyclerView.apply {
-            layoutManager = layoutRecyclerView
-            adapter = musicAdapter
         }
     }
 }
