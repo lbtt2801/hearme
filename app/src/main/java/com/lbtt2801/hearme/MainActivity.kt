@@ -1,11 +1,8 @@
 package com.lbtt2801.hearme
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.Service
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -15,7 +12,6 @@ import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.Gravity
@@ -82,11 +78,9 @@ class MainActivity : AppCompatActivity() {
     //    var checkInHome = false
     var checkInHistory = false
     var language: String = "English (US)"
-    var mediaPlayer = MediaPlayer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mediaPlayer = MediaPlayer.create(this, R.raw.shape_of_you_nokia)
 
 //        requestRuntimePermission()
         val window = this.window

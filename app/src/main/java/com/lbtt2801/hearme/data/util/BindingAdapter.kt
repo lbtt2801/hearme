@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
 import com.lbtt2801.hearme.MainActivity
+import com.lbtt2801.hearme.MusicService
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MusicsData
 import com.lbtt2801.hearme.model.*
@@ -477,7 +478,6 @@ fun setPlay(checkBox: CheckBox, music: Music) {
 @BindingAdapter("app:clickPlayForCheckBox")
 fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
     val mainActivity = checkBox.context as MainActivity
-
     checkBox.setOnClickListener() {
         var isPlaying = false
         if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
@@ -495,7 +495,6 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
                 )
         } else {
             isPlaying = false
-            mainActivity.mediaPlayer.stop()
             mainActivity.showSnack(
                 checkBox,
                 "You stop playing ${music.musicName}!"
