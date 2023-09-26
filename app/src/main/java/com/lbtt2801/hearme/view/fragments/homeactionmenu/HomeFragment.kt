@@ -31,10 +31,7 @@ import com.lbtt2801.hearme.databinding.FragmentHomeBinding
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Chart
 import com.lbtt2801.hearme.model.Music
-import com.lbtt2801.hearme.viewmodel.ArtistViewModel
-import com.lbtt2801.hearme.viewmodel.HomeViewModel
-import com.lbtt2801.hearme.viewmodel.MusicViewModel
-import com.lbtt2801.hearme.viewmodel.UserViewModel
+import com.lbtt2801.hearme.viewmodel.*
 import java.io.FileNotFoundException
 
 
@@ -54,6 +51,7 @@ class HomeFragment : Fragment() {
     private val musicViewModel: MusicViewModel by activityViewModels()
     private val artistViewModel: ArtistViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
+    private val topicSearchViewModel: TopicSearchViewModel by activityViewModels()
 
     private val viewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
