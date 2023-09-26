@@ -17,7 +17,7 @@ import com.lbtt2801.hearme.databinding.FragmentTabFollowBinding
 import com.lbtt2801.hearme.model.User
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
-class TabFollowFragment(page: Int,  userEmail: String) : Fragment() {
+class TabFollowFragment(page: Int, userEmail: String) : Fragment() {
     private lateinit var binding: FragmentTabFollowBinding
     private lateinit var mainActivity: MainActivity
     private lateinit var userAdapter: UserAdapter
@@ -51,7 +51,7 @@ class TabFollowFragment(page: Int,  userEmail: String) : Fragment() {
     private fun displayRecyclerView(lstData: ArrayList<User>) {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
-        userAdapter = UserAdapter(lstData, 0)
+        userAdapter = UserAdapter(lstData, 0, this)
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = userAdapter

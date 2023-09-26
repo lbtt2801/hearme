@@ -3,15 +3,21 @@ package com.lbtt2801.hearme.data.adapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.ViewProfileBinding
 import com.lbtt2801.hearme.model.User
+import com.lbtt2801.hearme.view.fragments.search.ExploreFragment
+import com.lbtt2801.hearme.view.tab_viewpager.TabFollowFragment
+import com.lbtt2801.hearme.view.tab_viewpager.TabSongFragment
 
 class UserAdapter(
     private val dataUsers: ArrayList<User>,
     private val type: Int,
+    private val fragment: Fragment,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
@@ -37,7 +43,11 @@ class UserAdapter(
         when (holder) {
             is SearchProfileViewHolder -> {
                 holder.bind(dataUsers[position])
-                destination = R.id.action_item_nav_explore_to_viewDetailsProfileFragment
+                if (fragment is ExploreFragment)
+                    destination = R.id.action_item_nav_explore_to_viewDetailsProfileFragment
+                else if (fragment is TabFollowFragment) {
+                    destination = R.id.viewDetailsProfileFragment
+                }
             }
         }
         holder.itemView.setOnClickListener() {
@@ -55,7 +65,7 @@ class UserAdapter(
     override fun getItemCount(): Int = dataUsers.size
 
     inner class SearchProfileViewHolder private constructor(
-        val binding: ViewProfileBinding
+        val binding: ViewProfileBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
             ViewProfileBinding.inflate(

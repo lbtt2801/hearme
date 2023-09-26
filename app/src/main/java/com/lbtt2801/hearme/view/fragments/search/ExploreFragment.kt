@@ -47,8 +47,6 @@ class ExploreFragment : Fragment(),
 
     private lateinit var includeTopsSongsArtistsAlbumsPlaylistsProfiles: ContainerSearchResultBinding
 
-    private var nameCallBack: String? = null
-
     private var saveInstanceTextSearch: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,13 +71,22 @@ class ExploreFragment : Fragment(),
         includeTopsSongsArtistsAlbumsPlaylistsProfiles.recyclerViewTopicSearch.apply {
             layoutManager =
                 LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = TopicSearchAdapter(data)
+            adapter = TopicSearchAdapter(data, 0)
         }
     }
 
     override fun onResume() {
         super.onResume()
         mainActivity = (activity as MainActivity)
+
+        if (saveInstanceTextSearch.isNotEmpty()) {
+            binding.containerBrowseAll.visibility = View.GONE
+            binding.containerRecentSearches.visibility = View.GONE
+            includeTopsSongsArtistsAlbumsPlaylistsProfiles.root.visibility = View.VISIBLE
+            mainActivity.showBottomNav("GONE")
+            mainActivity.customToolbar("GONE")
+            binding.searchView.setQuery(saveInstanceTextSearch, true)
+        }
 
         displayRecyclerViewTopicSearch(topicSearchViewModel.lstDataTopicSearch.value as ArrayList<TopicSearch>)
 
@@ -98,7 +105,6 @@ class ExploreFragment : Fragment(),
             recentSearchViewModel.deleteAll()
         }
 
-        Log.v(TAG, "onResume saveInstanceTextSearch -> $saveInstanceTextSearch")
         mainActivity.customToolbar(
             "VISIBLE",
             "Explore",
@@ -141,6 +147,8 @@ class ExploreFragment : Fragment(),
         binding.searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
+                saveInstanceTextSearch = p0.toString()
+
                 binding.containerRecentSearches.visibility = View.GONE
                 includeTopsSongsArtistsAlbumsPlaylistsProfiles.root.visibility = View.VISIBLE
                 mainActivity.showBottomNav("GONE")
@@ -239,7 +247,7 @@ class ExploreFragment : Fragment(),
             return false
         }
 
-        userAdapter = UserAdapter(listFoundUser, 0)
+        userAdapter = UserAdapter(listFoundUser, 0, this)
         includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.recyclerViewFoundList.apply {
             layoutManager = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
             adapter = userAdapter
