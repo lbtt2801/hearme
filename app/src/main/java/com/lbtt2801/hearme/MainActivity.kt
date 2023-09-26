@@ -80,9 +80,16 @@ class MainActivity : AppCompatActivity() {
     //    var checkInHome = false
     var checkInHistory = false
     var language: String = "English (US)"
-
+    val dataListSong = ArrayList<Int>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        dataListSong.add(R.raw.shape_of_you_nokia)
+        dataListSong.add(R.raw.shape_of_you_nokia)
+        dataListSong.add(R.raw.shape_of_you_nokia)
+        dataListSong.add(R.raw.shape_of_you_nokia)
+        dataListSong.add(R.raw.shape_of_you_nokia)
+
 
 //        requestRuntimePermission()
         val window = this.window
@@ -671,33 +678,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("MissingPermission")
-    fun showNotificationMedia(music: Music) {
-        val notificationManagerCompat = NotificationManagerCompat.from(this)
-        val mediaSession = MediaSessionCompat(this, "MediaNotification")
-
-        val notification = NotificationCompat.Builder(this, "HEAR_ME_APP")
-            // Show controls on lock screen even when user hides sensitive content.
-//            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setSmallIcon(R.drawable.logo_default)
-            .setLargeIcon(music.image.let { BitmapFactory.decodeResource(resources, it) })
-            .setSubText("Hearme App")
-            .setContentTitle(music.musicName)
-            .setContentText(music.artist.artistName)
-//            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
-            // Add media control buttons that invoke intents in your media service
-            .addAction(R.drawable.ic_previous, "Previous", null) // #0
-            .addAction(R.drawable.ic_pause, "Pause", null) // #1
-            .addAction(R.drawable.ic_next, "Next", null) // #2
-            // Apply the media style template
-            .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
-                .setShowActionsInCompactView(0, 1, 2/* #1: pause button \*/)
-                .setMediaSession(mediaSession.sessionToken))
-            .build()
-
-        notificationManagerCompat.notify(1, notification)
-    }
+//    @SuppressLint("MissingPermission")
+//    fun showNotificationMedia(music: Music) {
+//        val notificationManagerCompat = NotificationManagerCompat.from(this)
+//        val mediaSession = MediaSessionCompat(this, "MediaNotification")
+//
+//        val notification = NotificationCompat.Builder(this, "HEAR_ME_APP")
+//            // Show controls on lock screen even when user hides sensitive content.
+////            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+//            .setSmallIcon(R.drawable.logo_default)
+//            .setLargeIcon(music.image.let { BitmapFactory.decodeResource(resources, it) })
+//            .setSubText("Hearme App")
+//            .setContentTitle(music.musicName)
+//            .setContentText(music.artist.artistName)
+////            .setPriority(NotificationCompat.PRIORITY_HIGH)
+//            .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
+//            // Add media control buttons that invoke intents in your media service
+//            .addAction(R.drawable.ic_previous, "Previous", null) // #0
+//            .addAction(R.drawable.ic_pause, "Pause", null) // #1
+//            .addAction(R.drawable.ic_next, "Next", null) // #2
+//            // Apply the media style template
+//            .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
+//                .setShowActionsInCompactView(0,1,2/* #1: pause button \*/)
+//                .setMediaSession(mediaSession.sessionToken))
+//            .build()
+//
+//        notificationManagerCompat.notify(1, notification)
+//    }
 
 
 }

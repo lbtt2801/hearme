@@ -141,9 +141,9 @@
                     android:layout_weight="1"
                     android:background="@drawable/selector_play_check_box"
                     android:button="@color/transparent"
-                    android:checked="false"/>
-<!--                    app:clickPlayForCheckBox="@{music}"-->
-<!--                    app:setPlay="@{music}" />-->
+                    android:checked="false"
+                    app:clickPlayForCheckBox="@{music}"
+                    app:setPlay="@{music}" />
 
                 <ImageButton
                     android:id="@+id/btnForward"

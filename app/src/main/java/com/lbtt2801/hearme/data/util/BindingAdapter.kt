@@ -2,6 +2,7 @@ package com.lbtt2801.hearme.data.util
 
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
@@ -18,6 +19,7 @@ import com.lbtt2801.hearme.MusicService
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MusicsData
 import com.lbtt2801.hearme.model.*
+import com.lbtt2801.hearme.view.fragments.search.SongPlayFragment
 import com.squareup.picasso.Picasso
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -478,22 +480,28 @@ fun setPlay(checkBox: CheckBox, music: Music) {
 @BindingAdapter("app:clickPlayForCheckBox")
 fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
     val mainActivity = checkBox.context as MainActivity
+    val service = SongPlayFragment().musicService
     checkBox.setOnClickListener() {
         var isPlaying = false
         if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
             isPlaying = true
+            service.mediaPlayer.start()
             mainActivity.showSnack(
                 checkBox,
                 "You are playing ${music.musicName}!"
             )
             // Chuyễn trang và put bundle ở đây
-            it.findNavController()
-                .navigate(R.id.songPlayFragment // R.id.action_notificationFragment_to_songPlayFragment
-                    ,Bundle().apply {
-                        putString("musicID", music.musicID)
-                    }
-                )
+            if (!SongPlayFragment().isResumed) {
+                it.findNavController()
+                    .navigate(R.id.songPlayFragment // R.id.action_notificationFragment_to_songPlayFragment
+                        ,Bundle().apply {
+                            putString("musicID", music.musicID)
+                        }
+                    )
+            }
+
         } else {
+            service.mediaPlayer.pause()
             isPlaying = false
             mainActivity.showSnack(
                 checkBox,

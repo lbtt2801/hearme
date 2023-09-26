@@ -80,4 +80,7 @@ dependencies {
     implementation("jp.wasabeef:picasso-transformations:2.4.0")
 
     implementation("androidx.media:media:1.5.0")
+    implementation("androidx.media3:media3-exoplayer:1.1.1")
+    implementation("androidx.media3:media3-ui:1.1.1")
+    implementation("androidx.media3:media3-common:1.1.1")
 }

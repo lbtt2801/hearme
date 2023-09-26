@@ -13,5 +13,6 @@ data class Music(
     val artist: Artist,
     val isAlbum: Boolean,
     val information: String? = null,
+    val path: Int ?= 1,
     var isPlaying: Boolean? = false
 )
