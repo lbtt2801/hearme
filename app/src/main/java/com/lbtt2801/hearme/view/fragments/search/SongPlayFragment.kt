@@ -3,6 +3,9 @@ package com.lbtt2801.hearme.view.fragments.search
 import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.Context.BIND_AUTO_CREATE
+import android.content.Intent
 import android.content.ServiceConnection
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -29,12 +32,12 @@ import com.lbtt2801.hearme.viewmodel.MusicViewModel
 import java.util.concurrent.TimeUnit
 
 class SongPlayFragment : Fragment(), ServiceConnection {
-    private lateinit var binding: FragmentSongPlayBinding
+    lateinit var binding: FragmentSongPlayBinding
     private lateinit var mainActivity: MainActivity
     private lateinit var runnable: Runnable
     private lateinit var musicID: String
     private var handler = Handler()
-//    private var mediaPlayer = MediaPlayer()
+    private var mediaPlayer = MediaPlayer()
     private var positionSong = 1 // vi tri bai hat da chon
     private var lstData = ArrayList<Int>()
     private var music: Music? = null
@@ -68,24 +71,26 @@ class SongPlayFragment : Fragment(), ServiceConnection {
 
         Log.v(TAG, "Create fragment")
 
-        // For Starting Service
-//        val intent = Intent(this, MusicService::class.java)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//         For Starting Service
+        val intent = Intent(mainActivity, MusicService::class.java)
+        activity?.bindService(intent, this, BIND_AUTO_CREATE)
+        activity?.startService(intent)
+
         musicID = arguments?.getString("musicID").toString()
         music = musicViewModel.lstDataMusics.value?.first { it.musicID == musicID }
-//        binding.music = music
+        binding.music = music
+        positionSong = music?.path!!
         binding.imgAvatar.background =
             music?.let { ContextCompat.getDrawable(requireContext(), it.image) }
         binding.tvTitle.text = music?.musicName
         binding.tvDetail.text = music?.artist?.artistName
         binding.btnPlay.isChecked = music?.isPlaying == true
-
     }
 
     override fun onResume() {
@@ -101,7 +106,7 @@ class SongPlayFragment : Fragment(), ServiceConnection {
         binding.seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(p0: SeekBar?, position: Int, changed: Boolean) {
                 if (changed) {
-                    musicService.mediaPlayer.seekTo(position)
+                    mediaPlayer.seekTo(position)
                 }
             }
 
@@ -114,14 +119,14 @@ class SongPlayFragment : Fragment(), ServiceConnection {
         })
 
         runnable = Runnable {
-            binding.seekBar.progress = musicService.mediaPlayer.currentPosition
-            binding.tvTimeStart.text = convertToMMSS(musicService.mediaPlayer.currentPosition)
-            handler.postDelayed(runnable, 1000)
+            binding.seekBar.progress = mediaPlayer.currentPosition
+            binding.tvTimeStart.text = convertToMMSS(mediaPlayer.currentPosition)
+            handler.postDelayed(runnable, 500)
         }
-        handler.postDelayed(runnable, 1000)
+        handler.postDelayed(runnable, 500)
 
         // music off because time run end
-        musicService.mediaPlayer.setOnCompletionListener {
+        mediaPlayer.setOnCompletionListener {
             binding.seekBar.progress = 0
 
 //            // tu dong phat bai ke tiep con BUG
@@ -139,20 +144,22 @@ class SongPlayFragment : Fragment(), ServiceConnection {
         }
 
         binding.btnPlay.setOnClickListener {
-            if (!musicService.mediaPlayer.isPlaying) {
-                musicService.mediaPlayer.start()
+            if (!mediaPlayer.isPlaying) {
+                mediaPlayer.start()
                 music?.isPlaying = true
             } else {
-                musicService.mediaPlayer.stop()
+                mediaPlayer.pause()
                 music?.isPlaying = false
             }
+//            musicService.mediaPlayer.pause()
+//            musicService.setup(false)
         }
 
         binding.btnNext.setOnClickListener {
             if (positionSong == lstData.size - 1)
                 return@setOnClickListener
             positionSong += 1
-            musicService.mediaPlayer.reset()
+            mediaPlayer.reset()
             setResourcesWithMusic()
 
         }
@@ -161,18 +168,18 @@ class SongPlayFragment : Fragment(), ServiceConnection {
             if (positionSong == 0)
                 return@setOnClickListener
             positionSong -= 1
-            musicService.mediaPlayer.reset()
+            mediaPlayer.reset()
             setResourcesWithMusic()
         }
 
         binding.btnForward.setOnClickListener {
-            if (musicService.mediaPlayer.isPlaying)
-                musicService.mediaPlayer.seekTo(musicService.mediaPlayer.currentPosition + 10000)
+            if (mediaPlayer.isPlaying)
+                mediaPlayer.seekTo(mediaPlayer.currentPosition + 10000)
         }
 
         binding.btnBackward.setOnClickListener {
-            if (musicService.mediaPlayer.isPlaying)
-                musicService.mediaPlayer.seekTo(musicService.mediaPlayer.currentPosition - 10000)
+            if (mediaPlayer.isPlaying)
+                mediaPlayer.seekTo(mediaPlayer.currentPosition - 10000)
         }
     }
 
@@ -202,30 +209,33 @@ class SongPlayFragment : Fragment(), ServiceConnection {
 
     private fun setResourcesWithMusic() {
 //        showNotificationMedia(requireContext())
-        if (music != null)
-            mainActivity.showNotificationMedia(music!!)
+//        if (music != null)
+//            mainActivity.showNotificationMedia(music!!)
 
-        musicService.mediaPlayer = MediaPlayer.create(context, lstData[positionSong]) // get Song in positionSong
-
+        mediaPlayer = MediaPlayer.create(context, lstData[positionSong]) // get Song in positionSong
         binding.seekBar.progress = 0
-        binding.seekBar.max = musicService.mediaPlayer.duration
+        binding.seekBar.max = mediaPlayer.duration
 
-        binding.tvTimeEnd.text = convertToMMSS(musicService.mediaPlayer.duration)
-
+        binding.tvTimeEnd.text = convertToMMSS(mediaPlayer.duration)
 
         if (music?.isPlaying == true)
-            musicService.mediaPlayer.start()
-//        mediaPlayer.start()
+            mediaPlayer.start()
+
+//        musicService.mediaPlayer = MediaPlayer.create(context, lstData[1])
+//        if (music?.isPlaying == true)
+//            musicService.mediaPlayer.start()
 
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
         val binder = service as MusicService.MyBinder
         musicService = binder.currentService()
+        musicService.showNotification(music!!)
+        Log.v(TAG, "onServiceConnected")
     }
 
     override fun onServiceDisconnected(p0: ComponentName?) {
-        musicService = MusicService()
+
     }
 
 //    @SuppressLint("MissingPermission")
