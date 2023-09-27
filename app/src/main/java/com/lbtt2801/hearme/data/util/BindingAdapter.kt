@@ -2,6 +2,8 @@ package com.lbtt2801.hearme.data.util
 
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -12,29 +14,43 @@ import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
 import com.lbtt2801.hearme.MainActivity
-import com.lbtt2801.hearme.MusicService
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MusicsData
 import com.lbtt2801.hearme.model.*
-import com.lbtt2801.hearme.view.fragments.search.SongPlayFragment
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.IOException
+import java.net.URL
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 @BindingAdapter("app:setImage")
 fun setImage(imageView: ImageView, id: Int) {
-    Picasso.get().load(id).placeholder(R.drawable.progress_icon).error(R.drawable.ellipse).fit()
-        .centerCrop()
+    Picasso.get().load(id).placeholder(R.drawable.progressbar).error(R.drawable.ellipse)
         .into(imageView)
-//    imageView.setImageResource(id)
-////    imageView.background = ContextCompat.getDrawable(imageView.context, id)
-//    imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+}
+
+@BindingAdapter("app:setImageUrl")
+fun setImageUrl(imageView: ImageView, url: String) {
+    val options = RequestOptions()
+        .centerCrop()
+        .placeholder(R.drawable.progressbar)
+        .error(R.drawable.ellipse)
+
+    Glide.with(imageView.context)
+        .load(url)
+        .apply(options)
+        .into(imageView)
 }
 
 @BindingAdapter("app:setDate")
@@ -486,7 +502,8 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
             isPlaying = true
             if (mainActivity.mediaPlayer.isPlaying)
                 mainActivity.mediaPlayer.stop()
-            mainActivity.mediaPlayer = MediaPlayer.create(mainActivity, mainActivity.dataListSong[music.path!!])
+            mainActivity.mediaPlayer =
+                MediaPlayer.create(mainActivity, mainActivity.dataListSong[music.path!!])
             mainActivity.showSnack(
                 checkBox,
                 "You are playing ${music.musicName}!"
@@ -495,7 +512,7 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
 
             it.findNavController()
                 .navigate(R.id.songPlayFragment // R.id.action_notificationFragment_to_songPlayFragment
-                    ,Bundle().apply {
+                    , Bundle().apply {
                         putString("musicID", music.musicID)
                         putString("fragment", "Notification")
                     }

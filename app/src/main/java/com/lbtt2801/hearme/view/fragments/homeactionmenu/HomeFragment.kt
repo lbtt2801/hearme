@@ -1,20 +1,16 @@
 package com.lbtt2801.hearme.view.fragments.homeactionmenu
 
 import android.content.ContentResolver
-import android.content.ContentValues.TAG
-import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -32,7 +28,6 @@ import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Chart
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.viewmodel.*
-import java.io.FileNotFoundException
 
 
 class HomeFragment : Fragment() {
@@ -45,7 +40,7 @@ class HomeFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private var email: String? = ""
     private var drawableAvatar: Int? = null
-    private var uriAvatar: Uri? = null
+    private var urlAvatar: String? = null
     private var fullName: String? = ""
 
     private val musicViewModel: MusicViewModel by activityViewModels()
@@ -71,6 +66,9 @@ class HomeFragment : Fragment() {
         if (savedInstanceState != null) {
             email = savedInstanceState.getString("email").toString()
         }
+        val policy = ThreadPolicy.Builder()
+            .permitAll().build()
+        StrictMode.setThreadPolicy(policy)
     }
 
     override fun onResume() {
@@ -80,14 +78,8 @@ class HomeFragment : Fragment() {
 
         drawableAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
         if (drawableAvatar == null) {
-            uriAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatarUri
-            Log.v(TAG, "UriAvatar -> $uriAvatar")
-            Log.v(TAG,
-                "get MediaStore Image Path -> ${
-                    getImagePath(mainActivity.contentResolver,
-                        uriAvatar)
-                }")
-            if (uriAvatar == null) {
+            urlAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatarUrl
+            if (urlAvatar == null) {
                 drawableAvatar = R.drawable.ellipse
             }
         }
@@ -130,20 +122,21 @@ class HomeFragment : Fragment() {
             fullName,
             R.color.transparent,
             navIcon = if (drawableAvatar != null) {
-                mainActivity.changeSizeDrawable(drawableAvatar!!, 48, 48)
+                ContextCompat.getDrawable(requireContext(), drawableAvatar!!)
             } else {
-                val bitmap = try {
-                    MediaStore.Images.Media.getBitmap(mainActivity.contentResolver, uriAvatar)
-                } catch (e: FileNotFoundException) {
-                    BitmapFactory.decodeResource(mainActivity.resources, R.drawable.ellipse)
-                }
-                BitmapDrawable(mainActivity.changeSizeBitmap(bitmap, 128 * 3, 128 * 3))
+                null
+            },
+            navIconUrl = if (urlAvatar != null) {
+                urlAvatar
+            } else {
+                null
             },
             showIcMore = false,
             showIcFilter = false,
             showIcSearch = true,
             showIcNotification = true
         )
+
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             //navigate
         }
@@ -152,11 +145,6 @@ class HomeFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("email", email)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-//        mainActivity.checkInHome = false
     }
 
     override fun onDestroy() {

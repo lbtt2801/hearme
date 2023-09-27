@@ -75,7 +75,7 @@ class UserViewModel : ViewModel() {
         dob: Date,
         secondaryEmail: String,
         phoneNumber: String,
-        avatar: Uri? = null,
+        avatar: String? = null,
     ) {
         lst.first { it.email == email }.apply {
             this.fullName = fullName
@@ -83,9 +83,10 @@ class UserViewModel : ViewModel() {
             this.dob = dob
             this.secondaryEmail = secondaryEmail
             this.phone = phoneNumber
-            this.avatarUri = avatar
+            this.avatarUrl = avatar
         }
         _lstDataUser.postValue(lst)
+        Log.v(TAG, "=========================== Update User -> ${lst.first { it.email == email }.avatarUrl}")
     }
 
     fun updateDataUser(

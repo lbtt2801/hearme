@@ -32,41 +32,55 @@
                 <LinearLayout
                     android:id="@+id/container_title_for_home"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:visibility="gone">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/image_view_avatar"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginRight="16dp"
+                        android:src="@drawable/avatar_1"
+                        app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:letterSpacing="0.01"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="2dp"
+                                android:letterSpacing="0.01"
+                                android:lineSpacingExtra="3sp"
+                                android:text="Good Morning 👋"
+                                android:textColor="@color/greyscale_600"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/text_user_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ellipsize="marquee"
+                            android:gravity="center_vertical"
                             android:lineSpacingExtra="3sp"
-                            android:text="Good Morning 👋"
-                            android:textColor="@color/greyscale_600"
-                            android:textSize="16sp" />
+                            android:maxLines="1"
+                            android:text="Andrew Ainsleys"
+                            android:textColor="@color/greyscale_900"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/text_user_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ellipsize="marquee"
-                        android:gravity="center_vertical"
-                        android:lineSpacingExtra="3sp"
-                        android:maxLines="1"
-                        android:text="Andrew Ainsleys"
-                        android:textColor="@color/greyscale_900"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <TextView

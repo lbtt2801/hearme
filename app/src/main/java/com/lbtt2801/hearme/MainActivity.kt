@@ -2,7 +2,6 @@ package com.lbtt2801.hearme
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -13,12 +12,9 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.view.Gravity
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.Button
@@ -35,28 +31,28 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.FirebaseApp
 import com.lbtt2801.hearme.data.MoreSongData
 import com.lbtt2801.hearme.data.adapter.MoreSongDropdownAdapter
 import com.lbtt2801.hearme.data.control.CustomSpinner
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.HomeFragment
-import com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment
 import com.lbtt2801.hearme.view.fragments.library.MyLibraryFragment
 import com.lbtt2801.hearme.view.fragments.profile_settings.ProfileFragment
 import com.lbtt2801.hearme.view.fragments.search.ExploreFragment
 import com.lbtt2801.hearme.view.fragments.search.ViewDetailsAlbumFragment
 import com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistFragment
 import com.lbtt2801.hearme.view.fragments.search.ViewDetailsSongFragment
-import com.lbtt2801.hearme.viewmodel.ArtistViewModel
-import com.lbtt2801.hearme.viewmodel.CategoriesViewModel
-import com.lbtt2801.hearme.viewmodel.EmailViewModel
-import com.lbtt2801.hearme.viewmodel.MusicViewModel
-import com.lbtt2801.hearme.viewmodel.PlaylistViewModel
-import com.lbtt2801.hearme.viewmodel.RecentSearchViewModel
-import com.lbtt2801.hearme.viewmodel.TopicSearchViewModel
-import com.lbtt2801.hearme.viewmodel.UserViewModel
+import com.lbtt2801.hearme.view.tab_viewpager.TabSongFragment
+import com.lbtt2801.hearme.viewmodel.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
 
 
@@ -84,7 +80,6 @@ class MainActivity : AppCompatActivity() {
     var mediaPlayer = MediaPlayer()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         dataListSong.add(R.raw.shape_of_you_nokia)
         dataListSong.add(R.raw.beauteous_upbeat_electronic)
         dataListSong.add(R.raw.funny_dance_music)
@@ -276,6 +271,7 @@ class MainActivity : AppCompatActivity() {
         showIcNotification: Boolean = false,
         showIcEdit: Boolean = false,
         showIcScan: Boolean = false,
+        navIconUrl: String? = null,
     ) {
         //Toolbar visibility
         when (isVisible.lowercase()) {
@@ -311,6 +307,15 @@ class MainActivity : AppCompatActivity() {
             binding.toolBar.navigationIcon = navIcon
         } else {
             binding.toolBar.navigationIcon = null
+        }
+
+        if (navIconUrl != null) {
+            val options = RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.progressbar)
+                .error(R.drawable.ellipse)
+
+            Glide.with(this).load(navIconUrl).apply(options).into(binding.imageViewAvatar)
         }
 
         binding.toolBar.menu.findItem(R.id.item_more_circle).isVisible = showIcMore

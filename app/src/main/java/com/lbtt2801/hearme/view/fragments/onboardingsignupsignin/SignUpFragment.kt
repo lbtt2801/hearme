@@ -20,8 +20,7 @@ import com.lbtt2801.hearme.viewmodel.EmailViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class SignUpFragment : Fragment() {
-    private var _binding: FragmentSignUpBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentSignUpBinding
     private lateinit var mainActivity: MainActivity
 
     private val viewModelUser: UserViewModel by activityViewModels()
@@ -31,7 +30,7 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
         return binding.root
     }
 
@@ -130,10 +129,5 @@ class SignUpFragment : Fragment() {
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }

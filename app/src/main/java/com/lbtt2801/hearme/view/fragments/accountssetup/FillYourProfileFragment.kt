@@ -3,6 +3,7 @@ package com.lbtt2801.hearme.view.fragments.accountssetup
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
@@ -24,13 +25,21 @@ import androidx.core.net.ParseException
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.FirebaseApp
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentFillYourProfileBinding
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.FileNotFoundException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,8 +48,10 @@ import java.util.*
 class FillYourProfileFragment : Fragment() {
     private lateinit var binding: FragmentFillYourProfileBinding
     private lateinit var mainActivity: MainActivity
+    private lateinit var storageReference: StorageReference
     private var email: String? = null
     private var avatarUri: Uri? = null
+    private var avatarUrl: String? = null
 
     private val userViewModel: UserViewModel by activityViewModels()
 
@@ -98,33 +109,19 @@ class FillYourProfileFragment : Fragment() {
         }
 
         binding.btnContinue.setOnClickListener() {
-            isValidEmail = isValidEmail(binding.edtEmail.text)
-            if (binding.edtFullName.text.isEmpty() || binding.edtNickName.text.isEmpty() || binding.edtDob.text.isEmpty() || binding.edtEmail.text.isEmpty() || binding.edtPhoneNumber.text.isEmpty()) {
-                mainActivity.showSnack(requireView(), "Enter full information, please!")
-            } else {
-                if (!isValidEmail || !isValidPhone) {
-                    mainActivity.showSnack(requireView(), "Invalid Email or Phone!")
+            if (avatarUri != null) {
+                isValidEmail = isValidEmail(binding.edtEmail.text)
+                if (binding.edtFullName.text.isEmpty() || binding.edtNickName.text.isEmpty() || binding.edtDob.text.isEmpty() || binding.edtEmail.text.isEmpty() || binding.edtPhoneNumber.text.isEmpty()) {
+                    mainActivity.showSnack(requireView(), "Enter full information, please!")
                 } else {
-                    val phone = "${binding.edtPhoneNumber.text}"
-
-                    email?.let {
-                        stringToDate(binding.edtDob.text.toString())?.let { it1 ->
-                            userViewModel.updateUserInfo(
-                                it,
-                                binding.edtFullName.text.toString(),
-                                binding.edtNickName.text.toString(),
-                                it1,
-                                binding.edtEmail.text.toString(),
-                                phone,
-                                avatarUri
-                            )
-                        }
+                    if (!isValidEmail || !isValidPhone) {
+                        mainActivity.showSnack(requireView(), "Invalid Email or Phone!")
+                    } else {
+                        uploadImageToFirebase()
                     }
-                    Log.v(TAG, userViewModel.lstDataUser.value?.size.toString())
-                    findNavController().navigate(
-                        R.id.action_fillYourProfileFragment_to_createNewPinFragment
-                    )
                 }
+            } else {
+                mainActivity.showSnack(requireView(), "Input your image!")
             }
         }
 
@@ -134,6 +131,49 @@ class FillYourProfileFragment : Fragment() {
         )
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
+        }
+    }
+
+    private fun uploadImageToFirebase() {
+        val progressDialog = ProgressDialog(requireContext())
+        progressDialog.setTitle("Uploading File...")
+        progressDialog.show()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            storageReference =
+                FirebaseStorage.getInstance().getReference("images/users/user_$email")
+            storageReference.putFile(avatarUri!!).addOnSuccessListener { snapshot ->
+                if (progressDialog.isShowing)
+                    progressDialog.dismiss()
+                Toast.makeText(requireContext(), "Successfully!", Toast.LENGTH_SHORT).show()
+                val result = snapshot.storage.downloadUrl
+                result.addOnSuccessListener {
+                    avatarUrl = it.toString()
+                    if (avatarUrl != null) {
+                        val phone = "${binding.edtPhoneNumber.text}"
+                        email?.let {
+                            stringToDate(binding.edtDob.text.toString())?.let { it1 ->
+                                userViewModel.updateUserInfo(
+                                    it,
+                                    binding.edtFullName.text.toString(),
+                                    binding.edtNickName.text.toString(),
+                                    it1,
+                                    binding.edtEmail.text.toString(),
+                                    phone,
+                                    avatarUrl
+                                )
+                            }
+                        }
+                        findNavController().navigate(
+                            R.id.action_fillYourProfileFragment_to_createNewPinFragment
+                        )
+                    }
+                }
+            }.addOnFailureListener() {
+                if (progressDialog.isShowing)
+                    progressDialog.dismiss()
+                Toast.makeText(requireContext(), "Error!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

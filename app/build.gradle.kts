@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -51,6 +52,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation("androidx.test:core-ktx:1.5.0")
+    implementation("com.google.firebase:firebase-storage:20.0.1")
+    implementation("com.google.firebase:firebase-storage-ktx:20.2.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -83,4 +86,8 @@ dependencies {
     implementation("androidx.media3:media3-exoplayer:1.1.1")
     implementation("androidx.media3:media3-ui:1.1.1")
     implementation("androidx.media3:media3-common:1.1.1")
+
+    implementation("com.github.bumptech.glide:glide:4.8.0")
+    implementation("com.github.bumptech.glide:compiler:4.8.0")
 }
+

@@ -11,6 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.MusicAdapter
@@ -26,14 +28,16 @@ class ProfileDetailFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private var email: String? = ""
     private var avatar: Int? = null
+    private var avatarUrl: String? = null
     private var fullName: String? = ""
 
     private val userViewModel: UserViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_detail, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_profile_detail, container, false)
         return binding.root
     }
 
@@ -62,12 +66,25 @@ class ProfileDetailFragment : Fragment() {
         }
 
         avatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
+        avatarUrl = userViewModel.lstDataUser.value?.first { it.email == email }?.avatarUrl
         fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
         val follower = userViewModel.lstDataUser.value?.first { it.email == email }?.listFollowers
-        val following = userViewModel.lstDataUser.value?.first { it.email == email }?.listUserFollowing
+        val following =
+            userViewModel.lstDataUser.value?.first { it.email == email }?.listUserFollowing
         val lstData = userViewModel.lstDataUser.value?.first { it.email == email }?.listPlaylist
 
-        binding.imgAvatar.background = avatar?.let { ContextCompat.getDrawable(requireContext(), it) }
+        val options = RequestOptions()
+            .centerCrop()
+            .placeholder(R.drawable.progressbar)
+            .error(R.drawable.ellipse)
+        if (avatar != null)
+            binding.imgAvatar.background =
+                avatar?.let { ContextCompat.getDrawable(requireContext(), it) }
+        else if (avatarUrl != null)
+            Glide.with(this).load(avatarUrl).apply(options).into(binding.imgAvatar)
+        else
+            binding.imgAvatar.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ellipse)
         binding.tvNameUser.text = fullName.toString()
         binding.numberFollowers.text = follower?.size.toString()
         binding.numberFollowing.text = following?.size.toString()
@@ -85,7 +102,8 @@ class ProfileDetailFragment : Fragment() {
     }
 
     private fun displayRecyclerView(lstData: ArrayList<Playlist>) {
-        val layoutRecyclerView = GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
+        val layoutRecyclerView =
+            GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
         val playlistAdapter = PlaylistAdapter(lstData, 1)
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerView
