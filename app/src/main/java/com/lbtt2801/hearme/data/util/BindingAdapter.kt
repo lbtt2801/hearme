@@ -480,29 +480,30 @@ fun setPlay(checkBox: CheckBox, music: Music) {
 @BindingAdapter("app:clickPlayForCheckBox")
 fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
     val mainActivity = checkBox.context as MainActivity
-    val service = SongPlayFragment().musicService
     checkBox.setOnClickListener() {
         var isPlaying = false
         if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
             isPlaying = true
-            service.mediaPlayer.start()
+            if (mainActivity.mediaPlayer.isPlaying)
+                mainActivity.mediaPlayer.stop()
+            mainActivity.mediaPlayer = MediaPlayer.create(mainActivity, mainActivity.dataListSong[music.path!!])
             mainActivity.showSnack(
                 checkBox,
                 "You are playing ${music.musicName}!"
             )
             // Chuyễn trang và put bundle ở đây
-            if (!SongPlayFragment().isResumed) {
-                it.findNavController()
-                    .navigate(R.id.songPlayFragment // R.id.action_notificationFragment_to_songPlayFragment
-                        ,Bundle().apply {
-                            putString("musicID", music.musicID)
-                        }
-                    )
-            }
+
+            it.findNavController()
+                .navigate(R.id.songPlayFragment // R.id.action_notificationFragment_to_songPlayFragment
+                    ,Bundle().apply {
+                        putString("musicID", music.musicID)
+                        putString("fragment", "Notification")
+                    }
+                )
 
         } else {
-            service.mediaPlayer.pause()
             isPlaying = false
+            mainActivity.mediaPlayer.pause()
             mainActivity.showSnack(
                 checkBox,
                 "You stop playing ${music.musicName}!"
