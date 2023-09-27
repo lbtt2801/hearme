@@ -533,7 +533,7 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
             // Chuyễn trang và put bundle ở đây
             it.findNavController()
                 .navigate(R.id.songPlayFragment // R.id.action_viewDetailsSongFragment_to_songPlayFragment
-                    ,Bundle().apply {
+                    , Bundle().apply {
                         putString("musicID", music.musicID)
                     }
                 )
@@ -543,6 +543,24 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
                 "You listening ${music.musicName}!"
             )
         }
+    }
+}
+
+@BindingAdapter("app:setTopicSearch")
+fun setTopicSearch(toggleButton: ToggleButton, topicSearch: TopicSearch) {
+    val mainActivity = toggleButton.context as MainActivity
+
+    mainActivity.viewModelTopicSearch.lstDataTopicSearch.observe(mainActivity) { it ->
+        toggleButton.isChecked = it.first { it.name == topicSearch.name }.isChecked
+    }
+}
+
+@BindingAdapter("app:clickTopicSearch")
+fun clickTopicSearch(toggleButton: ToggleButton, topicSearch: TopicSearch) {
+    val mainActivity = toggleButton.context as MainActivity
+
+    toggleButton.setOnClickListener() {
+        mainActivity.viewModelTopicSearch.updateChecked(topicSearch.name)
     }
 }
 

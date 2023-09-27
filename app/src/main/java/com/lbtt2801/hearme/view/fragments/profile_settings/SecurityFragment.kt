@@ -31,10 +31,14 @@ class SecurityFragment : Fragment() {
     private val userViewModel: UserViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_security, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         mainActivity = (activity as MainActivity)
         email = mainActivity.email
 
@@ -52,12 +56,6 @@ class SecurityFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         binding.btnChangePIN.setOnClickListener {
             showDialogChangePIN()
         }
@@ -69,12 +67,10 @@ class SecurityFragment : Fragment() {
         binding.switchRememberMe.setOnClickListener {
             mainActivity.checkRemember = binding.switchRememberMe.isChecked
         }
-
-
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 
@@ -160,8 +156,10 @@ class SecurityFragment : Fragment() {
         }
 
         btnYes.setOnClickListener {
-            val strOldPin = edtOldNum1.text.toString().plus(edtOldNum2.text.toString()).plus(edtOldNum3.text.toString()).plus(edtOldNum4.text.toString())
-            val strNewPin = edtNewNum1.text.toString().plus(edtNewNum2.text.toString()).plus(edtNewNum3.text.toString()).plus(edtNewNum4.text.toString())
+            val strOldPin = edtOldNum1.text.toString().plus(edtOldNum2.text.toString())
+                .plus(edtOldNum3.text.toString()).plus(edtOldNum4.text.toString())
+            val strNewPin = edtNewNum1.text.toString().plus(edtNewNum2.text.toString())
+                .plus(edtNewNum3.text.toString()).plus(edtNewNum4.text.toString())
             val strPin = userViewModel.lstDataUser.value?.first { it.email == email }?.pin
             if (strOldPin != strPin.toString()) {
                 Toast.makeText(requireContext(), "Wrong pin code !!", Toast.LENGTH_SHORT).show()
@@ -175,7 +173,9 @@ class SecurityFragment : Fragment() {
                 edtNewNum4.setText("")
                 edtOldNum1.requestFocus()
             } else {
-                Toast.makeText(requireContext(), "Changed pin code successfully !!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    "Changed pin code successfully !!",
+                    Toast.LENGTH_SHORT).show()
                 userViewModel.updateUserPin(email.toString(), strNewPin.toInt())
                 dialog.dismiss()
             }
@@ -191,7 +191,8 @@ class SecurityFragment : Fragment() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.dialog_password)
-        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
 
@@ -228,18 +229,22 @@ class SecurityFragment : Fragment() {
                 txtLayoutConfirmPass.error = "Confirm Password length must be longer than 6 !!"
             else checkLengthConfirmPass = true
 
-            Toast.makeText(requireContext(), "check new: $checkLengthNewPass", Toast.LENGTH_SHORT).show()
-            Toast.makeText(requireContext(), "check con: $checkLengthConfirmPass", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "check new: $checkLengthNewPass", Toast.LENGTH_SHORT)
+                .show()
+            Toast.makeText(requireContext(),
+                "check con: $checkLengthConfirmPass",
+                Toast.LENGTH_SHORT).show()
 
             if (pass != oldPass.text.toString())
                 txtLayoutOldPass.error = "Enter wrong password !!"
             else {
                 if (newPass.text.toString() == confirmPass.text.toString() && checkLengthConfirmPass && checkLengthNewPass) {
                     userViewModel.updatePassword(email.toString(), newPass.text.toString())
-                    Toast.makeText(requireContext(), "Password changed successfully !", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),
+                        "Password changed successfully !",
+                        Toast.LENGTH_SHORT).show()
                     dialog.dismiss()
-                }
-                else txtLayoutConfirmPass.error = "Does not match the new password !!"
+                } else txtLayoutConfirmPass.error = "Does not match the new password !!"
             }
         }
 

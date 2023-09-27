@@ -11,20 +11,26 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
-import com.lbtt2801.hearme.data.adapter.ViewPageAdapter
 import com.lbtt2801.hearme.data.adapter.ViewPageArtistAdapter
 import com.lbtt2801.hearme.databinding.FragmentArtistsBinding
 
 class ArtistsFragment : Fragment() {
     private var _binding: FragmentArtistsBinding? = null
     private val binding get() = _binding!!
+    private lateinit var mainActivity: MainActivity
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_artists, container, false)
+        return binding.root
+    }
 
-        val activity: MainActivity = (activity as MainActivity)
-        activity.customToolbar(
+    override fun onResume() {
+        super.onResume()
+        mainActivity = (activity as MainActivity)
+        mainActivity.customToolbar(
             "VISIBLE",
             "Artists",
             null,
@@ -34,18 +40,10 @@ class ArtistsFragment : Fragment() {
             showIcFilter = false,
             showIcSearch = true
         )
-        activity.showBottomNav("GONE")
-        activity.binding.toolBar.setNavigationOnClickListener() {
+        mainActivity.showBottomNav("GONE")
+        mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
         }
-
-        _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_artists, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         val tabLayout = binding.tabLayout
         val viewPage2 = binding.viewPager2

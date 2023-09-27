@@ -25,9 +25,6 @@
         <action
             android:id="@+id/action_item_nav_home_to_viewDetailsSongFragment"
             app:destination="@id/viewDetailsSongFragment" />
-        <action
-            android:id="@+id/action_item_nav_home_to_item_nav_explore"
-            app:destination="@id/item_nav_explore" />
     </fragment>
 
     <fragment
@@ -206,6 +203,9 @@
         <action
             android:id="@+id/action_item_nav_explore_to_viewDetailsProfileFragment"
             app:destination="@id/viewDetailsProfileFragment" />
+        <action
+            android:id="@+id/action_item_nav_explore_to_viewDetailsAlbumFragment"
+            app:destination="@id/viewDetailsAlbumFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemExploreFragment"
@@ -423,7 +423,11 @@
         android:id="@+id/viewDetailsArtistFragment"
         android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistFragment"
         android:label="ViewDetailsArtistFragment"
-        tools:layout="@layout/fragment_view_details_artist" />
+        tools:layout="@layout/fragment_view_details_artist" >
+        <action
+            android:id="@+id/action_viewDetailsArtistFragment_to_viewDetailsSongFragment"
+            app:destination="@id/viewDetailsSongFragment" />
+    </fragment>
     <fragment
         android:id="@+id/podcastLibraryFragment"
         android:name="com.lbtt2801.hearme.view.fragments.library.PodcastLibraryFragment"
@@ -518,5 +522,17 @@
         <action
             android:id="@+id/action_tabPodcastFragment_to_songPlayFragment"
             app:destination="@id/songPlayFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewDetailsAlbumFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsAlbumFragment"
+        android:label="ViewDetailsAlbumFragment"
+        tools:layout="@layout/fragment_view_details_album" >
+        <action
+            android:id="@+id/action_viewDetailsAlbumFragment_to_viewDetailsArtistFragment"
+            app:destination="@id/viewDetailsArtistFragment" />
+        <action
+            android:id="@+id/action_viewDetailsAlbumFragment_to_viewDetailsSongFragment"
+            app:destination="@id/viewDetailsSongFragment" />
     </fragment>
 </navigation>

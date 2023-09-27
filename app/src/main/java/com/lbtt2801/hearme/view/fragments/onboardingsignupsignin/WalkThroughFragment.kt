@@ -19,26 +19,21 @@ class WalkThroughFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_walk_through, container, false)
-        mainActivity = activity as MainActivity
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onResume() {
+        super.onResume()
+        mainActivity = activity as MainActivity
         binding.btnGetStarted.setOnClickListener {
             findNavController().navigate(R.id.action_walkThroughFragment_to_letYouInFragment)
 //            findNavController().navigate(R.id.navigation_home)
         }
 
-    }
-
-    override fun onResume() {
-        super.onResume()
         mainActivity.showBottomNav("gone")
         mainActivity.customToolbar("gone")
     }

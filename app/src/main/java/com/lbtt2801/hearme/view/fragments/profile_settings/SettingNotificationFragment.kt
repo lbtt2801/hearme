@@ -17,10 +17,17 @@ class SettingNotificationFragment : Fragment() {
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting_notification, container, false)
+        _binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_setting_notification,
+            container,
+            false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         (activity as MainActivity).customToolbar(
             "VISIBLE",
             "Notification",
@@ -34,12 +41,10 @@ class SettingNotificationFragment : Fragment() {
         (activity as MainActivity).binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-
-        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 }

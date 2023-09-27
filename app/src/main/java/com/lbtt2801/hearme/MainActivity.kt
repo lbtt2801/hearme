@@ -2,6 +2,7 @@ package com.lbtt2801.hearme
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -45,6 +46,7 @@ import com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment
 import com.lbtt2801.hearme.view.fragments.library.MyLibraryFragment
 import com.lbtt2801.hearme.view.fragments.profile_settings.ProfileFragment
 import com.lbtt2801.hearme.view.fragments.search.ExploreFragment
+import com.lbtt2801.hearme.view.fragments.search.ViewDetailsAlbumFragment
 import com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistFragment
 import com.lbtt2801.hearme.view.fragments.search.ViewDetailsSongFragment
 import com.lbtt2801.hearme.viewmodel.ArtistViewModel
@@ -88,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         dataListSong.add(R.raw.funny_dance_music)
         dataListSong.add(R.raw.happy_rock)
         dataListSong.add(R.raw.beauteous_upbeat_electronic)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
 //        requestRuntimePermission()
         val window = this.window
@@ -97,10 +100,9 @@ class MainActivity : AppCompatActivity() {
             isAppearanceLightStatusBars = true
         }
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(binding.root)
-
         binding.lifecycleOwner = this
+
         viewModelTopicSearch.getListDataTopicSearch()
 
         viewModelEmail.selectedItem.observe(this, Observer {
@@ -109,10 +111,6 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "viewModelEmail -> $email", Toast.LENGTH_SHORT).show()
 
         })
-
-        //*************************************************************************************************************************************************************
-        //Không get listdata của các viewmodel ở đây, khai báo "by viewModels()" ở trên thì hàm init trong viewmodel sẽ chạy, giúp xoay màn hình không bị mất dữ liệu
-        //*************************************************************************************************************************************************************
 
         if (savedInstanceState != null) {
             email = savedInstanceState.getString("email").toString()
@@ -598,7 +596,7 @@ class MainActivity : AppCompatActivity() {
                                     designation =
                                         R.id.action_item_nav_explore_to_viewDetailsArtistFragment
                                 }
-                                is NotificationFragment -> {
+                                is TabSongFragment -> {
                                     designation =
                                         R.id.action_notificationFragment_to_viewDetailsArtistFragment
                                 }
@@ -608,6 +606,10 @@ class MainActivity : AppCompatActivity() {
                                 }
                                 is ViewDetailsArtistFragment -> {
                                     showSnack(v, "You are here!")
+                                }
+                                is ViewDetailsAlbumFragment -> {
+                                    designation =
+                                        R.id.action_viewDetailsAlbumFragment_to_viewDetailsArtistFragment
                                 }
                             }
                             if (designation != null) {

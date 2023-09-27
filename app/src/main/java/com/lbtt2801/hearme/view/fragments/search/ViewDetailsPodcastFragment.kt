@@ -32,26 +32,23 @@ class ViewDetailsPodcastFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_view_details_podcast, container, false
         )
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
         mainActivity = activity as MainActivity
         musicID = arguments?.getString("musicID").toString()
         artist = musicViewModel.lstDataMusics.value?.first { it.musicID == musicID }?.artist
         music = musicViewModel.lstDataMusics.value?.first { it.musicID == musicID }
         binding.music = music
         binding.artist = artist
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onResume() {
-        super.onResume()
         mainActivity.showBottomNav("GONE")
         mainActivity.customToolbar(
             "VISIBLE",

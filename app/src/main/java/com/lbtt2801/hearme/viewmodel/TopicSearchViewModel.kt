@@ -24,8 +24,11 @@ class TopicSearchViewModel : ViewModel() {
         _lstDataTopicSearch.postValue(lst)
     }
 
-    fun updateChecked(position: Int, boolean: Boolean) {
-        lst[position].isChecked = boolean
+    fun updateChecked(name: String) {
+        lst.forEach {
+            it.isChecked = false
+        }
+        lst.first { it.name == name }.isChecked = true
         _lstDataTopicSearch.postValue(lst)
     }
 }

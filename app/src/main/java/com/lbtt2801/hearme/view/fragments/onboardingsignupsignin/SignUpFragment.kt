@@ -29,15 +29,16 @@ class SignUpFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false)
-        mainActivity = activity as MainActivity
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
+        mainActivity = activity as MainActivity
+
         binding.edtEmail.setOnFocusChangeListener { _, hasFocus ->
             val color = if (hasFocus) resources.getColor(R.color.bg_button) else Color.BLACK
             binding.txtLayoutEmail.setStartIconTintList(ColorStateList.valueOf(color))
@@ -113,10 +114,7 @@ class SignUpFragment : Fragment() {
                 viewModelUser.addDataUser(email, pass)
             }
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
         mainActivity.showBottomNav("gone")
         mainActivity.customToolbar(
             "visible",
@@ -134,8 +132,8 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 }

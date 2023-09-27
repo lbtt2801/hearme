@@ -25,7 +25,7 @@ class ViewDetailsProfileFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(
             inflater,
@@ -33,15 +33,16 @@ class ViewDetailsProfileFragment : Fragment() {
             container,
             false
         )
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
         mainActivity = activity as MainActivity
         userEmail = arguments?.getString("userEmail")
         user = userViewModel.lstDataUser.value?.first { it.email == userEmail }
         binding.user = user
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         binding.containerFollow.setOnClickListener() {
             findNavController().navigate(
                 R.id.action_viewDetailsProfileFragment_to_followerDetailFragment,
@@ -49,10 +50,7 @@ class ViewDetailsProfileFragment : Fragment() {
                     putString("emailID", userEmail)
                 })
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
         mainActivity.showBottomNav("GONE")
         mainActivity.customToolbar(
             "VISIBLE",

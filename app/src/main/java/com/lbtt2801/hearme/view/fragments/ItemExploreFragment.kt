@@ -25,9 +25,8 @@ class ItemExploreFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onResume() {
+        super.onResume()
         val title = arguments?.getString("name")
         (activity as MainActivity).customToolbar(
             "VISIBLE",
@@ -101,7 +100,6 @@ class ItemExploreFragment : Fragment() {
                 "The list viral top 50 from last week."
             )
         }
-
     }
 
     private fun sendData(idCard: Int, tvInCard: String, tvTitle: String, tvDetail: String) {

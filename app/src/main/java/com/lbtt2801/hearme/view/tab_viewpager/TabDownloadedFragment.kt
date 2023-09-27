@@ -21,6 +21,7 @@ import com.lbtt2801.hearme.databinding.FragmentTabDownloadedBinding
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.model.Playlist
 import com.lbtt2801.hearme.viewmodel.UserViewModel
+
 class TabDownloadedFragment : Fragment() {
     private lateinit var binding: FragmentTabDownloadedBinding
     private lateinit var mainActivity: MainActivity
@@ -35,17 +36,15 @@ class TabDownloadedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_downloaded, container, false)
-
-        mainActivity = (activity as MainActivity)
-        email = mainActivity.email
-
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_tab_downloaded, container, false)
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-
+        mainActivity = (activity as MainActivity)
+        email = mainActivity.email
         val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.style_spinner, spinnerItems)
         binding.spinner.adapter = spinnerAdapter
 
@@ -72,6 +71,7 @@ class TabDownloadedFragment : Fragment() {
                     else
                         displayRecyclerView(lstP1)
                 }
+
                 override fun onNothingSelected(p0: AdapterView<*>?) {
 
                 }
@@ -82,7 +82,7 @@ class TabDownloadedFragment : Fragment() {
     private fun displayRecyclerView(lstData: ArrayList<Music>) {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
-        musicAdapter = MusicAdapter(lstData, 2,this)
+        musicAdapter = MusicAdapter(lstData, 2, this)
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter

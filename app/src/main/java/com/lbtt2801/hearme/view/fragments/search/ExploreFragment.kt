@@ -6,11 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -47,8 +49,6 @@ class ExploreFragment : Fragment(),
 
     private lateinit var includeTopsSongsArtistsAlbumsPlaylistsProfiles: ContainerSearchResultBinding
 
-    private var nameCallBack: String? = null
-
     private var saveInstanceTextSearch: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,17 +63,33 @@ class ExploreFragment : Fragment(),
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        Log.v(TAG, "onCreateView saveInstanceTextSearch -> $saveInstanceTextSearch")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_explore, container, false)
-        mainActivity = (activity as MainActivity)
         includeTopsSongsArtistsAlbumsPlaylistsProfiles =
             binding.includeTopsSongsArtistsAlbumsPlaylistsProfiles
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.v(TAG, "onViewCreated saveInstanceTextSearch -> $saveInstanceTextSearch")
+    private fun displayRecyclerViewTopicSearch(data: ArrayList<TopicSearch>) {
+        includeTopsSongsArtistsAlbumsPlaylistsProfiles.recyclerViewTopicSearch.apply {
+            layoutManager =
+                LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = TopicSearchAdapter(data, 0)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainActivity = (activity as MainActivity)
+
+        if (saveInstanceTextSearch.isNotEmpty()) {
+            binding.containerBrowseAll.visibility = View.GONE
+            binding.containerRecentSearches.visibility = View.GONE
+            includeTopsSongsArtistsAlbumsPlaylistsProfiles.root.visibility = View.VISIBLE
+            mainActivity.showBottomNav("GONE")
+            mainActivity.customToolbar("GONE")
+            binding.searchView.setQuery(saveInstanceTextSearch, true)
+        }
+
         displayRecyclerViewTopicSearch(topicSearchViewModel.lstDataTopicSearch.value as ArrayList<TopicSearch>)
 
         recentSearchViewModel.lstDataRecentSearch.observe(mainActivity) {
@@ -90,19 +106,7 @@ class ExploreFragment : Fragment(),
         binding.textClearAll.setOnClickListener() {
             recentSearchViewModel.deleteAll()
         }
-    }
 
-    private fun displayRecyclerViewTopicSearch(data: ArrayList<TopicSearch>) {
-        includeTopsSongsArtistsAlbumsPlaylistsProfiles.recyclerViewTopicSearch.apply {
-            layoutManager =
-                LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = TopicSearchAdapter(data)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.v(TAG, "onResume saveInstanceTextSearch -> $saveInstanceTextSearch")
         mainActivity.customToolbar(
             "VISIBLE",
             "Explore",
@@ -116,11 +120,6 @@ class ExploreFragment : Fragment(),
         if (binding.searchView.query.isNotEmpty()) {
             binding.searchView.setQuery("${binding.searchView.query}", true)
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.v(TAG, "onPause saveInstanceTextSearch -> $saveInstanceTextSearch")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -150,6 +149,8 @@ class ExploreFragment : Fragment(),
         binding.searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
+                saveInstanceTextSearch = p0.toString()
+
                 binding.containerRecentSearches.visibility = View.GONE
                 includeTopsSongsArtistsAlbumsPlaylistsProfiles.root.visibility = View.VISIBLE
                 mainActivity.showBottomNav("GONE")
@@ -248,7 +249,7 @@ class ExploreFragment : Fragment(),
             return false
         }
 
-        userAdapter = UserAdapter(listFoundUser, 0)
+        userAdapter = UserAdapter(listFoundUser, 0, this)
         includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.recyclerViewFoundList.apply {
             layoutManager = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
             adapter = userAdapter

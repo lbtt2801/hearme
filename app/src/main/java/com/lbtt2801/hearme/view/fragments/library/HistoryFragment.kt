@@ -12,18 +12,25 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.ViewPageAdapter
-import com.lbtt2801.hearme.data.adapter.ViewPageFollowAdapter
 import com.lbtt2801.hearme.databinding.FragmentHistoryBinding
 
 class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
+    private lateinit var mainActivity: MainActivity
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
-        val activity: MainActivity = (activity as MainActivity)
-        activity.customToolbar(
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_history, container, false)
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainActivity = (activity as MainActivity)
+        mainActivity.customToolbar(
             "VISIBLE",
             "History",
             null,
@@ -33,19 +40,11 @@ class HistoryFragment : Fragment() {
             showIcFilter = false,
             showIcSearch = true
         )
-        activity.showBottomNav("GONE")
-        activity.binding.toolBar.setNavigationOnClickListener() {
+        mainActivity.showBottomNav("GONE")
+        mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
         }
-
-        _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_history, container, false)
-        activity.checkInHistory = true
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        mainActivity.checkInHistory = true
 
         val tabLayout = binding.tabLayout
         val viewPage2 = binding.viewPager2
@@ -66,7 +65,11 @@ class HistoryFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        mainActivity.checkInHistory = false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
-        (activity as MainActivity).checkInHistory = false
     }
 }

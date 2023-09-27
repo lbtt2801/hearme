@@ -32,10 +32,15 @@ class EditProfileFragment : Fragment() {
     private val userViewModel: UserViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_profile, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_edit_profile, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
+        super.onResume()
         mainActivity = activity as MainActivity
         email = mainActivity.email
 
@@ -52,12 +57,6 @@ class EditProfileFragment : Fragment() {
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
         }
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         val formatter = SimpleDateFormat("dd/MM/yyyy")
         fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
@@ -117,11 +116,10 @@ class EditProfileFragment : Fragment() {
             Toast.makeText(context, "Update Success !!", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_editProfileFragment_to_profileDetailFragment)
         }
-
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 

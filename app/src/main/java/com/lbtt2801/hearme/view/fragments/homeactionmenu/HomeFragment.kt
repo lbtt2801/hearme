@@ -31,10 +31,7 @@ import com.lbtt2801.hearme.databinding.FragmentHomeBinding
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Chart
 import com.lbtt2801.hearme.model.Music
-import com.lbtt2801.hearme.viewmodel.ArtistViewModel
-import com.lbtt2801.hearme.viewmodel.HomeViewModel
-import com.lbtt2801.hearme.viewmodel.MusicViewModel
-import com.lbtt2801.hearme.viewmodel.UserViewModel
+import com.lbtt2801.hearme.viewmodel.*
 import java.io.FileNotFoundException
 
 
@@ -54,6 +51,7 @@ class HomeFragment : Fragment() {
     private val musicViewModel: MusicViewModel by activityViewModels()
     private val artistViewModel: ArtistViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
+    private val topicSearchViewModel: TopicSearchViewModel by activityViewModels()
 
     private val viewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
@@ -65,18 +63,21 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-        mainActivity = activity as MainActivity
-//        mainActivity.checkInHome = true
-        email = mainActivity.email
-        Toast.makeText(requireContext(), "home -> $email", Toast.LENGTH_SHORT).show()
-        if (savedInstanceState != null) {
-            email = savedInstanceState.getString("email").toString()
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (savedInstanceState != null) {
+            email = savedInstanceState.getString("email").toString()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainActivity = activity as MainActivity
+        email = mainActivity.email
+
         drawableAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
         if (drawableAvatar == null) {
             uriAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatarUri
@@ -88,31 +89,9 @@ class HomeFragment : Fragment() {
                 }")
             if (uriAvatar == null) {
                 drawableAvatar = R.drawable.ellipse
-            } else {
-//                val galleryImageUrls = mutableListOf<Uri>()
-//                val columns = arrayOf(MediaStore.Images.Media._ID)
-//                val orderBy = MediaStore.Images.Media.DATE_TAKEN
-//
-//                mainActivity.contentResolver.query(
-//                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, columns,
-//                    null, null, null
-//                )?.use { cursor ->
-//                    val idColumn = cursor.getColumnIndex(MediaStore.Images.Media._ID)
-//
-//                    while (cursor.moveToNext()) {
-//                        val id = cursor.getLong(idColumn)
-//
-//                                galleryImageUrls.add(ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-//                                    id))
-//                    }
-//                }
             }
         }
         fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         binding.tvSeeTrendingNow.setOnClickListener {
             findNavController().navigate(R.id.trendingNowFragment)
