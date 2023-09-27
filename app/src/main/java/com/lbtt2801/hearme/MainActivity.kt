@@ -1,27 +1,23 @@
 package com.lbtt2801.hearme
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.media.MediaPlayer
 import android.os.Bundle
-import android.support.v4.media.session.MediaSessionCompat
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
-import android.util.Log
-import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.Button
@@ -30,11 +26,8 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -54,7 +47,14 @@ import com.lbtt2801.hearme.view.fragments.profile_settings.ProfileFragment
 import com.lbtt2801.hearme.view.fragments.search.ExploreFragment
 import com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistFragment
 import com.lbtt2801.hearme.view.fragments.search.ViewDetailsSongFragment
-import com.lbtt2801.hearme.viewmodel.*
+import com.lbtt2801.hearme.viewmodel.ArtistViewModel
+import com.lbtt2801.hearme.viewmodel.CategoriesViewModel
+import com.lbtt2801.hearme.viewmodel.EmailViewModel
+import com.lbtt2801.hearme.viewmodel.MusicViewModel
+import com.lbtt2801.hearme.viewmodel.PlaylistViewModel
+import com.lbtt2801.hearme.viewmodel.RecentSearchViewModel
+import com.lbtt2801.hearme.viewmodel.TopicSearchViewModel
+import com.lbtt2801.hearme.viewmodel.UserViewModel
 import kotlin.system.exitProcess
 
 
@@ -79,15 +79,15 @@ class MainActivity : AppCompatActivity() {
     var checkInHistory = false
     var language: String = "English (US)"
     val dataListSong = ArrayList<Int>()
+    var mediaPlayer = MediaPlayer()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         dataListSong.add(R.raw.shape_of_you_nokia)
-        dataListSong.add(R.raw.shape_of_you_nokia)
-        dataListSong.add(R.raw.shape_of_you_nokia)
-        dataListSong.add(R.raw.shape_of_you_nokia)
-        dataListSong.add(R.raw.shape_of_you_nokia)
-
+        dataListSong.add(R.raw.beauteous_upbeat_electronic)
+        dataListSong.add(R.raw.funny_dance_music)
+        dataListSong.add(R.raw.happy_rock)
+        dataListSong.add(R.raw.beauteous_upbeat_electronic)
 
 //        requestRuntimePermission()
         val window = this.window

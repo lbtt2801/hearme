@@ -480,7 +480,11 @@
         android:id="@+id/songPlayFragment"
         android:name="com.lbtt2801.hearme.view.fragments.search.SongPlayFragment"
         android:label="fragment_song_play"
-        tools:layout="@layout/fragment_song_play" />
+        tools:layout="@layout/fragment_song_play" >
+        <action
+            android:id="@+id/action_songPlayFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tabDownloadedFragment"
         android:name="com.lbtt2801.hearme.view.tab_viewpager.TabDownloadedFragment"
