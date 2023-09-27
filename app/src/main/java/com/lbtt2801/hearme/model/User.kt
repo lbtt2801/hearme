@@ -5,6 +5,7 @@ import android.net.Uri
 import android.text.TextUtils
 import android.util.Patterns
 import com.lbtt2801.hearme.R
+import java.net.URL
 import java.util.Date
 
 data class User(
@@ -12,7 +13,7 @@ data class User(
     var password: String,
     var secondaryEmail: String? = null,
     var avatar: Int? = null,
-    var avatarUri: Uri? = null,
+    var avatarUrl: String? = null,
     var fullName: String = "User 404",
     var nickName: String? = null,
     var dob: Date? = null,

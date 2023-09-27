@@ -39,8 +39,10 @@ class TabFollowFragment(page: Int, userEmail: String) : Fragment() {
         mainActivity = (activity as MainActivity)
 
         userViewModel.lstDataUser.observe(viewLifecycleOwner, Observer {
-            lstFollowers = it.first { user -> user.email == email }.listFollowers
-            lstFollowing = it.first { user -> user.email == email }.listUserFollowing
+            lstFollowers =
+                it.first { user -> user.email == email }.listFollowers
+            lstFollowing =
+                it.first { user -> user.email == email }.listUserFollowing
         })
         if (getPage == 0)
             displayRecyclerView(lstFollowers)

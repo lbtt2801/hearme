@@ -9,6 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.FragmentProfileBinding
@@ -20,6 +22,7 @@ class ProfileFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private var email: String? = ""
     private var avatar: Int? = null
+    private var avatarUrl: String? = null
     private var fullName: String? = ""
 
     private val userViewModel: UserViewModel by activityViewModels()
@@ -46,11 +49,23 @@ class ProfileFragment : Fragment() {
             true
         )
         mainActivity.showBottomNav("VISIBLE")
+
         avatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
+        avatarUrl = userViewModel.lstDataUser.value?.first { it.email == email }?.avatarUrl
         fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
 
-        binding.imgAvatar.background =
-            avatar?.let { ContextCompat.getDrawable(requireContext(), it) }
+        val options = RequestOptions()
+            .centerCrop()
+            .placeholder(R.drawable.progressbar)
+            .error(R.drawable.ellipse)
+        if (avatar != null)
+            binding.imgAvatar.background =
+                avatar?.let { ContextCompat.getDrawable(requireContext(), it) }
+        else if (avatarUrl != null)
+            Glide.with(this).load(avatarUrl).apply(options).into(binding.imgAvatar)
+        else
+            binding.imgAvatar.background =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ellipse)
         binding.tvNameUser.text = fullName
         binding.tvEmailUser.text = email
 

@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.databinding.ViewProfileBinding
 import com.lbtt2801.hearme.model.User
@@ -39,6 +40,7 @@ class UserAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val mainActivity = fragment.context as MainActivity
         var destination: Int? = null
         when (holder) {
             is SearchProfileViewHolder -> {
@@ -50,16 +52,17 @@ class UserAdapter(
                 }
             }
         }
-        holder.itemView.setOnClickListener() {
-            if (destination != null) {
-                it.findNavController()
-                    .navigate(destination,
-                        Bundle().apply {
-                            putString("userEmail", dataUsers[position].email)
-                        }
-                    )
+        if (dataUsers[position].email != mainActivity.email)
+            holder.itemView.setOnClickListener() {
+                if (destination != null) {
+                    it.findNavController()
+                        .navigate(destination,
+                            Bundle().apply {
+                                putString("userEmail", dataUsers[position].email)
+                            }
+                        )
+                }
             }
-        }
     }
 
     override fun getItemCount(): Int = dataUsers.size

@@ -21,7 +21,7 @@
             android:layout_marginRight="16dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            app:setImage="@{user.avatar}"
+            app:setImageUrl="@{user.avatarUrl}"
             app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
         <LinearLayout
