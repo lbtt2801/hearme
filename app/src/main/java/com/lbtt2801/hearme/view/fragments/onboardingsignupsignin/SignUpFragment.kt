@@ -73,10 +73,13 @@ class SignUpFragment : Fragment() {
             }
 
             // check length username email: 6 <= username <= 30
-            if (email.substring(0, 6).find { it == '@' } != null) {
-                checkEmail = false
-                binding.txtLayoutEmail.error = "Please enter the correct email format"
-            } else checkEmail = true
+
+            if (email.length > 6) {
+                if (email.substring(0, 6).find { it == '@' } != null) {
+                    checkEmail = false
+                    binding.txtLayoutEmail.error = "Please enter the correct email format"
+                } else checkEmail = true
+            }
 
             if (email.length > 30) {
                 if (email.substring(0, 30).find { it == '@' } == null)
@@ -90,7 +93,10 @@ class SignUpFragment : Fragment() {
 
             if (pass.length >= 6)
                 checkPass = true
-            else binding.txtLayoutPass.error = "Password length must be >= 6"
+            else {
+                binding.txtLayoutPass.error = "Password length must be >= 6"
+                checkPass = false
+            }
 
             // kiem tra trung lap email
             if (viewModelUser.checkDuplicateEmails(email)) {
@@ -105,7 +111,7 @@ class SignUpFragment : Fragment() {
                     if (it.size > sizeUserDataOld) {
                         Toast.makeText(context, "Sign Up Success", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(
-                            R.id.action_signUpFragment_to_fillYourProfileFragment
+                            R.id.fillYourProfileFragment  //action_signUpFragment_to_fillYourProfileFragment
                         )
                         emailViewModel.selectItem(binding.edtEmail.text.toString())
                     }

@@ -2,6 +2,8 @@ package com.lbtt2801.hearme
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -12,8 +14,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.StrictMode
-import android.os.StrictMode.ThreadPolicy
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
@@ -38,7 +39,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.FirebaseApp
 import com.lbtt2801.hearme.data.MoreSongData
 import com.lbtt2801.hearme.data.adapter.MoreSongDropdownAdapter
 import com.lbtt2801.hearme.data.control.CustomSpinner
@@ -53,9 +53,6 @@ import com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistFragment
 import com.lbtt2801.hearme.view.fragments.search.ViewDetailsSongFragment
 import com.lbtt2801.hearme.view.tab_viewpager.TabSongFragment
 import com.lbtt2801.hearme.viewmodel.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
 
 
@@ -66,6 +63,7 @@ class MainActivity : AppCompatActivity() {
     val viewModelTopicSearch: TopicSearchViewModel by viewModels()
     val viewModelRecentSearch: RecentSearchViewModel by viewModels()
     val viewModelMusic: MusicViewModel by viewModels()
+    val songPlayViewModel: SongPlayViewModel by viewModels()
     private val viewModelArtist: ArtistViewModel by viewModels()
     private val viewModelCategory: CategoriesViewModel by viewModels()
     private val viewModelPlaylist: PlaylistViewModel by viewModels()
@@ -75,22 +73,21 @@ class MainActivity : AppCompatActivity() {
     var email: String = ""
 
     var checkRemember = true
-
     //    var checkInHome = false
     var checkInHistory = false
     var language: String = "English (US)"
     val dataListSong = ArrayList<Int>()
     var mediaPlayer = MediaPlayer()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         dataListSong.add(R.raw.shape_of_you_nokia)
         dataListSong.add(R.raw.beauteous_upbeat_electronic)
         dataListSong.add(R.raw.funny_dance_music)
         dataListSong.add(R.raw.happy_rock)
         dataListSong.add(R.raw.beauteous_upbeat_electronic)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-//        requestRuntimePermission()
         val window = this.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
@@ -98,6 +95,10 @@ class MainActivity : AppCompatActivity() {
             isAppearanceLightStatusBars = true
         }
 
+
+//        requestRuntimePermission()
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(binding.root)
         binding.lifecycleOwner = this
 
@@ -684,7 +685,15 @@ class MainActivity : AppCompatActivity() {
                 arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
                 13
             )
+            Log.v(TAG, "121w32321")
         }
+
+//        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+//            Log.v(TAG,"121w32321")
+//        } else {
+//            Log.v(TAG,"Permission Granted")
+//        }
     }
 
     override fun onRequestPermissionsResult(
@@ -695,14 +704,23 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 13) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
-            else
+//                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+                Log.v(TAG, "Permission Granted")
+            else {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
                     13
                 )
+                Log.v(TAG, "xxxxxxxxxxxxxx")
+            }
         }
+//        if (grantResults[0] == 1) {
+//            Log.v(TAG,"Permission Granted")
+//        } else {
+//            Log.v(TAG,"xxxxxxxxxxxxxx")
+//            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+//        }
     }
 
 //    @SuppressLint("MissingPermission")

@@ -5,7 +5,9 @@
     tools:context=".view.fragments.search.SongPlayFragment">
 
     <data>
-
+        <variable
+            name="fragment"
+            type="androidx.fragment.app.Fragment" />
         <variable
             name="music"
             type="com.lbtt2801.hearme.model.Music" />
@@ -137,9 +139,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/selector_play_check_box"
                 android:button="@color/transparent"
-                android:checked="false"/>
-            <!--                    app:clickPlayForCheckBox="@{music}"-->
-            <!--                    app:setPlay="@{music}" />-->
+
+                app:setPlay="@{music}"
+                app:music="@{music}"
+                app:fragment="@{fragment}"/>
+<!--            app:clickPlayForCheckBox="@{music}"-->
 
             <ImageButton
                 android:id="@+id/btnForward"

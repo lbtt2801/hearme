@@ -12,7 +12,7 @@ data class Music(
     val category: Category,
     val artist: Artist,
     val isAlbum: Boolean,
+    val path: String ?= "https://cdn.pixabay.com/audio/2023/07/03/audio_80cd47077b.mp3",
     val information: String? = null,
-    val path: Int ?= 1,
     var isPlaying: Boolean? = false
 )
