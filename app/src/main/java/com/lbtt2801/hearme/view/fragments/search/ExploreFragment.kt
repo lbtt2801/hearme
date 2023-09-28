@@ -90,8 +90,6 @@ class ExploreFragment : Fragment(),
             binding.searchView.setQuery(saveInstanceTextSearch, true)
         }
 
-        displayRecyclerViewTopicSearch(topicSearchViewModel.lstDataTopicSearch.value as ArrayList<TopicSearch>)
-
         recentSearchViewModel.lstDataRecentSearch.observe(mainActivity) {
             displayRecyclerViewRecentSearches(it)
         }
@@ -149,6 +147,7 @@ class ExploreFragment : Fragment(),
         binding.searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
+                displayRecyclerViewTopicSearch(topicSearchViewModel.lstDataTopicSearch.value as ArrayList<TopicSearch>)
                 saveInstanceTextSearch = p0.toString()
 
                 binding.containerRecentSearches.visibility = View.GONE
