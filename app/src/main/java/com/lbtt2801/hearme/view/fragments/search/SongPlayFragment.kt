@@ -23,6 +23,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.MusicService
 import com.lbtt2801.hearme.R
@@ -91,8 +96,21 @@ class SongPlayFragment : Fragment(), ServiceConnection {
         music = musicViewModel.lstDataMusics.value?.first { it.musicID == musicID }
         binding.music = music
         positionSong = music?.path!!
-        binding.imgAvatar.background =
-            music?.let { ContextCompat.getDrawable(requireContext(), it.image) }
+//        binding.imgAvatar.background =
+//            music?.let { ContextCompat.getDrawable(requireContext(), it.image) }
+        val options = RequestOptions()
+            .centerCrop()
+            .error(R.drawable.ellipse)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .priority(Priority.HIGH)
+            .dontTransform()
+
+        Glide.with(this)
+            .load(music!!.image)
+            .apply(options)
+            .transition(DrawableTransitionOptions.withCrossFade(250))
+            .into(binding.imgAvatar)
+
         binding.tvTitle.text = music?.musicName
         binding.tvDetail.text = music?.artist?.artistName
         binding.btnPlay.isChecked = music?.isPlaying == true

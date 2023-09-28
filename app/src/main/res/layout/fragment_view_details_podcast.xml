@@ -36,7 +36,7 @@
                     android:layout_height="100dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    app:setImage="@{artist.image}"
+                    app:setImageUrl="@{artist.image}"
                     app:shapeAppearanceOverlay="@style/roundedConorImageview" />
 
                 <LinearLayout

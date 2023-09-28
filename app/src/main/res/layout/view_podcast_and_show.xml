@@ -21,7 +21,7 @@
             android:layout_height="160dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            app:setImage="@{artist.image}"
+            app:setImageUrl="@{artist.image}"
             android:scaleType="centerCrop"
             app:shapeAppearanceOverlay="@style/roundedConorImageview2" />
 

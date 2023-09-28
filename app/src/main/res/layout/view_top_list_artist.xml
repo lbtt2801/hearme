@@ -29,7 +29,7 @@
                 android:layout_marginRight="16dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                app:setImage="@{artist.image}"
+                app:setImageUrl="@{artist.image}"
                 app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
             <LinearLayout

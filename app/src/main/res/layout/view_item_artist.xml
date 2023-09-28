@@ -20,7 +20,7 @@
             android:layout_height="80dp"
             android:layout_marginEnd="16dp"
             android:scaleType="centerCrop"
-            app:setImage="@{artist.image}"
+            app:setImageUrl="@{artist.image}"
             app:shapeAppearance="@style/circleImageView"/>
         <LinearLayout
             android:layout_width="0dp"

@@ -32,7 +32,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
@@ -312,10 +315,16 @@ class MainActivity : AppCompatActivity() {
         if (navIconUrl != null) {
             val options = RequestOptions()
                 .centerCrop()
-                .placeholder(R.drawable.progressbar)
                 .error(R.drawable.ellipse)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .priority(Priority.HIGH)
+                .dontTransform()
 
-            Glide.with(this).load(navIconUrl).apply(options).into(binding.imageViewAvatar)
+            Glide.with(this)
+                .load(navIconUrl)
+                .apply(options)
+                .transition(DrawableTransitionOptions.withCrossFade(250))
+                .into(binding.imageViewAvatar)
         }
 
         binding.toolBar.menu.findItem(R.id.item_more_circle).isVisible = showIcMore

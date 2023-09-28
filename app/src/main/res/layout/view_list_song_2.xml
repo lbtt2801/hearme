@@ -28,7 +28,7 @@
                 android:layout_marginRight="16dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                app:setImage="@{music.image}"
+                app:setImageUrl="@{music.image}"
                 app:shapeAppearanceOverlay="@style/roundedConorImageview" />
 
             <LinearLayout

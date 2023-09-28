@@ -16,7 +16,7 @@
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            app:setImage="@{artist.image}"
+            app:setImageUrl="@{artist.image}"
             app:shapeAppearance="@style/circleImageView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
