@@ -2,8 +2,6 @@ package com.lbtt2801.hearme.data.util
 
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -14,7 +12,11 @@ import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
@@ -23,11 +25,6 @@ import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MusicsData
 import com.lbtt2801.hearme.model.*
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.io.IOException
-import java.net.URL
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -36,7 +33,7 @@ import java.util.*
 
 @BindingAdapter("app:setImage")
 fun setImage(imageView: ImageView, id: Int) {
-    Picasso.get().load(id).placeholder(R.drawable.progressbar).error(R.drawable.ellipse)
+    Picasso.get().load(id).error(R.drawable.ellipse)
         .into(imageView)
 }
 
@@ -44,12 +41,15 @@ fun setImage(imageView: ImageView, id: Int) {
 fun setImageUrl(imageView: ImageView, url: String) {
     val options = RequestOptions()
         .centerCrop()
-        .placeholder(R.drawable.progressbar)
         .error(R.drawable.ellipse)
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .priority(Priority.HIGH)
+        .dontTransform()
 
     Glide.with(imageView.context)
         .load(url)
         .apply(options)
+        .transition(DrawableTransitionOptions.withCrossFade(250))
         .into(imageView)
 }
 

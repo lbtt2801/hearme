@@ -37,8 +37,7 @@
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_artist"
-                    app:setImage="@{artist.image}"
+                    app:setImageUrl="@{artist.image}"
                     app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
                 <TextView

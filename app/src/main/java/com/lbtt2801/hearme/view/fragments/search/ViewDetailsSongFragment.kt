@@ -17,6 +17,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.internal.FadeThroughDrawable
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MoreSongData
@@ -36,7 +42,6 @@ class ViewDetailsSongFragment : Fragment() {
     private val userViewModel: UserViewModel by activityViewModels()
 
     private lateinit var musicID: String
-    private var artist: Artist? = null
     private var music: Music? = null
     private var musicsMoreLikeThis: ArrayList<Music>? = arrayListOf()
     private var user: User? = null
@@ -57,23 +62,12 @@ class ViewDetailsSongFragment : Fragment() {
         super.onResume()
         mainActivity = activity as MainActivity
         musicID = arguments?.getString("musicID").toString()
-        artist = musicViewModel.lstDataMusics.value?.first { it.musicID == musicID }?.artist
         music = musicViewModel.lstDataMusics.value?.first { it.musicID == musicID }
         musicsMoreLikeThis =
-            musicViewModel.lstDataMusics.value?.filter { it.artist.artistId == artist?.artistId && it.musicID != musicID } as ArrayList<Music>?
+            musicViewModel.lstDataMusics.value?.filter { it.artist.artistId == music?.artist?.artistId && it.musicID != musicID } as ArrayList<Music>?
         user = userViewModel.lstDataUser.value?.first { it.email == mainActivity.email }
         binding.music = music
 
-        binding.imageArtist.setImageDrawable(
-            artist?.image?.let {
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    it
-                )
-            }
-        )
-        binding.textViewMusicName.text = music?.musicName
-        binding.textViewArtistName.text = artist?.artistName
         binding.textViewCategory.text = if (music?.isAlbum == true) "Album" else "Song"
         val duration = "${music?.duration?.minute}:${music?.duration?.second}"
         binding.textViewDuration.text = duration

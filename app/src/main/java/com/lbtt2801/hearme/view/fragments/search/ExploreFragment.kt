@@ -365,7 +365,8 @@ class ExploreFragment : Fragment(),
         val listFoundMusic: ArrayList<Music> =
             musicViewModel.lstDataMusics.value?.filter {
                 it.musicName.trim().lowercase()
-                    .contains(p0.trim().lowercase()) && it.category.categoryID != "ca002"
+                    .contains(p0.trim()
+                        .lowercase()) && it.category.categoryID != "ca002" && !it.isAlbum
             } as ArrayList<Music>
 
         if (listFoundMusic.isEmpty())
