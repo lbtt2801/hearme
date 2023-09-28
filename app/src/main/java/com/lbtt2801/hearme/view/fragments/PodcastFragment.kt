@@ -33,7 +33,6 @@ class PodcastFragment : Fragment() {
     private lateinit var artistAdapter: ArtistAdapter
     private lateinit var categoryAdapter: CategoryAdapter
 
-    private val userViewModel: UserViewModel by activityViewModels()
     private val viewModel by lazy {
         ViewModelProvider(this)[HomeViewModel::class.java]
     }
@@ -103,7 +102,7 @@ class PodcastFragment : Fragment() {
     private fun displayRecyclerViewArtist(lstData: ArrayList<Artist>) {
         val layoutRecyclerViewArtist =
             LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
-        artistAdapter = ArtistAdapter(lstData, 0, userViewModel)
+        artistAdapter = ArtistAdapter(lstData, 0)
         binding.recyclerViewPopularArtists.apply {
             layoutManager = layoutRecyclerViewArtist
             adapter = artistAdapter

@@ -3,6 +3,7 @@ package com.lbtt2801.hearme.data.adapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.R
@@ -11,12 +12,13 @@ import com.lbtt2801.hearme.databinding.ViewItemArtistBinding
 import com.lbtt2801.hearme.databinding.ViewPodcastAndShowBinding
 import com.lbtt2801.hearme.databinding.ViewListArtistBinding
 import com.lbtt2801.hearme.model.Artist
+import com.lbtt2801.hearme.view.fragments.accountssetup.FollowArtistsFragment
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class ArtistAdapter(
     private val dataArtists: ArrayList<Artist>,
     private val type: Int,
-    private val userViewModel: UserViewModel?= null
+    private val fragment: Fragment? = null,
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
@@ -65,7 +67,10 @@ class ArtistAdapter(
 //            is ArtistViewHolderFollowArtists -> holder.bind(dataArtists[position])
             is ListArtistViewHolder -> {
                 holder.bind(dataArtists[position])
-                destination = R.id.action_item_nav_explore_to_viewDetailsArtistFragment
+                if (fragment is FollowArtistsFragment) {
+
+                } else
+                    destination = R.id.action_item_nav_explore_to_viewDetailsArtistFragment
             }
             is PodcastAndShowViewHolder -> {
                 holder.bind(dataArtists[position])
@@ -90,7 +95,7 @@ class ArtistAdapter(
     override fun getItemCount(): Int = dataArtists.size
 
     inner class HomeViewHolder private constructor(
-        val binding: ViewHomeArtistBinding
+        val binding: ViewHomeArtistBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
             ViewHomeArtistBinding.inflate(
@@ -147,7 +152,7 @@ class ArtistAdapter(
     }
 
     inner class PodcastAndShowViewHolder private constructor(
-        val binding: ViewPodcastAndShowBinding
+        val binding: ViewPodcastAndShowBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
             ViewPodcastAndShowBinding.inflate(
@@ -180,7 +185,7 @@ class ArtistAdapter(
 //    }
 
     inner class ArtistViewHolder private constructor(
-        val binding: ViewItemArtistBinding
+        val binding: ViewItemArtistBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
             ViewItemArtistBinding.inflate(

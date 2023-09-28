@@ -90,8 +90,6 @@ class ExploreFragment : Fragment(),
             binding.searchView.setQuery(saveInstanceTextSearch, true)
         }
 
-        displayRecyclerViewTopicSearch(topicSearchViewModel.lstDataTopicSearch.value as ArrayList<TopicSearch>)
-
         recentSearchViewModel.lstDataRecentSearch.observe(mainActivity) {
             displayRecyclerViewRecentSearches(it)
         }
@@ -149,6 +147,7 @@ class ExploreFragment : Fragment(),
         binding.searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
+                displayRecyclerViewTopicSearch(topicSearchViewModel.lstDataTopicSearch.value as ArrayList<TopicSearch>)
                 saveInstanceTextSearch = p0.toString()
 
                 binding.containerRecentSearches.visibility = View.GONE
@@ -289,7 +288,7 @@ class ExploreFragment : Fragment(),
             } as ArrayList<Music>)
         }
 
-        artistAdapter = ArtistAdapter(listFoundArtist, 5, userViewModel)
+        artistAdapter = ArtistAdapter(listFoundArtist, 5)
         includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearchPodcasts.recyclerViewPodcastAndShow.apply {
             layoutManager =
                 GridLayoutManager(view?.context, 1, LinearLayoutManager.HORIZONTAL, false)
@@ -350,7 +349,6 @@ class ExploreFragment : Fragment(),
             ArtistAdapter(
                 listFoundArtist,
                 4,
-                userViewModel
             )
 
         includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.recyclerViewFoundList.apply {
@@ -409,8 +407,7 @@ class ExploreFragment : Fragment(),
         artistAdapter =
             ArtistAdapter(
                 listFoundArtist,
-                4,
-                userViewModel
+                4
             )
         val concatAdapter = ConcatAdapter(musicAdapter, artistAdapter)
 

@@ -27,11 +27,10 @@ class FollowArtistsFragment : Fragment() {
     private lateinit var artistAdapter: ArtistAdapter
 
     private val artistViewModel: ArtistViewModel by activityViewModels()
-    private val userViewModel: UserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(
             inflater,
@@ -69,7 +68,7 @@ class FollowArtistsFragment : Fragment() {
     private var displayRecyclerView: Observer<ArrayList<Artist>?> =
         Observer<ArrayList<Artist>?> { artistArrayList ->
             val layout = LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
-            artistAdapter = artistArrayList?.let { ArtistAdapter(it, 4, userViewModel) }!!
+            artistAdapter = artistArrayList?.let { ArtistAdapter(it, 4, this) }!!
             binding.recyclerView.apply {
                 layoutManager = layout
                 adapter = artistAdapter
