@@ -37,7 +37,7 @@
                 android:layout_marginBottom="-10dp"
                 android:layout_gravity="end|bottom"
                 android:rotation="45"
-                app:setImage="@{category.image}"
+                app:setImageUrl="@{category.image}"
                 app:shapeAppearance="@style/roundedImageView"/>
 
         </com.google.android.material.card.MaterialCardView>

@@ -17,7 +17,7 @@
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            app:setImage="@{music.image}"
+            app:setImageUrl="@{music.image}"
             app:shapeAppearance="@style/roundedImageView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>

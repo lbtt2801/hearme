@@ -6,7 +6,7 @@ data class Music(
     val musicID: String,
     val musicName: String,
     val totalListeners: Int = 0,
-    val image: Int,
+    val image: String,
     val duration: Time,
     val release: Date,
     val category: Category,

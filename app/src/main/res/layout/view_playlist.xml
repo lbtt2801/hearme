@@ -24,7 +24,7 @@
             android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            app:setImage="@{music.image}"
+            app:setImageUrl="@{music.image}"
             app:shapeAppearanceOverlay="@style/roundedConorImageview2" />
 
         <LinearLayout
