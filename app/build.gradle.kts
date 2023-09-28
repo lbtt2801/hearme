@@ -90,5 +90,7 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.8.0")
     implementation("com.github.bumptech.glide:compiler:4.8.0")
+
+    implementation("androidx.biometric:biometric-ktx:1.2.0-alpha05")
 }
 

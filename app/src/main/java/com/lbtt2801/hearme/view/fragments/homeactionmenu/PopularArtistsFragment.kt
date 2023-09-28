@@ -25,9 +25,7 @@ class PopularArtistsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var artistAdapter: ArtistAdapter
 
-    private val userViewModel: UserViewModel by activityViewModels()
     private val artistViewModel: ArtistViewModel by activityViewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,7 +67,7 @@ class PopularArtistsFragment : Fragment() {
     private fun displayRecyclerView(lstData: ArrayList<Artist>) {
         val layoutRecyclerView =
             GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
-        artistAdapter = ArtistAdapter(lstData, 0, userViewModel)
+        artistAdapter = ArtistAdapter(lstData, 0)
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerView
             adapter = artistAdapter

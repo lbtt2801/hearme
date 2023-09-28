@@ -79,9 +79,6 @@ class HomeFragment : Fragment() {
         drawableAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatar
         if (drawableAvatar == null) {
             urlAvatar = userViewModel.lstDataUser.value?.first { it.email == email }?.avatarUrl
-            if (urlAvatar == null) {
-                drawableAvatar = R.drawable.ellipse
-            }
         }
         fullName = userViewModel.lstDataUser.value?.first { it.email == email }?.fullName
 
@@ -165,7 +162,7 @@ class HomeFragment : Fragment() {
     private fun displayRecyclerViewArtist(lstData: ArrayList<Artist>) {
         val layoutRecyclerViewArtist =
             LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
-        artistAdapter = ArtistAdapter(lstData, 0, userViewModel)
+        artistAdapter = ArtistAdapter(lstData, 0)
         binding.recyclerViewPopularArtists.apply {
             layoutManager = layoutRecyclerViewArtist
             adapter = artistAdapter

@@ -305,14 +305,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        //Toolbar nav icon
-        if (navIcon != null) {
-            binding.toolBar.navigationIcon = navIcon
-        } else {
-            binding.toolBar.navigationIcon = null
-        }
-
-        if (navIconUrl != null) {
+        if (navIcon == null && navIconUrl == null) {
             val options = RequestOptions()
                 .centerCrop()
                 .error(R.drawable.ellipse)
@@ -321,10 +314,34 @@ class MainActivity : AppCompatActivity() {
                 .dontTransform()
 
             Glide.with(this)
-                .load(navIconUrl)
+                .load(R.drawable.ellipse)
                 .apply(options)
                 .transition(DrawableTransitionOptions.withCrossFade(250))
                 .into(binding.imageViewAvatar)
+
+            binding.toolBar.navigationIcon = null
+        } else {
+            //Toolbar nav icon
+            if (navIcon != null) {
+                binding.toolBar.navigationIcon = navIcon
+            } else {
+                binding.toolBar.navigationIcon = null
+            }
+
+            if (navIconUrl != null) {
+                val options = RequestOptions()
+                    .centerCrop()
+                    .error(R.drawable.ellipse)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .priority(Priority.HIGH)
+                    .dontTransform()
+
+                Glide.with(this)
+                    .load(navIconUrl)
+                    .apply(options)
+                    .transition(DrawableTransitionOptions.withCrossFade(250))
+                    .into(binding.imageViewAvatar)
+            }
         }
 
         binding.toolBar.menu.findItem(R.id.item_more_circle).isVisible = showIcMore
