@@ -535,4 +535,9 @@
             android:id="@+id/action_viewDetailsAlbumFragment_to_viewDetailsSongFragment"
             app:destination="@id/viewDetailsSongFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/nowSongPlayingFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.search.NowSongPlayingFragment"
+        android:label="fragment_now_song_playing"
+        tools:layout="@layout/fragment_now_song_playing" />
 </navigation>
