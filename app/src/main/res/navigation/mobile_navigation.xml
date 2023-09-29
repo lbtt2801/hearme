@@ -506,6 +506,9 @@
         <action
             android:id="@+id/action_tabPodcastersFragment_to_songPlayFragment"
             app:destination="@id/songPlayFragment" />
+        <action
+            android:id="@+id/action_tabPodcastersFragment_to_viewDetailsPodcastFragment"
+            app:destination="@id/viewDetailsPodcastFragment" />
     </fragment>
     <fragment
         android:id="@+id/tabSongFragment"

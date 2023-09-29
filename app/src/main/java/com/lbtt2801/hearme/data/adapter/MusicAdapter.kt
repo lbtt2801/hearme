@@ -24,6 +24,7 @@ import com.lbtt2801.hearme.view.fragments.homeactionmenu.HomeFragment
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.TrendingNowFragment
 import com.lbtt2801.hearme.view.fragments.search.*
+import com.lbtt2801.hearme.view.tab_viewpager.TabPodcastFragment
 import kotlin.math.roundToInt
 
 
@@ -87,11 +88,17 @@ class MusicAdapter(
             }
             is PodcastNotificationViewHolder -> {
                 holder.bind(dataMusics[position])
-                if (fragment is ExploreFragment) {
-                    destination = R.id.action_item_nav_explore_to_viewDetailsPodcastFragment
-                } else if (fragment is ViewDetailsArtistOfPodcastFragment) {
-                    destination =
-                        R.id.action_viewDetailsArtistOfPodcastFragment_to_viewDetailsPodcastFragment
+                when (fragment) {
+                    is ExploreFragment -> {
+                        destination = R.id.action_item_nav_explore_to_viewDetailsPodcastFragment
+                    }
+                    is ViewDetailsArtistOfPodcastFragment -> {
+                        destination =
+                            R.id.action_viewDetailsArtistOfPodcastFragment_to_viewDetailsPodcastFragment
+                    }
+                    is TabPodcastFragment -> {
+                        destination = R.id.action_tabPodcastersFragment_to_viewDetailsPodcastFragment
+                    }
                 }
             }
             is LibraryListSongViewHolder -> {
