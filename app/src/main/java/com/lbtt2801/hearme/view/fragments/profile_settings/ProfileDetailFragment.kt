@@ -12,6 +12,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
@@ -75,13 +78,20 @@ class ProfileDetailFragment : Fragment() {
 
         val options = RequestOptions()
             .centerCrop()
-            .placeholder(R.drawable.progressbar)
             .error(R.drawable.ellipse)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .priority(Priority.HIGH)
+            .dontTransform()
+
         if (avatar != null)
             binding.imgAvatar.background =
                 avatar?.let { ContextCompat.getDrawable(requireContext(), it) }
         else if (avatarUrl != null)
-            Glide.with(this).load(avatarUrl).apply(options).into(binding.imgAvatar)
+            Glide.with(this)
+                .load(avatarUrl)
+                .apply(options)
+                .transition(DrawableTransitionOptions.withCrossFade(250))
+                .into(binding.imgAvatar)
         else
             binding.imgAvatar.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.ellipse)

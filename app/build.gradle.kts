@@ -49,8 +49,6 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation("androidx.test:core-ktx:1.5.0")
     implementation("com.google.firebase:firebase-storage:20.0.1")
     implementation("com.google.firebase:firebase-storage-ktx:20.2.1")
@@ -60,11 +58,18 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    //View model
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+
+    //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
 
+    //Text box country code number
     implementation("com.hbb20:ccp:2.7.3")
 
+    //Pin view
     implementation("io.github.chaosleung:pinview:1.4.4")
 
     // viewpager
@@ -72,27 +77,31 @@ dependencies {
 
     // room
     implementation("androidx.room:room-runtime:2.5.2")
-//    kapt("androidx.room:room-compiler:2.5.2")
     implementation("androidx.room:room-ktx:2.5.2")
     androidTestImplementation("androidx.room:room-testing:2.5.2")
 
-    // kotlin
-//    implementation("kotlin")
-
+    //Text box show and less more
     implementation("kr.co.prnd:readmore-textview:1.0.0")
 
+    //Picasso
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("jp.wasabeef:picasso-transformations:2.4.0")
 
+    //Media
     implementation("androidx.media:media:1.5.0")
     implementation("androidx.media3:media3-exoplayer:1.1.1")
     implementation("androidx.media3:media3-ui:1.1.1")
     implementation("androidx.media3:media3-common:1.1.1")
 
+    //Glide
     implementation("com.github.bumptech.glide:glide:4.8.0")
     implementation("com.github.bumptech.glide:compiler:4.8.0")
 
+    //Biometric
     implementation("androidx.biometric:biometric-ktx:1.2.0-alpha05")
+
+    //Read json animated button
+    implementation("com.airbnb.android:lottie:3.4.4")
 
     // Coroutines
 //    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:x.x.x")

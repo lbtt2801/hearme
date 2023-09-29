@@ -29,6 +29,7 @@
 
     <color name="transparent">#00000000</color>
     <color name="transparent_8percent">#06C14914</color>
+    <color name="transparent_9percent">#17000000</color>
 
     <color name="greyscale_50">#FAFAFA</color>
     <color name="greyscale_100">#F5F5F5</color>

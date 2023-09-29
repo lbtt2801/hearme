@@ -28,6 +28,8 @@ import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MusicsData
 import com.lbtt2801.hearme.model.*
 import com.lbtt2801.hearme.view.fragments.search.SongPlayFragment
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import java.io.IOException
 import java.text.DecimalFormat
@@ -38,7 +40,10 @@ import java.util.*
 
 @BindingAdapter("app:setImage")
 fun setImage(imageView: ImageView, id: Int) {
-    Picasso.get().load(id).error(R.drawable.ellipse)
+    Picasso.get().load(id)
+        .networkPolicy(NetworkPolicy.NO_CACHE)
+        .memoryPolicy(MemoryPolicy.NO_CACHE)
+        .error(R.drawable.ellipse)
         .into(imageView)
 }
 
@@ -47,8 +52,8 @@ fun setImageUrl(imageView: ImageView, url: String) {
     val options = RequestOptions()
         .centerCrop()
         .error(R.drawable.ellipse)
-        .diskCacheStrategy(DiskCacheStrategy.ALL)
-        .priority(Priority.HIGH)
+        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        .priority(Priority.LOW)
         .dontTransform()
 
     Glide.with(imageView.context)
@@ -543,7 +548,11 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
 }
 
 @BindingAdapter("music", "fragment", requireAll = false)
-fun ClickPlayForCheckBoxForSongPlayFragmnet(checkBox: CheckBox, music: Music, fragment: Fragment?= null) {
+fun ClickPlayForCheckBoxForSongPlayFragmnet(
+    checkBox: CheckBox,
+    music: Music,
+    fragment: Fragment? = null,
+) {
     val mainActivity = checkBox.context as MainActivity
     checkBox.setOnClickListener() { it ->
         var isPlaying = false

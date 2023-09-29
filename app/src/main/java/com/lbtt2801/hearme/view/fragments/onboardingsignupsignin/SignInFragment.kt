@@ -41,7 +41,7 @@ class SignInFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false)
         return binding.root
@@ -104,8 +104,10 @@ class SignInFragment : Fragment() {
                     lstDataUser.filter { it.email == binding.edtEmail.text.toString() && it.password == binding.edtPass.text.toString() }
                 if (kq.isNotEmpty()) {
                     saveDataLogin()
-                    Toast.makeText(context, "Welcome to Hearme!", Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_signInFragment_to_item_nav_home)
+                    if (kq.first().isFirstSignIn)
+                        findNavController().navigate(R.id.fillYourProfileFragment)
+                    else
+                        findNavController().navigate(R.id.action_signInFragment_to_item_nav_home)
                     emailViewModel.selectItem(email)
                 } else {
                     Toast.makeText(
@@ -155,7 +157,8 @@ class SignInFragment : Fragment() {
 
     private fun getDataLogin() {
         if (mainActivity.checkRemember) {
-            sharedPreferences = requireActivity().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
+            sharedPreferences =
+                requireActivity().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
             email = sharedPreferences.getString("username", "")!!
             pass = sharedPreferences.getString("pass", "")!!
             isChecked = sharedPreferences.getBoolean("check", false)
@@ -173,7 +176,8 @@ class SignInFragment : Fragment() {
 
     private fun saveDataLogin() {
         if (binding.chkRemember.isChecked) {
-            sharedPreferences = requireActivity().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
+            sharedPreferences =
+                requireActivity().getSharedPreferences("dataLogin", Context.MODE_PRIVATE)
             isChecked = binding.chkRemember.isChecked
 
             // luu data

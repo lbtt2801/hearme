@@ -52,7 +52,7 @@ class TabFollowFragment(page: Int, userEmail: String) : Fragment() {
 
     private fun displayRecyclerView(lstData: ArrayList<User>) {
         val layoutRecyclerViewMusic =
-            LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(view?.context, LinearLayoutManager.VERTICAL, true)
         userAdapter = UserAdapter(lstData, 0, this)
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerViewMusic

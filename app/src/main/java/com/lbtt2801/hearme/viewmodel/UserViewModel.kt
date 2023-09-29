@@ -37,21 +37,68 @@ class UserViewModel : ViewModel() {
 
     private fun getListDataUser() {
         lst = UsersData.data()
-        updateFollowingList("phuongviet.huit@gmail.com", lst[1], true)
-        updateFollowingList("phuongviet.huit@gmail.com", lst[2], true)
-        updateFollowingList("phuongviet.huit@gmail.com", lst[3], true)
-        updateFollowingList("phuongviet.huit@gmail.com", lst[4], true)
-        updateFollowingList("phuongviet.huit@gmail.com", lst[5], true)
+        updateFollowingList(lst[0].email, lst[1], true)
+        updateFollowingList(lst[0].email, lst[4], true)
+        updateFollowingList(lst[0].email, lst[6], true)
+        updateFollowingList(lst[0].email, lst[8], true)
+        updateFollowingList(lst[0].email, lst[14], true)
+        updateFollowingList(lst[0].email, lst[15], true)
+        updateFollowingList(lst[0].email, lst[16], true)
 
-        updateFollowingList("lebuitantruong@gmail.com", lst[0], true)
-        updateFollowingList("lebuitantruong@gmail.com", lst[4], true)
-        updateFollowingList("lebuitantruong@gmail.com", lst[5], true)
-        updateFollowingList("lebuitantruong@gmail.com", lst[6], true)
-        updateFollowingList("lebuitantruong@gmail.com", lst[7], true)
+        updateFollowingList(lst[1].email, lst[0], true)
+        updateFollowingList(lst[1].email, lst[12], true)
+        updateFollowingList(lst[1].email, lst[13], true)
+        updateFollowingList(lst[1].email, lst[5], true)
+        updateFollowingList(lst[1].email, lst[6], true)
 
-        updateFollowingList("123456@gmail.com", lst[4], true)
-        updateFollowingList("123456@gmail.com", lst[5], true)
-        updateFollowingList("123456@gmail.com", lst[6], true)
+        updateFollowingList(lst[2].email, lst[1], true)
+        updateFollowingList(lst[2].email, lst[3], true)
+        updateFollowingList(lst[2].email, lst[10], true)
+
+        updateFollowingList(lst[3].email, lst[1], true)
+        updateFollowingList(lst[3].email, lst[2], true)
+        updateFollowingList(lst[3].email, lst[5], true)
+        updateFollowingList(lst[3].email, lst[6], true)
+        updateFollowingList(lst[3].email, lst[12], true)
+
+        updateFollowingList(lst[4].email, lst[1], true)
+        updateFollowingList(lst[4].email, lst[6], true)
+        updateFollowingList(lst[4].email, lst[7], true)
+        updateFollowingList(lst[4].email, lst[8], true)
+        updateFollowingList(lst[4].email, lst[9], true)
+        updateFollowingList(lst[4].email, lst[12], true)
+        updateFollowingList(lst[4].email, lst[16], true)
+
+        updateFollowingList(lst[5].email, lst[3], true)
+        updateFollowingList(lst[5].email, lst[4], true)
+        updateFollowingList(lst[5].email, lst[5], true)
+        updateFollowingList(lst[5].email, lst[9], true)
+
+        updateFollowingList(lst[6].email, lst[1], true)
+        updateFollowingList(lst[6].email, lst[13], true)
+        updateFollowingList(lst[6].email, lst[14], true)
+        updateFollowingList(lst[6].email, lst[15], true)
+        updateFollowingList(lst[6].email, lst[16], true)
+
+        updateFollowingList(lst[7].email, lst[2], true)
+        updateFollowingList(lst[7].email, lst[3], true)
+        updateFollowingList(lst[7].email, lst[5], true)
+        updateFollowingList(lst[7].email, lst[7], true)
+        updateFollowingList(lst[7].email, lst[10], true)
+        updateFollowingList(lst[7].email, lst[11], true)
+
+        updateFollowingList(lst[8].email, lst[12], true)
+        updateFollowingList(lst[8].email, lst[13], true)
+        updateFollowingList(lst[8].email, lst[3], true)
+        updateFollowingList(lst[8].email, lst[15], true)
+
+        updateFollowingList(lst[9].email, lst[1], true)
+        updateFollowingList(lst[9].email, lst[2], true)
+
+        updateFollowingList(lst[10].email, lst[3], true)
+        updateFollowingList(lst[10].email, lst[5], true)
+        updateFollowingList(lst[10].email, lst[7], true)
+        updateFollowingList(lst[10].email, lst[12], true)
 
         _lstDataUser.postValue(lst)
     }
@@ -86,7 +133,20 @@ class UserViewModel : ViewModel() {
             this.avatarUrl = avatar
         }
         _lstDataUser.postValue(lst)
-        Log.v(TAG, "=========================== Update User -> ${lst.first { it.email == email }.avatarUrl}")
+    }
+
+    fun updateIsFirstLogin(email: String, isFirst: Boolean) {
+        lst.first { it.email == email }.apply {
+            this.isFirstSignIn = isFirst
+        }
+        _lstDataUser.postValue(lst)
+    }
+
+    fun updateAvatar(email: String, url: String) {
+        lst.first { it.email == email }.apply {
+            this.avatarUrl = url
+        }
+        _lstDataUser.postValue(lst)
     }
 
     fun updateDataUser(

@@ -127,6 +127,9 @@
         <action
             android:id="@+id/action_notificationFragment_to_songPlayFragment"
             app:destination="@id/songPlayFragment" />
+        <action
+            android:id="@+id/action_notificationFragment_to_viewDetailsPodcastFragment"
+            app:destination="@id/viewDetailsPodcastFragment" />
     </fragment>
     <fragment
         android:id="@+id/followArtistsFragment"
@@ -190,22 +193,46 @@
             app:destination="@id/itemExploreFragment" />
         <action
             android:id="@+id/action_item_nav_explore_to_viewDetailsSongFragment"
-            app:destination="@id/viewDetailsSongFragment" />
+            app:destination="@id/viewDetailsSongFragment"
+            app:enterAnim="@anim/anim_enter_from_right"
+            app:exitAnim="@anim/anim_exit_to_left"
+            app:popEnterAnim="@anim/anim_pop_enter_from_left"
+            app:popExitAnim="@anim/anim_pop_exit_to_right" />
         <action
             android:id="@+id/action_item_nav_explore_to_viewDetailsArtistFragment"
-            app:destination="@id/viewDetailsArtistFragment" />
+            app:destination="@id/viewDetailsArtistFragment"
+            app:enterAnim="@anim/anim_enter_from_right"
+            app:exitAnim="@anim/anim_exit_to_left"
+            app:popEnterAnim="@anim/anim_pop_enter_from_left"
+            app:popExitAnim="@anim/anim_pop_exit_to_right" />
         <action
             android:id="@+id/action_item_nav_explore_to_viewDetailsArtistOfPodcastFragment"
-            app:destination="@id/viewDetailsArtistOfPodcastFragment" />
+            app:destination="@id/viewDetailsArtistOfPodcastFragment"
+            app:enterAnim="@anim/anim_enter_from_right"
+            app:exitAnim="@anim/anim_exit_to_left"
+            app:popEnterAnim="@anim/anim_pop_enter_from_left"
+            app:popExitAnim="@anim/anim_pop_exit_to_right" />
         <action
             android:id="@+id/action_item_nav_explore_to_viewDetailsPodcastFragment"
-            app:destination="@id/viewDetailsPodcastFragment" />
+            app:destination="@id/viewDetailsPodcastFragment"
+            app:enterAnim="@anim/anim_enter_from_right"
+            app:exitAnim="@anim/anim_exit_to_left"
+            app:popEnterAnim="@anim/anim_pop_enter_from_left"
+            app:popExitAnim="@anim/anim_pop_exit_to_right" />
         <action
             android:id="@+id/action_item_nav_explore_to_viewDetailsProfileFragment"
-            app:destination="@id/viewDetailsProfileFragment" />
+            app:destination="@id/viewDetailsProfileFragment"
+            app:enterAnim="@anim/anim_enter_from_right"
+            app:exitAnim="@anim/anim_exit_to_left"
+            app:popEnterAnim="@anim/anim_pop_enter_from_left"
+            app:popExitAnim="@anim/anim_pop_exit_to_right" />
         <action
             android:id="@+id/action_item_nav_explore_to_viewDetailsAlbumFragment"
-            app:destination="@id/viewDetailsAlbumFragment" />
+            app:destination="@id/viewDetailsAlbumFragment"
+            app:enterAnim="@anim/anim_enter_from_right"
+            app:exitAnim="@anim/anim_exit_to_left"
+            app:popEnterAnim="@anim/anim_pop_enter_from_left"
+            app:popExitAnim="@anim/anim_pop_exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/itemExploreFragment"
@@ -423,7 +450,7 @@
         android:id="@+id/viewDetailsArtistFragment"
         android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistFragment"
         android:label="ViewDetailsArtistFragment"
-        tools:layout="@layout/fragment_view_details_artist" >
+        tools:layout="@layout/fragment_view_details_artist">
         <action
             android:id="@+id/action_viewDetailsArtistFragment_to_viewDetailsSongFragment"
             app:destination="@id/viewDetailsSongFragment" />
@@ -484,7 +511,7 @@
         android:id="@+id/songPlayFragment"
         android:name="com.lbtt2801.hearme.view.fragments.search.SongPlayFragment"
         android:label="fragment_song_play"
-        tools:layout="@layout/fragment_song_play" >
+        tools:layout="@layout/fragment_song_play">
         <action
             android:id="@+id/action_songPlayFragment_to_notificationFragment"
             app:destination="@id/notificationFragment" />
@@ -527,7 +554,7 @@
         android:id="@+id/viewDetailsAlbumFragment"
         android:name="com.lbtt2801.hearme.view.fragments.search.ViewDetailsAlbumFragment"
         android:label="ViewDetailsAlbumFragment"
-        tools:layout="@layout/fragment_view_details_album" >
+        tools:layout="@layout/fragment_view_details_album">
         <action
             android:id="@+id/action_viewDetailsAlbumFragment_to_viewDetailsArtistFragment"
             app:destination="@id/viewDetailsArtistFragment" />

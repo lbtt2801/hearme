@@ -109,7 +109,6 @@ class SignUpFragment : Fragment() {
             if (checkEmail && checkPass) {
                 viewModelUser.lstDataUser.observe(viewLifecycleOwner) {
                     if (it.size > sizeUserDataOld) {
-                        Toast.makeText(context, "Sign Up Success", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(
                             R.id.fillYourProfileFragment  //action_signUpFragment_to_fillYourProfileFragment
                         )

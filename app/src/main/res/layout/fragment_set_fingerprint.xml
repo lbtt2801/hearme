@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -41,12 +42,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
+                <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/image_view_finger_print"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="228dp"
+                    android:layout_height="238dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/finger" />
+                    app:lottie_rawRes="@raw/animation_finger" />
+
             </FrameLayout>
 
             <LinearLayout
@@ -91,6 +93,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/bg_button_continue_1"
+                    android:enabled="false"
                     android:padding="16dp"
                     android:text="Continue"
                     android:textAllCaps="false"

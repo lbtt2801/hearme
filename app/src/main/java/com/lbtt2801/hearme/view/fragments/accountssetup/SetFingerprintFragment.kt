@@ -1,6 +1,8 @@
 package com.lbtt2801.hearme.view.fragments.accountssetup
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,9 +24,9 @@ class SetFingerprintFragment : Fragment() {
     private lateinit var binding: FragmentSetFingerprintBinding
     private lateinit var mainActivity: MainActivity
 
-//    private lateinit var executor: Executor
-//    private lateinit var biometricPrompt: BiometricPrompt
-//    private lateinit var promptInfo: PromptInfo
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: PromptInfo
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,12 +41,52 @@ class SetFingerprintFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnContinue.isEnabled = false
+    }
+
     override fun onResume() {
         super.onResume()
         mainActivity = (activity as MainActivity)
         checkDeviceHasBiometric()
 
+        executor = ContextCompat.getMainExecutor(requireContext())
+        biometricPrompt = BiometricPrompt(requireActivity(),
+            executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    Log.v(TAG, "Authentication error: $errString | code: $errorCode")
+                    binding.btnContinue.isEnabled = false
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    mainActivity.showSnack(requireView(), "Authentication succeeded!")
+                    Log.v(TAG, "Authentication succeeded: $result")
+                    binding.btnContinue.isEnabled = true
+                    binding.imageViewFingerPrint.setMinAndMaxProgress(0.5f, 1.0f)
+                    binding.imageViewFingerPrint.playAnimation()
+                    binding.imageViewFingerPrint.isEnabled = false
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    mainActivity.showSnack(requireView(), "Authentication failed!")
+                    Log.v(TAG, "Authentication failed")
+                    binding.btnContinue.isEnabled = false
+                }
+            })
+
+        promptInfo =
+            PromptInfo.Builder()
+                .setTitle("Biometric Authentication")
+                .setNegativeButtonText("Cancel")
+                .build()
+
         binding.imageViewFingerPrint.setOnClickListener() {
+            biometricPrompt.authenticate(promptInfo)
         }
 
         binding.btnSkip.setOnClickListener() {
@@ -68,7 +110,6 @@ class SetFingerprintFragment : Fragment() {
         val biometricManager = BiometricManager.from(requireContext())
         when (biometricManager.canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)) {
             BiometricManager.BIOMETRIC_SUCCESS -> {
-                mainActivity.showSnack(requireView(), "App can use biometric")
             }
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
                 mainActivity.showSnack(requireView(), "No biometric feature on this device")

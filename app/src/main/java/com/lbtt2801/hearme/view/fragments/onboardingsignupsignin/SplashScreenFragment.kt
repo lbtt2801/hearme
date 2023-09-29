@@ -32,8 +32,8 @@ class SplashScreenFragment : Fragment() {
 
         handler.postDelayed({
             binding.progressBar.visibility = View.GONE
-//            findNavController().navigate(R.id.walkThroughFragment)
-            findNavController().navigate(R.id.signInFragment)
+            findNavController().navigate(R.id.walkThroughFragment)
+            //findNavController().navigate(R.id.signInFragment)
 
         }, 3000)
 

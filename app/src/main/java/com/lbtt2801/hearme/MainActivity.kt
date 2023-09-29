@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
     var email: String = ""
 
     var checkRemember = true
+
     //    var checkInHome = false
     var checkInHistory = false
     var language: String = "English (US)"
@@ -322,7 +323,8 @@ class MainActivity : AppCompatActivity() {
             val options = RequestOptions()
                 .centerCrop()
                 .error(R.drawable.ellipse)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .priority(Priority.HIGH)
                 .dontTransform()
 
@@ -345,7 +347,7 @@ class MainActivity : AppCompatActivity() {
                 val options = RequestOptions()
                     .centerCrop()
                     .error(R.drawable.ellipse)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .priority(Priority.HIGH)
                     .dontTransform()
 

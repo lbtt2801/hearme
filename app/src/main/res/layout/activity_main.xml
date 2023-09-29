@@ -41,6 +41,8 @@
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_marginRight="16dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
                         app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
                     <LinearLayout
@@ -108,11 +110,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone">
+
             <fragment
+                android:name="com.lbtt2801.hearme.view.fragments.search.NowSongPlayingFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:name="com.lbtt2801.hearme.view.fragments.search.NowSongPlayingFragment"
-                tools:layout="@layout/fragment_now_song_playing"/>
+                tools:layout="@layout/fragment_now_song_playing" />
         </FrameLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

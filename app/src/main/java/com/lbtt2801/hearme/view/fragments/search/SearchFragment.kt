@@ -15,8 +15,6 @@ class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
     private lateinit var mainActivity: MainActivity
 
-    private lateinit var recentSearchesAdapter: RecentSearchesAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
