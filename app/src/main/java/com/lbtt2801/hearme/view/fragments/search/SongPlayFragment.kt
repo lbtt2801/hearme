@@ -3,34 +3,29 @@ package com.lbtt2801.hearme.view.fragments.search
 import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Context.BIND_AUTO_CREATE
 import android.content.Intent
 import android.content.ServiceConnection
-import android.content.SharedPreferences
 import android.media.AudioAttributes
-import android.media.AudioManager
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
@@ -46,7 +41,6 @@ import com.lbtt2801.hearme.viewmodel.MusicViewModel
 import com.lbtt2801.hearme.viewmodel.SongPlayViewModel
 import java.io.BufferedReader
 import java.io.FileInputStream
-import java.io.IOException
 import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
 
@@ -58,6 +52,7 @@ class SongPlayFragment : Fragment(), ServiceConnection {
     private var lstDataMusic = ArrayList<Music>()
     lateinit var musicID: String
     private var handler = Handler()
+//    private lateinit var exoPlayer: ExoPlayer
 
     //    private var mediaPlayer = MediaPlayer()
     private var positionSong = 1 // vi tri bai hat da chon
@@ -89,8 +84,7 @@ class SongPlayFragment : Fragment(), ServiceConnection {
 
         musicID = arguments?.getString("musicID").toString()
         music = musicViewModel.lstDataMusics.value?.first { it.musicID == musicID }
-
-//        positionSong = music?.path!!
+        positionSong = lstDataMusic.indexOf(music)
         musicViewModel.lstDataMusics.observe(viewLifecycleOwner, Observer {
             lstDataMusic = it
         })
@@ -124,6 +118,66 @@ class SongPlayFragment : Fragment(), ServiceConnection {
             .transition(DrawableTransitionOptions.withCrossFade(250))
             .into(binding.imgAvatar)
     }
+
+    private fun setResourcesWithMedia3() {
+//        mainActivity.exoPlayer = ExoPlayer.Builder(requireContext()).build()
+        mainActivity.exoPlayer.addListener(object: Player.Listener {
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                val duration = mainActivity.exoPlayer.duration.toInt()/1000
+                binding.seekBar.max = duration
+                binding.tvTimeEnd.text = getTimeConvertToString(duration)
+            }
+
+            override fun onPositionDiscontinuity(
+                oldPosition: Player.PositionInfo,
+                newPosition: Player.PositionInfo,
+                reason: Int
+            ) {
+                val currentPosition = mainActivity.exoPlayer.currentPosition.toInt()/1000
+                binding.seekBar.progress = currentPosition
+                binding.tvTimeEnd.text = getTimeConvertToString(currentPosition)
+            }
+        })
+
+//        val mediaItem = MediaItem.fromUri("https://cdn.pixabay.com/audio/2023/07/03/audio_80cd47077b.mp3")
+//        exoPlayer.setMediaItem(mediaItem)
+        mainActivity.exoPlayer.prepare()
+        mainActivity.exoPlayer.play()
+
+        binding.seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    mainActivity.exoPlayer.seekTo(progress.toLong() * 1000)
+                    binding.tvTimeStart.text = getTimeConvertToString(progress)
+                    if (progress == mainActivity.exoPlayer.duration.toInt()/1000) {
+                        binding.btnPlay.isChecked = false
+                        music?.isPlaying = false
+                    }
+                }
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+        })
+
+        val handler = Handler(Looper.getMainLooper())
+        handler.post(object: Runnable{
+            override fun run() {
+                val currentPosition = mainActivity.exoPlayer.currentPosition.toInt()/1000
+                binding.seekBar.progress = currentPosition
+                binding.tvTimeStart.text = getTimeConvertToString(currentPosition)
+                handler.postDelayed(this, 1000)
+            }
+        })
+
+    }
+
+    fun getTimeConvertToString(duration: Int): String {
+        val min = duration / 60
+        val sec = duration % 60
+        return String.format("%02d:%02d", min, sec)
+    }
     override fun onResume() {
         super.onResume()
         binding.fragment = this
@@ -137,57 +191,17 @@ class SongPlayFragment : Fragment(), ServiceConnection {
         )
         mainActivity.showBottomNav("GONE")
         mainActivity.binding.toolBar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            binding.music = music
             mainActivity.binding.fragmentBottomPlayer.isVisible = true
             music?.let { songPlayViewModel.selectItem(it) }
+            findNavController().popBackStack()
         }
 
         binding.tvLyrics.movementMethod = ScrollingMovementMethod()
 
-//        lstData.add(R.raw.shape_of_you_nokia)
-//        lstData.add(R.raw.shape_of_you_nokia)
-//        lstData.add(R.raw.shape_of_you_nokia)
-//        lstData.add(R.raw.shape_of_you_nokia)
-//        lstData.add(R.raw.shape_of_you_nokia)
+//        setResourcesWithMusic()
 
-        Log.v(TAG, "onResume")
-
-        setResourcesWithMusic()
-
-        binding.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(p0: SeekBar?, position: Int, changed: Boolean) {
-                if (changed) {
-                    mainActivity.mediaPlayer.seekTo(position)
-                }
-            }
-
-            override fun onStartTrackingTouch(p0: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(p0: SeekBar?) {
-            }
-
-        })
-
-        runnable = Runnable {
-            binding.seekBar.progress = mainActivity.mediaPlayer.currentPosition
-            binding.tvTimeStart.text = convertToMMSS(mainActivity.mediaPlayer.currentPosition)
-            handler.postDelayed(runnable, 500)
-        }
-        handler.postDelayed(runnable, 500)
-
-        // music off because time run end
-        mainActivity.mediaPlayer.setOnCompletionListener {
-            binding.seekBar.progress = 0
-
-//            // tu dong phat bai ke tiep con BUG
-//            positionSong += 1
-//            if (positionSong == lstData.size - 1)
-//                return@setOnCompletionListener
-//            mediaPlayer.reset()
-//            setResourcesWithMusic()
-        }
-
+        setResourcesWithMedia3()
 
         binding.linearCache.setOnClickListener {
             binding.linearDetail.isVisible = false
@@ -209,73 +223,40 @@ class SongPlayFragment : Fragment(), ServiceConnection {
             binding.tvLyrics.text = stringBuilder.toString()
         }
 
-//        binding.btnPlay.setOnClickListener {
-////            if (!mediaPlayer.isPlaying) {
-////                mediaPlayer.start()
-////                music?.isPlaying = true
-////            } else {
-////                mediaPlayer.pause()
-////                music?.isPlaying = false
-////            }
-//
-////            musicService.mediaPlayer.pause()
-////            musicService.setup(false)
-//
-//            if (!mainActivity.mediaPlayer.isPlaying) {
-//                mainActivity.mediaPlayer.start()
-//                music?.isPlaying = true
-//            } else {
-//                mainActivity.mediaPlayer.pause()
-//                music?.isPlaying = false
-//            }
-//        }
-
         binding.btnNext.setOnClickListener {
             if (positionSong == lstDataMusic.size - 1)
                 return@setOnClickListener
             positionSong += 1
-            setImageMusic(lstDataMusic[positionSong].image)
-            binding.tvTitle.text = lstDataMusic[positionSong].musicName
-            binding.tvDetail.text = lstDataMusic[positionSong].artist.artistName
-//            mainActivity.mediaPlayer.stop()
-//            mainActivity.mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-//            try {
-//                mainActivity.mediaPlayer.setDataSource(music!!.path)
-//                mainActivity.mediaPlayer.prepare()
-//                mainActivity.mediaPlayer.start()
-//            } catch (e: IOException) {
-//                e.printStackTrace()
-//            }
-//            mainActivity.mediaPlayer.start()
+            music?.isPlaying = false
+            music = musicViewModel.lstDataMusics.value?.first { it.musicID == lstDataMusic[positionSong].musicID }
+            music?.isPlaying = true
+            music?.image?.let { it1 -> setImageMusic(it1) }
+            binding.tvTitle.text = music?.musicName
+            binding.tvDetail.text = music?.artist?.artistName
+            mainActivity.exoPlayer.setMediaItem(MediaItem.fromUri(music?.path!!))
         }
 
         binding.btnPrevious.setOnClickListener {
             if (positionSong == 0)
                 return@setOnClickListener
             positionSong -= 1
-            setImageMusic(lstDataMusic[positionSong].image)
-            binding.tvTitle.text = lstDataMusic[positionSong].musicName
-            binding.tvDetail.text = lstDataMusic[positionSong].artist.artistName
-//            mainActivity.mediaPlayer.stop()
-//            mainActivity.mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-//            try {
-//                mainActivity.mediaPlayer.setDataSource(music!!.path)
-//                mainActivity.mediaPlayer.prepare()
-//                mainActivity.mediaPlayer.start()
-//            } catch (e: IOException) {
-//                e.printStackTrace()
-//            }
-//            mainActivity.mediaPlayer.start()
+            music?.isPlaying = false
+            music = musicViewModel.lstDataMusics.value?.first { it.musicID == lstDataMusic[positionSong].musicID }
+            music?.isPlaying = true
+            music?.image?.let { it1 -> setImageMusic(it1) }
+            binding.tvTitle.text = music?.musicName
+            binding.tvDetail.text = music?.artist?.artistName
+            mainActivity.exoPlayer.setMediaItem(MediaItem.fromUri(music?.path!!))
         }
 
         binding.btnForward.setOnClickListener {
-            if (mainActivity.mediaPlayer.isPlaying)
-                mainActivity.mediaPlayer.seekTo(mainActivity.mediaPlayer.currentPosition + 10000)
+            if (mainActivity.exoPlayer.isPlaying)
+                mainActivity.exoPlayer.seekTo(mainActivity.exoPlayer.currentPosition + 10000)
         }
 
         binding.btnBackward.setOnClickListener {
-            if (mainActivity.mediaPlayer.isPlaying)
-                mainActivity.mediaPlayer.seekTo(mainActivity.mediaPlayer.currentPosition - 10000)
+            if (mainActivity.exoPlayer.isPlaying)
+                mainActivity.exoPlayer.seekTo(mainActivity.exoPlayer.currentPosition - 10000)
         }
     }
 
@@ -306,10 +287,6 @@ class SongPlayFragment : Fragment(), ServiceConnection {
         if (music?.isPlaying == true)
             mainActivity.mediaPlayer.start()
 
-//        musicService.mediaPlayer = MediaPlayer.create(context, lstData[1])
-//        if (music?.isPlaying == true)
-//            musicService.mediaPlayer.start()
-
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -322,32 +299,4 @@ class SongPlayFragment : Fragment(), ServiceConnection {
     override fun onServiceDisconnected(p0: ComponentName?) {
 
     }
-
-//    @SuppressLint("MissingPermission")
-//    private fun showNotificationMedia(context: Context) {
-//        val notificationManagerCompat = NotificationManagerCompat.from(context)
-//        val mediaSession = MediaSessionCompat(context, "MediaNotification")
-//
-//        val notification = NotificationCompat.Builder(context, "HEAR_ME_APP")
-//            // Show controls on lock screen even when user hides sensitive content.
-////            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-//            .setSmallIcon(R.drawable.logo_default)
-//            .setLargeIcon(music?.image?.let { BitmapFactory.decodeResource(resources, it) })
-//            .setSubText("Hearme App")
-//            .setContentTitle(music?.musicName)
-//            .setContentText(music?.artist?.artistName)
-////            .setPriority(NotificationCompat.PRIORITY_HIGH)
-//            .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
-//            // Add media control buttons that invoke intents in your media service
-//            .addAction(R.drawable.ic_previous, "Previous", null) // #0
-//            .addAction(R.drawable.ic_pause, "Pause", null) // #1
-//            .addAction(R.drawable.ic_next, "Next", null) // #2
-//            // Apply the media style template
-//            .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
-//                .setShowActionsInCompactView(0,1,2/* #1: pause button \*/)
-//                .setMediaSession(mediaSession.sessionToken))
-//            .build()
-//
-//        notificationManagerCompat.notify(1, notification)
-//    }
 }

@@ -2,6 +2,7 @@ package com.lbtt2801.hearme.data.util
 
 import android.app.AlertDialog
 import android.content.ContentValues.TAG
+import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -13,6 +14,7 @@ import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
+import androidx.media3.common.MediaItem
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
@@ -25,7 +27,6 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.MusicsData
 import com.lbtt2801.hearme.model.*
-import com.lbtt2801.hearme.view.fragments.search.NowSongPlayingFragment
 import com.lbtt2801.hearme.view.fragments.search.SongPlayFragment
 import com.squareup.picasso.Picasso
 import java.io.IOException
@@ -504,20 +505,11 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
         var isPlaying = false
         if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
             isPlaying = true
-            if (mainActivity.mediaPlayer.isPlaying)
-                mainActivity.mediaPlayer.stop()
+            if (mainActivity.exoPlayer.isPlaying)
+                mainActivity.exoPlayer.stop()
 
-            mainActivity.mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-            try {
-                mainActivity.mediaPlayer.setDataSource(music.path)
-                mainActivity.mediaPlayer.prepare()
-                mainActivity.mediaPlayer.start()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+            mainActivity.exoPlayer.setMediaItem(MediaItem.fromUri(music.path))
 
-//            mainActivity.mediaPlayer =
-//                MediaPlayer.create(mainActivity, mainActivity.dataListSong[music.path!!])
             mainActivity.showSnack(
                 checkBox,
                 "You are playing ${music.musicName}!"
@@ -535,7 +527,8 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
 
         } else {
             isPlaying = false
-            mainActivity.mediaPlayer.pause()
+//            mainActivity.mediaPlayer.pause()
+            mainActivity.exoPlayer.pause()
             mainActivity.showSnack(
                 checkBox,
                 "You stop playing ${music.musicName}!"
@@ -556,11 +549,14 @@ fun ClickPlayForCheckBoxForSongPlayFragmnet(checkBox: CheckBox, music: Music, fr
         var isPlaying = false
         if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
             isPlaying = true
-            if (mainActivity.mediaPlayer.isPlaying)
-                mainActivity.mediaPlayer.stop()
+            if (mainActivity.exoPlayer.isPlaying)
+                mainActivity.exoPlayer.stop()
 //            mainActivity.mediaPlayer =
 //                MediaPlayer.create(mainActivity, mainActivity.dataListSong[music.path!!])
-            mainActivity.mediaPlayer.start()
+//            mainActivity.exoPlayer.setMediaItem(MediaItem.fromUri(music.path!!))
+
+            mainActivity.exoPlayer.play()
+
             mainActivity.showSnack(
                 checkBox,
                 "You are playing ${music.musicName}!"
@@ -582,7 +578,7 @@ fun ClickPlayForCheckBoxForSongPlayFragmnet(checkBox: CheckBox, music: Music, fr
 
         } else {
             isPlaying = false
-            mainActivity.mediaPlayer.pause()
+            mainActivity.exoPlayer.pause()
             mainActivity.showSnack(
                 checkBox,
                 "You stop playing ${music.musicName}!"
@@ -604,20 +600,15 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
         var isPlaying = false
         if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
             isPlaying = true
-            if (mainActivity.mediaPlayer.isPlaying)
-                mainActivity.mediaPlayer.stop()
+            if (mainActivity.exoPlayer.isPlaying)
+                mainActivity.exoPlayer.stop()
 
+            mainActivity.exoPlayer.setMediaItem(MediaItem.fromUri(music.path!!))
 //            mainActivity.mediaPlayer =
 //                MediaPlayer.create(mainActivity, mainActivity.dataListSong[music.path!!])
 
-            mainActivity.mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-            try {
-                mainActivity.mediaPlayer.setDataSource(music.path)
-                mainActivity.mediaPlayer.prepare()
-                mainActivity.mediaPlayer.start()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+//            mainActivity.mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+
 
             mainActivity.showSnack(
                 appCompatButton,
@@ -636,7 +627,7 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
 
         } else {
             isPlaying = false
-            mainActivity.mediaPlayer.pause()
+            mainActivity.exoPlayer.pause()
             mainActivity.showSnack(
                 appCompatButton,
                 "You stop playing ${music.musicName}!"

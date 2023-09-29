@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.media3.common.MediaItem
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -22,12 +23,15 @@ import com.lbtt2801.hearme.model.Time
 import com.lbtt2801.hearme.viewmodel.SongPlayViewModel
 import java.util.Date
 import com.bumptech.glide.request.RequestOptions
+import com.lbtt2801.hearme.viewmodel.MusicViewModel
 
 
 class NowSongPlayingFragment : Fragment() {
     lateinit var binding: FragmentNowSongPlayingBinding
     private lateinit var mainActivity: MainActivity
     private var music: Music? = null
+    private var lstDataMusic = ArrayList<Music>()
+    private val musicViewModel: MusicViewModel by activityViewModels()
     private val songPlayViewModel: SongPlayViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -42,6 +46,11 @@ class NowSongPlayingFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mainActivity = (activity as MainActivity)
+
+        musicViewModel.lstDataMusics.observe(viewLifecycleOwner) {
+            lstDataMusic = it
+        }
+
         binding.music = Music(
             "ms001",
             "Shades of Love",
@@ -54,20 +63,12 @@ class NowSongPlayingFragment : Fragment() {
             true
         )
         songPlayViewModel.selectedItem.observe(requireActivity()) {
+            if (it != null) {
+                binding.music = it
+                music = it
+            }
 
-            val options = RequestOptions()
-                .centerCrop()
-                .error(R.drawable.ellipse)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .priority(Priority.HIGH)
-                .dontTransform()
-
-            Glide.with(this)
-                .load(it.image)
-                .apply(options)
-                .transition(DrawableTransitionOptions.withCrossFade(250))
-                .into(binding.imgAvatar)
-
+            setImageMusic(it.image)
             binding.tvTitle.text = it.musicName.plus(" - ")
                 .plus(it.artist.artistName)
             binding.btnPlay.isChecked = it.isPlaying!!
@@ -81,5 +82,35 @@ class NowSongPlayingFragment : Fragment() {
                 mainActivity.binding.fragmentBottomPlayer.isVisible = true
         }
 
+        binding.btnNext.setOnClickListener {
+            var positionSong = lstDataMusic.indexOf(music)
+            if (positionSong == lstDataMusic.size - 1)
+                return@setOnClickListener
+            positionSong += 1
+            music?.isPlaying = false
+            music = musicViewModel.lstDataMusics.value?.first { it.musicID == lstDataMusic[positionSong].musicID }
+            music?.isPlaying = true
+            music?.image?.let { it1 -> setImageMusic(it1) }
+            binding.tvTitle.text = music?.musicName.plus(" - ").plus(music?.artist?.artistName)
+            mainActivity.exoPlayer.setMediaItem(MediaItem.fromUri(music?.path!!))
+            mainActivity.exoPlayer.prepare()
+            mainActivity.exoPlayer.play()
+        }
+
+    }
+
+    private fun setImageMusic(strUrl: String) {
+        val options = RequestOptions()
+            .centerCrop()
+            .error(R.drawable.ellipse)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .priority(Priority.HIGH)
+            .dontTransform()
+
+        Glide.with(this)
+            .load(strUrl)
+            .apply(options)
+            .transition(DrawableTransitionOptions.withCrossFade(250))
+            .into(binding.imgAvatar)
     }
 }

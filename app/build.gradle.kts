@@ -102,5 +102,9 @@ dependencies {
 
     //Read json animated button
     implementation("com.airbnb.android:lottie:3.4.4")
+
+    // Coroutines
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:x.x.x")
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:x.x.x")
 }
 
