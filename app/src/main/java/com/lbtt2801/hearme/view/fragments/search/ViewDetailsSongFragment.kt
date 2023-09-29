@@ -64,7 +64,7 @@ class ViewDetailsSongFragment : Fragment() {
         musicID = arguments?.getString("musicID").toString()
         music = musicViewModel.lstDataMusics.value?.first { it.musicID == musicID }
         musicsMoreLikeThis =
-            musicViewModel.lstDataMusics.value?.filter { it.artist.artistId == music?.artist?.artistId && it.musicID != musicID } as ArrayList<Music>?
+            musicViewModel.lstDataMusics.value?.filter { it.category.categoryID == music?.category?.categoryID && it.musicID != musicID } as ArrayList<Music>?
         user = userViewModel.lstDataUser.value?.first { it.email == mainActivity.email }
         binding.music = music
 

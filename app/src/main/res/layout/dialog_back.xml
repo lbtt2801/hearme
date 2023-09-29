@@ -5,8 +5,8 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="50dp"
-        android:backgroundTint="@color/on_button">
+        android:backgroundTint="@color/on_button"
+        app:cardCornerRadius="50dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -17,50 +17,52 @@
                 android:id="@+id/tvWarning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist_bold"
                 android:text="Warning"
-                android:textStyle="bold"
-                android:textSize="25sp"
                 android:textColor="@android:color/holo_red_light"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Want to exit the app? Are you sure?"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:textColor="@color/greyscale_900"
                 android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvWarning"
+                android:fontFamily="@font/urbanist_regular"
+                android:text="Want to exit the app? Are you sure?"
+                android:textColor="@color/greyscale_900"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvWarning" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnYesDialog"
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/greyscale_500"
-                android:text="Yes"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="@color/greyscale_500"
+                android:fontFamily="@font/urbanist_bold"
+                android:text="Yes"
                 app:cornerRadius="50dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvDetail"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDetail" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnNoDialog"
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/bg_button"
-                android:text="No"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="@color/bg_button"
+                android:fontFamily="@font/urbanist_bold"
+                android:text="No"
                 app:cornerRadius="50dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvDetail"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDetail" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

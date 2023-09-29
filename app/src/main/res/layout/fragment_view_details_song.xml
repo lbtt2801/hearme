@@ -45,17 +45,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:fontFamily="@font/urbanist_extrabold"
                     android:gravity="center"
                     android:text="@{music.musicName}"
                     android:textColor="@color/greyscale_900"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
+                    android:textSize="32sp" />
 
                 <TextView
                     android:id="@+id/text_view_artist_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
+                    android:fontFamily="@font/urbanist_medium"
                     android:gravity="center"
                     android:letterSpacing="0.01"
                     android:text="@{music.artist.artistName}"
@@ -73,6 +74,7 @@
                         android:id="@+id/text_view_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/urbanist_regular"
                         android:letterSpacing="0.01"
                         android:text="Song"
                         android:textColor="@color/greyscale_700"
@@ -83,6 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:layout_marginRight="12dp"
+                        android:fontFamily="@font/urbanist_regular"
                         android:letterSpacing="0.01"
                         android:text="|"
                         android:textColor="@color/greyscale_700"
@@ -92,6 +95,7 @@
                         android:id="@+id/text_view_duration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/urbanist_regular"
                         android:letterSpacing="0.01"
                         android:text="03:50 mins"
                         android:textColor="@color/greyscale_700"
@@ -167,12 +171,13 @@
                         android:drawableLeft="@drawable/ic_play_2"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/white"
+                        android:fontFamily="@font/urbanist_bold"
                         android:paddingLeft="24dp"
                         android:paddingRight="24dp"
                         android:text="Play"
+                        android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="18sp"
-                        android:textStyle="bold"
                         app:clickPlayForButton="@{music}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -199,14 +204,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/urbanist_bold"
                             android:text="More Like This"
                             android:textColor="@color/greyscale_900"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                            android:textSize="24sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/urbanist_semibold"
                             android:letterSpacing="0.01"
                             android:text="See All"
                             android:textColor="@color/color_bg_button_continue"

@@ -13,6 +13,8 @@ import com.lbtt2801.hearme.databinding.ViewPodcastAndShowBinding
 import com.lbtt2801.hearme.databinding.ViewListArtistBinding
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.view.fragments.accountssetup.FollowArtistsFragment
+import com.lbtt2801.hearme.view.fragments.homeactionmenu.HomeFragment
+import com.lbtt2801.hearme.view.fragments.homeactionmenu.PopularArtistsFragment
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class ArtistAdapter(
@@ -60,9 +62,19 @@ class ArtistAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var destination: Int? = null
         when (holder) {
+            //Con dang loi
             is HomeViewHolder -> {
                 holder.bind(dataArtists[position])
-                destination = R.id.action_item_nav_home_to_viewDetailsArtistFragment
+                when (fragment) {
+                    is PopularArtistsFragment -> {
+                        destination =
+                            R.id.action_popularArtistsFragment_to_viewDetailsArtistFragment
+                    }
+                    is HomeFragment -> {
+                        destination = R.id.action_item_nav_home_to_viewDetailsArtistFragment
+
+                    }
+                }
             }
 //            is ArtistViewHolderFollowArtists -> holder.bind(dataArtists[position])
             is ListArtistViewHolder -> {

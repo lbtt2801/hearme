@@ -13,8 +13,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="32dp"
-            android:paddingHorizontal="32dp">
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="32dp">
 
             <ImageView
                 android:id="@+id/image_circle_1"
@@ -124,31 +124,33 @@
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
                 android:layout_marginBottom="16dp"
+                android:fontFamily="@font/urbanist_extrabold"
                 android:letterSpacing="0.04"
                 android:text="Congratulations!"
                 android:textColor="@color/color_bg_button_continue"
                 android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginTop="50dp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_main_circle"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_main_circle" />
 
             <TextView
                 android:id="@+id/tvDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="32dp"
-                android:letterSpacing="0.005"
+                android:fontFamily="@font/urbanist_regular"
+                android:gravity="center"
+                android:letterSpacing="0.01"
+                android:lineSpacingExtra="3sp"
                 android:text="You have successfully subscribed 1 month premium. Enjoy the benefits!"
                 android:textColor="@color/greyscale_900"
-                android:gravity="center"
                 android:textSize="18sp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTitle"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnYes"
@@ -156,16 +158,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:backgroundTint="@color/bg_button"
-                android:text="OK"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:fontFamily="@font/urbanist_bold"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="18dp"
                 android:paddingTop="30dp"
+                android:text="OK"
+                android:textSize="16sp"
                 app:cornerRadius="30dp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDetail"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDetail" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

@@ -21,14 +21,15 @@
             android:layout_height="160dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            app:setImageUrl="@{artist.image}"
             android:scaleType="centerCrop"
+            app:setImageUrl="@{artist.image}"
             app:shapeAppearanceOverlay="@style/roundedConorImageview2" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/urbanist_bold"
             android:letterSpacing="0.01"
             android:singleLine="true"
             android:text="@{artist.artistName}"
