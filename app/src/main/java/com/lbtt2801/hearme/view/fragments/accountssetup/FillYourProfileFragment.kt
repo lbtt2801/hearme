@@ -141,7 +141,7 @@ class FillYourProfileFragment : Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
             storageReference =
-                FirebaseStorage.getInstance().getReference("images/users/user_$email")
+                FirebaseStorage.getInstance().getReference("images/users/user_$email.png")
             storageReference.putFile(avatarUri!!).addOnSuccessListener { snapshot ->
                 if (progressDialog.isShowing)
                     progressDialog.dismiss()
@@ -204,21 +204,5 @@ class FillYourProfileFragment : Fragment() {
             e.printStackTrace()
         }
         return dateConverted
-    }
-
-    fun decodeUriAsBitmap(context: Context, uri: Uri?): Bitmap? {
-        var bitmap: Bitmap? = null //from   w  ww  . j  a  v  a2s.  c om
-        bitmap = try {
-            BitmapFactory.decodeStream(
-                uri?.let {
-                    context
-                        .contentResolver.openInputStream(it)
-                }
-            )
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-            return null
-        }
-        return bitmap
     }
 }

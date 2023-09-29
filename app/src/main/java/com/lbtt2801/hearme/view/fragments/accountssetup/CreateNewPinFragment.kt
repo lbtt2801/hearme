@@ -117,14 +117,10 @@ class CreateNewPinFragment : Fragment() {
             if (passCode.length < 4) {
                 Toast.makeText(requireContext(), "Invalid PIN!", Toast.LENGTH_SHORT).show()
             } else {
-
                 email?.let { it1 -> viewModelUser.updateUserPin(it1, passCode.toInt()) }
+                email?.let { it1 -> viewModelUser.updateIsFirstLogin(it1, false) }
                 findNavController().navigate(
-                    R.id.action_createNewPinFragment_to_setFingerprintFragment,
-                    Bundle().apply {
-                        putString("email", email)
-                        putInt("pin", passCode.toInt())
-                    })
+                    R.id.action_createNewPinFragment_to_setFingerprintFragment)
             }
         }
 

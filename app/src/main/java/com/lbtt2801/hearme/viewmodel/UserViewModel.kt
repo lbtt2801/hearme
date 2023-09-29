@@ -133,7 +133,20 @@ class UserViewModel : ViewModel() {
             this.avatarUrl = avatar
         }
         _lstDataUser.postValue(lst)
-        Log.v(TAG, "=========================== Update User -> ${lst.first { it.email == email }.avatarUrl}")
+    }
+
+    fun updateIsFirstLogin(email: String, isFirst: Boolean) {
+        lst.first { it.email == email }.apply {
+            this.isFirstSignIn = isFirst
+        }
+        _lstDataUser.postValue(lst)
+    }
+
+    fun updateAvatar(email: String, url: String) {
+        lst.first { it.email == email }.apply {
+            this.avatarUrl = url
+        }
+        _lstDataUser.postValue(lst)
     }
 
     fun updateDataUser(

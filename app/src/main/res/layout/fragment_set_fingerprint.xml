@@ -47,14 +47,7 @@
                     android:layout_width="228dp"
                     android:layout_height="238dp"
                     android:layout_gravity="center"
-                    app:lottie_rawRes="@raw/animation_finger_3" />
-
-                <!--                <androidx.appcompat.widget.AppCompatButton-->
-                <!--                    android:layout_width="wrap_content"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_gravity="center"-->
-                <!--                    android:background="@drawable/animated_selector_finger"-->
-                <!--                    android:enabled="false" />-->
+                    app:lottie_rawRes="@raw/animation_finger" />
 
             </FrameLayout>
 

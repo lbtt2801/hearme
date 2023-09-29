@@ -32,6 +32,7 @@
                     app:shapeAppearance="@style/circleImageView" />
 
                 <ImageView
+                    android:id="@+id/image_view_edit_avatar"
                     android:layout_width="16.6dp"
                     android:layout_height="16.6dp"
                     android:background="@drawable/ic_edit_square"

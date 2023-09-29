@@ -97,7 +97,7 @@ class MusicAdapter(
                             R.id.action_viewDetailsArtistOfPodcastFragment_to_viewDetailsPodcastFragment
                     }
                     is TabPodcastFragment -> {
-                        destination = R.id.action_tabPodcastersFragment_to_viewDetailsPodcastFragment
+                        destination = R.id.action_notificationFragment_to_viewDetailsPodcastFragment
                     }
                 }
             }

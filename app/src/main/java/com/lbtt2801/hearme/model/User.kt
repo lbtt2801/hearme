@@ -22,7 +22,7 @@ data class User(
     var pin: Int? = null,
     var gender: Boolean? = null,
     val isPremium: Boolean? = false,
-    val isFirstSignIn: Boolean = true,
+    var isFirstSignIn: Boolean = true,
     val listArtistsFollowing: ArrayList<Artist> = ArrayList(), //Artist Following
     val listFollowers: ArrayList<User> = ArrayList(), //Followers
     val listMusicsLoved: ArrayList<Music> = ArrayList(), //Love
