@@ -93,5 +93,9 @@ dependencies {
     implementation("com.github.bumptech.glide:compiler:4.8.0")
 
     implementation("androidx.biometric:biometric-ktx:1.2.0-alpha05")
+
+    // Coroutines
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:x.x.x")
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:x.x.x")
 }
 

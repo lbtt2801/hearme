@@ -27,7 +27,8 @@ class MusicsData {
                         calToday.time,
                         CategoriesData.dataCategory().first { it.categoryID == "ca001" },
                         ArtistsData.dataArtist().first { it.artistId == "ar001" },
-                        true
+                        true,
+//                        "http://api.mp3.zing.vn/api/streaming/song/Z66IABZF/128"
                     )
                 )
                 add(
