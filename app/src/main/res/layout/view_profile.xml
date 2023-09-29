@@ -49,6 +49,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/urbanist_regular"
                     android:letterSpacing="0.02"
                     android:textColor="@color/greyscale_700"
                     android:textSize="12sp"
@@ -58,6 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
+                    android:fontFamily="@font/urbanist_regular"
                     android:letterSpacing="0.02"
                     android:text="Followers"
                     android:textColor="@color/greyscale_700"
@@ -73,6 +75,7 @@
             android:layout_height="32dp"
             android:layout_gravity="center_vertical|right"
             android:background="@drawable/selector_toggle_button_follow"
+            android:fontFamily="@font/urbanist_medium"
             android:letterSpacing="0.01"
             android:paddingLeft="16dp"
             android:paddingTop="6dp"

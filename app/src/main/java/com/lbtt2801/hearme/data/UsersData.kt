@@ -33,8 +33,6 @@ class UsersData {
                         ArtistsData.dataArtist() //listArtistsFollowing
                             .filter { it.artistId == " ar001" || it.artistId == "ar002" || it.artistId == "ar004" } as ArrayList<Artist>,
                         ArrayList(), //listFollowers
-//                        UsersData.data() //listFollowers
-//                            .filter { it.email == "lebuitantruong@gmail.com" } as ArrayList<User>,
                         MusicsData.dataMusic() //listMusicsLoved
                             .filter { it.musicID == "ms001" || it.musicID == "ms002" || it.musicID == "ms005" || it.musicID == "ms008" } as ArrayList<Music>,
                         MusicsData.dataMusic() //listMusicsListened
@@ -44,8 +42,6 @@ class UsersData {
                         ArrayList(), //listMusicsQueued
                         PlaylistData.dataPlaylist()
                             .filter { it.playlistID == "pl001" || it.playlistID == "pl003" } as ArrayList<Playlist>,
-//                        MusicsData.dataMusic() //listPlayedMusic
-//                            .filter { it.musicID == "ms004" || it.musicID == "ms010" || it.musicID == "ms012" || it.musicID == "ms009" } as ArrayList<Music>,
                         ArrayList() //blackListMusic
                     )
                 )
@@ -68,8 +64,6 @@ class UsersData {
                         ArtistsData.dataArtist()//listArtistsFollowing
                             .filter { it.artistId == " ar003" || it.artistId == "ar004" } as ArrayList<Artist>,
                         ArrayList(),
-//                        UsersData.data() //listFollowers
-//                            .filter { it.email == "phuongviet.huit@gmail.com" } as ArrayList<User>,
                         MusicsData.dataMusic() //listMusicsLoved
                             .filter { it.musicID == "ms002" || it.musicID == "ms006" || it.musicID == "ms007" } as ArrayList<Music>,
                         MusicsData.dataMusic() //listMusicListened
@@ -80,8 +74,6 @@ class UsersData {
                             .filter { it.musicID == "ms002" || it.musicID == "ms006" } as ArrayList<Music>,
                         PlaylistData.dataPlaylist() //listMusicsPlaylist
                             .filter { it.playlistID == "pl001" || it.playlistID == "pl002" || it.playlistID == "pl003" } as ArrayList<Playlist>,
-//                        MusicsData.dataMusic() //listPlayedMusic
-//                            .filter { it.musicID == "ms003" || it.musicID == "ms009" || it.musicID == "ms010" } as ArrayList<Music>,
                         ArrayList() //blackListMusic
                     )
                 )

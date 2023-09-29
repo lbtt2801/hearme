@@ -28,6 +28,7 @@
                 android:text="@{category.categoryName}"
                 android:layout_margin="20dp"
                 android:textSize="18sp"
+                android:fontFamily="@font/urbanist_regular"
                 android:textColor="@color/on_button"/>
 
             <com.google.android.material.imageview.ShapeableImageView

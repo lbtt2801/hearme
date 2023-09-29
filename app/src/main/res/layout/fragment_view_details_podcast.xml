@@ -74,6 +74,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/urbanist_regular"
                     android:letterSpacing="0.01"
                     android:text="1 day ago"
                     android:textColor="@color/greyscale_700"
@@ -84,6 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
+                    android:fontFamily="@font/urbanist_regular"
                     android:letterSpacing="0.01"
                     android:text="|"
                     android:textColor="@color/greyscale_700"
@@ -92,6 +94,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/urbanist_regular"
                     android:letterSpacing="0.01"
                     android:text="48:26 mins"
                     android:textColor="@color/greyscale_700"
@@ -127,6 +130,7 @@
                         android:background="@drawable/bg_button_continue_1"
                         android:drawableStart="@drawable/ic_play_2"
                         android:drawablePadding="8dp"
+                        android:fontFamily="@font/urbanist_bold"
                         android:letterSpacing="0.01"
                         android:paddingLeft="20dp"
                         android:paddingTop="8dp"
@@ -180,8 +184,8 @@
                         android:gravity="center">
 
                         <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:adjustViewBounds="true"
                             android:background="@color/transparent"
                             android:scaleType="centerCrop"

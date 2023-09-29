@@ -38,6 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
+                android:fontFamily="@font/urbanist_medium"
                 android:letterSpacing="0.01"
                 android:text="Like"
                 android:textColor="@color/greyscale_900"

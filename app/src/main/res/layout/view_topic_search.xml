@@ -26,6 +26,7 @@
             android:minHeight="38dp"
             android:paddingLeft="20dp"
             android:paddingTop="8dp"
+            android:fontFamily="@font/urbanist_semibold"
             android:paddingRight="20dp"
             android:paddingBottom="8dp"
             android:text="@{topicSearch.name}"

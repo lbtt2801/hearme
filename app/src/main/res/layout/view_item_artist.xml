@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="artist"
             type="com.lbtt2801.hearme.model.Artist" />
@@ -12,8 +13,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="24dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="24dp">
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgArtist"
             android:layout_width="80dp"
@@ -21,28 +23,32 @@
             android:layout_marginEnd="16dp"
             android:scaleType="centerCrop"
             app:setImageUrl="@{artist.image}"
-            app:shapeAppearance="@style/circleImageView"/>
+            app:shapeAppearance="@style/circleImageView" />
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist_bold"
                 android:text="@{artist.artistName}"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/greyscale_900"/>
+                android:textColor="@color/greyscale_900"
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/tvDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
                 android:textColor="@color/greyscale_700"
-                app:setTextArtist="@{artist}"/>
+                android:textSize="12sp"
+                android:fontFamily="@font/urbanist_regular"
+                app:setTextArtist="@{artist}" />
         </LinearLayout>
 
         <com.lbtt2801.hearme.data.control.CustomSpinner

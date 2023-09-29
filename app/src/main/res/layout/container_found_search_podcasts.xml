@@ -26,21 +26,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/urbanist_extrabold"
                     android:text="@string/podcasts_shows"
                     android:textColor="@color/greyscale_900"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/text_view_see_all_podcasts_and_shows"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
+                    android:fontFamily="@font/urbanist_semibold"
                     android:letterSpacing="0.01"
                     android:text="See All"
                     android:textColor="@color/color_bg_button_continue"
                     android:textSize="16sp"
-                    android:textStyle="bold"
                     android:translationY="-8sp" />
             </LinearLayout>
 
@@ -68,21 +68,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:fontFamily="@font/urbanist_extrabold"
                     android:text="Episodes"
                     android:textColor="@color/greyscale_900"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textSize="24sp"/>
 
                 <TextView
                     android:id="@+id/text_view_see_all_episodes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
+                    android:fontFamily="@font/urbanist_semibold"
                     android:letterSpacing="0.01"
                     android:text="See All"
                     android:textColor="@color/color_bg_button_continue"
                     android:textSize="16sp"
-                    android:textStyle="bold"
                     android:translationY="-8sp" />
             </LinearLayout>
 

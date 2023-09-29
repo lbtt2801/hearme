@@ -41,18 +41,19 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/urbanist_bold"
                     android:text="@{music.musicName}"
                     android:textColor="@color/greyscale_900"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:setTextSongs="@{music}"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/urbanist_regular"
                     android:textColor="@color/greyscale_700"
                     android:textSize="12sp"
-                    android:layout_marginTop="10dp"/>
+                    app:setTextSongs="@{music}" />
 
             </LinearLayout>
 

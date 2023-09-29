@@ -76,6 +76,7 @@
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical|right"
                     android:background="@drawable/selector_toggle_button_follow"
+                    android:fontFamily="@font/urbanist_semibold"
                     android:letterSpacing="0.07"
                     android:paddingLeft="16dp"
                     android:paddingTop="6dp"

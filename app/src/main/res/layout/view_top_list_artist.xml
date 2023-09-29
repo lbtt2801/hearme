@@ -66,6 +66,7 @@
                     android:layout_marginTop="12dp"
                     android:letterSpacing="0.02"
                     android:text="Artist"
+                    android:fontFamily="@font/urbanist_regular"
                     android:textSize="12sp" />
 
             </LinearLayout>

@@ -18,14 +18,15 @@
         android:layout_marginBottom="12dp"
         android:gravity="center"
         android:text="Not Found"
+        android:fontFamily="@font/urbanist_bold"
         android:textColor="@color/greyscale_900"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textSize="24sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:fontFamily="@font/urbanist_regular"
         android:letterSpacing="0.01"
         android:text="Sorry, the keyword you entered cannot be found, please check again or search with another keyword."
         android:textColor="@color/greyscale_900"
