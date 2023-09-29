@@ -47,12 +47,11 @@ import com.lbtt2801.hearme.data.control.CustomSpinner
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.HomeFragment
+import com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment
 import com.lbtt2801.hearme.view.fragments.library.MyLibraryFragment
 import com.lbtt2801.hearme.view.fragments.profile_settings.ProfileFragment
-import com.lbtt2801.hearme.view.fragments.search.ExploreFragment
-import com.lbtt2801.hearme.view.fragments.search.ViewDetailsAlbumFragment
-import com.lbtt2801.hearme.view.fragments.search.ViewDetailsArtistFragment
-import com.lbtt2801.hearme.view.fragments.search.ViewDetailsSongFragment
+import com.lbtt2801.hearme.view.fragments.search.*
+import com.lbtt2801.hearme.view.tab_viewpager.TabPodcastFragment
 import com.lbtt2801.hearme.view.tab_viewpager.TabSongFragment
 import com.lbtt2801.hearme.viewmodel.*
 import kotlin.system.exitProcess
@@ -674,8 +673,35 @@ class MainActivity : AppCompatActivity() {
 
                         }
                         8 -> { // Go to Podcast
-                            Toast.makeText(v.context, "Go to Podcast", Toast.LENGTH_SHORT).show()
-
+                            var designation: Int? = null
+                            when (fromFragment) {
+                                is ExploreFragment -> {
+                                    designation =
+                                        R.id.action_item_nav_explore_to_viewDetailsArtistOfPodcastFragment
+                                }
+                                is TabPodcastFragment -> {
+                                    designation =
+                                        R.id.action_notificationFragment_to_viewDetailsArtistOfPodcastFragment
+                                }
+//                                is ViewDetailsSongFragment -> {
+//                                    designation =
+//                                        R.id.action_viewDetailsSongFragment_to_viewDetailsArtistFragment
+//                                }
+                                is ViewDetailsArtistOfPodcastFragment -> {
+                                    showSnack(v, "You are here!")
+                                }
+//                                is ViewDetailsAlbumFragment -> {
+//                                    designation =
+//                                        R.id.action_viewDetailsAlbumFragment_to_viewDetailsArtistFragment
+//                                }
+                            }
+                            if (designation != null) {
+                                navController.navigate(
+                                    designation,
+                                    Bundle().apply {
+                                        putString("artistID", music.artist.artistId)
+                                    })
+                            }
                         }
 
                         9 -> { // Share
