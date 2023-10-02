@@ -1,6 +1,8 @@
 package com.lbtt2801.hearme.view.fragments.library
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +16,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
+import com.lbtt2801.hearme.data.ArtistsData
+import com.lbtt2801.hearme.data.CategoriesData
 import com.lbtt2801.hearme.data.adapter.MusicAdapter
 import com.lbtt2801.hearme.databinding.FragmentDownloadsBinding
 import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.model.Time
+import com.lbtt2801.hearme.viewmodel.MusicViewModel
 import com.lbtt2801.hearme.viewmodel.UserViewModel
 import java.util.Date
 
@@ -59,7 +65,22 @@ class DownloadsFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        lst = userViewModel.lstDataUser.value?.first { it.email == email }?.listMusicsDownloaded
+        binding.music = Music(
+            "ms004",
+            "Fake Music",
+            0,
+            "https://firebasestorage.googleapis.com/v0/b/hearme-app-16567.appspot.com/o/images%2Fmusics%2Fwithout_you.png?alt=media&token=e78ac2d2-7e0e-4373-84f1-5f2d3b7ef445&_gl=1*1gfxh8m*_ga*MTUyOTk3NDI1NS4xNjkzMzU5NjY4*_ga_CW55HF8NVT*MTY5NTg4NjQxNS43LjEuMTY5NTg4ODExOS40MC4wLjA.",
+            Time(0, 4, 30),
+            Date("02/5/2023"),
+            CategoriesData.dataCategory().first { it.categoryID == "ca001" },
+            ArtistsData.dataArtist().first { it.artistId == "ar001" },
+            true
+        )
+
+        userViewModel.lstDataUser.observe(viewLifecycleOwner) {
+            lst = it.first { user -> user.email == email }.listMusicsDownloaded
+        }
+
 
         val lstP1 = lst as ArrayList<Music>
         val lstP0 = ArrayList<Music>()
@@ -80,23 +101,32 @@ class DownloadsFragment : Fragment() {
                     else
                         displayRecyclerView(lstP1)
                 }
+
                 override fun onNothingSelected(p0: AdapterView<*>?) {
                 }
             }
+        } else {
+            binding.btnPlay.isEnabled = false
+            binding.btnShuffle.isEnabled = false
+        }
 
-            binding.btnShuffle.setOnClickListener {
-                lst!!.shuffle()
-                findNavController().navigate(R.id.songPlayFragment,
-                    Bundle().apply {
-                        putString("musicID", lst!![0].musicID)
-                    }
-                )
-            }
+        // Shuffle list
+        val lstShuffle = lst as ArrayList
+        lstShuffle.shuffle()
+        binding.music =  lstShuffle[0]
+
+        binding.btnShuffle.setOnClickListener {
+            findNavController().navigate(R.id.songPlayFragment,
+                Bundle().apply {
+                    putString("musicID", lst!![0].musicID)
+                }
+            )
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.v(TAG, "onDestroy ")
         _binding = null
     }
 

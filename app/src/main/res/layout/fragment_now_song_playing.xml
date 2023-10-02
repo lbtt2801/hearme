@@ -57,6 +57,8 @@
                 android:button="@color/transparent"
                 app:setPlay="@{music}"
                 app:clickPlayForCheckBox="@{music}"/>
+<!--                app:clickPlayForCheckBoxInMiniSizePlaying="@{music}"/>-->
+
 
 
 
