@@ -1,6 +1,7 @@
 package com.lbtt2801.hearme.view.fragments.search
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +14,10 @@ import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.ViewPageFollowAdapter
 import com.lbtt2801.hearme.databinding.FragmentFollowerDetailBinding
+import kotlin.math.log
 
 class FollowerDetailFragment : Fragment() {
-    private var _binding: FragmentFollowerDetailBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentFollowerDetailBinding
 
     private lateinit var mainActivity: MainActivity
 
@@ -26,13 +27,16 @@ class FollowerDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding =
+        Log.v("Test", "onCreateView -> FDF")
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_follower_detail, container, false)
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
+        Log.v("Test", "onResume -> FDF")
+
         mainActivity = (activity as MainActivity)
         email = arguments?.getString("emailID")
 
@@ -72,6 +76,7 @@ class FollowerDetailFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
+        Log.v("Test","onDestroy -> FDF")
+
     }
 }

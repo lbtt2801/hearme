@@ -267,6 +267,15 @@ class UserViewModel : ViewModel() {
         _lstDataUser.postValue(lst)
     }
 
+    fun updatePlayingDownloaded(email: String, music: Music) {
+        lst.first { it.email == email }.apply {
+            this.listMusicsDownloaded.removeIf { it.musicID == music.musicID }
+            this.listMusicsDownloaded.add(music)
+        }
+
+        _lstDataUser.postValue(lst)
+    }
+
     fun updateBlackListMusic(email: String, music: Music, isDontPlay: Boolean) {
         if (isDontPlay) {
             lst.first { it.email == email }.apply {

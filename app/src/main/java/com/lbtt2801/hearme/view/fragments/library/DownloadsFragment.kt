@@ -111,9 +111,9 @@ class DownloadsFragment : Fragment() {
         }
 
         // Shuffle list
-        val lstShuffle = lst as ArrayList
-        lstShuffle.shuffle()
-        binding.music =  lstShuffle[0]
+//        val lstShuffle = lst as ArrayList
+//        lstShuffle.shuffle()
+//        binding.music =  lstShuffle[0]
 
         binding.btnShuffle.setOnClickListener {
             findNavController().navigate(R.id.songPlayFragment,
