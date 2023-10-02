@@ -20,6 +20,7 @@ import com.lbtt2801.hearme.databinding.FragmentMyLibraryBinding
 import com.lbtt2801.hearme.model.Artist
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.viewmodel.MusicViewModel
+import com.lbtt2801.hearme.viewmodel.UserViewModel
 
 class MyLibraryFragment : Fragment() {
     private var _binding: FragmentMyLibraryBinding? = null
@@ -27,11 +28,11 @@ class MyLibraryFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private lateinit var musicAdapter: MusicAdapter
 
-    private val musicViewModel: MusicViewModel by activityViewModels()
+    private val userViewModel: UserViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_library, container, false)
         return binding.root
@@ -57,9 +58,9 @@ class MyLibraryFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        musicViewModel.lstDataMusics.observe((activity as MainActivity), Observer { list ->
-            displayRecyclerView(list.sortedByDescending { it.totalListeners }
-                .take(5) as ArrayList<Music>)
+        userViewModel.lstDataUser.observe((activity as MainActivity), Observer { list ->
+            displayRecyclerView(list.first { it.email == mainActivity.email }.listMusicsListened.take(
+                5) as ArrayList<Music>)
             if (list.isEmpty())
                 Toast.makeText(context, "list Music is null or empty", Toast.LENGTH_SHORT).show()
         })
@@ -101,7 +102,7 @@ class MyLibraryFragment : Fragment() {
     private fun displayRecyclerView(lstData: ArrayList<Music>) {
         val layoutRecyclerViewMusic =
             LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
-        musicAdapter = MusicAdapter(lstData, 0,this)
+        musicAdapter = MusicAdapter(lstData, 0, this)
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerViewMusic
             adapter = musicAdapter

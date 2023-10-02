@@ -523,6 +523,7 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
                 checkBox,
                 "You are playing ${music.musicName}!"
             )
+            mainActivity.viewModelUser.updateMusicsHistory(mainActivity.email, music)
             // Chuyễn trang và put bundle ở đây
 
             it.findNavController()
@@ -608,6 +609,8 @@ fun ClickPlayForCheckBoxForSongPlayFragmnet(
                 checkBox,
                 "You are playing ${music.musicName}!"
             )
+            mainActivity.viewModelUser.updateMusicsHistory(mainActivity.email, music)
+
             // Chuyễn trang và put bundle ở đây
 
             if (fragment is SongPlayFragment) {
@@ -661,6 +664,8 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
                 appCompatButton,
                 "You are playing ${music.musicName}!"
             )
+            mainActivity.viewModelUser.updateMusicsHistory(mainActivity.email, music)
+
             // Chuyễn trang và put bundle ở đây
 
             it.findNavController()
@@ -806,4 +811,17 @@ fun setTextArtist(textView: TextView, artist: Artist) {
     if (artist.isSinger)
         textView.text = "${lst.size} Songs"
     else textView.text = "${lst.size} Episodes"
+}
+
+@BindingAdapter("app:setTextNameArtist")
+fun setTextNameArtist(textView: TextView, name: String) {
+    var n = ""
+    name.forEach {
+        n += it
+        if (n.length >= 7) {
+            textView.text = "$n..."
+            return
+        }
+    }
+    textView.text = name
 }

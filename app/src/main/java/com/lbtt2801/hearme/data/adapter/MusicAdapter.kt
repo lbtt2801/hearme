@@ -23,6 +23,7 @@ import com.lbtt2801.hearme.view.dialogs.AuthorizationProgressDialog.Companion.TA
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.HomeFragment
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.TrendingNowFragment
+import com.lbtt2801.hearme.view.fragments.library.MyLibraryFragment
 import com.lbtt2801.hearme.view.fragments.search.*
 import com.lbtt2801.hearme.view.tab_viewpager.TabPodcastFragment
 import kotlin.math.roundToInt
@@ -81,6 +82,8 @@ class MusicAdapter(
                     destination = R.id.action_item_nav_home_to_viewDetailsSongFragment
                 else if (fragment is TrendingNowFragment)
                     destination = R.id.action_trendingNowFragment_to_viewDetailsSongFragment
+                if (fragment is MyLibraryFragment)
+                    destination = R.id.action_item_nav_library_to_viewDetailsSongFragment
             }
             is SongNotificationViewHolder -> {
                 holder.bind(dataMusics[position])
