@@ -1,16 +1,20 @@
 package com.lbtt2801.hearme.data.adapter
 
+import android.app.ActionBar
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.databinding.ViewListBrowseBinding
 import com.lbtt2801.hearme.model.Category
+import kotlin.math.roundToInt
 
-class CategoryAdapter (
+class CategoryAdapter(
     private val dataCategory: ArrayList<Category>,
     private val type: Int,
-    val onItemClick: ((Bundle) -> Unit)? = null
+    val onItemClick: ((Bundle) -> Unit)? = null,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val EXPLORE = 0
@@ -51,7 +55,7 @@ class CategoryAdapter (
     override fun getItemCount(): Int = dataCategory.size
 
     inner class ExploreViewHolder private constructor(
-        val binding: ViewListBrowseBinding
+        val binding: ViewListBrowseBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         constructor(parent: ViewGroup) : this(
             ViewListBrowseBinding.inflate(
@@ -63,6 +67,25 @@ class CategoryAdapter (
 
         fun bind(category: Category) {
             binding.category = category
+            if (absoluteAdapterPosition % 2 == 0) {
+                val paramsContainer = LinearLayout.LayoutParams(
+                    ActionBar.LayoutParams.MATCH_PARENT,
+                    ActionBar.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    marginEnd = (6 * Resources.getSystem().displayMetrics.density).roundToInt()
+                }
+                binding.containerView.layoutParams = paramsContainer
+            } else {
+                val paramsContainer = LinearLayout.LayoutParams(
+                    ActionBar.LayoutParams.MATCH_PARENT,
+                    ActionBar.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    marginStart = (6 * Resources.getSystem().displayMetrics.density).roundToInt()
+                }
+                binding.containerView.layoutParams = paramsContainer
+            }
         }
+
+
     }
 }
