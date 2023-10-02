@@ -29,7 +29,7 @@ class PopularArtistsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_popular_artists, container, false)
@@ -67,7 +67,7 @@ class PopularArtistsFragment : Fragment() {
     private fun displayRecyclerView(lstData: ArrayList<Artist>) {
         val layoutRecyclerView =
             GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
-        artistAdapter = ArtistAdapter(lstData, 0)
+        artistAdapter = ArtistAdapter(lstData, 0, this)
         binding.recyclerView.apply {
             layoutManager = layoutRecyclerView
             adapter = artistAdapter
