@@ -524,6 +524,7 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
                 "You are playing ${music.musicName}!"
             )
             mainActivity.viewModelUser.updateMusicsHistory(mainActivity.email, music)
+            mainActivity.viewModelUser.updatePlayingDownloaded(mainActivity.email, music)
             // Chuyễn trang và put bundle ở đây
 
             it.findNavController()

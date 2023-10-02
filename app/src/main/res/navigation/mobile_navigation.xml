@@ -577,4 +577,13 @@
         android:name="com.lbtt2801.hearme.view.fragments.search.NowSongPlayingFragment"
         android:label="fragment_now_song_playing"
         tools:layout="@layout/fragment_now_song_playing" />
+    <fragment
+        android:id="@+id/tabFollowFragment"
+        android:name="com.lbtt2801.hearme.view.tab_viewpager.TabFollowFragment"
+        android:label="fragment_tab_follow"
+        tools:layout="@layout/fragment_tab_follow">
+        <action
+            android:id="@+id/action_tabFollowFragment_to_viewDetailsProfileFragment"
+            app:destination="@id/viewDetailsProfileFragment" />
+    </fragment>
 </navigation>
