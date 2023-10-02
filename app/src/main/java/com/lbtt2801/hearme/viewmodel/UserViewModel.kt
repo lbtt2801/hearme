@@ -234,6 +234,13 @@ class UserViewModel : ViewModel() {
         _lstDataUser.postValue(lst)
     }
 
+    fun updateMusicsHistory(email: String, music: Music) {
+        lst.first { it.email == email }.apply {
+            this.listMusicsListened.add(music)
+        }
+        _lstDataUser.postValue(lst)
+    }
+
     fun updateListMusicsQueued(email: String, music: Music, isQueue: Boolean) {
         if (isQueue) {
             lst.first { it.email == email }.apply {
@@ -266,6 +273,7 @@ class UserViewModel : ViewModel() {
                 this.blackListMusic.add(music)
                 this.listMusicsDownloaded.removeIf { it.musicID == music.musicID }
 //                this.listPlayedMusic.removeIf { it.musicID == music.musicID }
+                this.listMusicsQueue.removeIf { it.musicID == music.musicID }
                 this.listMusicsLoved.removeIf { it.musicID == music.musicID }
                 this.listMusicsListened.removeIf { it.musicID == music.musicID }
             }

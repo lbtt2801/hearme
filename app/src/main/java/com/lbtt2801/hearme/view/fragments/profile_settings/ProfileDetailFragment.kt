@@ -1,6 +1,7 @@
 package com.lbtt2801.hearme.view.fragments.profile_settings
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -39,13 +40,26 @@ class ProfileDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        Log.v("State", "onCreateView() -> Fragment")
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_profile_detail, container, false)
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.v("State", "onViewCreated() -> Fragment")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.v("State", "onStart() -> Fragment")
+
+    }
+
     override fun onResume() {
         super.onResume()
+        Log.v("State", "onResume() -> Fragment")
         mainActivity = activity as MainActivity
         email = mainActivity.email
 

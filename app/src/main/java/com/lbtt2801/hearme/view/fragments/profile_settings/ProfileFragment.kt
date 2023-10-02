@@ -108,7 +108,7 @@ class ProfileFragment : Fragment() {
             binding.imgAvatar.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.ellipse)
 
-        profileFragmentViewModel.selectedItem.observe(requireActivity()){
+        profileFragmentViewModel.selectedItem.observe(requireActivity()) {
             Glide.with(this)
                 .load(it)
                 .apply(options)

@@ -48,7 +48,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="4dp"
-                        android:text="@{artist.artistName}"
+                        android:maxLines="1"
+                        app:setTextNameArtist="@{artist.artistName}"
                         android:textColor="@color/greyscale_900"
                         android:textSize="18sp"
                         android:textStyle="bold" />

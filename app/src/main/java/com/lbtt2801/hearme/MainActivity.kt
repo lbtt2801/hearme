@@ -84,6 +84,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setContentView(binding.root)
+
+        Log.v("State", "onCreate() -> Activity")
+
 
         dataListSong.add(R.raw.shape_of_you_nokia)
         dataListSong.add(R.raw.beauteous_upbeat_electronic)
@@ -109,10 +114,9 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("media_url", mediaUrl)
         startService(intent)
 
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        setContentView(binding.root)
         binding.lifecycleOwner = this
+        Log.v("State", "binding -> Activity")
+
 
         viewModelTopicSearch.getListDataTopicSearch()
 
@@ -790,6 +794,4 @@ class MainActivity : AppCompatActivity() {
 //
 //        notificationManagerCompat.notify(1, notification)
 //    }
-
-
 }

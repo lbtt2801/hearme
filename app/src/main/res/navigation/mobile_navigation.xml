@@ -185,7 +185,7 @@
     <fragment
         android:id="@+id/popularArtistsFragment"
         android:name="com.lbtt2801.hearme.view.fragments.homeactionmenu.PopularArtistsFragment"
-        android:label="PopularArtistsFragment" >
+        android:label="PopularArtistsFragment">
         <action
             android:id="@+id/action_popularArtistsFragment_to_viewDetailsArtistFragment"
             app:destination="@id/viewDetailsArtistFragment" />
@@ -420,6 +420,9 @@
         <action
             android:id="@+id/action_item_nav_library_to_artistsFragment"
             app:destination="@id/artistsFragment" />
+        <action
+            android:id="@+id/action_item_nav_library_to_viewDetailsSongFragment"
+            app:destination="@id/viewDetailsSongFragment" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
