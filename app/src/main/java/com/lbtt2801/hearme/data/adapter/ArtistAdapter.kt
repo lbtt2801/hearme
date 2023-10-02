@@ -62,7 +62,6 @@ class ArtistAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var destination: Int? = null
         when (holder) {
-            //Con dang loi
             is HomeViewHolder -> {
                 holder.bind(dataArtists[position])
                 when (fragment) {

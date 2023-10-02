@@ -162,7 +162,7 @@ class HomeFragment : Fragment() {
     private fun displayRecyclerViewArtist(lstData: ArrayList<Artist>) {
         val layoutRecyclerViewArtist =
             LinearLayoutManager(view?.context, LinearLayoutManager.HORIZONTAL, false)
-        artistAdapter = ArtistAdapter(lstData, 0)
+        artistAdapter = ArtistAdapter(lstData, 0,this)
         binding.recyclerViewPopularArtists.apply {
             layoutManager = layoutRecyclerViewArtist
             adapter = artistAdapter
