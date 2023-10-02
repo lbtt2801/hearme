@@ -78,9 +78,8 @@
                     android:layout_marginRight="20dp"
                     android:background="@drawable/selector_play_check_box"
                     android:button="@color/transparent"
-                    android:checked="false"
-                    app:clickPlayForCheckBox="@{music}"
-                    app:setPlay="@{music}" />
+                    app:setPlay="@{music}"
+                    app:clickPlayForCheckBox="@{music}"/>
 
                 <com.lbtt2801.hearme.data.control.CustomSpinner
                     android:id="@+id/spinner_drop_down_more"

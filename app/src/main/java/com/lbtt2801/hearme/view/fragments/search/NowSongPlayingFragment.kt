@@ -1,6 +1,8 @@
 package com.lbtt2801.hearme.view.fragments.search
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -87,11 +89,15 @@ class NowSongPlayingFragment : Fragment() {
             if (positionSong == lstDataMusic.size - 1)
                 return@setOnClickListener
             positionSong += 1
+            Log.v(TAG, "L1: Name: ${music?.musicName} - Play: ${music?.isPlaying}")
             music?.isPlaying = false
+            Log.v(TAG, "L2: Name: ${music?.musicName} - Play: ${music?.isPlaying}")
             music = musicViewModel.lstDataMusics.value?.first { it.musicID == lstDataMusic[positionSong].musicID }
             music?.isPlaying = true
             music?.image?.let { it1 -> setImageMusic(it1) }
+            Log.v(TAG, "L3: Name: ${music?.musicName} - Play: ${music?.isPlaying}")
             binding.tvTitle.text = music?.musicName.plus(" - ").plus(music?.artist?.artistName)
+            binding.music = music
             mainActivity.exoPlayer.setMediaItem(MediaItem.fromUri(music?.path!!))
             mainActivity.exoPlayer.prepare()
             mainActivity.exoPlayer.play()
