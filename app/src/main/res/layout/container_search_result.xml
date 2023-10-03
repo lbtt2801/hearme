@@ -9,8 +9,8 @@
     <LinearLayout
         android:id="@+id/container_search_results"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/transparent"
+        android:layout_height="wrap_content"
+        android:background="@null"
         android:orientation="vertical"
         android:visibility="visible">
 
@@ -19,38 +19,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:background="@color/transparent"
+            android:layout_marginBottom="24dp"
+            android:background="@null"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:paddingLeft="24dp"
             android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/view_topic_search" />
-
-        <include
-            android:id="@+id/include_notfound_search"
-            layout="@layout/container_notfound_search"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:visibility="gone" />
-
-        <include
-            android:id="@+id/include_found_search"
-            layout="@layout/container_found_search"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:visibility="gone" />
-
-        <include
-            android:id="@+id/include_found_search_podcasts"
-            layout="@layout/container_found_search_podcasts"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-
     </LinearLayout>
+
+
+    <include
+        android:id="@+id/include_notfound_search"
+        layout="@layout/container_notfound_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/include_found_search"
+        layout="@layout/container_found_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/include_found_search_podcasts"
+        layout="@layout/container_found_search_podcasts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
 </LinearLayout>
