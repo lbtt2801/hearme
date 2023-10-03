@@ -497,12 +497,12 @@ fun clickUserFollowButton(toggleButton: ToggleButton, myFollower: User) {
 fun setPlay(checkBox: CheckBox, music: Music) {
     val mainActivity = checkBox.context as MainActivity
 
-//    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) { _ ->
-//        checkBox.isChecked =
-//            music.isPlaying == true
-//    }
+    mainActivity.viewModelUser.lstDataUser.observe(mainActivity) { _ ->
+        checkBox.isChecked =
+            music.isPlaying == true
+    }
 
-    checkBox.isChecked = music.isPlaying == true
+//    checkBox.isChecked = music.isPlaying == true
 
 }
 
@@ -545,6 +545,11 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
                 "You stop playing ${music.musicName}!"
             )
         }
+        music.isPlaying?.let { it1 ->
+            mainActivity.viewModelUser.updatePlaying(mainActivity.email, music,
+                !it1
+            )
+        }
         mainActivity.viewModelMusic.updatePlaying(
             music,
             isPlaying
@@ -552,40 +557,6 @@ fun clickPlayForCheckBox(checkBox: CheckBox, music: Music) {
         music.let { mainActivity.songPlayViewModel.selectItem(it) }
     }
 }
-
-//@BindingAdapter("app:clickPlayForCheckBoxInMiniSizePlaying")
-//fun clickPlayForCheckBoxInMiniSizePlaying(checkBox: CheckBox, music: Music) {
-//    Log.v(TAG, "P1: Name: ${music.musicName} - Play: ${music.isPlaying}")
-//    val mainActivity = checkBox.context as MainActivity
-//    checkBox.setOnClickListener() { it ->
-//        var isPlaying = false
-//        if (mainActivity.viewModelMusic.lstDataMusics.value?.first { it.musicID == music.musicID }?.isPlaying == false) {
-//            isPlaying = true
-//            if (mainActivity.exoPlayer.isPlaying)
-//                mainActivity.exoPlayer.stop()
-//
-//            mainActivity.exoPlayer.setMediaItem(MediaItem.fromUri(music.path))
-//
-//            mainActivity.showSnack(
-//                checkBox,
-//                "You are playing ${music.musicName}!"
-//            )
-//        } else {
-//            isPlaying = false
-////            mainActivity.mediaPlayer.pause()
-//            mainActivity.exoPlayer.pause()
-//            mainActivity.showSnack(
-//                checkBox,
-//                "You stop playing ${music.musicName}!"
-//            )
-//        }
-//        mainActivity.viewModelMusic.updatePlaying(
-//            music,
-//            isPlaying
-//        )
-//        music.let { mainActivity.songPlayViewModel.selectItem(it) }
-//    }
-//}
 
 @BindingAdapter("music", "fragment", requireAll = false)
 fun ClickPlayForCheckBoxForSongPlayFragmnet(
@@ -635,6 +606,11 @@ fun ClickPlayForCheckBoxForSongPlayFragmnet(
                 "You stop playing ${music.musicName}!"
             )
         }
+        music.isPlaying?.let { it1 ->
+            mainActivity.viewModelUser.updatePlaying(mainActivity.email, music,
+                !it1
+            )
+        }
         mainActivity.viewModelMusic.updatePlaying(
             music,
             isPlaying
@@ -654,7 +630,7 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
             if (mainActivity.exoPlayer.isPlaying)
                 mainActivity.exoPlayer.stop()
 
-            mainActivity.exoPlayer.setMediaItem(MediaItem.fromUri(music.path!!))
+            mainActivity.exoPlayer.setMediaItem(MediaItem.fromUri(music.path))
 //            mainActivity.mediaPlayer =
 //                MediaPlayer.create(mainActivity, mainActivity.dataListSong[music.path!!])
 
@@ -686,6 +662,7 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
                 "You stop playing ${music.musicName}!"
             )
         }
+        mainActivity.viewModelUser.updatePlaying(mainActivity.email, music, true)
         mainActivity.viewModelMusic.updatePlaying(
             music,
             isPlaying
