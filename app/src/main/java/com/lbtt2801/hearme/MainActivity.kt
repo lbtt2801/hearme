@@ -2,11 +2,11 @@ package com.lbtt2801.hearme
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Matrix
@@ -36,7 +36,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
-import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
@@ -47,7 +46,6 @@ import com.lbtt2801.hearme.data.control.CustomSpinner
 import com.lbtt2801.hearme.databinding.ActivityMainBinding
 import com.lbtt2801.hearme.model.Music
 import com.lbtt2801.hearme.view.fragments.homeactionmenu.HomeFragment
-import com.lbtt2801.hearme.view.fragments.homeactionmenu.NotificationFragment
 import com.lbtt2801.hearme.view.fragments.library.MyLibraryFragment
 import com.lbtt2801.hearme.view.fragments.profile_settings.ProfileFragment
 import com.lbtt2801.hearme.view.fragments.search.*
@@ -55,7 +53,6 @@ import com.lbtt2801.hearme.view.tab_viewpager.TabPodcastFragment
 import com.lbtt2801.hearme.view.tab_viewpager.TabSongFragment
 import com.lbtt2801.hearme.viewmodel.*
 import kotlin.system.exitProcess
-
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -117,19 +114,15 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         Log.v("State", "binding -> Activity")
 
-
-        viewModelTopicSearch.getListDataTopicSearch()
-
         viewModelEmail.selectedItem.observe(this, Observer {
-            Toast.makeText(this, "$it", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "$it", Toast.LENGTH_SHORT).show()
             email = it
-            Toast.makeText(this, "viewModelEmail -> $email", Toast.LENGTH_SHORT).show()
-
+//            Toast.makeText(this, "viewModelEmail -> $email", Toast.LENGTH_SHORT).show()
         })
 
         if (savedInstanceState != null) {
             email = savedInstanceState.getString("email").toString()
-            Toast.makeText(this, "savedInstanceState -> $email", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "savedInstanceState -> $email", Toast.LENGTH_SHORT).show()
         }
 
         navHostFragment =
@@ -397,6 +390,9 @@ class MainActivity : AppCompatActivity() {
         )
         snack.show()
     }
+
+    fun isLandscape(): Boolean =
+        resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     fun changeSizeBitmap(bm: Bitmap, newWidth: Int, newHeight: Int): Bitmap? {
         val width = bm.width

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.databinding.ViewListBrowseBinding
 import com.lbtt2801.hearme.model.Category
 import kotlin.math.roundToInt
@@ -16,6 +17,8 @@ class CategoryAdapter(
     private val type: Int,
     val onItemClick: ((Bundle) -> Unit)? = null,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var count = 0
+
     companion object {
         const val EXPLORE = 0
         const val POPULAR_ARTISTS = 1
@@ -67,25 +70,49 @@ class CategoryAdapter(
 
         fun bind(category: Category) {
             binding.category = category
-            if (absoluteAdapterPosition % 2 == 0) {
-                val paramsContainer = LinearLayout.LayoutParams(
-                    ActionBar.LayoutParams.MATCH_PARENT,
-                    ActionBar.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    marginEnd = (6 * Resources.getSystem().displayMetrics.density).roundToInt()
+            val mainActivity = binding.containerView.context as MainActivity
+
+            val paramsContainer = LinearLayout.LayoutParams(
+                ActionBar.LayoutParams.MATCH_PARENT,
+                ActionBar.LayoutParams.WRAP_CONTENT
+            )
+
+            if (mainActivity.isLandscape()) {
+                when (count) {
+                    0 -> {
+                        paramsContainer.apply {
+                            marginEnd =
+                                (12 * Resources.getSystem().displayMetrics.density).roundToInt()
+                        }
+                        count++
+                    }
+                    1 -> {
+                        paramsContainer.apply {
+                            marginEnd =
+                                (12 * Resources.getSystem().displayMetrics.density).roundToInt()
+                        }
+                        count++
+                    }
+                    2 -> {
+                        count = 0
+                    }
                 }
-                binding.containerView.layoutParams = paramsContainer
             } else {
-                val paramsContainer = LinearLayout.LayoutParams(
-                    ActionBar.LayoutParams.MATCH_PARENT,
-                    ActionBar.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    marginStart = (6 * Resources.getSystem().displayMetrics.density).roundToInt()
+                if (count == 0) {
+                    paramsContainer.apply {
+                        marginEnd =
+                            (6 * Resources.getSystem().displayMetrics.density).roundToInt()
+                    }
+                    count++
+                } else if (count == 1) {
+                    paramsContainer.apply {
+                        marginStart =
+                            (6 * Resources.getSystem().displayMetrics.density).roundToInt()
+                    }
+                    count = 0
                 }
-                binding.containerView.layoutParams = paramsContainer
             }
+            binding.containerView.layoutParams = paramsContainer
         }
-
-
     }
 }
