@@ -698,7 +698,7 @@ fun clickPlayForButton(appCompatButton: AppCompatButton, music: Music) {
 fun setTopicSearch(toggleButton: ToggleButton, topicSearch: TopicSearch) {
     val mainActivity = toggleButton.context as MainActivity
 
-    mainActivity.viewModelTopicSearch.lstDataTopicSearch.observe(mainActivity) { it ->
+    mainActivity.viewModelTopicSearch.getTopicSearch().observe(mainActivity) { it ->
         toggleButton.isChecked = it.first { it.name == topicSearch.name }.isChecked
     }
 }
@@ -816,13 +816,18 @@ fun setTextArtist(textView: TextView, artist: Artist) {
 
 @BindingAdapter("app:setTextNameArtist")
 fun setTextNameArtist(textView: TextView, name: String) {
-    var n = ""
-    name.forEach {
-        n += it
-        if (n.length >= 7) {
-            textView.text = "$n..."
-            return
+    val mainActivity = textView.context as MainActivity
+    if (mainActivity.isLandscape())
+        textView.text = name
+    else {
+        var n = ""
+        name.forEach {
+            n += it
+            if (n.length >= 7) {
+                textView.text = "$n..."
+                return
+            }
         }
+        textView.text = name
     }
-    textView.text = name
 }

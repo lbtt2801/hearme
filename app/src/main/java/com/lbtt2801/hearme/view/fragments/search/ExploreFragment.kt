@@ -53,9 +53,10 @@ class ExploreFragment : Fragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.v(TAG, "onCreate saveInstanceTextSearch -> $saveInstanceTextSearch")
+//        Log.v(TAG, "onCreate saveInstanceTextSearch -> $saveInstanceTextSearch")
         if (savedInstanceState != null) {
             saveInstanceTextSearch = savedInstanceState.getString("textSearch").toString()
+            Log.v("saveInstanceTextSearch", "$savedInstanceState")
         }
     }
 
@@ -127,7 +128,9 @@ class ExploreFragment : Fragment(),
     }
 
     private fun displayRecyclerView(lstData: ArrayList<Category>) {
-        val layoutRecyclerView =
+        val layoutRecyclerView = if (mainActivity.isLandscape()) GridLayoutManager(view?.context,
+            3, LinearLayoutManager.VERTICAL, false)
+        else
             GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
         categoryAdapter = CategoryAdapter(lstData, 0) {
             if (it.getInt("position") == 1)
@@ -147,16 +150,16 @@ class ExploreFragment : Fragment(),
         binding.searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                displayRecyclerViewTopicSearch(topicSearchViewModel.lstDataTopicSearch.value as ArrayList<TopicSearch>)
-                saveInstanceTextSearch = p0.toString()
+                topicSearchViewModel.getTopicSearch().value?.let { displayRecyclerViewTopicSearch(it) }
 
                 binding.containerRecentSearches.visibility = View.GONE
                 includeTopsSongsArtistsAlbumsPlaylistsProfiles.root.visibility = View.VISIBLE
                 mainActivity.showBottomNav("GONE")
                 mainActivity.customToolbar("GONE")
+
                 if (p0 != null) {
                     recentSearchViewModel.updateDataRecentSearch(p0)
-                    topicSearchViewModel.lstDataTopicSearch.observe(requireActivity()) { data ->
+                    topicSearchViewModel.getTopicSearch().observe(requireActivity()) { data ->
                         includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeNotfoundSearch.root.visibility =
                             View.GONE
                         includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.root.visibility =
@@ -232,6 +235,7 @@ class ExploreFragment : Fragment(),
                 binding.containerRecentSearches.visibility = View.VISIBLE
                 mainActivity.showBottomNav("GONE")
                 mainActivity.customToolbar("GONE")
+                saveInstanceTextSearch = p0.toString()
                 return true
             }
         })
@@ -328,8 +332,14 @@ class ExploreFragment : Fragment(),
                 4, this
             )
 
+
+        val layout = if (mainActivity.isLandscape())
+            GridLayoutManager(view?.context, 3, LinearLayoutManager.VERTICAL, false)
+        else
+            GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
+
         includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.recyclerViewFoundList.apply {
-            layoutManager = GridLayoutManager(view?.context, 2, LinearLayoutManager.VERTICAL, false)
+            layoutManager = layout
             adapter = musicAdapter
         }
 

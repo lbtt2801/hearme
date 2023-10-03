@@ -10,8 +10,6 @@ import com.lbtt2801.hearme.model.TopicSearch
 
 class TopicSearchViewModel : ViewModel() {
     private val _lstDataTopicSearch = MutableLiveData<ArrayList<TopicSearch>>()
-    val lstDataTopicSearch: LiveData<ArrayList<TopicSearch>>
-        get() = _lstDataTopicSearch
 
     private lateinit var lst: ArrayList<TopicSearch>
 
@@ -19,9 +17,13 @@ class TopicSearchViewModel : ViewModel() {
         getListDataTopicSearch()
     }
 
-    fun getListDataTopicSearch() {
+    fun getTopicSearch(): MutableLiveData<ArrayList<TopicSearch>> {
+        return _lstDataTopicSearch
+    }
+
+    private fun getListDataTopicSearch() {
         lst = TopicSearchData.data()
-        _lstDataTopicSearch.postValue(lst)
+        _lstDataTopicSearch.value = lst
     }
 
     fun updateChecked(name: String) {
@@ -29,6 +31,6 @@ class TopicSearchViewModel : ViewModel() {
             it.isChecked = false
         }
         lst.first { it.name == name }.isChecked = true
-        _lstDataTopicSearch.postValue(lst)
+        _lstDataTopicSearch.value = lst
     }
 }
