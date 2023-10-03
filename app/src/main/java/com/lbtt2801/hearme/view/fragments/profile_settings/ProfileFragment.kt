@@ -152,6 +152,12 @@ class ProfileFragment : Fragment() {
             val pickImg = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             changeImage.launch(pickImg)
         }
+
+        binding.imgAvatar.setOnClickListener() {
+            findNavController().navigate(R.id.fullImageFragment, Bundle().apply {
+                putString("url", avatarUrl)
+            })
+        }
     }
 
     private fun uploadImageToFirebase() {

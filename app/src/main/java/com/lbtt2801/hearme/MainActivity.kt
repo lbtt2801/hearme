@@ -18,10 +18,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -53,6 +50,7 @@ import com.lbtt2801.hearme.view.tab_viewpager.TabPodcastFragment
 import com.lbtt2801.hearme.view.tab_viewpager.TabSongFragment
 import com.lbtt2801.hearme.viewmodel.*
 import kotlin.system.exitProcess
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -790,4 +788,11 @@ class MainActivity : AppCompatActivity() {
 //
 //        notificationManagerCompat.notify(1, notification)
 //    }
+
+    fun zoomImage(imageView: ImageView, isZoomOut: Boolean) {
+        imageView.layoutParams =
+            LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT)
+        imageView.scaleType = ImageView.ScaleType.FIT_XY
+    }
 }

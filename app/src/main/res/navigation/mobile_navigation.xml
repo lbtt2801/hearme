@@ -586,4 +586,8 @@
             android:id="@+id/action_tabFollowFragment_to_viewDetailsProfileFragment"
             app:destination="@id/viewDetailsProfileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/fullImageFragment"
+        android:name="com.lbtt2801.hearme.view.fragments.FullImageFragment"
+        android:label="FullImageFragment" />
 </navigation>

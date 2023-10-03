@@ -34,7 +34,7 @@ class ViewDetailsArtistOfPodcastFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_view_details_artist_of_podcast, container, false
@@ -65,6 +65,12 @@ class ViewDetailsArtistOfPodcastFragment : Fragment() {
         )
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
+        }
+
+        binding.image.setOnClickListener() {
+            findNavController().navigate(R.id.fullImageFragment, Bundle().apply {
+                putString("url", artist?.image)
+            })
         }
     }
 }
