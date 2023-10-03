@@ -10,6 +10,8 @@ import android.os.Binder
 import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
+import androidx.media3.session.MediaSession
+import androidx.media3.session.MediaSessionService
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -18,9 +20,9 @@ import java.io.IOException
 import java.net.URL
 
 
-class MusicService: Service() {
+class MusicService: Service() {//MediaSessionService() {
+
     private  var myBinder = MyBinder()
-    var mediaPlayer = MediaPlayer()
     private lateinit var mediaSession: MediaSessionCompat
     override fun onBind(p0: Intent?): IBinder {
         mediaSession = MediaSessionCompat(baseContext, "My Music")
@@ -64,4 +66,25 @@ class MusicService: Service() {
             .build()
         startForeground(13, notification)
     }
+
+//    private var mediaSession: MediaSession? = null
+//    private lateinit var mainActivity: MainActivity
+//    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? =
+//        mediaSession
+//
+//    override fun onCreate() {
+//        super.onCreate()
+//        mediaSession = MediaSession.Builder(this, mainActivity.exoPlayer).build()
+//    }
+//
+//    override fun onDestroy() {
+//        mediaSession?.run {
+//            player.release()
+//            release()
+//            mediaSession = null
+//        }
+//        super.onDestroy()
+//    }
+
+
 }

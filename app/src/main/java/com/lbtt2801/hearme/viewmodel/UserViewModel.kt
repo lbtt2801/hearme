@@ -384,4 +384,15 @@ class UserViewModel : ViewModel() {
         lstPlaylist.add(playlist)
         _lstDataPlaylist.postValue(lstPlaylist)
     }
+
+    fun updatePlaying(email: String, music: Music, isPlaying: Boolean) {
+        lst.first { it.email == email }.apply {
+            listMusicsDownloaded.forEach {
+                it.isPlaying = false
+            }
+            listMusicsDownloaded.first { it.musicID == music.musicID }.isPlaying = isPlaying
+        }
+
+        _lstDataUser.postValue(lst)
+    }
 }

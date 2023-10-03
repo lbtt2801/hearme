@@ -14,11 +14,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
+import com.lbtt2801.hearme.data.ArtistsData
+import com.lbtt2801.hearme.data.CategoriesData
 import com.lbtt2801.hearme.data.adapter.MusicAdapter
 import com.lbtt2801.hearme.databinding.FragmentSongBinding
 import com.lbtt2801.hearme.model.Music
+import com.lbtt2801.hearme.model.Time
 import com.lbtt2801.hearme.view.fragments.onboardingsignupsignin.SignInFragment
 import com.lbtt2801.hearme.viewmodel.UserViewModel
+import java.util.Date
 
 class SongFragment : Fragment() {
     private var _binding: FragmentSongBinding? = null
@@ -84,18 +88,13 @@ class SongFragment : Fragment() {
                 override fun onNothingSelected(p0: AdapterView<*>?) {
                 }
             }
+
+            // Shuffle list
+            val lstShuffle = ArrayList(lst)
+            lstShuffle.shuffle()
+            binding.music =  lstShuffle[0]
         }
 
-        binding.btnShuffle.setOnClickListener {
-            if (lst != null) {
-                lst!!.shuffle()
-                findNavController().navigate(R.id.songPlayFragment,
-                    Bundle().apply {
-                        putString("musicID", lst!![0].musicID)
-                    }
-                )
-            }
-        }
     }
 
     override fun onDestroy() {

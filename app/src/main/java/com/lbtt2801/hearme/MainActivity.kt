@@ -1,5 +1,6 @@
 package com.lbtt2801.hearme
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ContentValues.TAG
@@ -8,6 +9,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
@@ -15,6 +17,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.support.v4.media.session.MediaSessionCompat
 import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
@@ -22,12 +25,14 @@ import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.core.app.NotificationCompat
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -49,6 +54,8 @@ import com.lbtt2801.hearme.view.fragments.search.*
 import com.lbtt2801.hearme.view.tab_viewpager.TabPodcastFragment
 import com.lbtt2801.hearme.view.tab_viewpager.TabSongFragment
 import com.lbtt2801.hearme.viewmodel.*
+import java.io.IOException
+import java.net.URL
 import kotlin.system.exitProcess
 
 
@@ -761,33 +768,41 @@ class MainActivity : AppCompatActivity() {
 //        }
     }
 
-//    @SuppressLint("MissingPermission")
-//    fun showNotificationMedia(music: Music) {
-//        val notificationManagerCompat = NotificationManagerCompat.from(this)
-//        val mediaSession = MediaSessionCompat(this, "MediaNotification")
-//
-//        val notification = NotificationCompat.Builder(this, "HEAR_ME_APP")
-//            // Show controls on lock screen even when user hides sensitive content.
-////            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-//            .setSmallIcon(R.drawable.logo_default)
-//            .setLargeIcon(music.image.let { BitmapFactory.decodeResource(resources, it) })
-//            .setSubText("Hearme App")
-//            .setContentTitle(music.musicName)
-//            .setContentText(music.artist.artistName)
-////            .setPriority(NotificationCompat.PRIORITY_HIGH)
-//            .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
-//            // Add media control buttons that invoke intents in your media service
-//            .addAction(R.drawable.ic_previous, "Previous", null) // #0
-//            .addAction(R.drawable.ic_pause, "Pause", null) // #1
-//            .addAction(R.drawable.ic_next, "Next", null) // #2
-//            // Apply the media style template
-//            .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
-//                .setShowActionsInCompactView(0,1,2/* #1: pause button \*/)
-//                .setMediaSession(mediaSession.sessionToken))
-//            .build()
-//
-//        notificationManagerCompat.notify(1, notification)
-//    }
+    @SuppressLint("MissingPermission")
+    fun showNotificationMedia(music: Music) {
+        val notificationManagerCompat = NotificationManagerCompat.from(this)
+        val mediaSession = MediaSessionCompat(this, "MediaNotification")
+
+        var image: Bitmap ?= null
+        image = try {
+            val url = URL(music.image)
+            BitmapFactory.decodeStream(url.openConnection().getInputStream())
+        } catch (e: IOException) {
+            BitmapFactory.decodeResource(resources, R.drawable.img_music)
+        }
+
+        val notification = NotificationCompat.Builder(this, "HEAR_ME_APP")
+            // Show controls on lock screen even when user hides sensitive content.
+//            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setSmallIcon(R.drawable.logo_default)
+            .setLargeIcon(image)
+            .setSubText("Hearme App")
+            .setContentTitle(music.musicName)
+            .setContentText(music.artist.artistName)
+//            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
+            // Add media control buttons that invoke intents in your media service
+            .addAction(R.drawable.ic_previous, "Previous", null) // #0
+            .addAction(R.drawable.ic_pause, "Pause", null) // #1
+            .addAction(R.drawable.ic_next, "Next", null) // #2
+            // Apply the media style template
+            .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
+                .setShowActionsInCompactView(0,1,2/* #1: pause button \*/)
+                .setMediaSession(mediaSession.sessionToken))
+            .build()
+
+        notificationManagerCompat.notify(1, notification)
+    }
 
     fun zoomImage(imageView: ImageView, isZoomOut: Boolean) {
         imageView.layoutParams =

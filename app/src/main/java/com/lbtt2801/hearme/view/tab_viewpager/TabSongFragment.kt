@@ -1,7 +1,9 @@
 package com.lbtt2801.hearme.view.tab_viewpager
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,7 +71,8 @@ class TabSongFragment : Fragment() {
                 displayRecyclerViewToday(lst!!, 5)
             }
         } else {
-            mainActivity.viewModelMusic.lstDataMusics.observe((activity as MainActivity), Observer { musicList ->
+            mainActivity.viewModelMusic.lstDataMusics.observe(viewLifecycleOwner, Observer { musicList ->
+                Log.v(TAG, "UP0: xxxx")
                 lst = musicList as ArrayList<Music>
                 val formatter = SimpleDateFormat("dd/MM/yyyy")
                 val calToday = Calendar.getInstance()
