@@ -1,11 +1,14 @@
 package com.lbtt2801.hearme.view.fragments.search
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -19,6 +22,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.lbtt2801.hearme.MainActivity
 import com.lbtt2801.hearme.R
 import com.lbtt2801.hearme.data.adapter.*
@@ -50,10 +54,10 @@ class ExploreFragment : Fragment(),
     private lateinit var includeTopsSongsArtistsAlbumsPlaylistsProfiles: ContainerSearchResultBinding
 
     private var saveInstanceTextSearch: String = ""
+    private var isScrollingUp = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        Log.v(TAG, "onCreate saveInstanceTextSearch -> $saveInstanceTextSearch")
         if (savedInstanceState != null) {
             saveInstanceTextSearch = savedInstanceState.getString("textSearch").toString()
             Log.v("saveInstanceTextSearch", "$savedInstanceState")
@@ -81,6 +85,44 @@ class ExploreFragment : Fragment(),
     override fun onResume() {
         super.onResume()
         mainActivity = (activity as MainActivity)
+
+//        val a = includeTopsSongsArtistsAlbumsPlaylistsProfiles.recyclerViewTopicSearch
+//        includeTopsSongsArtistsAlbumsPlaylistsProfiles.includeFoundSearch.recyclerViewFoundList.addOnScrollListener(
+//            object : RecyclerView.OnScrollListener() {
+//                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                    super.onScrolled(recyclerView, dx, dy)
+//                    if (dy > 0) {
+//                        if (isScrollingUp) {
+////                            includeTopsSongsArtistsAlbumsPlaylistsProfiles.containsRecyclerViewTopicSearch.startAnimation(
+////                                AnimationUtils.loadAnimation(context, R.anim.anim_upward))
+//                            a.animate()
+//                                .alpha(0.0f)
+//                                .setListener(object : AnimatorListenerAdapter() {
+//                                    override fun onAnimationEnd(animation: Animator) {
+//                                        super.onAnimationEnd(animation);
+//                                        a.visibility = View.GONE;
+//                                    }
+//                                })
+//                            isScrollingUp = false
+//                        }
+//                    } else {
+//                        if (!isScrollingUp) {
+////                            includeTopsSongsArtistsAlbumsPlaylistsProfiles.containsRecyclerViewTopicSearch.startAnimation(
+////                                AnimationUtils.loadAnimation(context, R.anim.anim_downward))
+//                            a.animate()
+//                                .alpha(1.0f)
+//                                .setListener(object : AnimatorListenerAdapter() {
+//                                    override fun onAnimationEnd(animation: Animator) {
+//                                        super.onAnimationEnd(animation);
+//                                        a.visibility = View.VISIBLE;
+//                                    }
+//                                })
+//
+//                            isScrollingUp = true
+//                        }
+//                    }
+//                }
+//            })
 
         if (saveInstanceTextSearch.isNotEmpty()) {
             binding.containerBrowseAll.visibility = View.GONE

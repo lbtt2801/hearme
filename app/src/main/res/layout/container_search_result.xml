@@ -10,6 +10,7 @@
         android:id="@+id/container_search_results"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/transparent"
         android:orientation="vertical"
         android:visibility="visible">
 
@@ -17,10 +18,12 @@
             android:id="@+id/recycler_view_topic_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/transparent"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:paddingLeft="24dp"
+            android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/view_topic_search" />
 
@@ -49,7 +52,5 @@
             android:layout_height="match_parent"
             android:visibility="gone" />
 
-
     </LinearLayout>
-
 </LinearLayout>

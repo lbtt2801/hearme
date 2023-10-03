@@ -60,5 +60,11 @@ class ViewDetailsProfileFragment : Fragment() {
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
         }
+
+        binding.iamge.setOnClickListener() {
+            findNavController().navigate(R.id.fullImageFragment, Bundle().apply {
+                putString("url", user?.avatarUrl)
+            })
+        }
     }
 }

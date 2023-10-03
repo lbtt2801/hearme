@@ -95,6 +95,12 @@ class ViewDetailsSongFragment : Fragment() {
         binding.btnPlay.setOnClickListener {
             findNavController().navigate(R.id.songPlayFragment)
         }
+
+        binding.imageArtist.setOnClickListener() {
+            findNavController().navigate(R.id.fullImageFragment, Bundle().apply {
+                putString("url", music?.image)
+            })
+        }
     }
 
     private fun displayRecyclerViewMoreLikeThis() {

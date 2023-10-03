@@ -75,6 +75,12 @@ class ViewDetailsAlbumFragment : Fragment() {
         mainActivity.binding.toolBar.setNavigationOnClickListener() {
             findNavController().popBackStack()
         }
+
+        binding.imageArtist.setOnClickListener() {
+            findNavController().navigate(R.id.fullImageFragment, Bundle().apply {
+                putString("url", music.image)
+            })
+        }
     }
 
     private fun displayRecyclerView() {
